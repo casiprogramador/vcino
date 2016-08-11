@@ -1,0 +1,8 @@
+{
+  "name": "vcino",
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.1",
+    "font-awesome": "fontawesome#^4.6.3"
+  }
+}
