@@ -24,8 +24,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <form method="get" class="form-horizontal">
-
+                            {!! Form::open(array('route' => 'account.store', 'class' => 'form-horizontal')) !!}
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a data-toggle="tab" href="#tab-1">Nueva cuenta</a></li>
@@ -37,48 +36,45 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Cuenta</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control input-sm">
+                                                    <input type="text" class="form-control input-sm" name="nombre">
+                                                    @if ($errors->has('nombre'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('nombre') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Tipo de cuenta</label>
                                                 <div class="col-sm-4">
-                                                    <select class="form-control input-sm" name="tipo-cuenta">
-                                                        <option>Caja de Ahorro</option>
-                                                        <option>Cuenta Corriente</option>
-                                                        <option>Efectivo</option>
-                                                    </select>
+                                                    {{ Form::select('tipo_cuenta',array('0' => 'Seleccione','Caja de Ahorro' => 'Caja de Ahorro', 'Cuenta Corriente' => 'Cuenta Corriente','Efectivo' => 'Efectivo'),  old('tipo_cuenta') , ['class' => 'form-control input-sm']) }}
+                                                    @if ($errors->has('tipo_cuenta'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('tipo_cuenta') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Banco</label>
                                                 <div class="col-sm-4">
-                                                    <select class="form-control input-sm" name="account">
-                                                        <option>Banco BISA</option>
-                                                        <option>Banco de Crédito BCP</option>
-                                                        <option>Banco Económico</option>
-                                                        <option>Banco Ganadero</option>
-                                                        <option>Banco Mercantil Santa Cruz</option>
-                                                        <option>Banco Nacional de Bolivia</option>
-                                                        <option>Banco Unión</option>
-                                                        <option>Mi banco no aparece en la lista</option>
-                                                    </select>
+                                                    {{ Form::select('banco',$banks, '1', ['class' => 'form-control input-sm']) }}
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Número cuenta</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" class="form-control input-sm">
+                                                    <input type="text" class="form-control input-sm" name="nro_cuenta" value="{{old('nro_cuenta')}}">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Nombre cuentahabiente</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" class="form-control input-sm">
+                                                    <input type="text" class="form-control input-sm" name="nombre_cuentahabiente" value="{{old('nombre_cuentahabiente')}}">
                                                 </div>
                                             </div>
 
@@ -87,7 +83,12 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Notas</label>
                                                 <div class="col-sm-8">
-                                                    <textarea rows="4" class="form-control input-sm"></textarea>
+                                                    <textarea rows="4" class="form-control input-sm" name="nota" value="{{old('nota')}}"></textarea>
+                                                    @if ($errors->has('nota'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('nota') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -97,7 +98,9 @@
                                                 <label class="col-sm-3 control-label">Activa</label>
                                                 <div class="col-sm-4">
 
-                                                    <label><input type="checkbox" class="i-checks"></label>
+                                                    <div>
+                                                        <input type="checkbox" class="i-checks" name="activa" value="1" checked>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -109,15 +112,25 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button class="btn btn-success" type="submit">Guardar</button>
-                                        <button class="btn btn-white" type="submit">Cancelar</button>
+                                        <button class="btn btn-white" >Cancelar</button>
                                     </div>
                                 </div>
 
                             </div>
-                        </form>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('javascript')
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
 @endsection

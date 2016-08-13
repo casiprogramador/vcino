@@ -35,43 +35,32 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Caja general</td>
-                                <td></td>
-                                <td>Efectivo</td>
-                                <td><span class="text-success">Activa</span></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn-white btn btn-xs">Ver</button>
-                                        <button class="btn-white btn btn-xs">Editar</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>C.C. Ganadero No. 1310146136</td>
-                                <td>1310-146136</td>
-                                <td>Cuenta corriente</td>
-                                <td><span class="text-success">Activa</span></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn-white btn btn-xs">Ver</button>
-                                        <button class="btn-white btn btn-xs">Editar</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="text-muted">C.C. BISA No. 301-2203</span></td>
-                                <td><span class="text-muted">301-2203</span></td>
-                                <td><span class="text-muted">Cuenta corriente</span></td>
-                                <td><span class="text-danger">Inactiva</span></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn-white btn btn-xs">Ver</button>
-                                        <button class="btn-white btn btn-xs">Editar</button>
-                                    </div>
-                                </td>
-                            </tr>
-
+                            @foreach ($accounts as $account)
+                                <tr>
+                                    <td>{{ $account->nombre }}</td>
+                                    <td>{{ $account->nro_cuenta }}</td>
+                                    <td>{{ $account->tipo_cuenta }}</td>
+                                    <td>
+                                        @if($account->activa == 1)
+                                            <p><span class="badge badge-primary">&nbsp;&nbsp;ACTIVO&nbsp;&nbsp; </span></p>
+                                        @else
+                                            <span class="badge badge-danger">INACTIVO</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                Opciones
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a href="#">Ver Cuenta</a></li>
+                                                <li><a href="#">Editar Cuenta</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -81,7 +70,7 @@
             <div class="col-md-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title text-center">
-                        <button type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nueva Cuenta" data-original-title="Nueva Cuenta" style="margin-right: 10px;"> Nueva </button>
+                        <a href="{{ route('account.create') }}" class="btn btn-sm btn-success" > Nueva </a>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de Cuentas..." data-original-title="Imprimir lista de Cuentas..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar Cuentas" data-original-title="Exportar Cuentas"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
                     </div>
@@ -90,7 +79,7 @@
                             Cuentas
                         </h5>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                            Usted puede ver los detalles completos de cualquiera de sus cuentas
                         </p>
                     </div>
                 </div>

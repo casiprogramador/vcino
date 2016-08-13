@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use App\Company;
 use Illuminate\Http\Request;
-use App\Account;
-use App\Bank;
-use Auth;
+
 use App\Http\Requests;
 
-class AccountController extends Controller
+class CompanyController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
@@ -21,10 +19,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $company = Auth::user()->company;
 
-        $accounts = Account::where('company_id',$company->id );
-        return view('accounts.index')->with('accounts',$accounts->get());
     }
 
     /**
@@ -34,8 +29,7 @@ class AccountController extends Controller
      */
     public function create()
     {
-        $banks = Bank::all()->lists('nombre','id');
-        return view('accounts.create')->with('banks',$banks);
+        return view('company.create');
     }
 
     /**
@@ -48,27 +42,22 @@ class AccountController extends Controller
     {
         $this->validate($request, [
             'nombre' => 'required',
-            'tipo_cuenta' => 'required|not_in:0',
-            'banco' => 'required',
-            'nota' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'dias_mora' => 'required',
         ]);
 
-        $company = Auth::user()->company;
-        $activa = (empty($request->activa) ? '0' : $request->activa);
+        $company = new Company();
+        $company->nombre = $request->nombre;
+        $company->direccion = $request->direccion;
+        $company->telefono = $request->telefono;
+        $company->logotipo = 'logo.jpg';
+        $company->dias_mora = $request->dias_mora;
+        $company->user_id = Auth::user()->id;
 
-        $account = new Account();
-        $account->nombre = $request->nombre;
-        $account->nro_cuenta = $request->nro_cuenta;
-        $account->tipo_cuenta = $request->tipo_cuenta;
-        $account->bank_id = $request->banco;
-        $account->nombre_cuentahabiente = $request->nombre_cuentahabiente;
-        $account->nota = $request->nota;
-        $account->activa = $activa;
-        $account->company_id = $company->id;
+        $company->save();
 
-        $account->save();
-
-        return redirect()->route('account.index');
+        return redirect('admin');
     }
 
     /**

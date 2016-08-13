@@ -7,6 +7,7 @@
 
     <title>V-cino</title>
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}" />
+    @yield('style')
 </head>
 <body class="@yield('body-class')">
 {{--<nav class="navbar navbar-default navbar-static-top">
@@ -58,5 +59,6 @@
 @yield('content')
 
 <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+@yield('javascript')
 </body>
 </html>

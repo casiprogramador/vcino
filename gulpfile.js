@@ -26,8 +26,10 @@ elixir(function(mix) {
         [
             paths.vendor +'bootstrap/dist/css/bootstrap.css',
             paths.vendor +'font-awesome/css/font-awesome.css',
+            paths.template +'css/custom-icheck.css',
             paths.template +'css/animate.css',
-            paths.template +'css/style.css'
+            paths.template +'css/style.css',
+            paths.template +'css/awesome-bootstrap-checkbox.css'
         ],'public/css/app.css'
     ).scripts(
         [
@@ -35,7 +37,8 @@ elixir(function(mix) {
             paths.vendor +'bootstrap/dist/js/bootstrap.js',
             paths.template +'js/jquery.metisMenu.js',
             paths.template +'js/jquery.slimscroll.js',
-            paths.template +'js/inspinia.js'
+            paths.template +'js/inspinia.js',
+            paths.template +'js/icheck.min.js'
         ],
         'public/js/app.js'
     );

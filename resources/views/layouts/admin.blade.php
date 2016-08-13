@@ -84,7 +84,7 @@
                             <li>
                                 <div class="dropdown-messages-box">
                                     <a href="profile.html" class="pull-left">
-                                        <img alt="image" class="img-circle" src="img/a7.jpg">
+
                                     </a>
                                     <div class="media-body">
                                         <small class="pull-right">46h ago</small>
@@ -117,7 +117,7 @@
 
 
                     <li>
-                        <a href="login.html">
+                        <a href="{{ url('/logout') }}">
                             <i class="fa fa-sign-out"></i> Log out
                         </a>
                     </li>
