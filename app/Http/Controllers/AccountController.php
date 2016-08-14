@@ -90,7 +90,11 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        //
+        $account = Account::find($id);
+        $banks = Bank::all()->lists('nombre','id');
+        return view('accounts.edit')
+            ->with('account',$account)
+            ->with('banks',$banks);
     }
 
     /**
@@ -102,7 +106,27 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required',
+            'tipo_cuenta' => 'required|not_in:0',
+            'banco' => 'required',
+            'nota' => 'required',
+        ]);
+
+        $activa = (empty($request->activa) ? '0' : $request->activa);
+
+        $account = Account::find($id);
+        $account->nombre = $request->nombre;
+        $account->nro_cuenta = $request->nro_cuenta;
+        $account->tipo_cuenta = $request->tipo_cuenta;
+        $account->bank_id = $request->banco;
+        $account->nombre_cuentahabiente = $request->nombre_cuentahabiente;
+        $account->nota = $request->nota;
+        $account->activa = $activa;
+
+        $account->save();
+
+        return redirect()->route('account.index');
     }
 
     /**

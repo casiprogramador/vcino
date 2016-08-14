@@ -55,7 +55,7 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                 <li><a href="#">Ver Cuenta</a></li>
-                                                <li><a href="#">Editar Cuenta</a></li>
+                                                <li><a href="{{ route('account.edit', $account->id) }}">Editar Cuenta</a></li>
                                             </ul>
                                         </div>
                                     </td>
