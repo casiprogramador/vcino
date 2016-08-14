@@ -29,7 +29,7 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/admin';
-    protected $redirectPath = '/company/create';
+    //protected $redirectPath = '/admin';
 
     /**
      * Create a new authentication controller instance.
@@ -64,6 +64,8 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
+        $this->redirectTo = '/company/create';
         return User::create([
             'nombre' => $data['name'],
             'email' => $data['email'],
