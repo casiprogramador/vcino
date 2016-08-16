@@ -3537,8 +3537,13 @@ body.body-small .footer.fixed {
   margin-bottom: 5px;
 }
 /* TABLES */
+.table{
+  font-size: 13px;
+}
+
 .table-bordered {
   border: 1px solid #EBEBEB;
+
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {

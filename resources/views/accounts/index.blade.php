@@ -6,7 +6,7 @@
             <h2>Cuentas</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{url('/admin')}}">Inicio</a>
                 </li>
                 <li>
                     Configuración
@@ -36,16 +36,13 @@
                             </thead>
                             <tbody>
                             @foreach ($accounts as $account)
+                                @if($account->activa == 1)
                                 <tr>
                                     <td>{{ $account->nombre }}</td>
                                     <td>{{ $account->nro_cuenta }}</td>
                                     <td>{{ $account->tipo_cuenta }}</td>
                                     <td>
-                                        @if($account->activa == 1)
-                                            <p><span class="badge badge-primary">&nbsp;&nbsp;ACTIVO&nbsp;&nbsp; </span></p>
-                                        @else
-                                            <span class="badge badge-danger">INACTIVO</span>
-                                        @endif
+                                            <p><span class="text-success">Activa</span></p>
                                     </td>
                                     <td>
                                         <div class="dropdown">
@@ -60,6 +57,28 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @else
+                                    <tr>
+                                        <td><span class="text-muted">{{ $account->nombre }}</span></td>
+                                        <td><span class="text-muted">{{ $account->nro_cuenta }}</span></td>
+                                        <td><span class="text-muted">{{ $account->tipo_cuenta }}</span></td>
+                                        <td>
+                                                <p><span class="text-danger">Inactiva</span></p>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    Opciones
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li><a href="#">Ver Cuenta</a></li>
+                                                    <li><a href="{{ route('account.edit', $account->id) }}">Editar Cuenta</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>

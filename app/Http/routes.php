@@ -19,6 +19,7 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 Route::resource('account', 'AccountController');
+Route::resource('category', 'CategoryController');
 Route::resource('company', 'CompanyController');
 Route::get('admin', ['middleware' => 'auth', function () {
     return view('admin');

@@ -12,7 +12,7 @@
                     Configuración
                 </li>
                 <li class="active">
-                    <strong>Editar cuenta</strong>
+                    <strong>Ver cuenta</strong>
                 </li>
             </ol>
         </div>
@@ -27,7 +27,7 @@
                         {!! Form::open(array('route' => array('account.update', $account->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar cuenta {{ $account->nombre }}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle cuenta {{ $account->nombre }}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -36,7 +36,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Cuenta</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control input-sm" name="nombre" value="{{ $account->nombre }}">
+                                                <input type="text" class="form-control input-sm" name="nombre" value="{{ $account->nombre }}" readonly>
                                                 @if ($errors->has('nombre'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('nombre') }}</strong>
@@ -48,7 +48,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Tipo de cuenta</label>
                                             <div class="col-sm-4">
-                                                {{ Form::select('tipo_cuenta',array('0' => 'Seleccione','Caja de Ahorro' => 'Caja de Ahorro', 'Cuenta Corriente' => 'Cuenta Corriente','Efectivo' => 'Efectivo'),  $account->tipo_cuenta , ['class' => 'form-control input-sm']) }}
+                                                {{ Form::select('tipo_cuenta',array('0' => 'Seleccione','Caja de Ahorro' => 'Caja de Ahorro', 'Cuenta Corriente' => 'Cuenta Corriente','Efectivo' => 'Efectivo'),  $account->tipo_cuenta , ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                                                 @if ($errors->has('tipo_cuenta'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('tipo_cuenta') }}</strong>
@@ -60,21 +60,21 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Banco</label>
                                             <div class="col-sm-4">
-                                                {{ Form::select('banco',$banks, $account->banco_id, ['class' => 'form-control input-sm']) }}
+                                                {{ Form::select('banco',$banks, $account->banco_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Número cuenta</label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control input-sm" name="nro_cuenta" value="{{ $account->nro_cuenta }}">
+                                                <input type="text" class="form-control input-sm" name="nro_cuenta" value="{{ $account->nro_cuenta }}" readonly>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nombre cuentahabiente</label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control input-sm" name="nombre_cuentahabiente" value="{{ $account->nombre_cuentahabiente }}">
+                                                <input type="text" class="form-control input-sm" name="nombre_cuentahabiente" value="{{ $account->nombre_cuentahabiente }}" readonly>
                                             </div>
                                         </div>
 
@@ -83,7 +83,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Notas</label>
                                             <div class="col-sm-8">
-                                                <textarea rows="4" class="form-control input-sm" name="nota" >{{ $account->nota }}</textarea>
+                                                <textarea rows="4" class="form-control input-sm" name="nota" readonly>{{ $account->nota }}</textarea>
                                                 @if ($errors->has('nota'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('nota') }}</strong>
@@ -99,7 +99,7 @@
                                             <div class="col-sm-4">
 
                                                 <div>
-                                                    <input type="checkbox" class="i-checks" name="activa" value="1" {{ ($account->activa == 1) ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="i-checks" name="activa" value="1" {{ ($account->activa == 1) ? 'checked' : '' }} disabled="disabled">
                                                 </div>
 
                                             </div>

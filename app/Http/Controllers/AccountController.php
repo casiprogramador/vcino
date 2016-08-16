@@ -79,7 +79,11 @@ class AccountController extends Controller
      */
     public function show($id)
     {
-        //
+        $account = Account::find($id);
+        $banks = Bank::all()->lists('nombre','id');
+        return view('accounts.show')
+            ->with('account',$account)
+            ->with('banks',$banks);
     }
 
     /**

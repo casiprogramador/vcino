@@ -1,17 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
-use App\Company;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Auth;
 
-class CompanyController extends Controller
+class CategoryController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +16,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-
+        return view('categories.index');
     }
 
     /**
@@ -29,7 +26,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('company.create');
+        return view('categories.create');
     }
 
     /**
@@ -42,22 +39,21 @@ class CompanyController extends Controller
     {
         $this->validate($request, [
             'nombre' => 'required',
-            'direccion' => 'required',
-            'telefono' => 'required',
-            'dias_mora' => 'required',
+            'tipo_categoria' => 'required|not_in:0',
+            'clase' => 'required|not_in:0',
+            'description' => 'required',
+            'icono'	=>	'required | mimes:jpeg,jpg,png'
         ]);
 
-        $company = new Company();
-        $company->nombre = $request->nombre;
-        $company->direccion = $request->direccion;
-        $company->telefono = $request->telefono;
-        $company->logotipo = 'logo.jpg';
-        $company->dias_mora = $request->dias_mora;
-        $company->user_id = Auth::user()->id;
+        $id = Auth::user()->id;
+        $file = $request->file('icono');
+        $tmpFilePath = '/img/upload/';
+        $tmpFileName = time() . '-'.$id. '-' . $file->getClientOriginalName();
+        $file->move(public_path() . $tmpFilePath, $tmpFileName);
+        $path = $tmpFilePath . $tmpFileName;
 
-        $company->save();
+        dd($path);
 
-        return redirect('admin');
     }
 
     /**
