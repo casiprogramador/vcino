@@ -24,7 +24,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        {!! Form::open(array('route' => array('category.update', $category->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
+                        {!! Form::open(array('route' => array('category.update', $category->id),'method' => 'patch' ,'class' => 'form-horizontal', 'files' => true)) !!}
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
