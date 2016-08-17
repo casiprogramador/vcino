@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
+use App\Category;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('categories.index');
+        $company = Auth::user()->company;
+
+        $category = Category::where('company_id',$company->id );
+        return view('categories.index')->with('categories',$category->get());
     }
 
     /**
@@ -52,7 +56,21 @@ class CategoryController extends Controller
         $file->move(public_path() . $tmpFilePath, $tmpFileName);
         $path = $tmpFilePath . $tmpFileName;
 
-        dd($path);
+        $company = Auth::user()->company;
+        $activa = (empty($request->activa) ? '0' : $request->activa);
+
+        $category = new Category();
+        $category->nombre = $request->nombre;
+        $category->clase = $request->clase;
+        $category->tipo_categoria = $request->tipo_categoria;
+        $category->description = $request->description;
+        $category->icono = $path;
+        $category->activa = $activa;
+        $category->company_id = $company->id;
+
+        $category->save();
+
+        return redirect()->route('category.index');
 
     }
 
@@ -64,7 +82,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+        return view('categories.show')
+            ->with('category',$category);
     }
 
     /**
@@ -75,7 +95,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return view('categories.edit')
+            ->with('category',$category);
     }
 
     /**
@@ -87,7 +109,38 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required',
+            'tipo_categoria' => 'required|not_in:0',
+            'clase' => 'required|not_in:0',
+            'description' => 'required'
+        ]);
+
+        if(!empty($request->icono)){
+            $user_id = Auth::user()->id;
+            $file = $request->file('icono');
+            $tmpFilePath = '/img/upload/';
+            $tmpFileName = time() . '-'.$user_id. '-' . $file->getClientOriginalName();
+            $file->move(public_path() . $tmpFilePath, $tmpFileName);
+            $path = $tmpFilePath . $tmpFileName;
+        }
+
+
+        $activa = (empty($request->activa) ? '0' : $request->activa);
+
+        $category = Category::find($id);
+        $category->nombre = $request->nombre;
+        $category->clase = $request->clase;
+        $category->tipo_categoria = $request->tipo_categoria;
+        $category->description = $request->description;
+        if(!empty($request->icono)) {
+            $category->icono = $path;
+        }
+        $category->activa = $activa;
+
+        $category->save();
+
+        return redirect()->route('category.index');
     }
 
     /**
