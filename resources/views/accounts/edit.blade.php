@@ -60,7 +60,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Banco</label>
                                             <div class="col-sm-4">
-                                                {{ Form::select('banco',$banks, $account->banco_id, ['class' => 'form-control input-sm']) }}
+                                                {{ Form::select('banco',$banks, $account->bank_id, ['class' => 'form-control input-sm']) }}
                                             </div>
                                         </div>
 

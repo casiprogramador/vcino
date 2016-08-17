@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdccf6a7-51b1-4c39-a7c6-2a24d7afeb81" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/img/blue.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/img/blue@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/img/system/logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/categories/edit.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/categories/show.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/app.css" afterPath="$PROJECT_DIR$/public/css/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/assets/css/custom-icheck.css" afterPath="$PROJECT_DIR$/resources/assets/css/custom-icheck.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/accounts/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/accounts/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/categories/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/categories/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/accounts/edit.blade.php" afterPath="$PROJECT_DIR$/resources/views/accounts/edit.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/accounts/show.blade.php" afterPath="$PROJECT_DIR$/resources/views/accounts/show.blade.php" />
     </list>
     <ignored path="vcino.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,23 +67,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="admin.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/layouts/admin.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+            <state relative-caret-position="324">
+              <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="show.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/accounts/show.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="101" column="182" selection-start-line="101" selection-start-column="163" selection-end-line="101" selection-end-column="182" />
+            <state relative-caret-position="370">
+              <caret line="110" column="62" selection-start-line="110" selection-start-column="62" selection-end-line="110" selection-end-column="62" />
               <folding>
-                <marker date="1471294328959" expanded="true" signature="2531:2761" ph="..." />
+                <marker date="1471393770022" expanded="true" signature="2531:2761" ph="..." />
               </folding>
             </state>
           </provider>
@@ -112,10 +102,10 @@
       <file leaf-file-name="edit.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/accounts/edit.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="101" column="163" selection-start-line="101" selection-start-column="52" selection-end-line="101" selection-end-column="163" />
+            <state relative-caret-position="252">
+              <caret line="64" column="46" selection-start-line="64" selection-start-column="46" selection-end-line="64" selection-end-column="46" />
               <folding>
-                <marker date="1471293835752" expanded="true" signature="2524:2731" ph="..." />
+                <marker date="1471393722931" expanded="true" signature="2524:2731" ph="..." />
               </folding>
             </state>
           </provider>
@@ -186,8 +176,6 @@
         <option value="$PROJECT_DIR$/resources/assets/js/app.js" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
         <option value="$PROJECT_DIR$/resources/assets/css/style.css" />
-        <option value="$PROJECT_DIR$/resources/views/accounts/edit.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/accounts/show.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2016_08_15_231012_create_categories_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" />
         <option value="$PROJECT_DIR$/resources/views/categories/create.blade.php" />
@@ -202,6 +190,8 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" />
         <option value="$PROJECT_DIR$/resources/views/categories/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/accounts/edit.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/accounts/show.blade.php" />
       </list>
     </option>
   </component>
@@ -615,12 +605,12 @@
       <workItem from="1471129812480" duration="6876000" />
       <workItem from="1471195164568" duration="2566000" />
       <workItem from="1471289407774" duration="17436000" />
-      <workItem from="1471375246962" duration="10614000" />
+      <workItem from="1471375246962" duration="11599000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86176000" />
+    <option name="totallyTimeSpent" value="87161000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1358" height="736" extended-state="0" />
@@ -967,16 +957,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/accounts/edit.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="101" column="163" selection-start-line="101" selection-start-column="52" selection-end-line="101" selection-end-column="163" />
-          <folding>
-            <marker date="1471293835752" expanded="true" signature="2524:2731" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AccountController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
@@ -1029,16 +1009,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/accounts/show.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="101" column="182" selection-start-line="101" selection-start-column="163" selection-end-line="101" selection-end-column="182" />
-          <folding>
-            <marker date="1471294328959" expanded="true" signature="2531:2761" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/categories/show.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1057,9 +1027,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layouts/admin.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        <state relative-caret-position="324">
+          <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/accounts/edit.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="64" column="46" selection-start-line="64" selection-start-column="46" selection-end-line="64" selection-end-column="46" />
+          <folding>
+            <marker date="1471393722931" expanded="true" signature="2524:2731" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/accounts/show.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="110" column="62" selection-start-line="110" selection-start-column="62" selection-end-line="110" selection-end-column="62" />
+          <folding>
+            <marker date="1471393770022" expanded="true" signature="2531:2761" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

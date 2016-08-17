@@ -60,7 +60,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Banco</label>
                                             <div class="col-sm-4">
-                                                {{ Form::select('banco',$banks, $account->banco_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
+                                                {{ Form::select('banco',$banks, $account->bank_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                                             </div>
                                         </div>
 
@@ -109,12 +109,6 @@
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Editar</button>
-                                    <button class="btn btn-white" >Cancelar</button>
-                                </div>
-                            </div>
 
                         </div>
                         {!! Form::close() !!}
