@@ -632,8 +632,8 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .btn-primary:active:hover,
 .btn-primary.active:hover,
 .btn-primary.active:focus {
-  background-color: #18a689;
-  border-color: #18a689;
+  background-color: #2685C6;
+  border-color: #2685C6;
   color: #FFFFFF;
 }
 .btn-primary:active,
@@ -1843,7 +1843,7 @@ div.dt-button-info {
 }
 .form-control:focus,
 .single-line:focus {
-  border-color: #1ab394 !important;
+  border-color: #0e9aef !important;
 }
 .has-success .form-control {
   border-color: #1ab394;
@@ -7462,7 +7462,7 @@ body.rtls.top-navigation .footer.fixed {
   margin-right: 30px;
 }
 .skin-1.fixed-nav .minimalize-styl-2 {
-  margin: 14px 5px 5px 15px;
+  margin: 18px 5px 5px 15px;
 }
 .skin-1 .spin-icon {
   background: #0e9aef !important;

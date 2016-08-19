@@ -6,7 +6,7 @@
             <h2>Cuentas</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="">Inicio</a>
                 </li>
                 <li>
                     Configuración
@@ -24,7 +24,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        {!! Form::open(array('route' => array('account.update', $account->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
+                        <form action="#" class="form-horizontal">
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Detalle cuenta {{ $account->nombre }}</a></li>

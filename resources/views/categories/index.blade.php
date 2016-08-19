@@ -50,8 +50,8 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('category.show', $category->id) }}">Ver Categoria</a></li>
-                                                    <li><a href="{{ route('category.edit', $category->id) }}">Editar Categoria</a></li>
+                                                    <li><a href="{{ route('config.category.show', $category->id) }}">Ver Categoria</a></li>
+                                                    <li><a href="{{ route('config.category.edit', $category->id) }}">Editar Categoria</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -70,8 +70,8 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('category.show', $category->id) }}">Ver Categoria</a></li>
-                                                    <li><a href="{{ route('category.edit', $category->id) }}">Editar Categoria</a></li>
+                                                    <li><a href="{{ route('config.category.show', $category->id) }}">Ver Categoria</a></li>
+                                                    <li><a href="{{ route('config.category.edit', $category->id) }}">Editar Categoria</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -89,7 +89,7 @@
             <div class="col-md-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title text-left" style="padding-left: 20px;">
-                        <a href="{{ route('category.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nueva Cuenta" data-original-title="Nueva Cuenta" style="margin-right: 10px;"> Nueva </a>
+                        <a href="{{ route('config.category.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nueva Cuenta" data-original-title="Nueva Cuenta" style="margin-right: 10px;"> Nueva </a>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de Cuentas..." data-original-title="Imprimir lista de Cuentas..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar Cuentas" data-original-title="Exportar Cuentas"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
                     </div>

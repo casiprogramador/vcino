@@ -6,10 +6,10 @@
             <h2>Cuentas</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
-                <li>
-                    Configuración
+                <li class="active">
+                    <a href="{{ route('config.account.index') }}">Cuentas</a>
                 </li>
                 <li class="active">
                     <strong>Editar cuenta</strong>
@@ -24,7 +24,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        {!! Form::open(array('route' => array('account.update', $account->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
+                        {!! Form::open(array('route' => array('config.account.update', $account->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Editar cuenta {{ $account->nombre }}</a></li>
@@ -112,7 +112,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button class="btn btn-success" type="submit">Editar</button>
-                                    <button class="btn btn-white" >Cancelar</button>
+                                    <a href="{{ route('config.account.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>
 

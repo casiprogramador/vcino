@@ -68,7 +68,7 @@ class AccountController extends Controller
 
         $account->save();
 
-        return redirect()->route('account.index');
+        return redirect()->route('config.account.index');
     }
 
     /**
@@ -130,7 +130,7 @@ class AccountController extends Controller
 
         $account->save();
 
-        return redirect()->route('account.index');
+        return redirect()->route('config.account.index');
     }
 
     /**

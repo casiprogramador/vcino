@@ -6,13 +6,10 @@
             <h2>Cuentas</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{url('/admin')}}">Inicio</a>
-                </li>
-                <li>
-                    Configuración
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong>Lista de cuentas</strong>
+                    <strong><a href="{{ route('config.account.index') }}">Cuentas</a></strong>
                 </li>
             </ol>
         </div>
@@ -51,8 +48,8 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a href="{{ route('account.show', $account->id) }}">Ver Cuenta</a></li>
-                                                <li><a href="{{ route('account.edit', $account->id) }}">Editar Cuenta</a></li>
+                                                <li><a href="{{ route('config.account.show', $account->id) }}">Ver Cuenta</a></li>
+                                                <li><a href="{{ route('config.account.edit', $account->id) }}">Editar Cuenta</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -72,8 +69,8 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('account.show', $account->id) }}">Ver Cuenta</a></li>
-                                                    <li><a href="{{ route('account.edit', $account->id) }}">Editar Cuenta</a></li>
+                                                    <li><a href="{{ route('config.account.show', $account->id) }}">Ver Cuenta</a></li>
+                                                    <li><a href="{{ route('config.account.edit', $account->id) }}">Editar Cuenta</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -89,7 +86,7 @@
             <div class="col-md-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title text-center">
-                        <a href="{{ route('account.create') }}" class="btn btn-sm btn-success" > Nueva </a>
+                        <a href="{{ route('config.account.create') }}" class="btn btn-sm btn-success" > Nueva </a>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de Cuentas..." data-original-title="Imprimir lista de Cuentas..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar Cuentas" data-original-title="Exportar Cuentas"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
                     </div>

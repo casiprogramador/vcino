@@ -24,7 +24,7 @@
 
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    {!! Form::open(array('route' => 'category.store', 'class' => 'form-horizontal', 'files' => true)) !!}
+                    {!! Form::open(array('route' => 'config.category.store', 'class' => 'form-horizontal', 'files' => true)) !!}
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">

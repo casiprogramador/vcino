@@ -18,7 +18,12 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
-Route::resource('account', 'AccountController');
-Route::resource('category', 'CategoryController');
-Route::resource('company', 'CompanyController');
-Route::get('admin','AdminController@index' );
+Route::group(['prefix' => 'config'], function () {
+    Route::resource('account', 'AccountController');
+    Route::resource('category', 'CategoryController');
+    Route::resource('company', 'CompanyController');
+});
+
+Route::get('admin', [
+    'as' => 'admin.home', 'uses' => 'AdminController@index'
+]);

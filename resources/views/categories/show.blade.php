@@ -24,7 +24,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        {!! Form::open(array('route' => array('category.update', $category->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
+                        <form action="#" class="form-horizontal">
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
@@ -90,7 +90,7 @@
                             <div class="hr-line-dashed"></div>
 
                         </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
             </div>

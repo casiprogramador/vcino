@@ -1,12 +1,15 @@
 @extends('layouts.app')
 @section('body-class', 'fixed-nav skin-1')
+
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav metismenu nav-custom" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <img src="{{ URL::asset('img/system/logo.png')}}" width="70" />
+                        <a href="{{ route('admin.home') }}">
+                            <img src="{{ URL::asset('img/system/logo.png')}}" width="70" />
+                        </a>
                     </div>
                     <div class="logo-element">
                         VCino
@@ -37,17 +40,17 @@
                     </ul>
                 </li>
 
-                <li>
+                <li {!! (Request::is('config/*') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-bar-chart"></i> <span class="nav-label">Configuración</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="{{ route('account.index') }}">Cuentas</a></li>
-                        <li><a href="{{ route('category.index') }}">Categorías</a></li>
-                        <li><a href="#/">Proveedores</a></li>
-                        <li><a href="#/">Instalaciones</a></li>
-                        <li><a href="#/">Cuotas</a></li>
-                        <li><a href="#/">Tipos de propiedad</a></li>
-                        <li><a href="#/">Número de comprobantes</a></li>
+                        <li class="{{ MenuRoute::active('config/account') }}"><a href="{{ route('config.account.index') }}">Cuentas</a></li>
+                        <li class="{{ MenuRoute::active('config/category') }}"><a href="{{ route('config.category.index') }}">Categorías</a></li>
+                        <li><a href="#">Proveedores</a></li>
+                        <li><a href="#">Instalaciones</a></li>
+                        <li><a href="#">Cuotas</a></li>
+                        <li><a href="#">Tipos de propiedad</a></li>
+                        <li><a href="#">Número de comprobantes</a></li>
                     </ul>
                 </li>
 
