@@ -6,13 +6,13 @@
             <h2>Categorías</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
-                </li>
-                <li>
-                    Configuración
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong>Editar {{ $category->nombre }}</strong>
+                    <a href="{{ route('config.category.index') }}">Categorias</a>
+                </li>
+                <li class="active">
+                    <strong>Editar categoria</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +28,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Nueva categoría</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar {{$category->nombre}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -119,7 +119,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button class="btn btn-success" type="submit">Guardar</button>
-                                    <button class="btn btn-white" type="button">Cancelar</button>
+                                    <a href="{{ route('config.category.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>
 

@@ -70,7 +70,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('category.index');
+        return redirect()->route('config.category.index');
 
     }
 
@@ -140,7 +140,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('category.index');
+        return redirect()->route('config.category.index');
     }
 
     /**

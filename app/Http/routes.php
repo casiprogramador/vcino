@@ -22,6 +22,7 @@ Route::group(['prefix' => 'config'], function () {
     Route::resource('account', 'AccountController');
     Route::resource('category', 'CategoryController');
     Route::resource('company', 'CompanyController');
+    Route::resource('supplier', 'SupplierController');
 });
 
 Route::get('admin', [

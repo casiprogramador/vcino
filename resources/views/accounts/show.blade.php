@@ -6,10 +6,10 @@
             <h2>Cuentas</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
-                <li>
-                    Configuración
+                <li class="active">
+                    <a href="{{ route('config.account.index') }}">Cuentas</a>
                 </li>
                 <li class="active">
                     <strong>Ver cuenta</strong>
@@ -109,9 +109,13 @@
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
-
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <a href="{{ route('config.account.index') }}" class="btn btn-success" >Atras</a>
+                                </div>
+                            </div>
                         </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
             </div>

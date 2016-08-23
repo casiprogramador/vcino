@@ -6,13 +6,10 @@
             <h2>Categorías</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
-                </li>
-                <li>
-                    Configuración
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong>Lista de categorias</strong>
+                    <strong><a href="{{ route('config.category.index') }}">Categorias</a></strong>
                 </li>
             </ol>
         </div>

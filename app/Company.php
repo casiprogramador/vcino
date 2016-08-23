@@ -15,4 +15,14 @@ class Company extends Model
     {
         return $this->hasMany('App\Account');
     }
+
+    public function category()
+    {
+        return $this->hasMany('App\Category');
+    }
+
+    public function supplier()
+    {
+        return $this->hasMany('App\Supplier');
+    }
 }

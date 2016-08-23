@@ -46,7 +46,7 @@
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('config/account') }}"><a href="{{ route('config.account.index') }}">Cuentas</a></li>
                         <li class="{{ MenuRoute::active('config/category') }}"><a href="{{ route('config.category.index') }}">Categorías</a></li>
-                        <li><a href="#">Proveedores</a></li>
+                        <li class="{{ MenuRoute::active('config/supplier') }}"><a href="{{ route('config.supplier.index') }}">Proveedores</a></li>
                         <li><a href="#">Instalaciones</a></li>
                         <li><a href="#">Cuotas</a></li>
                         <li><a href="#">Tipos de propiedad</a></li>

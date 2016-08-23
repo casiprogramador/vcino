@@ -6,13 +6,13 @@
         <h2>Categorías</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                Configuración
+                <a href="{{ route('config.category.index') }}">Categorias</a>
             </li>
             <li class="active">
-                <strong>Nueva categoría</strong>
+                <strong>Nueva categoria</strong>
             </li>
         </ol>
     </div>
@@ -34,7 +34,7 @@
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
 
-                                        <div class="form-group">
+                                        <div class="form-group{{ $errors->has('tipo_categoria') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Tipo</label>
                                             <div class="col-sm-3">
                                                 {{ Form::select('tipo_categoria',array('0' => 'Seleccione','Egreso' => 'Egreso', 'Ingreso' => 'Ingreso'),old('tipo_categoria'),['class' => 'form-control input-sm']) }}
@@ -46,7 +46,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group{{ $errors->has('clase') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Clase</label>
                                             <div class="col-sm-3">
                                                 {{ Form::select('clase',array('0' => 'Seleccione','Ordinaria' => 'Ordinaria', 'Extraordinaria' => 'Extraordinaria'),old('nro_cuenta'),['class' => 'form-control input-sm']) }}
@@ -58,10 +58,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Categoría</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control input-sm" name="nombre">
+                                                <input type="text" class="form-control input-sm" name="nombre" value="{{old('nombre')}}">
                                                 @if ($errors->has('nombre'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('nombre') }}</strong>
@@ -70,7 +70,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Descripción</label>
                                             <div class="col-sm-8">
                                                 <textarea rows="4" class="form-control input-sm" name="description">{{old('description')}}</textarea>
@@ -84,7 +84,7 @@
 
                                         <div class="hr-line-dashed"></div>
 
-                                        <div class="form-group">
+                                        <div class="form-group{{ $errors->has('icono') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Icono</label>
                                             <div class="col-sm-8">
                                                 <label title="Upload image file" for="inputImage" class="btn btn-white">
@@ -119,7 +119,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button class="btn btn-success" type="submit">Guardar</button>
-                                    <button class="btn btn-white" type="button">Cancelar</button>
+                                    <a href="{{ route('config.category.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>
 
