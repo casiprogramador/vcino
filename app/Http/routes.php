@@ -18,11 +18,12 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+Route::resource('company', 'CompanyController');
 Route::group(['prefix' => 'config'], function () {
     Route::resource('account', 'AccountController');
     Route::resource('category', 'CategoryController');
-    Route::resource('company', 'CompanyController');
     Route::resource('supplier', 'SupplierController');
+    Route::resource('typeproperty', 'TypePropertyController');
 });
 
 Route::get('admin', [

@@ -6,10 +6,10 @@
             <h2>Proveedores</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    Configuración
+                    <a href="{{ route('config.supplier.index') }}">Proveedores</a>
                 </li>
                 <li class="active">
                     <strong>Nuevo proveedor</strong>
@@ -63,7 +63,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Cheque a nombre de</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control input-sm" style="text-transform: uppercase;" name="nombre_cheque">
+                                                    <input type="text" class="form-control input-sm" style="text-transform: uppercase;" name="nombre_cheque" value="{{old('nombre_cheque')}}">
                                                     <span class="help-block m-b-none">Nombre o razón social para emitir el cheque.</span>
                                                 </div>
                                             </div>
@@ -75,13 +75,13 @@
                                                 <div class="col-sm-9">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="Oficina" class="form-control" name="telefono_oficina">
+                                                            <input type="text" placeholder="Oficina" class="form-control" name="telefono_oficina" value="{{old('telefono_oficina')}}">
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="Móvil" class="form-control" name="telefono_movil">
+                                                            <input type="text" placeholder="Móvil" class="form-control" name="telefono_movil" value="{{old('telefono_movil')}}">
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="# para Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia">
+                                                            <input type="text" placeholder="# para Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -90,21 +90,21 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">E-mail</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control input-sm" name="email">
+                                                    <input type="text" class="form-control input-sm" name="email" value="{{old('email')}}">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Sitio web</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control input-sm" name="sitio_web">
+                                                    <input type="text" class="form-control input-sm" name="sitio_web" value="{{old('sitio_web')}}">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Dirección</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control input-sm" name="direccion">
+                                                    <input type="text" class="form-control input-sm" name="direccion" value="{{old('direccion')}}">
                                                 </div>
                                             </div>
 
@@ -113,7 +113,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Notas</label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="4" class="form-control input-sm" name="notas"></textarea>
+                                                    <textarea rows="4" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
                                                 </div>
                                             </div>
 
