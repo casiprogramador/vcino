@@ -76,8 +76,8 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.supplier.show', $supplier->id) }}">Ver Cuenta</a></li>
-                                                    <li><a href="{{ route('config.supplier.edit', $supplier->id) }}">Editar Cuenta</a></li>
+                                                    <li><a href="{{ route('config.supplier.show', $supplier->id) }}">Ver Proveedor</a></li>
+                                                    <li><a href="{{ route('config.supplier.edit', $supplier->id) }}">Editar Proveedor</a></li>
                                                 </ul>
                                             </div>
                                         </td>

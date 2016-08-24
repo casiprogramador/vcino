@@ -10,4 +10,14 @@ class Quota extends Model
     {
         return $this->belongsTo('App\Company');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
+    public function typeProperty()
+    {
+        return $this->belongsTo('App\TypeProperty');
+    }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Account;
 use App\Bank;
 use Auth;
+use Session;
 use App\Http\Requests;
 
 class AccountController extends Controller
@@ -67,7 +68,7 @@ class AccountController extends Controller
         $account->company_id = $company->id;
 
         $account->save();
-
+        Session::flash('message', 'Nueva cuenta ingresada correctamente');
         return redirect()->route('config.account.index');
     }
 
@@ -129,7 +130,7 @@ class AccountController extends Controller
         $account->activa = $activa;
 
         $account->save();
-
+        Session::flash('message', 'Cuenta actualizada correctamente');
         return redirect()->route('config.account.index');
     }
 

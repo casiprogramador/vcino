@@ -25,4 +25,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Supplier');
     }
+
+    public function quota()
+    {
+        return $this->hasMany('App\Quota');
+    }
 }

@@ -19,6 +19,14 @@
 
         <div class="row">
             <div class="col-lg-9">
+                @if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
                 <div class="ibox">
                     <div class="ibox-content">
                         <table class="table table-hover table-striped">

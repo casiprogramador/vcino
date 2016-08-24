@@ -10,4 +10,9 @@ class TypeProperty extends Model
     {
         return $this->belongsTo('App\Company');
     }
+
+    public function quota()
+    {
+        return $this->hasMany('App\Quota');
+    }
 }

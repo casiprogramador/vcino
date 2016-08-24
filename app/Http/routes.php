@@ -24,6 +24,7 @@ Route::group(['prefix' => 'config'], function () {
     Route::resource('category', 'CategoryController');
     Route::resource('supplier', 'SupplierController');
     Route::resource('typeproperty', 'TypePropertyController');
+    Route::resource('quota', 'QuotaController');
 });
 
 Route::get('admin', [

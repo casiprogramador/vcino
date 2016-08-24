@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use App\Category;
+use Session;
 
 class CategoryController extends Controller
 {
@@ -69,7 +70,7 @@ class CategoryController extends Controller
         $category->company_id = $company->id;
 
         $category->save();
-
+        Session::flash('message', 'Nueva categoria ingresada correctamente');
         return redirect()->route('config.category.index');
 
     }
@@ -139,7 +140,7 @@ class CategoryController extends Controller
         $category->activa = $activa;
 
         $category->save();
-
+        Session::flash('message', 'Categoria actualizada correctamente');
         return redirect()->route('config.category.index');
     }
 
