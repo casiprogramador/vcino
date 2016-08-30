@@ -42,33 +42,33 @@
                             <tbody>
                             @foreach ($accounts as $account)
                                 @if($account->activa == 1)
-                                <tr>
-                                    <td>{{ $account->nombre }}</td>
-                                    <td>{{ $account->nro_cuenta }}</td>
-                                    <td>{{ $account->tipo_cuenta }}</td>
-                                    <td>
+                                    <tr>
+                                        <td>{{ $account->nombre }}</td>
+                                        <td>{{ $account->nro_cuenta }}</td>
+                                        <td>{{ $account->tipo_cuenta }}</td>
+                                        <td>
                                             <p><span class="text-success">Activa</span></p>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                Opciones
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a href="{{ route('config.account.show', $account->id) }}">Ver Cuenta</a></li>
-                                                <li><a href="{{ route('config.account.edit', $account->id) }}">Editar Cuenta</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    Opciones
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li><a href="{{ route('config.account.show', $account->id) }}">Ver Cuenta</a></li>
+                                                    <li><a href="{{ route('config.account.edit', $account->id) }}">Editar Cuenta</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 @else
                                     <tr>
                                         <td><span class="text-muted">{{ $account->nombre }}</span></td>
                                         <td><span class="text-muted">{{ $account->nro_cuenta }}</span></td>
                                         <td><span class="text-muted">{{ $account->tipo_cuenta }}</span></td>
                                         <td>
-                                                <p><span class="text-danger">Inactiva</span></p>
+                                            <p><span class="text-danger">Inactiva</span></p>
                                         </td>
                                         <td>
                                             <div class="dropdown">
@@ -113,4 +113,41 @@
 
     </div>
 
+@endsection
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
+
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        } );
+    </script>
 @endsection

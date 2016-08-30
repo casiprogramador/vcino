@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('body-class', 'fixed-nav skin-1')
-
+@section('content')
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -47,10 +47,10 @@
                         <li class="{{ MenuRoute::active('config/account') }}"><a href="{{ route('config.account.index') }}">Cuentas</a></li>
                         <li class="{{ MenuRoute::active('config/category') }}"><a href="{{ route('config.category.index') }}">Categorías</a></li>
                         <li class="{{ MenuRoute::active('config/supplier') }}"><a href="{{ route('config.supplier.index') }}">Proveedores</a></li>
-                        <li><a href="#">Instalaciones</a></li>
+                        <li class="{{ MenuRoute::active('config/installation') }}"><a href="{{ route('config.installation.index') }}">Instalaciones</a></li>
                         <li class="{{ MenuRoute::active('config/quota') }}"><a href="{{ route('config.quota.index') }}">Cuotas</a></li>
                         <li class="{{ MenuRoute::active('config/typeproperty') }}"><a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a></li>
-                        <li><a href="#">Número de comprobantes</a></li>
+                        <li class="{{ MenuRoute::active('receiptnumbers') }}"><a href="{{ route('config.receiptnumber.index') }}">Número de comprobantes</a></li>
                     </ul>
                 </li>
 
@@ -88,3 +88,4 @@
         </div>
     </div>
 </div>
+@endsection

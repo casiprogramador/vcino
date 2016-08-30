@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
-
+use Redis;
 use App\Http\Requests;
 
 class AdminController extends Controller
@@ -17,6 +17,7 @@ class AdminController extends Controller
     public function index()
     {
         $company = Auth::user()->company;
+        //Redis::set('user', 'Taylor');
         Session::set('company_name', $company->nombre);
 
         return view('admin');
