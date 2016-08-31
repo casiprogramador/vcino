@@ -6,13 +6,10 @@
             <h2>Instalaciones comunes</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
-                </li>
-                <li>
-                    Configuración
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong>Lista de instalaciones comunes</strong>
+                    <strong><a href="{{ route('config.installation.index') }}">Instalaciones</a></strong>
                 </li>
             </ol>
         </div>
@@ -22,6 +19,14 @@
 
         <div class="row">
             <div class="col-lg-9">
+                @if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
                 <div class="ibox">
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -37,61 +42,49 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><img src="img/Salon-Eventos.jpg" class="img-responsive" width="100"></td>
-                                    <td>Salón de eventos principal, piso 5</td>
-                                    <td>350,00</td>
-                                    <td>Si</td>
-                                    <td><span class="text-success">Activo</span></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                            <button class="btn-white btn btn-xs">Editar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><img src="img/Gimnasio.jpg" class="img-responsive" width="100"></td>
-                                    <td>Gimnasio, piso 5</td>
-                                    <td>0,00</td>
-                                    <td>No</td>
-                                    <td><span class="text-success">Activo</span></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                            <button class="btn-white btn btn-xs">Editar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><img src="img/Piscina.jpg" class="img-responsive" width="100"></td>
-                                    <td>Piscina</td>
-                                    <td>0,00</td>
-                                    <td>No</td>
-                                    <td><span class="text-success">Activo</span></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                            <button class="btn-white btn btn-xs">Editar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><img src="img/demo.png" class="img-responsive" width="100"></td>
-                                    <td>Salón de reuniones piso 1</td>
-                                    <td>0,00</td>
-                                    <td>No</td>
-                                    <td><span class="text-success">Activo</span></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                            <button class="btn-white btn btn-xs">Editar</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @foreach ($installations as $installation)
+                                    @if($installation->activa == 1)
+                                        <tr>
+                                            <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="100"></td>
+                                            <td>{{ $installation->instalacion }}</td>
+                                            <td>{{ $installation->costo }}</td>
+                                            <td>{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</td>
+                                            <td><span class="text-success">Activo</span></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                        Opciones
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="{{ route('config.installation.show', $installation->id) }}">Ver Instalacion</a></li>
+                                                        <li><a href="{{ route('config.installation.edit', $installation->id) }}">Editar Instalacion</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="100"></td>
+                                            <td style="vertical-align:middle"><span class="text-muted">{{ $installation->instalacion }}</span></td>
+                                            <td style="vertical-align:middle"><span class="text-muted">{{ $installation->costo }}</span></td>
+                                            <td style="vertical-align:middle"><span class="text-muted">{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</span></td>
+                                            <td style="vertical-align:middle"><span class="text-danger">Inactiva</span></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                        Opciones
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="{{ route('config.installation.show', $installation->id) }}">Ver Instalacion</a></li>
+                                                        <li><a href="{{ route('config.installation.edit', $installation->id) }}">Editar Instalacion</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
 
                                 </tbody>
                             </table>
@@ -122,4 +115,41 @@
 
     </div>
 
+@endsection
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
+
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        } );
+    </script>
 @endsection
