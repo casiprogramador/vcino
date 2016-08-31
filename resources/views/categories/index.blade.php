@@ -32,7 +32,8 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th colspan="2">Categoría</th>
+                                <th></th>
+                                <th>Categoría</th>
                                 <th>Tipo</th>
                                 <th>Ordinaria/ Extraordinaria</th>
                                 <th>Estado</th>
