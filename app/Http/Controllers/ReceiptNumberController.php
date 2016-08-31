@@ -17,7 +17,10 @@ class ReceiptNumberController extends Controller
      */
     public function index()
     {
-        return view('receiptnumbers.index');
+        $company = Auth::user()->company;
+
+        $receiptnumbers = ReceiptNumber::where('company_id',$company->id );
+        return view('receiptnumbers.index')->with('receiptnumbers',$receiptnumbers->get());
     }
 
     /**
@@ -38,7 +41,25 @@ class ReceiptNumberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'gestion' => 'required',
+            'ingreso' => 'required',
+            'egreso' => 'required',
+            'traspaso' => 'required'
+        ]);
+
+        $company = Auth::user()->company;
+
+        $receiptnumber = new ReceiptNumber();
+        $receiptnumber->gestion = $request->gestion;
+        $receiptnumber->ingreso = $request->ingreso;
+        $receiptnumber->egreso = $request->egreso;
+        $receiptnumber->traspaso = $request->traspaso;
+        $receiptnumber->company_id = $company->id;
+
+        $receiptnumber->save();
+        Session::flash('message', 'Numero de comprobante ingresado correctamente');
+        return redirect()->route('config.receiptnumber.index');
     }
 
     /**
@@ -60,7 +81,9 @@ class ReceiptNumberController extends Controller
      */
     public function edit($id)
     {
-        //
+        $receiptnumber = ReceiptNumber::find($id);
+        return view('receiptnumbers.edit')
+            ->with('receiptnumber',$receiptnumber);
     }
 
     /**
@@ -72,7 +95,22 @@ class ReceiptNumberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'gestion' => 'required',
+            'ingreso' => 'required',
+            'egreso' => 'required',
+            'traspaso' => 'required'
+        ]);
+
+        $receiptnumber = ReceiptNumber::find($id);
+        $receiptnumber->gestion = $request->gestion;
+        $receiptnumber->ingreso = $request->ingreso;
+        $receiptnumber->egreso = $request->egreso;
+        $receiptnumber->traspaso = $request->traspaso;
+
+        $receiptnumber->save();
+        Session::flash('message', 'Numero de comprobante actualizado correctamente');
+        return redirect()->route('config.receiptnumber.index');
     }
 
     /**

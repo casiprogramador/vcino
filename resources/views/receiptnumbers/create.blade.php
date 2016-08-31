@@ -6,13 +6,13 @@
             <h2>Números de comprobantes</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    Configuración
+                    <a href="{{ route('config.receiptnumber.index') }}">Numero de comprobante</a>
                 </li>
                 <li class="active">
-                    <strong>Nuevo número de comprobante</strong>
+                    <strong>Nuevo numero de comprobante</strong>
                 </li>
             </ol>
         </div>
@@ -24,9 +24,9 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <form method="get" class="form-horizontal">
+                        {!! Form::open(array('route' => 'config.receiptnumber.store', 'class' => 'form-horizontal')) !!}
 
-                            <div class="tabs-container">
+                        <div class="tabs-container">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a data-toggle="tab" href="#tab-1">Nuevo</a></li>
                                 </ul>
@@ -34,31 +34,51 @@
                                     <div id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
 
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Gestión</label>
-                                                <div class="col-sm-2">
-                                                    <input type="text" class="form-control input-sm">
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control input-sm" name="gestion" value="{{old('gestion')}}">
+                                                    @if ($errors->has('gestion'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('gestion') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('ingreso') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Número Ingreso</label>
-                                                <div class="col-sm-2">
-                                                    <input type="text" class="form-control input-sm">
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control input-sm" name="ingreso" value="{{old('ingreso')}}">
+                                                    @if ($errors->has('ingreso'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('ingreso') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('egreso') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Número Egreso</label>
-                                                <div class="col-sm-2">
-                                                    <input type="text" class="form-control input-sm">
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control input-sm" name="egreso" value="{{old('egreso')}}">
+                                                    @if ($errors->has('egreso'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('egreso') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('traspaso') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Número Traspaso</label>
-                                                <div class="col-sm-2">
-                                                    <input type="text" class="form-control input-sm">
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control input-sm" name="traspaso" value="{{old('traspaso')}}">
+                                                    @if ($errors->has('traspaso'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('traspaso') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -69,12 +89,12 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button class="btn btn-success" type="submit">Guardar</button>
-                                        <button class="btn btn-white" type="submit">Cancelar</button>
+                                        <a href="{{ route('config.receiptnumber.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>
 
                             </div>
-                        </form>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
