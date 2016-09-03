@@ -32,11 +32,11 @@
                     </ul>
                 </li>
 
-                <li>
+                <li {!! (Request::is('equipments') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-plug"></i> <span class="nav-label">Equipamiento</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#/">Equipos y maquinarias</a></li>
+                        <li class="{{ MenuRoute::active('equipment/machinery') }}"><a href="{{ route('equipment.machinery.index') }}">Equipos y maquinarias</a></li>
                     </ul>
                 </li>
 

@@ -28,7 +28,9 @@ Route::group(['prefix' => 'config'], function () {
     Route::resource('installation', 'InstallationController');
     Route::resource('receiptnumber', 'ReceiptNumberController');
 });
-
+Route::group(['prefix' => 'equipment'], function () {
+    Route::resource('machinery', 'EquipmentController');
+});
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
 ]);

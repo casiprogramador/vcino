@@ -47,6 +47,7 @@ elixir(function(mix) {
             paths.template +'css/style.css',
             paths.template +'css/awesome-bootstrap-checkbox.css',
             paths.template +'css/clockpicker.css',
+            paths.vendor +'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
 
         ],'public/css/app.css'
     );
@@ -59,6 +60,8 @@ elixir(function(mix) {
             paths.template +'js/inspinia.js',
             paths.template +'js/icheck.min.js',
             paths.template +'js/clockpicker.js',
+            paths.vendor +'moment/min/moment.min.js',
+            paths.vendor +'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
             //paths.template +'js/app.js'
         ],
         'public/js/app.js'

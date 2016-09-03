@@ -6,16 +6,13 @@
             <h2>Instalaciones comunes</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    Configuración
-                </li>
-                <li>
-                    Instalaciones comunes
+                    <a href="{{ route('config.installation.index') }}">Instalaciones comunes</a>
                 </li>
                 <li class="active">
-                    <strong>Nueva</strong>
+                    <strong>Nueva categoria</strong>
                 </li>
             </ol>
         </div>
@@ -306,9 +303,6 @@
         </div>
     </div>
 
-
-
-
 @endsection
 
 @section('style')
@@ -330,8 +324,6 @@
                 height: 300
             });
         });
-
-
 
         $('.clockpicker').clockpicker();
     </script>
