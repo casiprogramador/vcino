@@ -89,7 +89,7 @@
                                                 <div class="col-sm-3">
                                                     <div class="input-group date">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <input type="text" class="form-control date-picker" value="01/09/2016" name="fecha_instalacion" value="{{old('fecha_instalacion')}}">
+                                                        <input type="text" class="form-control date-picker" name="fecha_instalacion" value="{{old('fecha_instalacion')}}">
                                                         @if ($errors->has('fecha_instalacion'))
                                                             <span class="help-block">
                                                                 <strong>{{ $errors->first('fecha_instalacion') }}</strong>

@@ -31,6 +31,9 @@ Route::group(['prefix' => 'config'], function () {
 Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');
 });
+Route::group(['prefix' => 'comunication'], function () {
+    Route::resource('phonesite', 'PhonesiteController');
+});
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
 ]);

@@ -79,31 +79,31 @@ class InstallationController extends Controller
         //Reglamento
         $fileReglamento = $request->file('reglamento');
         $tmpFilePathReglamento = '/img/upload/';
-        $tmpFileNameReglamento = time() .'-'. 'rg'.'-'.$id. '-' . $fileReglamento->getClientOriginalName();
+        $tmpFileNameReglamento = time() .'-'. 'rg-in'.'-'.$id. '-' . $fileReglamento->getClientOriginalName();
         $fileReglamento->move(public_path() . $tmpFilePathReglamento, $tmpFileNameReglamento);
         $pathReglamento = $tmpFilePathReglamento . $tmpFileNameReglamento;
         //Foto Principal
         $fileFp = $request->file('fotografia_principal');
         $tmpFilePathFp = '/img/upload/';
-        $tmpFileNameFp = time() .'-'. 'fp'.'-'.$id. '-' . $fileFp->getClientOriginalName();
+        $tmpFileNameFp = time() .'-'. 'fp-in'.'-'.$id. '-' . $fileFp->getClientOriginalName();
         $fileFp->move(public_path() . $tmpFilePathFp, $tmpFileNameFp);
         $pathFp = $tmpFilePathFp . $tmpFileNameFp;
         //Foto 1
         $fileF1 = $request->file('fotografia_1');
         $tmpFilePathF1 = '/img/upload/';
-        $tmpFileNameF1 = time() .'-'. 'f1'.'-'.$id. '-' . $fileF1->getClientOriginalName();
+        $tmpFileNameF1 = time() .'-'. 'f1-in'.'-'.$id. '-' . $fileF1->getClientOriginalName();
         $fileF1->move(public_path() . $tmpFilePathF1, $tmpFileNameF1);
         $pathF1 = $tmpFilePathF1 . $tmpFileNameF1;
         //Foto 2
         $fileF2 = $request->file('fotografia_2');
         $tmpFilePathF2 = '/img/upload/';
-        $tmpFileNameF2 = time() .'-'. 'f2'.'-'.$id. '-' . $fileF1->getClientOriginalName();
+        $tmpFileNameF2 = time() .'-'. 'f2-in'.'-'.$id. '-' . $fileF1->getClientOriginalName();
         $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
         $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
         //Foto 3
         $fileF3 = $request->file('fotografia_3');
         $tmpFilePathF3 = '/img/upload/';
-        $tmpFileNameF3 = time() .'-'. 'f3'.'-'.$id. '-' . $fileF3->getClientOriginalName();
+        $tmpFileNameF3 = time() .'-'. 'f3-in'.'-'.$id. '-' . $fileF3->getClientOriginalName();
         $fileF3->move(public_path() . $tmpFilePathF3, $tmpFileNameF3);
         $pathF3 = $tmpFilePathF3 . $tmpFileNameF3;
 

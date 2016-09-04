@@ -174,7 +174,7 @@
                                         <div class="form-group{{ $errors->has('reglamento') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Normas o Reglamento</label>
                                             <div class="col-sm-9">
-                                                <img src="{{ $installation->reglamento }}" class="img-responsive" width="100">
+                                                <a href="{{asset($installation->reglamento)}}" target="_blank" class="btn btn-info" role="button">Ver Documento</a>
                                             </div>
                                         </div>
 

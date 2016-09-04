@@ -30,4 +30,24 @@ class Company extends Model
     {
         return $this->hasMany('App\Quota');
     }
+
+    public function equipment()
+    {
+        return $this->hasMany('App\Equipment');
+    }
+
+    public function installation()
+    {
+        return $this->hasMany('App\Installation');
+    }
+
+    public function receiptnumber()
+    {
+        return $this->hasMany('App\ReceiptNumber');
+    }
+
+    public function phonesite()
+    {
+        return $this->hasMany('App\Phonesite');
+    }
 }

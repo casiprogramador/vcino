@@ -15,12 +15,12 @@
                         VCino
                     </div>
                 </li>
-                <li>
+                <li {!! (Request::is('comunication') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-envelope-o"></i> <span
                                 class="nav-label">Comunicación & Info</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="#/">Comunicados</a></li>
-                        <li><a href="#/">Teléfonos y sitios útiles</a></li>
+                        <li class="{{ MenuRoute::active('comunication/phonesite') }}"><a href="{{ route('comunication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>
                 <li>
