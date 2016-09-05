@@ -6,13 +6,10 @@
             <h2>Teléfonos y sitios</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
-                </li>
-                <li>
-                    Comunicación & Información
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong>Teléfonos y sitios útiles</strong>
+                    <strong><a href="{{ route('comunication.phonesite.index') }}">Teléfonos y sitios útiles</a></strong>
                 </li>
             </ol>
         </div>
@@ -22,6 +19,14 @@
 
         <div class="row">
             <div class="col-lg-9">
+                @if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
                 <div class="ibox">
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -37,46 +42,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>C.R.E. - Reclamos</td>
-                                    <td>Servicios básicos</td>
-                                    <td>176</td>
-                                    <td>176</td>
-                                    <td><a href="http://www.cre.com.bo" target="_blank">www.cre.com.bo</a></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                            <button class="btn-white btn btn-xs">Editar</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @foreach ($phonesites as $phonesite)
 
-                                <tr>
-                                    <td>Juan Perez</td>
-                                    <td>Fontanero</td>
-                                    <td>766-76783</td>
-                                    <td>766-76783</td>
-                                    <td></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                            <button class="btn-white btn btn-xs">Editar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>A.T.M. Ascensores S.R.L.</td>
-                                    <td>Proveedores</td>
-                                    <td>334-5543</td>
-                                    <td>333-4321</td>
-                                    <td></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                            <button class="btn-white btn btn-xs">Editar</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td>{{$phonesite->razon_social}}</td>
+                                            <td>{{$phonesite->categoria}}</td>
+                                            <td>{{$phonesite->telefono}}</td>
+                                            <td>{{$phonesite->telefono_emergencia}}</td>
+                                            <td><a href="{{$phonesite->sitio_web}}" target="_blank">{{$phonesite->sitio_web}}</a></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                        Opciones
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="{{ route('comunication.phonesite.show', $phonesite->id) }}">Ver</a></li>
+                                                        <li><a href="{{ route('comunication.phonesite.edit', $phonesite->id) }}">Editar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                @endforeach
+
                                 </tbody>
                             </table>
                         </div>

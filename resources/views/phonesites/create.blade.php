@@ -37,7 +37,7 @@
                                             <div class="form-group{{ $errors->has('razon_social') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Razón social / Nombre</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control input-sm" value="{{old('razon_social')}}">
+                                                    <input type="text" class="form-control input-sm" name="razon_social" value="{{old('razon_social')}}">
                                                     @if ($errors->has('razon_social'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('razon_social') }}</strong>
@@ -58,12 +58,20 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Teléfonos</label>
                                                 <div class="col-sm-9">
                                                     <div class="row">
-                                                        <div class="col-md-4"><input type="text" placeholder="Fijo/ Móvil" class="form-control"></div>
-                                                        <div class="col-md-4"><input type="text" placeholder="Tel. Emergencias" class="form-control" style="background-color: #ffffe6">
+                                                        <div class="col-md-4">
+                                                            <input type="text" placeholder="Fijo/ Móvil" class="form-control" name="telefono" value="{{old('telefono')}}">
+                                                            @if ($errors->has('telefono'))
+                                                                <span class="help-block">
+                                                            <strong>{{ $errors->first('telefono') }}</strong>
+                                                        </span>
+                                                            @endif
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input type="text" placeholder="Tel. Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,24 +79,34 @@
 
                                             <div class="hr-line-dashed"></div>
 
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">E-mail</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control input-sm">
+                                                    <input type="text" class="form-control input-sm" name="email" value="{{old('email')}}">
+                                                    @if ($errors->has('email'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('email') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('sitio_web') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Sitio web</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control input-sm">
+                                                    <input type="text" class="form-control input-sm" placeholder="Ej: http://website.com" name="sitio_web" value="{{old('sitio_web')}}">
+                                                    @if ($errors->has('sitio_web'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('sitio_web') }}</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Dirección</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control input-sm">
+                                                    <input type="text" class="form-control input-sm" name="direccion" value="{{old('direccion')}}">
                                                 </div>
                                             </div>
 
@@ -97,7 +115,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Notas</label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="4" class="form-control input-sm"></textarea>
+                                                    <textarea rows="4" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
                                                 </div>
                                             </div>
 
@@ -107,7 +125,7 @@
                                                 <label class="col-sm-3 control-label">Activa</label>
                                                 <div class="col-sm-4">
 
-                                                    <label><input type="checkbox" class="i-checks"></label>
+                                                    <label><input type="checkbox" class="i-checks" name="activa" value="1" checked></label>
 
                                                 </div>
                                             </div>
@@ -119,7 +137,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button class="btn btn-success" type="submit">Guardar</button>
-                                        <button class="btn btn-white" type="submit">Cancelar</button>
+                                        <a href="{{ route('comunication.phonesite.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>
 
@@ -131,16 +149,16 @@
         </div>
     </div>
 
-    <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
+
+@endsection
+@section('javascript')
     <script>
         $(document).ready(function () {
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
+
         });
     </script>
-
-
 @endsection

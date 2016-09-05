@@ -263,7 +263,8 @@
         });
 
         $('.date-picker').datetimepicker({
-            format: 'DD/MM/YYYY'
+            format: 'DD/MM/YYYY',
+            language: 'es'
         });
     </script>
 @endsection
