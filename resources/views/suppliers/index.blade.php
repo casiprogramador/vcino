@@ -48,7 +48,7 @@
                                     <tr>
                                         <td>{{ $supplier->razon_social }} {{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }}</td>
                                         <td>{{ $supplier->email }}</td>
-                                        <td>{{ $supplier->telefono_oficina }} - {{ $supplier->telefono_movil }}</td>
+                                        <td>{{ $supplier->telefono_emergencia }}</td>
                                         <td><span class="text-success">Activo</span></td>
                                         <td>
                                             <div class="dropdown">
@@ -67,7 +67,7 @@
                                     <tr>
                                         <td><span class="text-muted">{{ $supplier->razon_social }} {{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }}</span></td>
                                         <td><span class="text-muted">{{ $supplier->email }}</span></td>
-                                        <td><span class="text-muted">{{ $supplier->telefono_oficina }} - {{ $supplier->telefono_movil }}</span></td>
+                                        <td><span class="text-muted">{{ $supplier->telefono_emergencia }}</span></td>
                                         <td><span class="text-danger">Inactiva</span></td>
                                         <td>
                                             <div class="dropdown">
@@ -149,7 +149,9 @@
                         "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
-                }
+                },
+                "paging":   false,
+                "info":     false
             });
         } );
     </script>

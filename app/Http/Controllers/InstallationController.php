@@ -176,7 +176,7 @@ class InstallationController extends Controller
         ]);
 
 
-        $id = Auth::user()->id;
+        $id_user = Auth::user()->id;
 
         //Requiere reserva
         $requiere_reserva = (empty($request->requiere_reserva) ? '0' : $request->requiere_reserva);
@@ -194,7 +194,7 @@ class InstallationController extends Controller
         if(!empty($request->reglamento)){
             $fileReglamento = $request->file('reglamento');
             $tmpFilePathReglamento = '/img/upload/';
-            $tmpFileNameReglamento = time() .'-'. 'rg'.'-'.$id. '-' . $fileReglamento->getClientOriginalName();
+            $tmpFileNameReglamento = time() .'-'. 'rg'.'-'.$id_user. '-' . $fileReglamento->getClientOriginalName();
             $fileReglamento->move(public_path() . $tmpFilePathReglamento, $tmpFileNameReglamento);
             $pathReglamento = $tmpFilePathReglamento . $tmpFileNameReglamento;
         }
@@ -202,7 +202,7 @@ class InstallationController extends Controller
         if(!empty($request->fotografia_principal)){
             $fileFp = $request->file('fotografia_principal');
             $tmpFilePathFp = '/img/upload/';
-            $tmpFileNameFp = time() .'-'. 'fp'.'-'.$id. '-' . $fileFp->getClientOriginalName();
+            $tmpFileNameFp = time() .'-'. 'fp'.'-'.$id_user. '-' . $fileFp->getClientOriginalName();
             $fileFp->move(public_path() . $tmpFilePathFp, $tmpFileNameFp);
             $pathFp = $tmpFilePathFp . $tmpFileNameFp;
         }
@@ -210,7 +210,7 @@ class InstallationController extends Controller
         if(!empty($request->fotografia_1)){
             $fileF1 = $request->file('fotografia_1');
             $tmpFilePathF1 = '/img/upload/';
-            $tmpFileNameF1 = time() .'-'. 'f1'.'-'.$id. '-' . $fileF1->getClientOriginalName();
+            $tmpFileNameF1 = time() .'-'. 'f1'.'-'.$id_user. '-' . $fileF1->getClientOriginalName();
             $fileF1->move(public_path() . $tmpFilePathF1, $tmpFileNameF1);
             $pathF1 = $tmpFilePathF1 . $tmpFileNameF1;
         }
@@ -218,7 +218,7 @@ class InstallationController extends Controller
         if(!empty($request->fotografia_2)){
             $fileF2 = $request->file('fotografia_2');
             $tmpFilePathF2 = '/img/upload/';
-            $tmpFileNameF2 = time() .'-'. 'f2'.'-'.$id. '-' . $fileF1->getClientOriginalName();
+            $tmpFileNameF2 = time() .'-'. 'f2'.'-'.$id_user. '-' . $fileF1->getClientOriginalName();
             $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
             $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
         }
@@ -226,7 +226,7 @@ class InstallationController extends Controller
         if(!empty($request->fotografia_3)){
             $fileF3 = $request->file('fotografia_3');
             $tmpFilePathF3 = '/img/upload/';
-            $tmpFileNameF3 = time() .'-'. 'f3'.'-'.$id. '-' . $fileF3->getClientOriginalName();
+            $tmpFileNameF3 = time() .'-'. 'f3'.'-'.$id_user. '-' . $fileF3->getClientOriginalName();
             $fileF3->move(public_path() . $tmpFilePathF3, $tmpFileNameF3);
             $pathF3 = $tmpFilePathF3 . $tmpFileNameF3;
         }

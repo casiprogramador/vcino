@@ -165,7 +165,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <a href="{{ route('equipment.machinery.index') }}" class="btn btn-white" >Atras</a>
+                                    <a href="{{ route('equipment.machinery.index') }}" class="btn btn-success" >Atras</a>
                                 </div>
                             </div>
 

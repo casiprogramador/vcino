@@ -12,7 +12,7 @@
                     <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinaria</a>
                 </li>
                 <li class="active">
-                    <strong>editar</strong>
+                    <strong>Editar</strong>
                 </li>
             </ol>
         </div>

@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong><a href="{{ route('comunication.phonesite.index') }}">Teléfonos y sitios útiles</a></strong>
+                    <strong><a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a></strong>
                 </li>
             </ol>
         </div>
@@ -57,8 +57,8 @@
                                                         <span class="caret"></span>
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="{{ route('comunication.phonesite.show', $phonesite->id) }}">Ver</a></li>
-                                                        <li><a href="{{ route('comunication.phonesite.edit', $phonesite->id) }}">Editar</a></li>
+                                                        <li><a href="{{ route('config.phonesite.show', $phonesite->id) }}">Ver</a></li>
+                                                        <li><a href="{{ route('config.phonesite.edit', $phonesite->id) }}">Editar</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -76,7 +76,7 @@
             <div class="col-md-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title text-left" style="padding-left: 20px;">
-                        <a href="{{route('comunication.phonesite.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo Proveedor" data-original-title="Nuevo" style="margin-right: 10px;"> Nuevo </a>
+                        <a href="{{route('config.phonesite.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo Proveedor" data-original-title="Nuevo" style="margin-right: 10px;"> Nuevo </a>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir..." data-original-title="Imprimir..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
                         <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar" data-original-title="Exportar"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
                     </div>
@@ -133,7 +133,9 @@
                         "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
-                }
+                },
+                "paging":   false,
+                "info":     false
             });
         } );
     </script>

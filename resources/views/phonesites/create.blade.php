@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('comunication.phonesite.index') }}">Teléfonos y sitios útiles</a>
+                    <a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a>
                 </li>
                 <li class="active">
                     <strong>Nueva</strong>
@@ -24,7 +24,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        {!! Form::open(array('route' => 'comunication.phonesite.store', 'class' => 'form-horizontal')) !!}
+                        {!! Form::open(array('route' => 'config.phonesite.store', 'class' => 'form-horizontal')) !!}
 
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs">
@@ -137,7 +137,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button class="btn btn-success" type="submit">Guardar</button>
-                                        <a href="{{ route('comunication.phonesite.index') }}" class="btn btn-white" >Cancelar</a>
+                                        <a href="{{ route('config.phonesite.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>
 

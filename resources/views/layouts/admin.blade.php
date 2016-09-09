@@ -15,12 +15,12 @@
                         VCino
                     </div>
                 </li>
-                <li {!! (Request::is('comunication') ? ' class="active"' : '') !!}>
+                <li {!! (Request::is('communication/*') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-envelope-o"></i> <span
                                 class="nav-label">Comunicación & Info</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="#/">Comunicados</a></li>
-                        <li class="{{ MenuRoute::active('comunication/phonesite') }}"><a href="{{ route('comunication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
+                        <li class="{{ MenuRoute::active('communication/phonesite') }}"><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>
                 <li>
@@ -32,7 +32,7 @@
                     </ul>
                 </li>
 
-                <li {!! (Request::is('equipments') ? ' class="active"' : '') !!}>
+                <li {!! (Request::is('equipment/*') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-plug"></i> <span class="nav-label">Equipamiento</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -51,6 +51,7 @@
                         <li class="{{ MenuRoute::active('config/quota') }}"><a href="{{ route('config.quota.index') }}">Cuotas</a></li>
                         <li class="{{ MenuRoute::active('config/typeproperty') }}"><a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a></li>
                         <li class="{{ MenuRoute::active('receiptnumbers') }}"><a href="{{ route('config.receiptnumber.index') }}">Número de comprobantes</a></li>
+                        <li class="{{ MenuRoute::active('phonesite') }}"><a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>
 

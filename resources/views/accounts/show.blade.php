@@ -48,7 +48,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Tipo de cuenta</label>
                                             <div class="col-sm-4">
-                                                {{ Form::select('tipo_cuenta',array('0' => 'Seleccione','Caja de Ahorro' => 'Caja de Ahorro', 'Cuenta Corriente' => 'Cuenta Corriente','Efectivo' => 'Efectivo'),  $account->tipo_cuenta , ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
+                                                {{ Form::select('tipo_cuenta',array('0' => 'Seleccione','Caja de Ahorro' => 'Caja de Ahorro', 'Cuenta Corriente' => 'Cuenta Corriente','Efectivo' => 'Efectivo'),  $account->tipo_cuenta , ['class' => 'form-control input-sm','disabled'=>'disabled','id'=>'tipo-cuenta']) }}
                                                 @if ($errors->has('tipo_cuenta'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('tipo_cuenta') }}</strong>
@@ -57,21 +57,21 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" id="banco">
                                             <label class="col-sm-3 control-label">Banco</label>
                                             <div class="col-sm-4">
                                                 {{ Form::select('banco',$banks, $account->bank_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" id="nro-cuenta">
                                             <label class="col-sm-3 control-label">Número cuenta</label>
                                             <div class="col-sm-4">
                                                 <input type="text" class="form-control input-sm" name="nro_cuenta" value="{{ $account->nro_cuenta }}" readonly>
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" id="nombre-cuentahabiente">
                                             <label class="col-sm-3 control-label">Nombre cuentahabiente</label>
                                             <div class="col-sm-4">
                                                 <input type="text" class="form-control input-sm" name="nombre_cuentahabiente" value="{{ $account->nombre_cuentahabiente }}" readonly>
@@ -129,6 +129,11 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
+            if($('#tipo-cuenta').val() == "Efectivo" ){
+                $('#nombre-cuentahabiente').hide();
+                $('#nro-cuenta').hide();
+                $('#banco').hide();
+            }
         });
     </script>
 @endsection

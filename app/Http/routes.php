@@ -27,12 +27,15 @@ Route::group(['prefix' => 'config'], function () {
     Route::resource('quota', 'QuotaController');
     Route::resource('installation', 'InstallationController');
     Route::resource('receiptnumber', 'ReceiptNumberController');
+    Route::resource('phonesite', 'PhonesiteController');
 });
 Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');
 });
-Route::group(['prefix' => 'comunication'], function () {
-    Route::resource('phonesite', 'PhonesiteController');
+Route::group(['prefix' => 'communication'], function () {
+    Route::get('/phonesite', [
+        'as' => 'communication.phonesite.index', 'uses' => 'CommunicationController@phonesite'
+    ]);
 });
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'

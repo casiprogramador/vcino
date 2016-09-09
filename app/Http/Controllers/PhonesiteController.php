@@ -10,6 +10,9 @@ use App\Http\Requests;
 
 class PhonesiteController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +25,7 @@ class PhonesiteController extends Controller
         $phonesites = Phonesite::where('company_id',$company->id );
         return view('phonesites.index')->with('phonesites',$phonesites->get());
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,7 +70,7 @@ class PhonesiteController extends Controller
 
         $phonesite->save();
         Session::flash('message', 'Nuevo telefono o sitio ingresado correctamente');
-        return redirect()->route('comunication.phonesite.index');
+        return redirect()->route('config.phonesite.index');
     }
 
     /**
@@ -127,7 +131,7 @@ class PhonesiteController extends Controller
 
         $phonesite->save();
         Session::flash('message', 'Telefono o sitio actualizado correctamente');
-        return redirect()->route('comunication.phonesite.index');
+        return redirect()->route('config.phonesite.index');
     }
 
     /**
