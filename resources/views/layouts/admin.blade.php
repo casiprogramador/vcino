@@ -23,11 +23,11 @@
                         <li class="{{ MenuRoute::active('communication/phonesite') }}"><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>
-                <li>
+                <li {!! (Request::is('properties/*') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label">Propiedades</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#/">Propiedades</a></li>
+                        <li class="{{ MenuRoute::active('properties/property') }}"><a href="{{ route('properties.property.index') }}">Propiedades</a></li>
                         <li><a href="#/">Contactos</a></li>
                     </ul>
                 </li>

@@ -29,6 +29,10 @@ Route::group(['prefix' => 'config'], function () {
     Route::resource('receiptnumber', 'ReceiptNumberController');
     Route::resource('phonesite', 'PhonesiteController');
 });
+Route::group(['prefix' => 'properties'], function () {
+    Route::resource('property', 'PropertyController');
+	Route::resource('contact', 'ContactController');
+});
 Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');
 });
