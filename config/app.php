@@ -157,6 +157,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
+		//Crud generator
+		Laracasts\Flash\FlashServiceProvider::class,
+		Prettus\Repository\Providers\RepositoryServiceProvider::class,
+		\InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
+		\InfyOm\CoreTemplates\CoreTemplatesServiceProvider::class, 
 
     ],
 
@@ -206,6 +211,9 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'MenuRoute' => App\Helpers\MenuRoute::class,
+		//Crud generator
+		'Html'      => Collective\Html\HtmlFacade::class,
+		'Flash'     => Laracasts\Flash\Flash::class,
 
     ],
 

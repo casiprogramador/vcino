@@ -8,7 +8,9 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "5.2.*",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+		"infyomlabs/laravel-generator": "5.2.x-dev",
+		"infyomlabs/core-templates": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

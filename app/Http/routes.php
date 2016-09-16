@@ -44,3 +44,24 @@ Route::group(['prefix' => 'communication'], function () {
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
 ]);
+
+/*
+|--------------------------------------------------------------------------
+| API routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'api', 'namespace' => 'API'], function () {
+    Route::group(['prefix' => 'v1'], function () {
+        require config('infyom.laravel_generator.path.api_routes');
+    });
+});
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('tvservices', 'Support\TvserviceController');
+	Route::resource('situacionHabitacional', 'Support\SituacionHabitacionalController');
+	Route::resource('phoneservices', 'Support\PhoneServiceController');
+	Route::resource('internetservices', 'Support\InternetserviceController');
+	Route::resource('waterservices', 'Support\WaterserviceController');
+	Route::resource('electricservices', 'Support\ElectricserviceController');
+});
