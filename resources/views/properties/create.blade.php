@@ -28,7 +28,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
 
-                    <form method="get" class="form-horizontal">
+                    {!! Form::open(array('route' => 'properties.property.store', 'class' => 'form-horizontal')) !!}
 
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
@@ -45,20 +45,12 @@
                                     </div>
                                     <div class="form-group"><label class="col-sm-3 control-label">Tipo</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm" name="account">
-                                                <option>option 1</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                            </select>
+                                             {{ Form::select('type_properties',$typeproperties, '1', ['class' => 'form-control input-sm']) }}
                                         </div>
                                     </div>
                                     <div class="form-group"><label class="col-sm-3 control-label">Situación habitacional</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm" name="account">
-                                                <option>option 1</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                            </select>
+                                             {{ Form::select('situacion_habitacionals',$sithabs, '1', ['class' => 'form-control input-sm']) }}
                                         </div>
                                     </div>
                                     <div class="hr-line-dashed"></div>
@@ -118,47 +110,27 @@
                                     <div class="hr-line-dashed"></div>
                                     <div class="form-group"><label class="col-sm-3 control-label">Servicio TV Cable</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm" name="account">
-                                                <option>Cotas cable</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                            </select>
+                                            {{ Form::select('tvservices',$tvs, '1', ['class' => 'form-control input-sm']) }}
                                         </div>
                                     </div>
                                     <div class="form-group"><label class="col-sm-3 control-label">Servicio Internet</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm" name="account">
-                                                <option>Entel</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                            </select>
+                                            {{ Form::select('internetservices',$internets, '1', ['class' => 'form-control input-sm']) }}
                                         </div>
                                     </div>
                                     <div class="form-group"><label class="col-sm-3 control-label">Servicio teléfono</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm" name="account">
-                                                <option>Cotas</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                            </select>
+                                            {{ Form::select('phone_services',$phones, '1', ['class' => 'form-control input-sm']) }}
                                         </div>
                                     </div>
                                     <div class="form-group"><label class="col-sm-3 control-label">Servicio agua potable</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm" name="account">
-                                                <option>Saguapac</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                            </select>
+                                            {{ Form::select('waterservices',$waters, '1', ['class' => 'form-control input-sm']) }}
                                         </div>
                                     </div>
                                     <div class="form-group"><label class="col-sm-3 control-label">Servicio energía eléctrica</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm" name="account">
-                                                <option>C.R.E.</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                            </select>
+                                            {{ Form::select('electricservices',$electrics, '1', ['class' => 'form-control input-sm']) }}
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +173,7 @@
                         </div>
 
                     </div>
-                  </form>
+                   {!! Form::close() !!}
                 </div>
             </div>
         </div>

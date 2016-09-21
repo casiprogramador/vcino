@@ -6,8 +6,19 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\TypeProperty;
+use App\ModelsSupport\Electricservice;
+use App\ModelsSupport\Internetservice;
+use App\ModelsSupport\PhoneService;
+use App\ModelsSupport\SituacionHabitacional;
+use App\ModelsSupport\Tvservice;
+use App\ModelsSupport\Waterservice;
+
 class PropertyController extends Controller
 {
+	public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +36,22 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('properties.create');
+		$typeproperties = TypeProperty::all()->lists('tipo_propiedad','id');
+		$electrics = Electricservice::all()->lists('nombre','id');
+		$internets = Internetservice::all()->lists('nombre','id');
+		$phones = PhoneService::all()->lists('nombre','id');
+		$sithabs = SituacionHabitacional::all()->lists('nombre','id');
+		$tvs = Tvservice::all()->lists('nombre','id');
+		$waters = Waterservice::all()->lists('nombre','id');
+		
+        return view('properties.create')
+		->with('typeproperties',$typeproperties)
+		->with('electrics',$electrics)
+		->with('internets',$internets)
+		->with('phones',$phones)
+		->with('sithabs',$sithabs)
+		->with('tvs',$tvs)
+		->with('waters',$waters);
     }
 
     /**
