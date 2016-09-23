@@ -15,4 +15,9 @@ class TypeProperty extends Model
     {
         return $this->hasMany('App\Quota');
     }
+	
+    public function property()
+    {
+        return $this->hasMany('App\Property');
+    }
 }

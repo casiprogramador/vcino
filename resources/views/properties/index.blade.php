@@ -39,12 +39,13 @@
                             </tr>
                         </thead>
                         <tbody>
+							@foreach ($properties as $property)
                             <tr>
-                                <td>3 AB</td>
-                                <td>Depto. Doble</td>
-                                <td>Duple</td>
-                                <td>Habitado</td>
-                                <td>Juan Perez Fernandez</td>
+                                <td>{{ $property->nro }}</td>
+                                <td>{{ $property->typeProperty->tipo_propiedad }}</td>
+                                <td>{{ $property->etiquetas }}</td>
+                                <td>{{ $property->situacionHabitacionals->nombre }}</td>
+                                <td></td>
                                 <td style="text-align:center;">
                                     <a href="#">Contactos (1)</a>
                                 </td>
@@ -59,47 +60,7 @@
                                     </div>
                                </td>
                             </tr>
-                            <tr>
-                                <td>4 B</td>
-                                <td>Depto. Simple</td>
-                                <td>Simple</td>
-                                <td>Alquilado</td>
-                                <td>Maria Fernanda Jimenez</td>
-                                <td style="text-align:center;">
-                                    <a href="#">Contactos (3)</a>
-                                </td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>19 PH</td>
-                                <td>Penthouse</td>
-                                <td>Doble</td>
-                                <td>Habitado</td>
-                                <td>Roberto Aguilera Jimenez</td>
-                                <td style="text-align:center;">
-                                    <a href="#">Contactos (2)</a>
-                                </td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-
+							@endforeach
                         </tbody>
                     </table>
                 </div>

@@ -10,10 +10,15 @@ class Property extends Model
     {
         return $this->belongsTo('App\Company');
     }
-
-    public function situacionhabitacional()
+	
+    public function typeProperty()
     {
-        return $this->belongsTo('App\ModelsSupport\SituacionHabitacional');
+        return $this->belongsTo('App\TypeProperty');
+    }
+	
+    public function situacionHabitacionals()
+    {
+        return $this->belongsTo('App\ModelsSupport\SituacionHabitacional','situacion_habitacionals_id');
     }
 	
 	public function internetservice()

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
+use Session;
 use App\Http\Requests;
-
+use App\Property;
 use App\TypeProperty;
 use App\ModelsSupport\Electricservice;
 use App\ModelsSupport\Internetservice;
@@ -26,7 +27,10 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        return view('properties.index');
+		$company = Auth::user()->company;
+
+        $properties = Property::where('company_id',$company->id );
+        return view('properties.index')->with('properties',$properties->get());
     }
 
     /**
@@ -62,7 +66,63 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nro' => 'required',
+			'nro_intecomunicador' => 'required',
+            'type_property' => 'required|not_in:0',
+			'situacion_habitacionals' => 'required|not_in:0',
+			'etiquetas' => 'required',
+			'campo_1' => 'required',
+			'campo_2' => 'required',
+			'notas' => 'required',
+			'codigo_electricidad' => 'required',
+			'codigo_agua' => 'required',
+			'codigo_gas' => 'required',
+			'tvservices' => 'required|not_in:0',
+			'internetservices' => 'required|not_in:0',
+			'phone_services' => 'required|not_in:0',
+			'waterservices' => 'required|not_in:0',
+			'electricservices' => 'required|not_in:0',
+			'superficie' => 'required',
+			'scc' => 'required',
+			'fit' => 'required',
+			'nro_dormitorios' => 'required',
+			'nro_banos' => 'required',
+			'plano' => 'required',
+			'caracteristicas' => 'required',
+        ]);
+
+        $company = Auth::user()->company;
+
+        $property = new Property();
+        $property->nro = $request->nro;
+        $property->nro_intecomunicador = $request->nro_intecomunicador;
+        $property->type_property_id = $request->type_property;
+        $property->situacion_habitacionals_id = $request->situacion_habitacionals;
+        $property->etiquetas = $request->etiquetas;
+        $property->campo_1 = $request->campo_1;
+        $property->campo_2 = $request->campo_2;
+        $property->notas = $request->notas;
+        $property->codigo_electricidad = $request->codigo_electricidad;		
+        $property->codigo_agua = $request->codigo_agua;
+        $property->codigo_gas = $request->codigo_gas;
+        $property->tvservices_id = $request->tvservices;
+		$property->internetservices_id = $request->internetservices;
+		$property->phone_services_id = $request->phone_services;
+		$property->waterservices_id = $request->waterservices;
+		$property->electricservices_id = $request->electricservices;
+		$property->superficie = $request->superficie;
+		$property->scc = $request->scc;
+		$property->fit = $request->fit;
+		$property->nro_dormitorios = $request->nro_dormitorios;
+		$property->nro_banos = $request->nro_banos;
+		$property->plano = $request->plano;
+		$property->caracteristicas = $request->caracteristicas;
+        $property->company_id = $company->id;
+
+        $property->save();
+        Session::flash('message', 'Nueva propiedad ingresada correctamente');
+        return redirect()->route('properties.property.index');
     }
 
     /**

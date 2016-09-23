@@ -44,6 +44,6 @@ class SituacionHabitacional extends Model
 
     public function property()
     {
-        return $this->hasMany('App\Property');
+        return $this->hasMany('App\Property','situacion_habitacionals_id');
     }
 }

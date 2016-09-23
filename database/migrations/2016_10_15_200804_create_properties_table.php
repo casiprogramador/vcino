@@ -49,8 +49,8 @@ class CreatePropertiesTable extends Migration
 			$table->integer('situacion_habitacionals_id')->unsigned();
             $table->foreign('situacion_habitacionals_id')->references('id')->on('situacion_habitacionals');
 			
-			$table->integer('type_properties_id')->unsigned();
-            $table->foreign('type_properties_id')->references('id')->on('type_properties');
+			$table->integer('type_property_id')->unsigned();
+            $table->foreign('type_property_id')->references('id')->on('type_properties');
 			
 			$table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
