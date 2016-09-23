@@ -133,7 +133,24 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        //
+		$typeproperties = TypeProperty::all()->lists('tipo_propiedad','id');
+		$electrics = Electricservice::all()->lists('nombre','id');
+		$internets = Internetservice::all()->lists('nombre','id');
+		$phones = PhoneService::all()->lists('nombre','id');
+		$sithabs = SituacionHabitacional::all()->lists('nombre','id');
+		$tvs = Tvservice::all()->lists('nombre','id');
+		$waters = Waterservice::all()->lists('nombre','id');
+		
+        $property = Property::find($id);
+        return view('properties.show')
+            ->with('property',$property)
+			->with('typeproperties',$typeproperties)
+			->with('electrics',$electrics)
+			->with('internets',$internets)
+			->with('phones',$phones)
+			->with('sithabs',$sithabs)
+			->with('tvs',$tvs)
+			->with('waters',$waters);
     }
 
     /**
@@ -144,7 +161,24 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        //
+		$typeproperties = TypeProperty::all()->lists('tipo_propiedad','id');
+		$electrics = Electricservice::all()->lists('nombre','id');
+		$internets = Internetservice::all()->lists('nombre','id');
+		$phones = PhoneService::all()->lists('nombre','id');
+		$sithabs = SituacionHabitacional::all()->lists('nombre','id');
+		$tvs = Tvservice::all()->lists('nombre','id');
+		$waters = Waterservice::all()->lists('nombre','id');
+		
+        $property = Property::find($id);
+        return view('properties.edit')
+            ->with('property',$property)
+			->with('typeproperties',$typeproperties)
+			->with('electrics',$electrics)
+			->with('internets',$internets)
+			->with('phones',$phones)
+			->with('sithabs',$sithabs)
+			->with('tvs',$tvs)
+			->with('waters',$waters);
     }
 
     /**
@@ -156,7 +190,60 @@ class PropertyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $this->validate($request, [
+            'nro' => 'required',
+			'nro_intecomunicador' => 'required',
+            'type_property' => 'required|not_in:0',
+			'situacion_habitacionals' => 'required|not_in:0',
+			'etiquetas' => 'required',
+			'campo_1' => 'required',
+			'campo_2' => 'required',
+			'notas' => 'required',
+			'codigo_electricidad' => 'required',
+			'codigo_agua' => 'required',
+			'codigo_gas' => 'required',
+			'tvservices' => 'required|not_in:0',
+			'internetservices' => 'required|not_in:0',
+			'phone_services' => 'required|not_in:0',
+			'waterservices' => 'required|not_in:0',
+			'electricservices' => 'required|not_in:0',
+			'superficie' => 'required',
+			'scc' => 'required',
+			'fit' => 'required',
+			'nro_dormitorios' => 'required',
+			'nro_banos' => 'required',
+			'plano' => 'required',
+			'caracteristicas' => 'required',
+        ]);
+
+        $property = Property::find($id);
+        $property->nro = $request->nro;
+        $property->nro_intecomunicador = $request->nro_intecomunicador;
+        $property->type_property_id = $request->type_property;
+        $property->situacion_habitacionals_id = $request->situacion_habitacionals;
+        $property->etiquetas = $request->etiquetas;
+        $property->campo_1 = $request->campo_1;
+        $property->campo_2 = $request->campo_2;
+        $property->notas = $request->notas;
+        $property->codigo_electricidad = $request->codigo_electricidad;		
+        $property->codigo_agua = $request->codigo_agua;
+        $property->codigo_gas = $request->codigo_gas;
+        $property->tvservices_id = $request->tvservices;
+		$property->internetservices_id = $request->internetservices;
+		$property->phone_services_id = $request->phone_services;
+		$property->waterservices_id = $request->waterservices;
+		$property->electricservices_id = $request->electricservices;
+		$property->superficie = $request->superficie;
+		$property->scc = $request->scc;
+		$property->fit = $request->fit;
+		$property->nro_dormitorios = $request->nro_dormitorios;
+		$property->nro_banos = $request->nro_banos;
+		$property->plano = $request->plano;
+		$property->caracteristicas = $request->caracteristicas;
+
+        $property->save();
+        Session::flash('message', 'Propiedad editada exitosamente correctamente');
+        return redirect()->route('properties.property.index');
     }
 
     /**

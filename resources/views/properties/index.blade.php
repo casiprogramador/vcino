@@ -23,6 +23,14 @@
 
     <div class="row">
         <div class="col-lg-12">
+			@if (Session::has('message'))
+				<div class="alert alert-success alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					{!! session('message') !!}
+				</div>
+			@endif
             <div class="ibox">
                 <div class="ibox-content">
                 <div class="table-responsive">
@@ -51,10 +59,10 @@
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                                        <a href="{{ route('properties.property.show', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                                        <a href="{{ route('properties.property.edit', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>
