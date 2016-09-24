@@ -46,4 +46,8 @@ class Property extends Model
         return $this->belongsTo('App\ModelsSupport\Electricservice');
 	}
     
+    public function contact()
+    {
+        return $this->hasMany('App\Contact','property_id');
+    }
 }

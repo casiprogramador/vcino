@@ -18,5 +18,8 @@ class DatabaseSeeder extends Seeder
 		$this->call(SituacionHabitacionalSeeder::class);
 		$this->call(TvServiceSeeder::class);
 		$this->call(WaterServiceSeeder::class);
+		$this->call(RelationContactSeeder::class);
+		$this->call(TypeContactSeeder::class);
+		$this->call(MediaSeeder::class);	
     }
 }

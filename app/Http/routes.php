@@ -64,4 +64,7 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::resource('internetservices', 'Support\InternetserviceController');
 	Route::resource('waterservices', 'Support\WaterserviceController');
 	Route::resource('electricservices', 'Support\ElectricserviceController');
+	Route::resource('typecontacts', 'Support\TypecontactController');
+	Route::resource('relationcontacts', 'Support\RelationcontactController');
+	Route::resource('media', 'Support\MediaController');
 });
