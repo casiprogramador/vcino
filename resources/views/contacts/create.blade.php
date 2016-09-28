@@ -6,13 +6,10 @@
         <h2>Contactos</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                Propiedades
-            </li>
-            <li>
-                Lista de contactos
+                <a href="{{ route('properties.contact.index') }}">Lista de contactos</a>
             </li>
             <li class="active">
                 <strong>Nuevo contacto</strong>
@@ -27,7 +24,7 @@
 
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
+                    {!! Form::open(array('route' => 'properties.contact.store', 'class' => 'form-horizontal', 'files' => true)) !!}
 
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
@@ -37,62 +34,67 @@
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('property') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Propiedad</label>
                                         <div class="col-sm-3">
-                                            <select class="form-control input-sm" name="tipo-cuenta">
-                                                <!-- Lista de las propiedades ordenada por campo ORDEN y despliega campo número  -->
-                                                <option>Propiedad 1</option>
-                                                <option>Propiedad 2</option>
-                                                <option>Propiedad 3</option>
-                                                <option>Propiedad 4</option>
-                                                <option>Propiedad 5</option>
-                                            </select>
+                                            {{ Form::select('property',$properties, old('property'), ['class' => 'form-control input-sm']) }}
+											@if ($errors->has('property'))
+												<span class="help-block">
+													<strong>{{ $errors->first('property') }}</strong>
+												</span>
+											@endif
                                         </div>
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('typecontact') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Tipo</label>
                                         <div class="col-sm-3">
-                                            <select class="form-control input-sm" name="tipo-cuenta">
-                                                <option>Propietario</option>
-                                                <option>Inquilino</option>
-                                            </select>
+                                            {{ Form::select('typecontact',$typecontacts, old('typecontact'), ['class' => 'form-control input-sm']) }}
+											@if ($errors->has('typecontact'))
+												<span class="help-block">
+													<strong>{{ $errors->first('typecontact') }}</strong>
+												</span>
+											@endif
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('relationcontact') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Relación</label>
                                         <div class="col-sm-3">
-                                            <select class="form-control input-sm" name="tipo-cuenta">
-                                                <!--    Lista desde JSON        -->
-                                                <option>Titular</option>
-                                                <option>Esposa/ Esposo</option>
-                                                <option>Hija/ Hijo</option>
-                                                <option>Familiar</option>
-                                                <option>Personal de servicio</option>
-                                                <option>Contacto administrativo</option>
-                                                <option>Contacto de emergencia</option>
-                                                <option>Otro</option>
-                                            </select>
+                                            {{ Form::select('relationcontact',$relationcontacts, old('relationcontact'), ['class' => 'form-control input-sm']) }}
+											@if ($errors->has('relationcontact'))
+												<span class="help-block">
+													<strong>{{ $errors->first('relationcontact') }}</strong>
+												</span>
+											@endif
                                         </div>
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Nombre</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control input-sm">
+                                            <input type="text" class="form-control input-sm" name="nombre" value="{{old('nombre')}}">
+											@if ($errors->has('nombre'))
+												<span class="help-block">
+													<strong>{{ $errors->first('nombre') }}</strong>
+												</span>
+											@endif
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Apellido</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control input-sm">
+                                            <input type="text" class="form-control input-sm" name="apellido" value="{{old('apellido')}}">
+											@if ($errors->has('apellido'))
+												<span class="help-block">
+													<strong>{{ $errors->first('apellido') }}</strong>
+												</span>
+											@endif
                                         </div>
                                     </div>
 
@@ -100,10 +102,31 @@
                                         <label class="col-sm-3 control-label">Teléfonos</label>
                                         <div class="col-sm-9">
                                             <div class="row">
-                                                <div class="col-sm-4"><input type="text" placeholder="Móvil" class="form-control input-sm"></div>
-                                                <div class="col-sm-4"><input type="text" placeholder="Domicilio" class="form-control input-sm"></div>
-                                                <div class="col-sm-4"><input type="text" placeholder="Oficina" class="form-control input-sm">
-                                                </div>
+                                                <div class="col-sm-4{{ $errors->has('telefono_movil') ? ' has-error' : '' }}">
+													<input type="text" placeholder="Móvil" class="form-control input-sm" name="telefono_movil" value="{{old('telefono_movil')}}">
+													@if ($errors->has('telefono_movil'))
+													<span class="help-block">
+														<strong>{{ $errors->first('telefono_movil') }}</strong>
+													</span>
+													@endif
+												</div>
+                                                <div class="col-sm-4{{ $errors->has('telefono_domicilio') ? ' has-error' : '' }}">
+													<input type="text" placeholder="Domicilio" class="form-control input-sm" name="telefono_domicilio" value="{{old('telefono_domicilio')}}">
+													@if ($errors->has('telefono_domicilio'))
+													<span class="help-block">
+														<strong>{{ $errors->first('telefono_domicilio') }}</strong>
+													</span>
+													@endif
+												</div>
+                                                <div class="col-sm-4{{ $errors->has('telefono_oficina') ? ' has-error' : '' }}">
+													<input type="text" placeholder="Oficina" class="form-control input-sm" name="telefono_oficina" value="{{old('telefono_oficina')}}">
+													@if ($errors->has('telefono_oficina'))
+													<span class="help-block">
+														<strong>{{ $errors->first('telefono_oficina') }}</strong>
+													</span>
+													@endif
+												</div>
+												
                                             </div>
                                         </div>
                                     </div>
@@ -112,8 +135,15 @@
                                         <label class="col-sm-3 control-label">E-mail</label>
                                         <div class="col-sm-9">
                                             <div class="row">
-                                                <div class="col-sm-6"><input type="text" placeholder="E-mail" class="form-control input-sm"></div>
-                                                <div class="col-sm-6"><input type="text" placeholder="E-mail alterno" class="form-control input-sm"></div>
+                                                <div class="col-sm-6{{ $errors->has('email') ? ' has-error' : '' }}">
+													<input type="text" placeholder="E-mail" class="form-control input-sm" name="email" value="{{old('email')}}">
+													@if ($errors->has('email'))
+													<span class="help-block">
+														<strong>{{ $errors->first('email') }}</strong>
+													</span>
+													@endif
+												</div>
+                                                <div class="col-sm-6"><input type="text" placeholder="E-mail alterno" class="form-control input-sm" name="email_alterno" value="{{old('email_alterno')}}"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -121,18 +151,22 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Dirección</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control input-sm">
+                                            <input type="text" class="form-control input-sm" name="direccion" value="{{old('direccion')}}">
                                         </div>
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Fotografía</label>
                                         <div class="col-sm-8">
                                             <label title="Upload image file" for="inputImage" class="btn btn-white">
-                                                <input type="file" name="file" id="inputImage" class="hide">
-                                                Seleccionar archivo
+                                                {{Form::file('fotografia', array('class'=>'') )}}
+												@if ($errors->has('fotografia'))
+													<span class="help-block">
+														<strong>{{ $errors->first('fotografia') }}</strong>
+													</span>
+												@endif
                                             </label>
                                         </div>
                                     </div>
@@ -141,46 +175,44 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Profesión</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control input-sm">
+                                            <input type="text" class="form-control input-sm" name="profesion" value="{{old('profesion')}}">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Nacionalidad</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control input-sm">
+                                            <input type="text" class="form-control input-sm" name="nacionalidad" value="{{old('nacionalidad')}}">
                                         </div>
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('correspondencia') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Correspondencia</label>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks">Comunicados</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados">Comunicados</label>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks">Cobranzas</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas">Cobranzas</label>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks">Directorio</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio">Directorio</label>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('media') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Medio preferido</label>
                                         <div class="col-sm-3">
-                                            <select class="form-control input-sm" name="tipo-cuenta">
-                                                <!--    Lista desde JSON        -->
-                                                <option>E-mail</option>
-                                                <option>Teléfono</option>
-                                                <option>Texting</option>
-                                                <option>Personal</option>
-                                                <option>Otro</option>
-                                            </select>
+                                            {{ Form::select('media',$medias, old('media'), ['class' => 'form-control input-sm']) }}
+											@if ($errors->has('media'))
+												<span class="help-block">
+													<strong>{{ $errors->first('media') }}</strong>
+												</span>
+											@endif
                                         </div>
                                     </div>
 
@@ -189,7 +221,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Miembro Directorio</label>
                                         <div class="col-sm-4">
-                                            <label><input type="checkbox" class="i-checks"></label>
+                                            <label><input type="checkbox" class="i-checks" name="miembro_directorio" value="1"></label>
                                         </div>
                                     </div>
 
@@ -198,7 +230,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Mostrar mis datos</label>
                                         <div class="col-sm-1">
-                                            <label><input type="checkbox" class="i-checks"></label>
+                                            <label><input type="checkbox" class="i-checks" name="mostrar_datos" value="1"></label>
                                         </div>
                                         <div class="col-md-6">
                                             <p style="font-size: 11px; color: #B0B0B0;">Se refiere a que los datos de contacto son visibles para otros miembros.</p>
@@ -207,11 +239,16 @@
 
                                     <div class="hr-line-dashed"></div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('notas') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Notas</label>
                                         <div class="col-sm-9">
-                                            <textarea rows="4" class="form-control input-sm"></textarea>
-                                        </div>
+                                            <textarea rows="4" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
+											@if ($errors->has('notas'))
+												<span class="help-block">
+													<strong>{{ $errors->first('notas') }}</strong>
+												</span>
+											@endif
+										</div>
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
@@ -219,7 +256,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Activa</label>
                                         <div class="col-sm-4">
-                                            <label><input type="checkbox" class="i-checks"></label>
+                                            <input type="checkbox" class="i-checks" name="activa" value="1" checked>
                                         </div>
                                     </div>
 
@@ -237,12 +274,12 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button class="btn btn-success" type="submit">Guardar</button>
-                                <button class="btn btn-white" type="submit">Cancelar</button>
+                                <a href="{{ route('properties.contact.index') }}" class="btn btn-white" >Cancelar</a>
                             </div>
                         </div>
 
                     </div>
-                  </form>
+                  {!! Form::close() !!}
                 </div>
             </div>
         </div>

@@ -17,20 +17,20 @@ class CreateContactsTable extends Migration
 			$table->string('nombre');
 			$table->string('apellido');
 			
-			$table->string('telefono_movil');
-			$table->string('telefono_domicilio');
-			$table->string('telefono_oficina');
+			$table->string('telefono_movil')->nullable();
+			$table->string('telefono_domicilio')->nullable();
+			$table->string('telefono_oficina')->nullable();
 			
 			$table->string('email');
-			$table->string('email_alterno');
+			$table->string('email_alterno')->nullable();
 			
-			$table->string('direccion');
+			$table->string('direccion')->nullable();
 			
 			$table->string('fotografia');
 			
-			$table->string('profesion');
+			$table->string('profesion')->nullable();
 			
-			$table->string('nacionalidad');
+			$table->string('nacionalidad')->nullable();
 			
 			$table->string('correspondencia');
 			

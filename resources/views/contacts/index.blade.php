@@ -6,10 +6,7 @@
         <h2>Contactos</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
-            </li>
-            <li>
-                Propiedades
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li class="active">
                 <strong>Lista de contactos</strong>
@@ -22,6 +19,14 @@
 
     <div class="row">
         <div class="col-lg-12">
+				@if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
             <div class="ibox">
                 <div class="ibox-content">
                 <div class="row">
@@ -51,58 +56,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($contacts as $contact)	
                             <tr>
-                                <td>3 AB</td>
-                                <td>Juan Perez Rivera</td>
-                                <td>Propietario: Titular</td>
-                                <td><a href="mailto:juanperez@gmail.com">juanperez@gmail.com</a></td>
-                                <td>767-09878</td>
+                                <td>{{ $contact->property->nro }}</td>
+                                <td>{{ $contact->nombre }} {{ $contact->apellido }}</td>
+                                <td>Propietario: {{ $contact->relationcontact->nombre }}</td>
+                                <td>{{ $contact->email }}</td>
+                                <td>{{ $contact->telefono_movil }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                                        <a href="{{ route('properties.contact.show', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                                        <a href="{{ route('properties.contact.edit', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>
                                </td>
                             </tr>
-                            <tr>
-                                <td>3 AB</td>
-                                <td>Maria Fernandez de Perez</td>
-                                <td>Propietario: Contacto administrativo</td>
-                                <td><a href="mailto:mariaperez@gmail.com">mariaperez@gmail.com</a></td>
-                                <td>773-98987</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>4 B</td>
-                                <td>Mario Jimenez Rueda</td>
-                                <td>Inquilino: Titular</td>
-                                <td><a href="mailto:mariojimenez@hotmail.com">mariojimenez@hotmail.com</a></td>
-                                <td>722-81223</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-
+							@endforeach
                         </tbody>
                     </table>
                 </div>
