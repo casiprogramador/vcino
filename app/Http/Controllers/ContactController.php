@@ -250,6 +250,28 @@ class ContactController extends Controller
         Session::flash('message', 'Contacto actualizado exitosamente');
         return redirect()->route('properties.contact.index');
     }
+	
+    public function listar($option = null)
+    {
+
+		$company = Auth::user()->company;
+		
+		if($option == 'todos'){
+			$contacts = Contact::where('company_id',$company->id );
+		}  elseif ($option == 'propietario') {
+			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',1);
+		}  elseif ($option == 'inquilino') {
+			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',2);
+		}elseif ($option == 'inactivo') {
+			
+			$contacts = Contact::where('company_id',$company->id )->where('activa',0);
+		}else{
+			$contacts = Contact::where('company_id',$company->id );
+		}
+
+        return view('contacts.index')->with('contacts',$contacts->get());
+
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -261,4 +283,6 @@ class ContactController extends Controller
     {
         //
     }
+	
+
 }

@@ -31,15 +31,15 @@
                 <div class="ibox-content">
                 <div class="row">
                     <div class="col-sm-6 m-b-xs">
-                        <div data-toggle="buttons" class="btn-group">
-                            <label class="btn btn-sm btn-white active">
-                                <input type="radio" id="option1" name="options"> Todos </label>
-                            <label class="btn btn-sm btn-white">
-                                <input type="radio" id="option2" name="options"> Propietarios </label>
-                            <label class="btn btn-sm btn-white">
-                                <input type="radio" id="option3" name="options"> Inquilinos </label>
-                            <label class="btn btn-sm btn-white">
-                                <input type="radio" id="option4" name="options"> Inactivos </label>
+                        <div class="btn-group">
+                            <a href="{{ route('properties.contact.list', 'todos') }}" class="btn btn-sm btn-white active">
+                                Todos </a>
+							 <a href="{{ route('properties.contact.list', 'propietario') }}" class="btn btn-sm btn-white active">
+                                Propietarios </a>
+							 <a href="{{ route('properties.contact.list', 'inquilino') }}" class="btn btn-sm btn-white active">
+                                Inquilinos </a>
+							 <a href="{{ route('properties.contact.list', 'inactivo') }}" class="btn btn-sm btn-white active">
+                                Inactivos </a>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                             <tr>
                                 <td>{{ $contact->property->nro }}</td>
                                 <td>{{ $contact->nombre }} {{ $contact->apellido }}</td>
-                                <td>Propietario: {{ $contact->relationcontact->nombre }}</td>
+                                <td>{{ $contact->typecontact->nombre }} : {{ $contact->relationcontact->nombre }}</td>
                                 <td>{{ $contact->email }}</td>
                                 <td>{{ $contact->telefono_movil }}</td>
                                 <td style="vertical-align:middle; text-align:right;">

@@ -7,6 +7,7 @@ use Auth;
 use Session;
 use App\Http\Requests;
 use App\Property;
+use App\Contact;
 use App\TypeProperty;
 use App\ModelsSupport\Electricservice;
 use App\ModelsSupport\Internetservice;
@@ -255,5 +256,14 @@ class PropertyController extends Controller
     public function destroy($id)
     {
         //
+    }
+	
+	public function contacts($id)
+    {
+		$contacts = Contact::where('property_id',$id );
+		$property = Property::find($id);
+        return view('properties.contact')
+				->with('contacts',$contacts->get())
+				->with('property',$property);
     }
 }

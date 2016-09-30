@@ -31,7 +31,13 @@ Route::group(['prefix' => 'config'], function () {
 });
 Route::group(['prefix' => 'properties'], function () {
     Route::resource('property', 'PropertyController');
+	Route::get('/property/contact/{id?}', [
+        'as' => 'properties.property.contact', 'uses' => 'PropertyController@contacts'
+    ]);
 	Route::resource('contact', 'ContactController');
+	Route::get('/contact/list/{option?}', [
+        'as' => 'properties.contact.list', 'uses' => 'ContactController@listar'
+    ]);
 });
 Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');

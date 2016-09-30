@@ -55,7 +55,7 @@
                                 <td>{{ $property->situacionHabitacionals->nombre }}</td>
                                 <td></td>
                                 <td style="text-align:center;">
-                                    <a href="#">Contactos (1)</a>
+                                    <a href="{{ route('properties.property.contact', $property->id) }}">Contactos({{ count($property->contact) }})</a>
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
