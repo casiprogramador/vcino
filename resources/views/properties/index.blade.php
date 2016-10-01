@@ -53,7 +53,15 @@
                                 <td>{{ $property->typeProperty->tipo_propiedad }}</td>
                                 <td>{{ $property->etiquetas }}</td>
                                 <td>{{ $property->situacionHabitacionals->nombre }}</td>
-                                <td></td>
+                                <td>
+									@foreach ( $property->contact as $contact)
+										@if( $contact->typecontact->nombre == 'Propietario')
+											{{$contact->nombre}} {{$contact->apellido}}
+											<br>
+										@endif
+									 
+									@endforeach
+								</td>
                                 <td style="text-align:center;">
                                     <a href="{{ route('properties.property.contact', $property->id) }}">Contactos({{ count($property->contact) }})</a>
                                 </td>
