@@ -41,7 +41,8 @@ class PropertyController extends Controller
      */
     public function create()
     {
-		$typeproperties = TypeProperty::all()->lists('tipo_propiedad','id');
+		$company = Auth::user()->company;
+		$typeproperties = TypeProperty::where('company_id',$company->id )->lists('tipo_propiedad','id');
 		$electrics = Electricservice::all()->lists('nombre','id');
 		$internets = Internetservice::all()->lists('nombre','id');
 		$phones = PhoneService::all()->lists('nombre','id');

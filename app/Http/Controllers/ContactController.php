@@ -40,7 +40,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-		$properties = Property::all()->lists('nro','id');
+		$company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->lists('nro','id');
 		$typecontacts = Typecontact::all()->lists('nombre','id');
 		$relationcontacts = Relationcontact::all()->lists('nombre','id');
 		$medias = Media::all()->lists('nombre','id');
@@ -281,7 +282,9 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::find($id);
+		$contact->delete();
+		return redirect()->route('properties.contact.index');
     }
 	
 

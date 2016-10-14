@@ -39,9 +39,9 @@
                                         <div class="col-sm-3">
                                             {{ Form::select('property',$properties, old('property'), ['class' => 'form-control input-sm']) }}
 											@if ($errors->has('property'))
-												<span class="help-block">
-													<strong>{{ $errors->first('property') }}</strong>
-												</span>
+											<span class="help-block">
+												<strong>{{ $errors->first('property') }}</strong>
+											</span>
 											@endif
                                         </div>
                                     </div>
@@ -53,9 +53,9 @@
                                         <div class="col-sm-3">
                                             {{ Form::select('typecontact',$typecontacts, old('typecontact'), ['class' => 'form-control input-sm']) }}
 											@if ($errors->has('typecontact'))
-												<span class="help-block">
-													<strong>{{ $errors->first('typecontact') }}</strong>
-												</span>
+											<span class="help-block">
+												<strong>{{ $errors->first('typecontact') }}</strong>
+											</span>
 											@endif
                                         </div>
                                     </div>
@@ -65,9 +65,9 @@
                                         <div class="col-sm-3">
                                             {{ Form::select('relationcontact',$relationcontacts, old('relationcontact'), ['class' => 'form-control input-sm']) }}
 											@if ($errors->has('relationcontact'))
-												<span class="help-block">
-													<strong>{{ $errors->first('relationcontact') }}</strong>
-												</span>
+											<span class="help-block">
+												<strong>{{ $errors->first('relationcontact') }}</strong>
+											</span>
 											@endif
                                         </div>
                                     </div>
@@ -79,9 +79,9 @@
                                         <div class="col-sm-3">
                                             <input type="text" class="form-control input-sm" name="nombre" value="{{old('nombre')}}">
 											@if ($errors->has('nombre'))
-												<span class="help-block">
-													<strong>{{ $errors->first('nombre') }}</strong>
-												</span>
+											<span class="help-block">
+												<strong>{{ $errors->first('nombre') }}</strong>
+											</span>
 											@endif
                                         </div>
                                     </div>
@@ -91,9 +91,9 @@
                                         <div class="col-sm-3">
                                             <input type="text" class="form-control input-sm" name="apellido" value="{{old('apellido')}}">
 											@if ($errors->has('apellido'))
-												<span class="help-block">
-													<strong>{{ $errors->first('apellido') }}</strong>
-												</span>
+											<span class="help-block">
+												<strong>{{ $errors->first('apellido') }}</strong>
+											</span>
 											@endif
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
 													</span>
 													@endif
 												</div>
-												
+
                                             </div>
                                         </div>
                                     </div>
@@ -163,9 +163,9 @@
                                             <label title="Upload image file" for="inputImage" class="btn btn-white">
                                                 {{Form::file('fotografia', array('class'=>'') )}}
 												@if ($errors->has('fotografia'))
-													<span class="help-block">
-														<strong>{{ $errors->first('fotografia') }}</strong>
-													</span>
+												<span class="help-block">
+													<strong>{{ $errors->first('fotografia') }}</strong>
+												</span>
 												@endif
                                             </label>
                                         </div>
@@ -192,15 +192,15 @@
                                         <label class="col-sm-3 control-label">Correspondencia</label>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados">Comunicados</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados">&nbsp;&nbsp;Comunicados</label>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas">Cobranzas</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas">&nbsp;&nbsp;Cobranzas</label>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio">Directorio</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio">&nbsp;&nbsp;Directorio</label>
                                         </div>
                                     </div>
 
@@ -209,9 +209,9 @@
                                         <div class="col-sm-3">
                                             {{ Form::select('media',$medias, old('media'), ['class' => 'form-control input-sm']) }}
 											@if ($errors->has('media'))
-												<span class="help-block">
-													<strong>{{ $errors->first('media') }}</strong>
-												</span>
+											<span class="help-block">
+												<strong>{{ $errors->first('media') }}</strong>
+											</span>
 											@endif
                                         </div>
                                     </div>
@@ -226,7 +226,7 @@
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
-                                    
+
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Mostrar mis datos</label>
                                         <div class="col-sm-1">
@@ -244,9 +244,9 @@
                                         <div class="col-sm-9">
                                             <textarea rows="4" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
 											@if ($errors->has('notas'))
-												<span class="help-block">
-													<strong>{{ $errors->first('notas') }}</strong>
-												</span>
+											<span class="help-block">
+												<strong>{{ $errors->first('notas') }}</strong>
+											</span>
 											@endif
 										</div>
                                     </div>
@@ -264,37 +264,37 @@
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button class="btn btn-danger" type="submit">
-                                    <i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
-                            </div>
-                        </div>
+
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button class="btn btn-success" type="submit">Guardar</button>
-                                <a href="{{ route('properties.contact.index') }}" class="btn btn-white" >Cancelar</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-white" >Cancelar</a>
                             </div>
                         </div>
 
                     </div>
-                  {!! Form::close() !!}
+					{!! Form::close() !!}
+
                 </div>
+
             </div>
         </div>
+
     </div>
+
 </div>
 
 @endsection
 @section('javascript')
-    <script>
-        $(document).ready(function () {
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
+<script>
+	$(document).ready(function () {
+		$('.i-checks').iCheck({
+			checkboxClass: 'icheckbox_square-green',
+			radioClass: 'iradio_square-green',
+		});
 
-        });
-    </script>
+	});
+</script>
 @endsection
+

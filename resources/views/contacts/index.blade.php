@@ -60,8 +60,8 @@
                             <tr>
                                 <td>{{ $contact->property->nro }}</td>
                                 <td>{{ $contact->nombre }} {{ $contact->apellido }}</td>
-                                <td>{{ $contact->typecontact->nombre }} : {{ $contact->relationcontact->nombre }}</td>
-                                <td>{{ $contact->email }}</td>
+                                <td>{{ $contact->typecontact->nombre }}&nbsp;&nbsp;:&nbsp;&nbsp;{{ $contact->relationcontact->nombre }}</td>
+                                <td><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>
                                 <td>{{ $contact->telefono_movil }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
@@ -77,6 +77,7 @@
 							@endforeach
                         </tbody>
                     </table>
+					<a href="{{ route('properties.contact.create') }}" class="btn btn-success" >Nuevo Contacto</a>
                 </div>
                 </div>
             </div>

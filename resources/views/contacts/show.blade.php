@@ -102,7 +102,7 @@
                                         <div class="col-sm-9">
                                             <div class="row">
                                                 <div class="col-sm-4{{ $errors->has('telefono_movil') ? ' has-error' : '' }}">
-													<input type="text" placeholder="Móvil" class="form-control input-sm" name="telefono_movil" value="{{$contact->telefono_movil}}" readonly>
+													<input type="text" placeholder="" class="form-control input-sm" name="telefono_movil" value="{{$contact->telefono_movil}}" readonly>
 													@if ($errors->has('telefono_movil'))
 													<span class="help-block">
 														<strong>{{ $errors->first('telefono_movil') }}</strong>
@@ -110,7 +110,7 @@
 													@endif
 												</div>
                                                 <div class="col-sm-4{{ $errors->has('telefono_domicilio') ? ' has-error' : '' }}">
-													<input type="text" placeholder="Domicilio" class="form-control input-sm" name="telefono_domicilio" value="{{$contact->telefono_domicilio}}" readonly>
+													<input type="text" placeholder="" class="form-control input-sm" name="telefono_domicilio" value="{{$contact->telefono_domicilio}}" readonly>
 													@if ($errors->has('telefono_domicilio'))
 													<span class="help-block">
 														<strong>{{ $errors->first('telefono_domicilio') }}</strong>
@@ -118,7 +118,7 @@
 													@endif
 												</div>
                                                 <div class="col-sm-4{{ $errors->has('telefono_oficina') ? ' has-error' : '' }}">
-													<input type="text" placeholder="Oficina" class="form-control input-sm" name="telefono_oficina" value="{{$contact->telefono_oficina}}" readonly>
+													<input type="text" placeholder="" class="form-control input-sm" name="telefono_oficina" value="{{$contact->telefono_oficina}}" readonly>
 													@if ($errors->has('telefono_oficina'))
 													<span class="help-block">
 														<strong>{{ $errors->first('telefono_oficina') }}</strong>
@@ -142,7 +142,7 @@
 													</span>
 													@endif
 												</div>
-                                                <div class="col-sm-6"><input type="text" placeholder="E-mail alterno" class="form-control input-sm" name="email_alterno" value="{{$contact->email_alterno}}" readonly></div>
+                                                <div class="col-sm-6"><input type="text" placeholder="" class="form-control input-sm" name="email_alterno" value="{{$contact->email_alterno}}" readonly></div>
                                             </div>
                                         </div>
                                     </div>
@@ -160,7 +160,11 @@
                                         <label class="col-sm-3 control-label">Fotografía</label>
                                         <div class="col-sm-8">
                                             <label title="Upload image file" for="inputImage" class="btn btn-white">
-                                                <a href="{{asset($contact->fotografia)}}" target="_blank" class="btn btn-info" role="button">Ver Fotografia</a>
+												@if(empty($contact->fotografia))
+													<img src="{{ URL::asset('img/system/user150.png')}}" width="150" />
+												@else
+													<img src="{{asset($contact->fotografia)}}" width="150" />	
+												@endif
                                             </label>
                                         </div>
                                     </div>
@@ -186,15 +190,15 @@
                                         <label class="col-sm-3 control-label">Correspondencia</label>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-											<input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">Comunicados</label>
+											<input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">  Comunicados</label>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">Cobranzas</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">  Cobranzas</label>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">Directorio</label>
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">  Directorio</label>
                                         </div>
                                     </div>
 
@@ -261,7 +265,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <a href="{{ route('properties.contact.index') }}" class="btn btn-white" >Atras</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-success" >Atras</a>
                             </div>
                         </div>
 

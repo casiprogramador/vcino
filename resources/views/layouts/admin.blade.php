@@ -28,9 +28,7 @@
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('properties/property') }}"><a href="{{ route('properties.property.index') }}">Propiedades</a></li>
-						<li class="{{ MenuRoute::active('properties/property/create') }}"><a href="{{ route('properties.property.create') }}">Crear Propiedades</a></li>
                         <li class="{{ MenuRoute::active('properties/contact') }}"><a href="{{ route('properties.contact.index') }}">Contactos</a></li>
-                        <li class="{{ MenuRoute::active('properties/contact/create') }}"><a href="{{ route('properties.contact.create') }}">Crear Contactos</a></li>
                     </ul>
                 </li>
 

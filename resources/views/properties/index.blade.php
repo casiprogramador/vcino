@@ -31,7 +31,9 @@
 					{!! session('message') !!}
 				</div>
 			@endif
+			
             <div class="ibox">
+				
                 <div class="ibox-content">
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
@@ -55,7 +57,7 @@
                                 <td>{{ $property->situacionHabitacionals->nombre }}</td>
                                 <td>
 									@foreach ( $property->contact as $contact)
-										@if( $contact->typecontact->nombre == 'Propietario')
+										@if( $contact->typecontact->nombre == 'Propietario' && $contact->relationcontact->nombre == 'Titular')
 											{{$contact->nombre}} {{$contact->apellido}}
 											<br>
 										@endif
@@ -63,7 +65,7 @@
 									@endforeach
 								</td>
                                 <td style="text-align:center;">
-                                    <a href="{{ route('properties.property.contact', $property->id) }}">Contactos({{ count($property->contact) }})</a>
+                                    <a href="{{ route('properties.property.contact', $property->id) }}">Contactos ({{ count($property->contact) }})</a>
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
@@ -79,6 +81,7 @@
 							@endforeach
                         </tbody>
                     </table>
+					<a href="{{ route('properties.property.create') }}" class="btn btn-success" >Nueva Propiedad</a>
                 </div>
                 </div>
             </div>
@@ -126,7 +129,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+				"columnDefs": [ { "orderable": false, "targets": 5 },{ "orderable": false, "targets": 6 } ]
             });
         } );
     </script>

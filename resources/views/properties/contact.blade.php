@@ -92,40 +92,41 @@
                                     <td>{{ $contact->nombre }} {{ $contact->apellido }}</td>
                                     <td>{{ $contact->typecontact->nombre }}</td>
                                     <td>{{ $contact->relationcontact->nombre }}</td>
-                                    <td><a href="mailto:juanperez@gmail.com">{{ $contact->email }}</a></td>
+                                    <td><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>
                                     <td>{{ $contact->telefono_movil }}</td>
                                     <td>
-											@if(in_array('Comunicados',explode(',',$contact->correspondencia)))
-												<span class="badge">Com</span>
-											@endif
-											@if(in_array('Cobranzas',explode(',',$contact->correspondencia)))
-												<span class="badge">Cob</span>
-											@endif
-											@if(in_array('Directorio',explode(',',$contact->correspondencia)))
-												<span class="badge">Dir</span>
-											@endif
+										@if(in_array('Comunicados',explode(',',$contact->correspondencia)))
+										<span class="badge">Com</span>
+										@endif
+										@if(in_array('Cobranzas',explode(',',$contact->correspondencia)))
+										<span class="badge">Cob</span>
+										@endif
+										@if(in_array('Directorio',explode(',',$contact->correspondencia)))
+										<span class="badge">Dir</span>
+										@endif
                                     </td>
                                     <td>
 										@if($contact->activa == 1)
-											Activo
+										Activo
 										@else
-											Inactivo
+										Inactivo
 										@endif
 									</td>
                                     <td style="vertical-align:middle; text-align:right;">
                                         <div class="btn-group">
-                                        <a href="{{ route('properties.contact.show', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a href="{{ route('properties.contact.edit', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                   </td>
+											<a href="{{ route('properties.contact.show', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+												<i class="fa fa-eye"></i>
+											</a>
+											<a href="{{ route('properties.contact.edit', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+												<i class="fa fa-pencil"></i>
+											</a>
+										</div>
+									</td>
                                 </tr>
 								@endforeach
                             </tbody>
                         </table>
+						<a href="{{ route('properties.contact.create') }}" class="btn btn-success" >Nuevo Contacto</a>
                     </div>
                 </div>
             </div>
@@ -133,7 +134,7 @@
     </div>
 
 
-<div class="row">
+	<!--<div class="row">
         <div class="col-lg-12">
             <div class="ibox collapsed">
 
@@ -147,14 +148,14 @@
                 </div>
 
                 <div class="ibox-content">
-                    
-                    <!-- Aqui el contenido      -->
+
+                     Aqui el contenido      
 
 
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 
 </div>
