@@ -1,27 +1,26 @@
-# Laravel PHP Framework
+##Instalacion
+Para la instalacion primeramente clonar el sistema del repositorio.
+> git clone https://github.com/pmarce/vcino.git
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+ingresar a la carpeta.
+> ```cd vcino```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Actualizar dependencias.
+> ```composer update```
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Copiar el archivo de configuracion.
+> ```copiar .env_example a .env```
 
-## Official Documentation
+Configurar base de datos.
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Generamos la llave de seguridad.
+> ```$ php artisan key:generate```
 
-## Contributing
+Creamos el esquema de la base de datos.
+> ```$ php artisan migrate```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+Creamos datos iniciales.
+> ```$ php artisan db:seed```
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Iniciamos el servidor.
+> ```$ php aritsan serve```
