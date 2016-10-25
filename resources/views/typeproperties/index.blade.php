@@ -145,7 +145,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+				"columnDefs": [ { "orderable": false, "targets": 3 }]
             });
         } );
     </script>

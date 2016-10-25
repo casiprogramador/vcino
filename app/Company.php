@@ -50,4 +50,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Phonesite');
     }
+	
+	public function comunication()
+    {
+        return $this->hasMany('App\Communication');
+    }
 }

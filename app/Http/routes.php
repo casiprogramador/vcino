@@ -46,6 +46,13 @@ Route::group(['prefix' => 'communication'], function () {
     Route::get('/phonesite', [
         'as' => 'communication.phonesite.index', 'uses' => 'CommunicationController@phonesite'
     ]);
+    Route::resource('communication', 'CommunicationController');
+    Route::get('/send', [
+        'as' => 'communication.communication.send', 'uses' => 'CommunicationController@send'
+    ]);
+	Route::get('/register/send', [
+        'as' => 'communication.register.send', 'uses' => 'CommunicationController@registersend'
+    ]);
 });
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'

@@ -19,7 +19,7 @@
                     <a href="index.html"><i class="fa fa-envelope-o"></i> <span
                                 class="nav-label">Comunicación & Info</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#/">Comunicados</a></li>
+                        <li class="{{ MenuRoute::active('communication/communication') }}"><a href="{{ route('communication.communication.index') }}">Comunicados</a></li>
                         <li class="{{ MenuRoute::active('communication/phonesite') }}"><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>
@@ -50,8 +50,8 @@
                         <li class="{{ MenuRoute::active('config/installation') }}"><a href="{{ route('config.installation.index') }}">Instalaciones</a></li>
                         <li class="{{ MenuRoute::active('config/quota') }}"><a href="{{ route('config.quota.index') }}">Cuotas</a></li>
                         <li class="{{ MenuRoute::active('config/typeproperty') }}"><a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a></li>
-                        <li class="{{ MenuRoute::active('receiptnumbers') }}"><a href="{{ route('config.receiptnumber.index') }}">Número de comprobantes</a></li>
-                        <li class="{{ MenuRoute::active('phonesite') }}"><a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
+                        <li class="{{ MenuRoute::active('config/receiptnumber') }}"><a href="{{ route('config.receiptnumber.index') }}">Número de comprobantes</a></li>
+                        <li class="{{ MenuRoute::active('config/phonesite') }}"><a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>
 
