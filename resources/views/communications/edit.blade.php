@@ -15,7 +15,7 @@
 				<a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
 			</li>
 			<li class="active">
-				<strong>Nuevo comunicado</strong>
+				<strong>Editar comunicado</strong>
 			</li>
 		</ol>
 	</div>
@@ -28,17 +28,17 @@
 			<div class="ibox float-e-margins">
 
 				<div class="ibox-title">
-					<h5 style="padding-top: 2px;">Nuevo comunicado</h5>
+					<h5 style="padding-top: 2px;">Editar comunicado</h5>
 				</div>
 
 				<div class="ibox-content">
-					{!! Form::open(array('route' => 'communication.communication.store', 'class' => 'form-horizontal', 'files' => true)) !!}
+					 {!! Form::open(array('route' => array('communication.communication.update', $communication->id),'method' => 'patch' ,'class' => 'form-horizontal', 'files' => true)) !!}
 
 					<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha">
 						<label class="col-sm-2 control-label">Fecha</label>
 						<div class="col-sm-3 input-group date" style="padding-left:15px;">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" class="form-control input-sm date-picker" name="fecha" value="">
+							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($communication->fecha)) }}">
 						</div>
 						<div class="col-sm-8 col-md-offset-2">
 							@if ($errors->has('fecha'))
@@ -52,7 +52,7 @@
 					<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
 						<label class="col-sm-2 control-label">Asunto</label>
 						<div class="col-sm-8">
-							<input type="text" name="asunto" class="form-control input-sm">
+							<input type="text" name="asunto" class="form-control input-sm" value="{{$communication->asunto}}">
 							@if ($errors->has('asunto'))
 							<span class="help-block">
 								<strong>{{ $errors->first('asunto') }}</strong>
@@ -65,7 +65,7 @@
 						<label class="col-sm-2 control-label">Cuerpo</label>
 						<div class="col-sm-9">
 							<div class="no-padding">
-								<textarea id="summernote" name="cuerpo">Escribir cuerpo...</textarea>
+								<textarea id="summernote" name="cuerpo">{{ $communication->cuerpo }}</textarea>
 							</div>
 							@if ($errors->has('cuerpo'))
 							<span class="help-block">
@@ -128,8 +128,15 @@
 					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<div class="col-sm-12">
+							<button class="btn btn-danger" type="submit">
+								<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
+						</div>
+					</div>
+					<div class="hr-line-dashed"></div>
+					<div class="form-group">
+						<div class="col-sm-12">
 							<button class="btn btn-success" type="submit">Guardar</button>
-							<a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
+							<button class="btn btn-white" type="submit">Cancelar</button>
 						</div>
 					</div>
 

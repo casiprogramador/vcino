@@ -23,6 +23,14 @@
 
         <div class="row">
             <div class="col-lg-12">
+				@if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5 style="padding-top: 7px;">Lista de comunicados</h5>
@@ -46,9 +54,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+									@foreach ($communications as $communication)
                                 <tr>
-                                    <td>06/04/2016</td>
-                                    <td>Convocatoria Asamblea de Socios</td>
+                                    <td>{{ date_format(date_create($communication->fecha),'d/m/Y') }}</td>
+                                    <td>{{$communication->asunto}}</td>
                                     <td></td>
                                     <td>Borrador</td>
                                     <td style="vertical-align:middle; text-align:right;">
@@ -59,7 +68,7 @@
                                             <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
                                                 <i class="fa fa-files-o"></i>
                                             </a>
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                            <a href="{{ route('communication.communication.edit', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
                                         </div>
@@ -73,6 +82,7 @@
                                         </div>
                                     </td>
                                 </tr>
+								@endforeach
                                 <tr>
                                     <td>20/03/2016</td>
                                     <td>Notificación de cuentas xxx</td>
@@ -153,7 +163,7 @@
                 },
                 "paging":   false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 5 } ]
+                "columnDefs": [ { "orderable": false, "targets": 4 } ]
             });
         } );
     </script>
