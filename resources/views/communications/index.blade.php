@@ -62,10 +62,10 @@
                                     <td>Borrador</td>
                                     <td style="vertical-align:middle; text-align:right;">
                                         <div class="btn-group">
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
+                                            <a href="{{ route('communication.communication.show', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
+                                            <a href="{{ route('communication.communication.copy', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
                                                 <i class="fa fa-files-o"></i>
                                             </a>
                                             <a href="{{ route('communication.communication.edit', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">

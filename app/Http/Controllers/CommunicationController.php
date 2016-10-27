@@ -139,10 +139,24 @@ class CommunicationController extends Controller
 	}
 	
 
-    public function show()
+    public function show($id)
     {
         $communication = Communication::find($id);
         return view('communications.show')
+            ->with('communication',$communication);
+    }
+	
+	public function destroy($id)
+    {
+        $communication = Communication::find($id);
+		$communication->delete();
+		return redirect()->route('communication.communication.index');
+    }
+	
+	public function copy($id)
+    {
+        $communication = Communication::find($id);
+        return view('communications.duplicate')
             ->with('communication',$communication);
     }
 

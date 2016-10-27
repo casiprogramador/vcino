@@ -32,46 +32,31 @@
 				</div>
 
 				<div class="ibox-content">
-					 {!! Form::open(array('route' => array('communication.communication.update', $communication->id),'method' => 'patch' ,'class' => 'form-horizontal', 'files' => true)) !!}
+					 <form action="#" class="form-horizontal">
 
 					<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha">
 						<label class="col-sm-2 control-label">Fecha</label>
 						<div class="col-sm-3 input-group date" style="padding-left:15px;">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($communication->fecha)) }}">
+							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($communication->fecha)) }}" readonly>
 						</div>
 						<div class="col-sm-8 col-md-offset-2">
-							@if ($errors->has('fecha'))
-							<span class="help-block">
-								<strong>{{ $errors->first('fecha') }}</strong>
-							</span>
-							@endif
+
 						</div>
 					</div>
 
 					<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
 						<label class="col-sm-2 control-label">Asunto</label>
 						<div class="col-sm-8">
-							<input type="text" name="asunto" class="form-control input-sm" value="{{$communication->asunto}}">
-							@if ($errors->has('asunto'))
-							<span class="help-block">
-								<strong>{{ $errors->first('asunto') }}</strong>
-							</span>
-							@endif
+							<input type="text" name="asunto" class="form-control input-sm" value="{{$communication->asunto}}" readonly>
+
 						</div>
 					</div>
 
 					<div class="form-group{{ $errors->has('cuerpo') ? ' has-error' : '' }}">
 						<label class="col-sm-2 control-label">Cuerpo</label>
 						<div class="col-sm-9">
-							<div class="no-padding">
-								<textarea id="summernote" name="cuerpo">{{ $communication->cuerpo }}</textarea>
-							</div>
-							@if ($errors->has('cuerpo'))
-							<span class="help-block">
-								<strong>{{ $errors->first('cuerpo') }}</strong>
-							</span>
-							@endif
+							<?php echo $communication->cuerpo ?>
 						</div>
 					</div>
 
@@ -80,67 +65,47 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Adjuntos</label>
 						<div class="col-sm-8">
-
-							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
-								<div class="form-control" data-trigger="fileinput">
-									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename"></span>
-								</div>
-								<span class="input-group-addon btn btn-default btn-file">
-									<span class="fileinput-new">Seleccionar archivo...</span>
-									<span class="fileinput-exists">Cambiar</span>
-									<input type="hidden" value=""><input type="file" name="adjunto[]">
-								</span>
-								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+							<div class="row">
+								@if(!empty($communication->adjuntos))
+									@foreach (explode(",",$communication->adjuntos) as $adjunto)
+									<?php 
+										$filename = explode("-",$adjunto);
+										$ext_array = explode(".",$adjunto);
+										$ext = end($ext_array);
+									?>
+									<div class="col-sm-4">
+										<div class="thumbnail">
+											@if($ext == 'jpg' || $ext == 'png')
+											<h3 class="text-center"><i class="fa fa-file-image-o fa-5x"></i></h3>
+											@elseif($ext == 'pdf')
+												<i class="fa fa fa-file-pdf-o fa-5x"></i>
+											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
+												<i class="fa fa-file-word-o fa-5x"></i>
+											@elseif($ext == 'xls' || $ext == 'xlsx')
+												<i class="fa fa-file-excel-o fa-5x"></i>
+											@elseif($ext == 'rar' || $ext == 'zip')
+												<i class="fa fa-file-archive-o fa-5x"></i>
+											@else
+												<i class="fa fa-file fa-5x"></i>
+											@endif
+											<div class="caption">
+												<h4 class="text-center">{{$filename[3]}}</h4>
+											</div>
+										</div>
+									</div>
+									@endforeach
+								@endif
 							</div>
-
-
-							<!--    Para el caso de mas de un attach        -->
-							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
-								<div class="form-control" data-trigger="fileinput">
-									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename"></span>
-								</div>
-								<span class="input-group-addon btn btn-default btn-file">
-									<span class="fileinput-new">Seleccionar archivo...</span>
-									<span class="fileinput-exists">Cambiar</span>
-									<input type="hidden" value=""><input type="file" name="adjunto[]">
-								</span>
-								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
-							</div>
-							<!--    Para el caso de mas de un attach        -->
-							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
-								<div class="form-control" data-trigger="fileinput">
-									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename"></span>
-								</div>
-								<span class="input-group-addon btn btn-default btn-file">
-									<span class="fileinput-new">Seleccionar archivo...</span>
-									<span class="fileinput-exists">Cambiar</span>
-									<input type="hidden" value=""><input type="file" name="adjunto[]">
-								</span>
-								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
-							</div>
-
-						</div>
-					</div>
-
-					<div class="hr-line-dashed"></div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<button class="btn btn-danger" type="submit">
-								<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
 						</div>
 					</div>
 					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button class="btn btn-success" type="submit">Guardar</button>
-							<button class="btn btn-white" type="submit">Cancelar</button>
+							<a href="{{ route('communication.communication.index') }}" class="btn btn-success" type="submit">Atras</a>
 						</div>
 					</div>
 
-					{!! Form::close() !!}
+					 </form>
 				</div>
 			</div>
 		</div>

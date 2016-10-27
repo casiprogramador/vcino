@@ -53,6 +53,9 @@ Route::group(['prefix' => 'communication'], function () {
 	Route::get('/register/send', [
         'as' => 'communication.register.send', 'uses' => 'CommunicationController@registersend'
     ]);
+    Route::get('/copy/{id}', [
+        'as' => 'communication.communication.copy', 'uses' => 'CommunicationController@copy'
+    ]);
 });
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
