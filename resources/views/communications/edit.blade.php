@@ -129,7 +129,7 @@
 					<div class="form-group">
 						<div class="col-sm-12">
 							<button class="btn btn-success" type="submit">Guardar</button>
-							<button class="btn btn-white" type="submit">Cancelar</button>
+							<a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
 						</div>
 					</div>
 

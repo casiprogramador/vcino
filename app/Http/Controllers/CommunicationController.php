@@ -56,7 +56,7 @@ class CommunicationController extends Controller
 					$id_user = Auth::user()->id;
 					$file = $adjunto;
 					$tmpFilePath = '/img/upload/comunicados/';
-					$tmpFileName = time() . '-' .$posicion.'-'.$id_user. '-' . $file->getClientOriginalName();
+					$tmpFileName = time() . '-' .$posicion.'-'.$id_user. '-name-' . $file->getClientOriginalName();
 					$file->move(public_path() . $tmpFilePath, $tmpFileName);
 					$path = $tmpFilePath . $tmpFileName;
 					array_push($array_path, $path);
@@ -114,7 +114,7 @@ class CommunicationController extends Controller
 					$id_user = Auth::user()->id;
 					$file = $adjunto;
 					$tmpFilePath = '/img/upload/comunicados/';
-					$tmpFileName = time() . '-' .$posicion.'-'.$id_user. '-' . $file->getClientOriginalName();
+					$tmpFileName = time() . '-' .$posicion.'-'.$id_user. '-name-' . $file->getClientOriginalName();
 					$file->move(public_path() . $tmpFilePath, $tmpFileName);
 					$path = $tmpFilePath . $tmpFileName;
 					array_push($array_path, $path);
@@ -158,6 +158,69 @@ class CommunicationController extends Controller
         $communication = Communication::find($id);
         return view('communications.duplicate')
             ->with('communication',$communication);
+    }
+	
+	public function savecopy(Request $request)
+    {
+        $this->validate($request, [
+            'fecha' => 'required',
+            'asunto' => 'required',
+            'cuerpo' => 'required'
+        ]);
+		$adjunto = $request->adjunto;
+		$adjunto_ori = $request->adjunto_ori;
+		$array_path = array();
+		$id_user = Auth::user()->id;
+		for ($i = 0; $i <= 2; $i++) {
+			if(isset($adjunto[$i])){
+				$file = $adjunto[$i];
+				$tmpFilePath = '/img/upload/comunicados/';
+				$tmpFileName = time() . '-' .$i.'-'.$id_user. '-name-' . $file->getClientOriginalName();
+				$file->move(public_path() . $tmpFilePath, $tmpFileName);
+				$path = $tmpFilePath . $tmpFileName;
+				array_push($array_path, $path);
+			}elseif (isset($adjunto_ori[$i])) {
+				array_push($array_path, $adjunto_ori[$i]);
+			}
+		}
+		
+		dd($array_path);
+
+		
+		/*
+
+		if(array_filter($request->adjunto)){
+			$array_path = array();
+			foreach ($request->adjunto as $posicion => $adjunto){
+				
+				if(!empty($adjunto)){
+					$id_user = Auth::user()->id;
+					$file = $adjunto;
+					$tmpFilePath = '/img/upload/comunicados/';
+					$tmpFileName = time() . '-' .$posicion.'-'.$id_user. '-name-' . $file->getClientOriginalName();
+					$file->move(public_path() . $tmpFilePath, $tmpFileName);
+					$path = $tmpFilePath . $tmpFileName;
+					array_push($array_path, $path);
+				}
+
+			}
+		}
+
+        $company = Auth::user()->company;
+
+        $communication = new Communication();
+        $communication->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+        $communication->asunto = $request->asunto;
+        $communication->cuerpo = $request->cuerpo;
+		$communication->company_id = $company->id;
+		if(array_filter($request->adjunto)){
+			$communication->adjuntos = implode(",", $array_path);
+		}
+        $communication->save();
+        Session::flash('message', 'Nuevo comunicado ingresado correctamente');
+        return redirect()->route('communication.communication.index');
+		 * 
+		 */
     }
 
 }

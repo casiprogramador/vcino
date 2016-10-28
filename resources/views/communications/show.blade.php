@@ -69,7 +69,7 @@
 								@if(!empty($communication->adjuntos))
 									@foreach (explode(",",$communication->adjuntos) as $adjunto)
 									<?php 
-										$filename = explode("-",$adjunto);
+										$filename = explode("-name-",$adjunto);
 										$ext_array = explode(".",$adjunto);
 										$ext = end($ext_array);
 									?>
@@ -78,18 +78,18 @@
 											@if($ext == 'jpg' || $ext == 'png')
 											<h3 class="text-center"><i class="fa fa-file-image-o fa-5x"></i></h3>
 											@elseif($ext == 'pdf')
-												<i class="fa fa fa-file-pdf-o fa-5x"></i>
+												<h3 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h3>
 											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
-												<i class="fa fa-file-word-o fa-5x"></i>
+												<h3 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h3>
 											@elseif($ext == 'xls' || $ext == 'xlsx')
-												<i class="fa fa-file-excel-o fa-5x"></i>
+												<h3 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h3>
 											@elseif($ext == 'rar' || $ext == 'zip')
-												<i class="fa fa-file-archive-o fa-5x"></i>
+												<h3 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h3>
 											@else
-												<i class="fa fa-file fa-5x"></i>
+												<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
 											@endif
 											<div class="caption">
-												<h4 class="text-center">{{$filename[3]}}</h4>
+												<h4 class="text-center">{{$filename[1]}}</h4>
 											</div>
 										</div>
 									</div>

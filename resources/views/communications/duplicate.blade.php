@@ -32,13 +32,13 @@
 				</div>
 
 				<div class="ibox-content">
-					 {!! Form::open(array('route' => array('communication.communication.update', $communication->id),'method' => 'patch' ,'class' => 'form-horizontal', 'files' => true)) !!}
-
+					{!! Form::open(array('route' => 'communication.communication.savecopy', 'class' => 'form-horizontal', 'files' => true)) !!}
 					<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha">
 						<label class="col-sm-2 control-label">Fecha</label>
 						<div class="col-sm-3 input-group date" style="padding-left:15px;">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($communication->fecha)) }}">
+							
 						</div>
 						<div class="col-sm-8 col-md-offset-2">
 							@if ($errors->has('fecha'))
@@ -87,12 +87,13 @@
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename">{{ (isset($adjuntos_array[0]) ) ? $adjuntos_array[0] : "" }}</span>
+									<span class="fileinput-filename">{{ (isset($adjuntos_array[0]) ) ? MenuRoute::filename($adjuntos_array[0]) : "" }}</span>
 								</div>
 								<span class="input-group-addon btn btn-default btn-file">
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
+									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[0]) ) ? $adjuntos_array[0] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
@@ -102,12 +103,13 @@
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename">{{ (isset($adjuntos_array[1]) ) ? $adjuntos_array[1] : "" }}</span>
+									<span class="fileinput-filename">{{ (isset($adjuntos_array[1]) ) ? MenuRoute::filename($adjuntos_array[1]) : "" }}</span>
 								</div>
 								<span class="input-group-addon btn btn-default btn-file">
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
+									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[1]) ) ? $adjuntos_array[1] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
@@ -115,12 +117,13 @@
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename">{{ (isset($adjuntos_array[2]) ) ? $adjuntos_array[2] : "" }}</span>
+									<span class="fileinput-filename">{{ (isset($adjuntos_array[2]) ) ? MenuRoute::filename($adjuntos_array[2]) : "" }}</span>
 								</div>
 								<span class="input-group-addon btn btn-default btn-file">
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
+									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[2]) ) ? $adjuntos_array[2] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
@@ -132,7 +135,7 @@
 					<div class="form-group">
 						<div class="col-sm-12">
 							<button class="btn btn-success" type="submit">Guardar</button>
-							<button class="btn btn-white" type="submit">Cancelar</button>
+							<a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
 						</div>
 					</div>
 

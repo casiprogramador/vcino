@@ -56,6 +56,9 @@ Route::group(['prefix' => 'communication'], function () {
     Route::get('/copy/{id}', [
         'as' => 'communication.communication.copy', 'uses' => 'CommunicationController@copy'
     ]);
+	Route::post('/copy', [
+        'as' => 'communication.communication.savecopy', 'uses' => 'CommunicationController@savecopy'
+    ]);
 });
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
