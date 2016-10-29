@@ -80,11 +80,6 @@ class CommunicationController extends Controller
         return redirect()->route('communication.communication.index');
 
     }
-
-    public function send()
-    {
-        return view('communications.send');
-    }
 	
 	public function registersend()
     {
@@ -122,14 +117,11 @@ class CommunicationController extends Controller
 
 			}
 		}
-
-        $company = Auth::user()->company;
 		
 		$communication = Communication::find($id);
         $communication->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
         $communication->asunto = $request->asunto;
         $communication->cuerpo = $request->cuerpo;
-		$communication->company_id = $company->id;
 		if(array_filter($request->adjunto)){
 			$communication->adjuntos = implode(",", $array_path);
 		}
@@ -183,28 +175,6 @@ class CommunicationController extends Controller
 				array_push($array_path, $adjunto_ori[$i]);
 			}
 		}
-		
-		dd($array_path);
-
-		
-		/*
-
-		if(array_filter($request->adjunto)){
-			$array_path = array();
-			foreach ($request->adjunto as $posicion => $adjunto){
-				
-				if(!empty($adjunto)){
-					$id_user = Auth::user()->id;
-					$file = $adjunto;
-					$tmpFilePath = '/img/upload/comunicados/';
-					$tmpFileName = time() . '-' .$posicion.'-'.$id_user. '-name-' . $file->getClientOriginalName();
-					$file->move(public_path() . $tmpFilePath, $tmpFileName);
-					$path = $tmpFilePath . $tmpFileName;
-					array_push($array_path, $path);
-				}
-
-			}
-		}
 
         $company = Auth::user()->company;
 
@@ -213,14 +183,23 @@ class CommunicationController extends Controller
         $communication->asunto = $request->asunto;
         $communication->cuerpo = $request->cuerpo;
 		$communication->company_id = $company->id;
-		if(array_filter($request->adjunto)){
-			$communication->adjuntos = implode(",", $array_path);
+		if(array_filter($request->adjunto) || array_filter($request->adjunto_ori)){
+			$communication->adjuntos = implode(",",array_filter ( $array_path) );
 		}
         $communication->save();
         Session::flash('message', 'Nuevo comunicado ingresado correctamente');
         return redirect()->route('communication.communication.index');
-		 * 
-		 */
+
+    }
+	
+	public function send($id)
+    {
+        return view('communications.send');
+    }
+	
+	public function printcom($id)
+    {
+        return view('communications.print');
     }
 
 }

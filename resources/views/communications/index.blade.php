@@ -73,10 +73,10 @@
                                             </a>
                                         </div>
                                         <div class="btn-group">
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
+                                            <a href="{{ route('communication.communication.print', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
                                                 <i class="fa fa-print"></i>
                                             </a>
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Enviar...">
+                                            <a href="{{ route('communication.communication.send', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Enviar...">
                                                 <i class="fa fa-envelope-o"></i>
                                             </a>
                                         </div>
