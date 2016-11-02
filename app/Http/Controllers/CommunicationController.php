@@ -7,6 +7,8 @@ use Auth;
 use App\Http\Requests;
 use App\Phonesite;
 use App\Communication;
+use App\Property;
+use App\Contact;
 use Session;
 
 class CommunicationController extends Controller
@@ -194,7 +196,16 @@ class CommunicationController extends Controller
 	
 	public function send($id)
     {
-        return view('communications.send');
+		$company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+		$communications = Communication::where('company_id',$company->id )->get();
+        $communications = $communications->lists('FechaAsunto','id');
+		$contacts = Contact::where('company_id',$company->id )->get();
+		$contacts = $contacts->lists('FullName','id');
+        return view('communications.send')
+			->with('properties',$properties)
+		    ->with('communications',$communications)
+			->with('contacts',$contacts);
     }
 	
 	public function printcom($id)

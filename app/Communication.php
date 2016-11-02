@@ -10,4 +10,8 @@ class Communication extends Model
     {
         return $this->belongsTo('App\Company');
     }
+	
+	public function getFechaAsuntoAttribute(){
+		return $this->attributes['fecha'] . " - " . $this->attributes['asunto'];
+	}
 }

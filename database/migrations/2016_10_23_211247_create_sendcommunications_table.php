@@ -14,6 +14,11 @@ class CreateSendcommunicationsTable extends Migration
     {
         Schema::create('sendcommunications', function (Blueprint $table) {
             $table->increments('id');
+			$table->string('remitente');
+			$table->string('dirigido');
+			$table->string('propiedad')->nullable();
+			$table->string('destinatario')->nullable();
+			$table->string('correos')->nullable();
 			$table->integer('communication_id')->unsigned();
             $table->foreign('communication_id')->references('id')->on('communications');
             $table->timestamps();
