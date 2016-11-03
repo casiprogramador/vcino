@@ -138,7 +138,7 @@
 							<a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
 						</div>
 					</div>
-
+					{!! Form::close() !!}
 				</div>
 			</div>
 		</div>

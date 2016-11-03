@@ -205,7 +205,8 @@ class CommunicationController extends Controller
         return view('communications.send')
 			->with('properties',$properties)
 		    ->with('communications',$communications)
-			->with('contacts',$contacts);
+			->with('contacts',$contacts)
+			->with('id_comunication',$id);
     }
 	
 	public function printcom($id)

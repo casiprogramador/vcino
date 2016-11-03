@@ -33,12 +33,12 @@
 
                     <div class="ibox-content">
 
-                        <form method="get" class="form-horizontal">
+                        {!! Form::open(array('route' => 'communication.communication.sendcommunication', 'class' => 'form-horizontal')) !!}
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Comunicado</label>
                                 <div class="col-sm-9">
-									{{ Form::select('comunicado',$communications, old('comunicado'), ['class' => 'form-control input-sm']) }}
+									{{ Form::select('comunicado',$communications, $id_comunication, ['class' => 'form-control input-sm']) }}
                                 </div>
                             </div>
 
@@ -153,7 +153,7 @@
 
                     </div>
 
-                    </form>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
