@@ -46,9 +46,9 @@
                                 <label class="col-sm-3 control-label">Remitente</label>
                                 <div class="col-sm-5">
                                     <select class="form-control input-sm" name="remitente">
-                                        <option value="todos">Administración</option>
-                                        <option value="copropietarios">Directorio</option>
-                                        <option value="inquilinos">Sin remitente</option>
+                                        <option value="Administracion">Administración</option>
+                                        <option value="Directorio">Directorio</option>
+                                        <option value="Sin remitente">Sin remitente</option>
                                     </select>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                             <div class="form-group" id="select-contacto">
                                 <label class="col-sm-3 control-label">Destinatario</label>
                                 <div class="col-sm-8">
-									{{ Form::select('destinatario',$contacts, old('destinatario'), ['multiple' => true,'class' => 'form-control input-sm chosen-select']) }}
+									{{ Form::select('destinatario[]',$contacts, old('destinatario'), ['multiple' => true,'class' => 'form-control input-sm chosen-select']) }}
                                 </div>
                             </div>
 
@@ -92,7 +92,7 @@
                             <div class="form-group" id="correo">
                                 <label class="col-sm-3 control-label">Dirección de correo</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm">
+                                    <input type="text" class="form-control input-sm" name="correo">
                                 </div>
                             </div>
 
@@ -187,7 +187,11 @@
                         $('#select-propiedad').hide();
                         $('#select-contacto').hide();
 						$('#correo').show("slow");
-                    }
+                    }else{
+						$('#select-propiedad').hide();
+                        $('#select-contacto').hide();
+						$('#correo').hide();
+					}
 					
             });
 

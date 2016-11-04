@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
@@ -208,6 +209,31 @@ class CommunicationController extends Controller
 			->with('contacts',$contacts)
 			->with('id_comunication',$id);
     }
+	
+	public function sendcommunication(Request $request){
+		$this->validate($request, [
+            'comunicado' => 'required',
+            'remitente' => 'required',
+            'dirigido' => 'required'
+        ]);
+		$data = [
+           'data' => '',
+           'password' => ''
+		];
+		Mail::send('emails.communication', $data, function ($m) use ($request) {
+            $m->from('admin@vcino.com', 'Your Application');
+
+            //$m->to($user->email, $user->name)->subject('Your Reminder!');
+			$m->to('jukumaro@gmail.com', 'Marcelo Choque')->subject('Your Reminder!');
+        });
+		if (Mail::failures()) {
+        dd('Mail no enviado');
+		}else{
+			dd('Mail enviado');
+		}
+		
+		//dd($request);
+	}
 	
 	public function printcom($id)
     {
