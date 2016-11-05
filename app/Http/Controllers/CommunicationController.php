@@ -216,6 +216,37 @@ class CommunicationController extends Controller
             'remitente' => 'required',
             'dirigido' => 'required'
         ]);
+		$communication = Communication::find($request->comunicado);
+		$dirigido = $request->dirigido;
+		
+		$company = Auth::user()->company;
+		//correspondencia
+		if($dirigido == 'todos'){
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->get();
+		}elseif ($dirigido == 'copropietarios') {
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',1)->get();
+			dd($contacts);
+		}elseif ($dirigido == 'inquilinos') {
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',2)->get();
+			dd($contacts);
+		}elseif ($dirigido == 'directorio') {
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Directorio%')->get();
+			dd($contacts);
+		}elseif ($dirigido == 'propiedad') {
+			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->get();
+			dd($contacts);
+		}elseif ($dirigido == 'contacto') {
+			$contacts = Contact::whereIn('id',$request->destinatario)->get();
+			dd($contacts);
+		}elseif ($dirigido == 'correo') {
+			$contacts = explode(",", trim($request->correo));
+			dd($contacts);
+		}elseif ($dirigido == 'prueba') {
+			$contacts = explode(",", trim($request->correo));
+			dd($contacts);
+		}
+		//dd($communication);
+		/*
 		$data = [
            'data' => '',
            'password' => ''
@@ -232,7 +263,7 @@ class CommunicationController extends Controller
 			dd('Mail enviado');
 		}
 		
-		//dd($request);
+		*/
 	}
 	
 	public function printcom($id)
