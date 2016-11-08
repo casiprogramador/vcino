@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sendcommunication extends Model
 {
-    public function company()
+	
+	public function communication()
     {
-        return $this->belongsTo('App\Company');
+        return $this->belongsTo('App\Communication');
     }
 }

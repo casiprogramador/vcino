@@ -10,6 +10,7 @@ use App\Phonesite;
 use App\Communication;
 use App\Property;
 use App\Contact;
+use App\Sendcommunication;
 use Session;
 
 class CommunicationController extends Controller
@@ -225,45 +226,51 @@ class CommunicationController extends Controller
 			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->get();
 		}elseif ($dirigido == 'copropietarios') {
 			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',1)->get();
-			dd($contacts);
 		}elseif ($dirigido == 'inquilinos') {
 			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',2)->get();
-			dd($contacts);
+
 		}elseif ($dirigido == 'directorio') {
 			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Directorio%')->get();
-			dd($contacts);
+
 		}elseif ($dirigido == 'propiedad') {
 			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->get();
-			dd($contacts);
 		}elseif ($dirigido == 'contacto') {
 			$contacts = Contact::whereIn('id',$request->destinatario)->get();
-			dd($contacts);
 		}elseif ($dirigido == 'correo') {
 			$contacts = explode(",", trim($request->correo));
-			dd($contacts);
 		}elseif ($dirigido == 'prueba') {
 			$contacts = explode(",", trim($request->correo));
-			dd($contacts);
-		}
-		//dd($communication);
-		/*
-		$data = [
-           'data' => '',
-           'password' => ''
-		];
-		Mail::send('emails.communication', $data, function ($m) use ($request) {
-            $m->from('admin@vcino.com', 'Your Application');
-
-            //$m->to($user->email, $user->name)->subject('Your Reminder!');
-			$m->to('jukumaro@gmail.com', 'Marcelo Choque')->subject('Your Reminder!');
-        });
-		if (Mail::failures()) {
-        dd('Mail no enviado');
-		}else{
-			dd('Mail enviado');
 		}
 		
-		*/
+		foreach ($contacts as $contact) {
+
+			$data = [
+				'nombre_remitente' => $request->remitente,
+				'email_remitente' => Auth::user()->email,
+				'email_contancto' => $contact->email,
+				'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
+				'comunicado_cuerpo' => $communication->cuerpo,
+				'comunicado_asunto' => $communication->asunto,
+				'comunicado_adjuntos' => $communication->adjuntos,
+			 ];
+
+			Mail::send('emails.communication',$data, function ($m) use ($data) {
+				$m->from($data['email_remitente'],$data['nombre_remitente']);
+				$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
+				$adjuntos = explode(',',$data['comunicado_adjuntos'] );
+				foreach ($adjuntos as $adjunto) {
+					$m->attach(public_path().$adjunto);
+				}
+				
+			});
+			if (Mail::failures()) {
+				echo 'mail No enviado';
+			}else{
+				echo 'mail enviado';
+			}
+
+		}
+
 	}
 	
 	public function printcom($id)
