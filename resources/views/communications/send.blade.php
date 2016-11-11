@@ -24,7 +24,14 @@
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
-
+				@if (Session::has('message'))
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
                 <div class="ibox float-e-margins">
 
                     <div class="ibox-title">
@@ -33,7 +40,7 @@
 
                     <div class="ibox-content">
 
-                        {!! Form::open(array('route' => 'communication.communication.sendcommunication', 'class' => 'form-horizontal')) !!}
+                        {!! Form::open(array('route' => 'communication.communication.sendcommunication', 'class' => 'form-horizontal','id'=>'form-send-communication')) !!}
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Comunicado</label>
@@ -92,7 +99,7 @@
                             <div class="form-group" id="correo">
                                 <label class="col-sm-3 control-label">Dirección de correo</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" name="correo">
+                                    <input type="text" class="form-control input-sm" name="correo" value="{{old('correo')}}">
                                 </div>
                             </div>
 
@@ -103,8 +110,8 @@
                                 <label class="col-sm-3 control-label">Proceso de envío</label>
                                 <div class="col-sm-9" style="margin-top: 5px">
                                     <div class="progress">
-                                        <div style="width: 65%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" role="progressbar" class="progress-bar progress-bar-success">
-                                            <span>65% Completado</span>
+                                        <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
+                                            <span id="progress-text">0% Completado</span>
                                         </div>
                                     </div>
                                 </div>
@@ -194,8 +201,25 @@
 					}
 					
             });
+			
+			$( "#form-send-communication" ).submit(function( event ) {
+				var value = 0;
 
-        });
+				function barAnim(){
+					value += 5;
+					$( ".progress-bar" ).css( "width", value + "%" ).attr( "aria-valuenow", value );
+					$("#progress-text").text(value + "% Completado");
+					if ( value == 25 || value == 55 || value == 85 ) { 
+						return setTimeout(barAnim, 1000); 
+					}
+					return value >= 100 || setTimeout(barAnim, 50);
+				}
+
+				setTimeout(barAnim, 50);
+				$( "#form-send-communication" ).submit();
+			 });
+
+		});
 		$(".chosen-select").chosen();
     </script>
 @endsection

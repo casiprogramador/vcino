@@ -38,7 +38,7 @@
 						<label class="col-sm-2 control-label">Fecha</label>
 						<div class="col-sm-3 input-group date" style="padding-left:15px;">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" class="form-control input-sm date-picker" name="fecha" value="">
+							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{old('fecha')}}">
 						</div>
 						<div class="col-sm-8 col-md-offset-2">
 							@if ($errors->has('fecha'))
@@ -52,7 +52,7 @@
 					<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
 						<label class="col-sm-2 control-label">Asunto</label>
 						<div class="col-sm-8">
-							<input type="text" name="asunto" class="form-control input-sm">
+							<input type="text" name="asunto" class="form-control input-sm" value="{{old('asunto')}}">
 							@if ($errors->has('asunto'))
 							<span class="help-block">
 								<strong>{{ $errors->first('asunto') }}</strong>

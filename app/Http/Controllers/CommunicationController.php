@@ -242,34 +242,74 @@ class CommunicationController extends Controller
 			$contacts = explode(",", trim($request->correo));
 		}
 		
-		foreach ($contacts as $contact) {
+		if(count($contacts)){
 
-			$data = [
-				'nombre_remitente' => $request->remitente,
-				'email_remitente' => Auth::user()->email,
-				'email_contancto' => $contact->email,
-				'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
-				'comunicado_cuerpo' => $communication->cuerpo,
-				'comunicado_asunto' => $communication->asunto,
-				'comunicado_adjuntos' => $communication->adjuntos,
-			 ];
+			foreach ($contacts as $contact) {
 
-			Mail::send('emails.communication',$data, function ($m) use ($data) {
-				$m->from($data['email_remitente'],$data['nombre_remitente']);
-				$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
-				$adjuntos = explode(',',$data['comunicado_adjuntos'] );
-				foreach ($adjuntos as $adjunto) {
-					$m->attach(public_path().$adjunto);
+				if($dirigido == 'correo' || $dirigido == 'prueba'){
+					$data = [
+					'nombre_remitente' => $request->remitente,
+					'email_remitente' => Auth::user()->email,
+					'email_contancto' => $contact,
+					'nombre_contacto'=> $contact,
+					'comunicado_cuerpo' => $communication->cuerpo,
+					'comunicado_asunto' => $communication->asunto,
+					'comunicado_adjuntos' => $communication->adjuntos,
+				   ];
+				}else{
+				  $data = [
+					'nombre_remitente' => $request->remitente,
+					'email_remitente' => Auth::user()->email,
+					'email_contancto' => $contact->email,
+					'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
+					'comunicado_cuerpo' => $communication->cuerpo,
+					'comunicado_asunto' => $communication->asunto,
+					'comunicado_adjuntos' => $communication->adjuntos,
+				  ];
 				}
-				
-			});
-			if (Mail::failures()) {
-				echo 'mail No enviado';
-			}else{
-				echo 'mail enviado';
-			}
 
+				Mail::send('emails.communication',$data, function ($m) use ($data) {
+					$m->from($data['email_remitente'],$data['nombre_remitente']);
+					$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
+					$adjuntos = explode(',',$data['comunicado_adjuntos'] );
+					foreach ($adjuntos as $adjunto) {
+						$m->attach(public_path().$adjunto);
+					}
+
+				});
+				if (Mail::failures()) {
+					Session::flash('message', 'Error envio comunicacion');
+					return redirect()->route('communication.communication.index');
+				}else{
+					$sendcommunication = new Sendcommunication();
+					$sendcommunication->communication_id = $request->comunicado;
+					$sendcommunication->remitente = $request->remitente;
+
+					$sendcommunication->dirigido = $request->dirigido;
+					if ($dirigido == 'propiedad') {
+						$sendcommunication->propiedad = $request->propiedad;	
+					}
+					if ($dirigido == 'contacto') {
+						$sendcommunication->destinatario = implode(',', $request->destinatario);	
+					}
+					if ($dirigido == 'correo' || $dirigido == 'prueba') {
+						$sendcommunication->correos = $request->correo;
+					}
+					$sendcommunication->enviado = '1';
+					$sendcommunication->save();
+					Session::flash('message', 'Comunicado enviado correctamente');
+					return redirect()->route('communication.communication.index');
+				}
+
+			}
+		
+					
+		}else{
+			Session::flash('message', 'No existe contactos para enviar comunicado');
+			return redirect()->route('communication.communication.send', ['id' => $request->comunicado]);
 		}
+		
+		
 
 	}
 	
