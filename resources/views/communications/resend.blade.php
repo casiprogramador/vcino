@@ -15,7 +15,7 @@
                     <a href="#">Lista de comunicados</a>
                 </li>
                 <li class="active">
-                    <strong>Enviar comunicado</strong>
+                    <strong>Reenviar comunicado</strong>
                 </li>
             </ol>
         </div>
@@ -35,7 +35,7 @@
                 <div class="ibox float-e-margins">
 
                     <div class="ibox-title">
-                        <h5 style="padding-top: 2px;">Enviar comunicado</h5>
+                        <h5 style="padding-top: 2px;">Reenviar comunicado</h5>
                     </div>
 
                     <div class="ibox-content">
@@ -116,6 +116,43 @@
                                     </div>
                                 </div>
                             </div>
+							@foreach($sendcommunications as $sendcommunication)
+                            <!--    PANEL REGISTRO DE ENVIO DE COMUNICADOS              -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Registro de envío
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Fecha envío</label>
+                                                <div class="col-sm-3">
+                                                    <p class="form-control-static">{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y") }}</p>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Hora envío</label>
+                                                <div class="col-sm-3">
+                                                    <p class="form-control-static">{{ date_format(date_create( $sendcommunication->created_at ),"H:i") }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Destinatarios</label>
+                                                <div class="col-sm-8">
+                                                    @if($sendcommunication->dirigido == 'correo')	
+														@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
+															<span class="badge">{{$correo}}</span>
+														@endforeach
+													@else
+														<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
+													@endif		
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							@endforeach
 
                             <div class="hr-line-dashed"></div>
                             <!--    FIN - PANEL REGISTRO DE ENVIO DE COMUNICADOS            -->
@@ -124,7 +161,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button class="btn btn-success" type="submit">Enviar</button>
-                                    <a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
+                                    <button class="btn btn-white" type="submit">Cancelar</button>
                                 </div>
                             </div>
 

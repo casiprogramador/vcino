@@ -50,6 +50,9 @@ Route::group(['prefix' => 'communication'], function () {
     Route::get('/send/{id}', [
         'as' => 'communication.communication.send', 'uses' => 'CommunicationController@send'
     ]);
+	Route::get('/resend/{id}', [
+        'as' => 'communication.communication.resend', 'uses' => 'CommunicationController@resend'
+    ]);
 	Route::post('/send', [
         'as' => 'communication.communication.sendcommunication', 'uses' => 'CommunicationController@sendcommunication'
     ]);

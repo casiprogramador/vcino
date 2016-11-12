@@ -87,7 +87,10 @@ class CommunicationController extends Controller
 	
 	public function registersend()
     {
-        return view('communications.registersend');
+		$company = Auth::user()->company;
+
+        $sendcommunications = Sendcommunication::where('company_id',$company->id );
+        return view('communications.registersend')->with('sendcommunications',$sendcommunications->get());
     }
 	
 	public function edit($id)
@@ -211,6 +214,24 @@ class CommunicationController extends Controller
 			->with('id_comunication',$id);
     }
 	
+	public function resend($id)
+    {
+		$company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+		$communications = Communication::where('company_id',$company->id )->get();
+        $communications = $communications->lists('FechaAsunto','id');
+		$contacts = Contact::where('company_id',$company->id )->get();
+		$contacts = $contacts->lists('FullName','id');
+		$sendcommunications = Sendcommunication::where('communication_id',$id );
+            
+        return view('communications.resend')
+			->with('properties',$properties)
+		    ->with('communications',$communications)
+			->with('contacts',$contacts)
+			->with('id_comunication',$id)
+			->with('sendcommunications',$sendcommunications->get());
+    }
+	
 	public function sendcommunication(Request $request){
 		$this->validate($request, [
             'comunicado' => 'required',
@@ -296,6 +317,7 @@ class CommunicationController extends Controller
 						$sendcommunication->correos = $request->correo;
 					}
 					$sendcommunication->enviado = '1';
+					$sendcommunication->company_id = $company->id;
 					$sendcommunication->save();
 					Session::flash('message', 'Comunicado enviado correctamente');
 					return redirect()->route('communication.communication.index');

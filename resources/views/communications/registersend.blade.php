@@ -44,67 +44,37 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="gradeX">
-                            <td>06/04/2016</td>
-                            <td>Convocatoria Asamblea de Socios</td>
-                            <td>
-                                <span class="badge">Todos</span>
-                            </td>
-                            <td>07/04/2016 - 14:34</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comunicado">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Reenviar...">
-                                            <i class="fa fa-share"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>20/03/2016</td>
-                            <td>Notificación de cuentas xxx</td>
-                            <td>
-                                <span class="badge">Directorio</span>
-                                <span class="badge">joseluisbr@gmail.com</span>
-                            </td>
-                            <td>21/03/2016 - 09:31</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comunicado">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Reenviar...">
-                                            <i class="fa fa-share"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>20/03/2016</td>
-                            <td>Notificación de cuentas xxx</td>
-                            <td>
-                            <span class="badge">Varios</span>
-                            </td>
-                            <td>20/03/2016 - 19:10</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comunicado">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Reenviar...">
-                                            <i class="fa fa-share"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                        </tr>
+							@foreach ($sendcommunications as $sendcommunication)
+							
+							<tr class="gradeX">
+								<td>{{ date_format(date_create($sendcommunication->communication->created_at),"d/m/Y") }}</td>
+								<td>{{ $sendcommunication->communication->asunto }}</td>
+								<td>
+									@if($sendcommunication->dirigido == 'correo')	
+										@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
+											<span class="badge">{{$correo}}</span>
+										@endforeach
+									@else
+										<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
+									@endif											
+								</td>
+								<td>{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y H:i") }}</td>
+									<td style="vertical-align:middle; text-align:right;">
+										<div class="btn-group">
+											<a href="{{ route('communication.communication.show', $sendcommunication->communication_id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comunicado">
+												<i class="fa fa-eye"></i>
+											</a>
+										</div>
+										<div class="btn-group">
+											<a href="{{ route('communication.communication.resend', $sendcommunication->communication_id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Reenviar...">
+												<i class="fa fa-share"></i>
+											</a>
+										</div>
+								   </td>
+							</tr>
+							
+							@endforeach
+                        
                         </tbody>
                     </table>
                 </div>

@@ -58,8 +58,26 @@
                                 <tr>
                                     <td>{{ date_format(date_create($communication->fecha),'d/m/Y') }}</td>
                                     <td>{{$communication->asunto}}</td>
-                                    <td></td>
-                                    <td>Borrador</td>
+                                    <td>
+										@foreach($communication->sendcommunication as $send)
+											@if($send->dirigido == 'correo')	
+												@foreach( ( explode(",",$send->correos) ) as $correo)
+													<span class="badge">{{$correo}}</span>
+												@endforeach
+											@else
+												<span class="badge">{{ ucwords($send->dirigido) }}</span>
+											@endif
+											
+										@endforeach
+									</td>
+                                    <td>
+										@if( count($communication->sendcommunication) )
+											Enviado
+										@else
+											Borrador
+										@endif
+										
+									</td>
                                     <td style="vertical-align:middle; text-align:right;">
                                         <div class="btn-group">
                                             <a href="{{ route('communication.communication.show', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
@@ -68,51 +86,33 @@
                                             <a href="{{ route('communication.communication.copy', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
                                                 <i class="fa fa-files-o"></i>
                                             </a>
+											@if( count($communication->sendcommunication) )
+											<a class="btn btn-default btn-xs disabled" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+											@else
                                             <a href="{{ route('communication.communication.edit', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
+											@endif
                                         </div>
                                         <div class="btn-group">
                                             <a href="{{ route('communication.communication.print', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
                                                 <i class="fa fa-print"></i>
                                             </a>
-                                            <a href="{{ route('communication.communication.send', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Enviar...">
+											@if( count($communication->sendcommunication) )
+											<a href="{{ route('communication.communication.resend', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Reenviar...">
+                                                <i class="fa fa-reply"></i>
+                                            </a>
+											@else
+											<a href="{{ route('communication.communication.send', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Enviar...">
                                                 <i class="fa fa-envelope-o"></i>
                                             </a>
+											@endif
                                         </div>
                                     </td>
                                 </tr>
 								@endforeach
-                                <tr>
-                                    <td>20/03/2016</td>
-                                    <td>Notificación de cuentas xxx</td>
-                                    <td>
-                                        <span class="badge">Todos</span>
-                                        <span class="badge">Prueba</span>
-                                    </td>
-                                    <td>Enviado</td>
-                                    <td style="vertical-align:middle; text-align:right;">
-                                        <div class="btn-group">
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
-                                                <i class="fa fa-files-o"></i>
-                                            </a>
-                                            <a class="btn btn-default btn-xs disabled" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
-                                                <i class="fa fa-print"></i>
-                                            </a>
-                                            <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Reenviar...">
-                                                <i class="fa fa-reply"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
 
                                 </tbody>
                             </table>

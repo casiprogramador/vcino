@@ -20,6 +20,8 @@ class CreateSendcommunicationsTable extends Migration
 			$table->string('destinatario')->nullable();
 			$table->string('correos')->nullable();
 			$table->tinyInteger('enviado')->default('0');
+			$table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('companies');
 			$table->integer('communication_id')->unsigned();
             $table->foreign('communication_id')->references('id')->on('communications');
             $table->timestamps();
