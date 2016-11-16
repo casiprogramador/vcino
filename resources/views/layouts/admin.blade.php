@@ -19,7 +19,7 @@
                     <a href="index.html"><i class="fa fa-envelope-o"></i> <span
                                 class="nav-label">Comunicación & Info</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#/">Comunicados</a></li>
+                        <li class="{{ MenuRoute::active('communication/communication') }}"><a href="{{ route('communication.communication.index') }}">Comunicados</a></li>
                         <li class="{{ MenuRoute::active('communication/phonesite') }}"><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>

@@ -12,4 +12,9 @@ class MenuRoute {
         return '';
 
     }
+	
+	public static function filename($route) {
+		$filename_array = explode("-name-",$route);
+		return $filename_array[1];
+    }
 }

@@ -40,6 +40,7 @@ elixir(function(mix) {
     mix.styles(
         [
             paths.vendor +'bootstrap/dist/css/bootstrap.css',
+			paths.vendor +'jasny-bootstrap/dist/css/jasny-bootstrap.min.css',
             paths.vendor +'font-awesome/css/font-awesome.css',
 
             paths.template +'css/custom-icheck.css',
@@ -54,7 +55,8 @@ elixir(function(mix) {
     mix.scripts(
         [
             paths.vendor +'jquery/dist/jquery.js',
-            paths.vendor +'bootstrap/dist/js/bootstrap.js',
+            paths.vendor +'jasny-bootstrap/dist/js/jasny-bootstrap.min.js',
+			paths.vendor +'bootstrap/dist/js/bootstrap.js',
             paths.template +'js/jquery.metisMenu.js',
             paths.template +'js/jquery.slimscroll.js',
             paths.template +'js/inspinia.js',

@@ -46,6 +46,28 @@ Route::group(['prefix' => 'communication'], function () {
     Route::get('/phonesite', [
         'as' => 'communication.phonesite.index', 'uses' => 'CommunicationController@phonesite'
     ]);
+    Route::resource('communication', 'CommunicationController');
+    Route::get('/send/{id}', [
+        'as' => 'communication.communication.send', 'uses' => 'CommunicationController@send'
+    ]);
+	Route::get('/resend/{id}', [
+        'as' => 'communication.communication.resend', 'uses' => 'CommunicationController@resend'
+    ]);
+	Route::post('/send', [
+        'as' => 'communication.communication.sendcommunication', 'uses' => 'CommunicationController@sendcommunication'
+    ]);
+	Route::get('/register/send', [
+        'as' => 'communication.register.send', 'uses' => 'CommunicationController@registersend'
+    ]);
+    Route::get('/copy/{id}', [
+        'as' => 'communication.communication.copy', 'uses' => 'CommunicationController@copy'
+    ]);
+	Route::post('/copy', [
+        'as' => 'communication.communication.savecopy', 'uses' => 'CommunicationController@savecopy'
+    ]);
+	Route::get('/print/{id}', [
+        'as' => 'communication.communication.print', 'uses' => 'CommunicationController@printcom'
+    ]);
 });
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'

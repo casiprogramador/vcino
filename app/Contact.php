@@ -26,4 +26,10 @@ class Contact extends Model
         return $this->belongsTo('App\ModelsSupport\Media','media_id');
     }
 	
+	//Mutator
+	
+	public function getFullNameAttribute(){
+		return $this->attributes['nombre'] . " " . $this->attributes['apellido'];
+	}
+	
 }
