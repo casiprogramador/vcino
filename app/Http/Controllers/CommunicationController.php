@@ -337,7 +337,9 @@ class CommunicationController extends Controller
 	
 	public function printcom($id)
     {
-        return view('communications.print');
+		$communication = Communication::find($id);
+        
+        return view('communications.print')->with('communication',$communication);
     }
 
 }

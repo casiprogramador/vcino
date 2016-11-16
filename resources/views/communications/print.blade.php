@@ -21,8 +21,8 @@
     </div>
     <div class="col-lg-4">
         <div class="title-action">
-            <a href="#" class="btn btn-success">
-            <i class="fa fa-print">&nbsp;&nbsp;&nbsp;</i>Imprimir comunicado</a>
+            <button id="printButton" class="btn btn-success">
+            <i class="fa fa-print">&nbsp;&nbsp;&nbsp;</i>Imprimir comunicado</button>
         </div>
     </div>
 </div>
@@ -31,7 +31,7 @@
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="ibox float-e-margins">
-                <div class="ibox-content p-xl">
+                <div class="ibox-content p-xl" id="printableArea">
                     <div class="row">
                         <div class="table-responsive">
                         <table class="table">
@@ -68,9 +68,9 @@
                             De:
                         </div>
                         <div class="col-sm-5">
-                            <span style="margin-left: -15px;">6 de abril de 2016</span>
+                            <span style="margin-left: -15px;">{{ date_format(date_create($communication->fecha),'d/m/Y') }}</span>
                             <br/>
-                            <span style="margin-left: -15px;">Administración</span>
+                            <span style="margin-left: -15px;"></span>
                         </div>
                         <div class="col-sm-1">
                             <br/>
@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-sm-5">
                             <br/>
-                            <span style="margin-left: -15px;">Juan Perez - Propiedad No. 10</span>
+                            <span style="margin-left: -15px;"></span>
                         </div>
                     </div>
 
@@ -87,20 +87,14 @@
                             Asunto:
                         </div>
                         <div class="col-sm-11">
-                            <span style="margin-left: -15px;"><strong>Convocatoria Asamblea de Socios</strong></span>
+                            <span style="margin-left: -15px;"><strong>{{$communication->asunto}}</strong></span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-12">
                             
-                            <h3>Lorem Ipsum is simply</h3>
-                            dummy text of the printing and typesetting industry. <strong>Lorem Ipsum has been the industry's</strong> standard dummy text ever since the 1500s,
-                            <ul>
-                                <li>Remaining essentially unchanged</li>
-                                <li>Make a type specimen book</li>
-                                <li>Unknown printer</li>
-                            </ul>
+                            <?php echo $communication->cuerpo ?>
                     
                         </div>
                     </div>
@@ -133,21 +127,17 @@
     </div>
 </div>
 @endsection
-@section('style')
-<link rel="stylesheet" href="{{ URL::asset('css/summernote.css') }}" />
-@endsection
 
 @section('javascript')
-<script type="text/javascript" src="{{ URL::asset('js/summernote.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>
 	$(document).ready(function () {
-		$('#summernote').summernote({
-			height: 300
+		$("#printButton").click(function(){
+			var mode = 'iframe'; //popup
+			var close = mode == "popup";
+			var options = { mode : mode, popClose : close};
+			$("#printableArea").printArea( options );
 		});
-	});
-
-	$('.date-picker').datetimepicker({
-		format: 'DD/MM/YYYY'
 	});
 </script>
 @endsection
