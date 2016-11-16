@@ -9,10 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <a href="{{ route('config.installation.index') }}">Instalacion</a>
+                    <a href="{{ route('config.installation.index') }}">Instalaciones comunes</a>
                 </li>
                 <li class="active">
-                    <strong>Editar instalacion</strong>
+                    <strong>Editar instalación</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +28,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Nueva</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar Instalación: {{$installation->instalacion}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -62,7 +62,7 @@
 
                                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Costo</label>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <input type="text" class="form-control input-sm" name="costo" value="{{$installation->costo}}">
                                                 @if ($errors->has('costo'))
                                                     <span class="help-block">
@@ -94,52 +94,50 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Días permitidos</label>
                                             <div class="col-sm-2">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="lunes" {{ (in_array('lunes',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}> Lunes</label>
+                                                <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="lunes" {{ (in_array('lunes',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}>&nbsp;&nbsp;Lunes</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="martes" {{ (in_array('martes',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}> Martes</label>
+                                                <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="martes" {{ (in_array('martes',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}>&nbsp;&nbsp;Martes</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="miercoles" {{ (in_array('miercoles',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}> Miércoles</label>
+                                                <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="miercoles" {{ (in_array('miercoles',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}>&nbsp;&nbsp;Miércoles</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="jueves" {{ (in_array('jueves',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}> Jueves</label>
+                                                <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="jueves" {{ (in_array('jueves',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}>&nbsp;&nbsp;Jueves</label>
                                             </div>
                                         </div>
-
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label"></label>
                                             <div class="col-sm-2">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="viernes" {{ (in_array('viernes',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}> Viernes</label>
+                                                <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="viernes" {{ (in_array('viernes',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}>&nbsp;&nbsp;Viernes</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="sabado" {{ (in_array('sabado',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}> Sábado</label>
+                                                <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="sabado" {{ (in_array('sabado',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}>&nbsp;&nbsp;Sábado</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="domingo" {{ (in_array('domingo',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}> Domingo</label>
+                                                <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                    <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="domingo" {{ (in_array('domingo',explode(',',$installation->dias_permitidos))) ? 'checked' : '' }}>&nbsp;&nbsp;Domingo</label>
                                             </div>
 
                                         </div>
                                         @if ($errors->has('dias_permitidos'))
                                             <span class="help-block">
-                                                            <strong>{{ $errors->first('dias_permitidos') }}</strong>
-                                                        </span>
+                                                <strong>{{ $errors->first('dias_permitidos') }}</strong>
+                                            </span>
                                         @endif
-
 
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group{{ $errors->has('hora_dia_semana_hasta') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Horario semana</label>
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-3">
                                                 <div class="input-group clockpicker" data-autoclose="true">
                                                     <input type="text" class="form-control" name="hora_dia_semana_hasta" value="{{$installation->hora_dia_semana_hasta}}">
 
@@ -161,7 +159,7 @@
 
                                         <div class="form-group{{ $errors->has('hora_fin_de_semana_hasta') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Horario fin de semana</label>
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-3">
                                                 <div class="input-group clockpicker" data-autoclose="true">
                                                     <input type="text" class="form-control"  name="hora_fin_de_semana_hasta" value="{{$installation->hora_fin_de_semana_hasta}}">
                                                     <span class="input-group-addon">
@@ -303,9 +301,6 @@
         </div>
     </div>
 
-
-
-
 @endsection
 
 @section('style')
@@ -320,15 +315,20 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
-
         });
+
         $(document).ready(function() {
             $('#summernote').summernote({
-                height: 300
+                height: 300,
+                toolbar: [
+                ['style', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+               ]
             });
         });
-
-
 
         $('.clockpicker').clockpicker();
     </script>

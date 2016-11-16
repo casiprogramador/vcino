@@ -35,7 +35,7 @@
                                         <div class="panel-body">
 
                                             <div class="form-group{{ $errors->has('razon_social') ? ' has-error' : '' }}">
-                                                <label class="col-sm-3 control-label">Razón social / Nombre</label>
+                                                <label class="col-sm-3 control-label">Razón social/ Nombre</label>
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control input-sm" name="razon_social" value="{{old('razon_social')}}">
                                                     @if ($errors->has('razon_social'))
@@ -64,7 +64,7 @@
                                                 <label class="col-sm-3 control-label">Cheque a nombre de</label>
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control input-sm" style="text-transform: uppercase;" name="nombre_cheque" value="{{old('nombre_cheque')}}">
-                                                    <span class="help-block m-b-none">Nombre o razón social para emitir el cheque.</span>
+                                                    <span class="help-block m-b-none" style="color: #BDBDBD">Nombre o razón social para emitir el cheque.</span>
                                                 </div>
                                             </div>
 
@@ -81,7 +81,7 @@
                                                             <input type="text" placeholder="Móvil" class="form-control" name="telefono_movil" value="{{old('telefono_movil')}}">
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="# para Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
+                                                            <input type="text" placeholder="Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
                                                         </div>
                                                     </div>
                                                 </div>

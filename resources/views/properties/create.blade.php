@@ -38,7 +38,7 @@
                                 <div class="panel-body">
 
                                     <div class="form-group{{ $errors->has('nro') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Número</label>
+										<label class="col-sm-3 control-label">Número *</label>
                                         <div class="col-sm-3">
 											<input type="text" class="form-control input-sm" name="nro" value="{{old('nro')}}">
 											@if ($errors->has('nro'))
@@ -49,7 +49,7 @@
 										</div>
                                     </div>
                                     <div class="form-group{{ $errors->has('type_property') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Tipo</label>
+										<label class="col-sm-3 control-label">Tipo *</label>
                                         <div class="col-sm-4">
                                              {{ Form::select('type_property',$typeproperties,old('type_property'), ['class' => 'form-control input-sm']) }}
 											 @if ($errors->has('type_property'))
@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('situacion_habitacionals') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Situación habitacional</label>
+										<label class="col-sm-3 control-label">Situación habitacional *</label>
                                         <div class="col-sm-4">
                                              {{ Form::select('situacion_habitacionals',$sithabs, old('situacion_habitacionals'), ['class' => 'form-control input-sm']) }}
 											 @if ($errors->has('situacion_habitacionals'))
@@ -95,7 +95,7 @@
 													<strong>{{ $errors->first('etiquetas') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none">Permite agrupar o clasificar las propiedades por otros criterios.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Permite agrupar o clasificar las propiedades por otros criterios.</span>
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('campo_1') ? ' has-error' : '' }}">
@@ -107,7 +107,7 @@
 													<strong>{{ $errors->first('campo_1') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none">Campo personalizado para almacenar valores o referencias adicionales.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Campo personalizado para almacenar valores o referencias adicionales.</span>
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('campo_2') ? ' has-error' : '' }}">
@@ -119,7 +119,7 @@
 													<strong>{{ $errors->first('campo_2') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none">Campo personalizado para almacenar valores o referencias adicionales.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Campo personalizado para almacenar valores o referencias adicionales.</span>
                                         </div>
                                     </div>
 

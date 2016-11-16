@@ -70,28 +70,28 @@ class PropertyController extends Controller
     {
         $this->validate($request, [
             'nro' => 'required',
-			'nro_intecomunicador' => 'required',
+			//'nro_intecomunicador' => 'required',
             'type_property' => 'required|not_in:0',
 			'situacion_habitacionals' => 'required|not_in:0',
-			'etiquetas' => 'required',
-			'campo_1' => 'required',
-			'campo_2' => 'required',
-			'notas' => 'required',
-			'codigo_electricidad' => 'required',
-			'codigo_agua' => 'required',
-			'codigo_gas' => 'required',
-			'tvservices' => 'required|not_in:0',
-			'internetservices' => 'required|not_in:0',
-			'phone_services' => 'required|not_in:0',
-			'waterservices' => 'required|not_in:0',
-			'electricservices' => 'required|not_in:0',
-			'superficie' => 'required',
-			'scc' => 'required',
-			'fit' => 'required',
-			'nro_dormitorios' => 'required',
-			'nro_banos' => 'required',
-			'plano' => 'required',
-			'caracteristicas' => 'required',
+			//'etiquetas' => 'required',
+			//'campo_1' => 'required',
+			//'campo_2' => 'required',
+			//'notas' => 'required',
+			//'codigo_electricidad' => 'required',
+			//'codigo_agua' => 'required',
+			//'codigo_gas' => 'required',
+			//'tvservices' => 'required|not_in:0',
+			//'internetservices' => 'required|not_in:0',
+			//'phone_services' => 'required|not_in:0',
+			//'waterservices' => 'required|not_in:0',
+			//'electricservices' => 'required|not_in:0',
+			//'superficie' => 'required',
+			//'scc' => 'required',
+			//'fit' => 'required',
+			//'nro_dormitorios' => 'required',
+			//'nro_banos' => 'required',
+			//'plano' => 'required',
+			//'caracteristicas' => 'required',
         ]);
 
         $company = Auth::user()->company;
@@ -123,7 +123,7 @@ class PropertyController extends Controller
         $property->company_id = $company->id;
 
         $property->save();
-        Session::flash('message', 'Nueva propiedad ingresada correctamente');
+        Session::flash('message', 'Nueva propiedad registrada correctamente.');
         return redirect()->route('properties.property.index');
     }
 
@@ -135,7 +135,8 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-		$typeproperties = TypeProperty::all()->lists('tipo_propiedad','id');
+        $company = Auth::user()->company;
+        $typeproperties = TypeProperty::where('company_id',$company->id )->lists('tipo_propiedad','id');
 		$electrics = Electricservice::all()->lists('nombre','id');
 		$internets = Internetservice::all()->lists('nombre','id');
 		$phones = PhoneService::all()->lists('nombre','id');
@@ -163,7 +164,8 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-		$typeproperties = TypeProperty::all()->lists('tipo_propiedad','id');
+        $company = Auth::user()->company;
+        $typeproperties = TypeProperty::where('company_id',$company->id )->lists('tipo_propiedad','id');
 		$electrics = Electricservice::all()->lists('nombre','id');
 		$internets = Internetservice::all()->lists('nombre','id');
 		$phones = PhoneService::all()->lists('nombre','id');
@@ -194,28 +196,28 @@ class PropertyController extends Controller
     {
          $this->validate($request, [
             'nro' => 'required',
-			'nro_intecomunicador' => 'required',
+			//'nro_intecomunicador' => 'required',
             'type_property' => 'required|not_in:0',
 			'situacion_habitacionals' => 'required|not_in:0',
-			'etiquetas' => 'required',
-			'campo_1' => 'required',
-			'campo_2' => 'required',
-			'notas' => 'required',
-			'codigo_electricidad' => 'required',
-			'codigo_agua' => 'required',
-			'codigo_gas' => 'required',
-			'tvservices' => 'required|not_in:0',
-			'internetservices' => 'required|not_in:0',
-			'phone_services' => 'required|not_in:0',
-			'waterservices' => 'required|not_in:0',
-			'electricservices' => 'required|not_in:0',
-			'superficie' => 'required',
-			'scc' => 'required',
-			'fit' => 'required',
-			'nro_dormitorios' => 'required',
-			'nro_banos' => 'required',
-			'plano' => 'required',
-			'caracteristicas' => 'required',
+			//'etiquetas' => 'required',
+			//'campo_1' => 'required',
+			//'campo_2' => 'required',
+			//'notas' => 'required',
+			//'codigo_electricidad' => 'required',
+			//'codigo_agua' => 'required',
+			//'codigo_gas' => 'required',
+			//'tvservices' => 'required|not_in:0',
+			//'internetservices' => 'required|not_in:0',
+			//'phone_services' => 'required|not_in:0',
+			//'waterservices' => 'required|not_in:0',
+			//'electricservices' => 'required|not_in:0',
+			//'superficie' => 'required',
+			//'scc' => 'required',
+			//'fit' => 'required',
+			//'nro_dormitorios' => 'required',
+			//'nro_banos' => 'required',
+			//'plano' => 'required',
+			//'caracteristicas' => 'required',
         ]);
 
         $property = Property::find($id);
@@ -244,7 +246,7 @@ class PropertyController extends Controller
 		$property->caracteristicas = $request->caracteristicas;
 
         $property->save();
-        Session::flash('message', 'Propiedad editada exitosamente correctamente');
+        Session::flash('message', 'Propiedad actualizada correctamente.');
         return redirect()->route('properties.property.index');
     }
 

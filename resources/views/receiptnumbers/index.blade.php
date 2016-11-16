@@ -36,35 +36,29 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">Gestión</th>
-                                    <th class="text-center">C. Ingreso</th>
-                                    <th class="text-center">C. Egreso</th>
-                                    <th class="text-center">C. Traspaso</th>
-                                    <th></th>
+                                    <th style="vertical-align:bottom">Gestión</th>
+                                    <th style="vertical-align:bottom" class="text-center">C. Ingreso</th>
+                                    <th style="vertical-align:bottom" class="text-center">C. Egreso</th>
+                                    <<th style="vertical-align:bottom" class="text-center">C. Traspaso</th>
+                                    <th style="vertical-align:bottom" width="70"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($receiptnumbers as $receiptnumber)
-                                        <tr>
-                                            <td class="text-center">{{$receiptnumber->gestion}}</td>
-                                            <td class="text-center">{{$receiptnumber->ingreso}}</td>
-                                            <td class="text-center">{{$receiptnumber->egreso}}</td>
-                                            <td class="text-center">{{$receiptnumber->traspaso}}</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        Opciones
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="{{ route('config.receiptnumber.edit', $receiptnumber->id) }}">Editar Comprobante</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
+                                    <tr>
+                                        <td>{{$receiptnumber->gestion}}</td>
+                                        <td class="text-center">{{$receiptnumber->ingreso}}</td>
+                                        <td class="text-center">{{$receiptnumber->egreso}}</td>
+                                        <td class="text-center">{{$receiptnumber->traspaso}}</td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.receiptnumber.edit', $receiptnumber->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar números de comprobantes">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            </div>
+                                           </td>
                                         </tr>
                                 @endforeach
-
-
 
                                 </tbody>
                             </table>
@@ -129,7 +123,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 4 } ]
             });
         } );
     </script>

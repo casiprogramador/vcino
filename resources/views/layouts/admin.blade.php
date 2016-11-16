@@ -41,7 +41,7 @@
                 </li>
 
                 <li {!! (Request::is('config/*') ? ' class="active"' : '') !!}>
-                    <a href="index.html"><i class="fa fa-bar-chart"></i> <span class="nav-label">Configuración</span>
+                    <a href="index.html"><i class="fa fa-cog"></i> <span class="nav-label">Configuración</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('config/account') }}"><a href="{{ route('config.account.index') }}">Cuentas</a></li>
@@ -50,8 +50,8 @@
                         <li class="{{ MenuRoute::active('config/installation') }}"><a href="{{ route('config.installation.index') }}">Instalaciones</a></li>
                         <li class="{{ MenuRoute::active('config/quota') }}"><a href="{{ route('config.quota.index') }}">Cuotas</a></li>
                         <li class="{{ MenuRoute::active('config/typeproperty') }}"><a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a></li>
-                        <li class="{{ MenuRoute::active('receiptnumbers') }}"><a href="{{ route('config.receiptnumber.index') }}">Número de comprobantes</a></li>
-                        <li class="{{ MenuRoute::active('phonesite') }}"><a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
+                        <li class="{{ MenuRoute::active('config/receiptnumber') }}"><a href="{{ route('config.receiptnumber.index') }}">Número de comprobantes</a></li>
+                        <li class="{{ MenuRoute::active('config/phonesite') }}"><a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
                     </ul>
                 </li>
 
@@ -81,10 +81,10 @@
         @yield('admin-content')
         <div class="footer">
             <div class="pull-right">
-                v1.1
+                <span style="color: #ccc">v1.5</span>
             </div>
             <div>
-                <strong>Copyright</strong> Esfera &copy; 2016
+                <strong></strong><span style="color: #ccc">&copy; 2016 Esfera SaaS</span>
             </div>
         </div>
     </div>

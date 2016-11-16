@@ -62,7 +62,7 @@ class ReceiptNumberController extends Controller
         $receiptnumber->company_id = $company->id;
 
         $receiptnumber->save();
-        Session::flash('message', 'Numero de comprobante ingresado correctamente');
+        Session::flash('message', 'Nuevos números de comprobantes registrados correctamente.');
         return redirect()->route('config.receiptnumber.index');
     }
 
@@ -113,7 +113,7 @@ class ReceiptNumberController extends Controller
         $receiptnumber->traspaso = $request->traspaso;
 
         $receiptnumber->save();
-        Session::flash('message', 'Numero de comprobante actualizado correctamente');
+        Session::flash('message', 'Números de comprobantes actualizados correctamente.');
         return redirect()->route('config.receiptnumber.index');
     }
 

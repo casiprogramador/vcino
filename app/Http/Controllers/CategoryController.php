@@ -50,7 +50,7 @@ class CategoryController extends Controller
             'nombre' => 'required',
             'tipo_categoria' => 'required|not_in:0',
             'clase' => 'required|not_in:0',
-            'description' => 'required',
+            //'description' => 'required',
             'icono'	=>	'required | mimes:jpeg,jpg,png'
         ]);
 
@@ -74,7 +74,7 @@ class CategoryController extends Controller
         $category->company_id = $company->id;
 
         $category->save();
-        Session::flash('message', 'Nueva categoria ingresada correctamente');
+        Session::flash('message', 'Nueva categoría registrada correctamente.');
         return redirect()->route('config.category.index');
 
     }
@@ -118,7 +118,7 @@ class CategoryController extends Controller
             'nombre' => 'required',
             'tipo_categoria' => 'required|not_in:0',
             'clase' => 'required|not_in:0',
-            'description' => 'required'
+            //'description' => 'required'
         ]);
 
         if(!empty($request->icono)){
@@ -144,7 +144,7 @@ class CategoryController extends Controller
         $category->activa = $activa;
 
         $category->save();
-        Session::flash('message', 'Categoria actualizada correctamente');
+        Session::flash('message', 'Categoría actualizada correctamente.');
         return redirect()->route('config.category.index');
     }
 

@@ -8,8 +8,11 @@
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
+                <li>
+                    Configuración
+                </li>
                 <li class="active">
-                    <strong><a href="{{ route('config.account.index') }}">Cuentas</a></strong>
+                    <strong>Cuentas</strong>
                 </li>
             </ol>
         </div>
@@ -18,7 +21,7 @@
     <div class="wrapper wrapper-content animated fadeInRight">
 
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 @if (Session::has('message'))
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -28,15 +31,27 @@
                     </div>
                 @endif
                 <div class="ibox">
+                    <div class="ibox-title">
+                        <h5 style="padding-top: 7px;">Lista de cuentas</h5>
+                        <div class="ibox-tools" style="padding-bottom: 7px;">
+                            <div class="btn-group">
+                                <a href="{{ route('config.account.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
+                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="ibox-content">
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>Nombre cuenta</th>
-                                <th>Número</th>
-                                <th>Tipo de cuenta</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
+                                <th style="vertical-align:bottom">Nombre cuenta</th>
+                                <th style="vertical-align:bottom">Número</th>
+                                <th style="vertical-align:bottom">Tipo de cuenta</th>
+                                <th style="vertical-align:bottom">Estado</th>
+                                <th style="vertical-align:bottom" width="70"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -47,18 +62,17 @@
                                         <td>{{ $account->nro_cuenta }}</td>
                                         <td>{{ $account->tipo_cuenta }}</td>
                                         <td>
-                                            <p><span class="text-success">Activa</span></p>
+                                            <span>Activa</span>
                                         </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Opciones
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.account.show', $account->id) }}">Ver Cuenta</a></li>
-                                                    <li><a href="{{ route('config.account.edit', $account->id) }}">Editar Cuenta</a></li>
-                                                </ul>
+
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.account.show', $account->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver cuenta">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.account.edit', $account->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar cuenta">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -68,18 +82,16 @@
                                         <td><span class="text-muted">{{ $account->nro_cuenta }}</span></td>
                                         <td><span class="text-muted">{{ $account->tipo_cuenta }}</span></td>
                                         <td>
-                                            <p><span class="text-danger">Inactiva</span></p>
+                                            <span class="text-muted">Inactiva</span>
                                         </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Opciones
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.account.show', $account->id) }}">Ver Cuenta</a></li>
-                                                    <li><a href="{{ route('config.account.edit', $account->id) }}">Editar Cuenta</a></li>
-                                                </ul>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.account.show', $account->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver cuenta">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.account.edit', $account->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar cuenta">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -90,21 +102,24 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title text-center">
-                        <a href="{{ route('config.account.create') }}" class="btn btn-sm btn-success" > Nueva </a>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de Cuentas..." data-original-title="Imprimir lista de Cuentas..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar Cuentas" data-original-title="Exportar Cuentas"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
+            <div class="col-lg-12">
+                <div class="ibox collapsed">
+                    <div class="ibox-title">
+                        <h5>Ayuda | Cuentas</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="ibox-content">
-                        <h5>
-                            Cuentas
-                        </h5>
-                        <p>
-                            Usted puede ver los detalles completos de cualquiera de sus cuentas
-                        </p>
+
+                        <h4>¿Qué son las Cuentas?</h4>
+                        <p>Las cuentas son...</p>
+                        <h4>¿Tipos de cuentas?</h4>
+                        <p>Las cuentas son...</p>
+                        <h4>Tutoriales</h4>
+                        <p></p>
                     </div>
                 </div>
             </div>
@@ -148,7 +163,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 3 }, { "orderable": false, "targets": 4 } ]
             });
         } );
     </script>

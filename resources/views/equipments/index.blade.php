@@ -6,13 +6,13 @@
             <h2>Equipamiento</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
                     Equipamiento
                 </li>
                 <li class="active">
-                    <strong>Lista de equipos y maquinaria</strong>
+                    <strong>Equipos y maquinarias</strong>
                 </li>
             </ol>
         </div>
@@ -28,12 +28,11 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Fotografía <br>principal</th>
-                                    <th>Equipo/ Maquinaria</th>
-                                    <th>Tipo de equipo</th>
-                                    <th>Con garantía</th>
-                                    <th>Estado</th>
-                                    <th></th>
+                                    <th style="vertical-align:bottom">Fotografía<br>principal</th>
+                                    <th style="vertical-align:bottom">Equipo/ Maquinaria</th>
+                                    <th style="vertical-align:bottom">Tipo de equipo</th>
+                                    <th style="vertical-align:bottom">Estado</th>
+                                    <th style="vertical-align:bottom" width="70"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -43,18 +42,15 @@
                                             <td><img src="{{ $equipment->fotografia_1 }}" class="img-responsive" width="100"></td>
                                             <td>{{ $equipment->equipo }}</td>
                                             <td>{{ $equipment->tipo_equipo }}</td>
-                                            <td>{{ $equipment->garantia }} meses</td>
-                                            <td><span class="text-success">Activo</span></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        Opciones
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="{{ route('equipment.machinery.show', $equipment->id) }}">Ver Equipo</a></li>
-                                                        <li><a href="{{ route('equipment.machinery.edit', $equipment->id) }}">Editar Equipo</a></li>
-                                                    </ul>
+                                            <td><span>Activo</span></td>
+                                            <td style="vertical-align:middle; text-align:right;">
+                                                <div class="btn-group">
+                                                    <a href="{{ route('equipment.machinery.show', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver equipamiento">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('equipment.machinery.edit', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar equipamiento">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -63,18 +59,15 @@
                                             <td><img src="{{ $equipment->fotografia_1 }}" class="img-responsive" width="100"></td>
                                             <td><span class="text-muted">{{ $equipment->equipo }}</span></td>
                                             <td><span class="text-muted">{{ $equipment->tipo_equipo }}</span></td>
-                                            <td><span class="text-muted">{{ $equipment->garantia }} meses</span></td>
-                                            <td><span class="text-danger">Inactiva</span></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        Opciones
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="{{ route('equipment.machinery.show', $equipment->id) }}">Ver Equipo</a></li>
-                                                        <li><a href="{{ route('equipment.machinery.edit', $equipment->id) }}">Editar Equipo</a></li>
-                                                    </ul>
+                                            <td><span class="text-muted">Inactiva</span></td>
+                                            <td style="vertical-align:middle; text-align:right;">
+                                                <div class="btn-group">
+                                                    <a href="{{ route('equipment.machinery.show', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver equipamiento">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('equipment.machinery.edit', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar equipamiento">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -97,7 +90,7 @@
                     </div>
                     <div class="ibox-content">
                         <h5>
-                            Equipos y maquinaria
+                            Equipos y maquinarias
                         </h5>
                         <p>
                             Se refieren a todo el equipamiento instalado en el lugar que cumple una función y requiere ser mantenido, ya sea preventivamente o de forma periódica. Son todos aquellos equipos necesarios que cumplen una función...
@@ -120,6 +113,7 @@
     <script>
         $(document).ready(function() {
             $('.table').DataTable({
+                "order": [[ 1, "asc" ]],
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -145,7 +139,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 0 }, { "orderable": false, "targets": 4 } ]
             });
         } );
     </script>

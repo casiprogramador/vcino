@@ -12,7 +12,7 @@
                     <a href="{{ route('config.installation.index') }}">Instalaciones comunes</a>
                 </li>
                 <li class="active">
-                    <strong>Nueva categoria</strong>
+                    <strong>Nueva instalación</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +28,7 @@
 
                         <div class="tabs-container">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-1">Nueva</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#tab-1">Nueva instalación</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
@@ -62,7 +62,7 @@
 
                                             <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Costo</label>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <input type="text" class="form-control input-sm" name="costo" value="{{old('costo')}}">
                                                     @if ($errors->has('costo'))
                                                         <span class="help-block">
@@ -94,54 +94,52 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Días permitidos</label>
                                                 <div class="col-sm-2">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="lunes"> Lunes</label>
+                                                    <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="lunes">&nbsp;&nbsp;Lunes</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="martes"> Martes</label>
+                                                    <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="martes">&nbsp;&nbsp;Martes</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="miercoles"> Miércoles</label>
+                                                    <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="miercoles">&nbsp;&nbsp;Miércoles</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="jueves"> Jueves</label>
+                                                    <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="jueves">&nbsp;&nbsp;Jueves</label>
                                                 </div>
                                             </div>
-
 
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label"></label>
                                                 <div class="col-sm-2">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="viernes"> Viernes</label>
+                                                    <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="viernes">&nbsp;&nbsp;Viernes</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="sabado"> Sábado</label>
+                                                    <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="sabado">&nbsp;&nbsp;Sábado</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="domingo"> Domingo</label>
+                                                    <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                        <input type="checkbox" class="i-checks" name='dias_permitidos[]' value="domingo">&nbsp;&nbsp;Domingo</label>
                                                 </div>
 
                                             </div>
                                             @if ($errors->has('dias_permitidos'))
                                                 <span class="help-block">
-                                                            <strong>{{ $errors->first('dias_permitidos') }}</strong>
-                                                        </span>
+                                                    <strong>{{ $errors->first('dias_permitidos') }}</strong>
+                                                </span>
                                             @endif
-
 
                                             <div class="hr-line-dashed"></div>
 
                                             <div class="form-group{{ $errors->has('hora_dia_semana_hasta') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Horario semana</label>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-3">
                                                     <div class="input-group clockpicker" data-autoclose="true">
-                                                        <input type="text" class="form-control" value="09:30" name="hora_dia_semana_hasta" value="{{old('hora_dia_semana_hasta')}}">
+                                                        <input type="text" class="form-control" value="22:00" name="hora_dia_semana_hasta" value="{{old('hora_dia_semana_hasta')}}">
 
                                                         <span class="input-group-addon">
                                                             <span class="fa fa-clock-o"></span>
@@ -161,9 +159,9 @@
 
                                             <div class="form-group{{ $errors->has('hora_fin_de_semana_hasta') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Horario fin de semana</label>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-3">
                                                     <div class="input-group clockpicker" data-autoclose="true">
-                                                        <input type="text" class="form-control" value="09:30" name="hora_fin_de_semana_hasta" value="{{old('hora_fin_de_semana_hasta')}}">
+                                                        <input type="text" class="form-control" value="23:30" name="hora_fin_de_semana_hasta" value="{{old('hora_fin_de_semana_hasta')}}">
                                                         <span class="input-group-addon">
                                                     <span class="fa fa-clock-o"></span>
                                                 </span>
@@ -186,7 +184,7 @@
                                                 <label class="col-sm-3 control-label">Principales normas</label>
                                                 <div class="col-sm-9">
                                                     <div class="no-padding">
-                                                        <textarea id="summernote" name="normas">Escribir cuerpo...</textarea>
+                                                        <textarea id="summernote" name="normas"></textarea>
                                                     </div>
                                                     @if ($errors->has('normas'))
                                                         <span class="help-block">
@@ -321,7 +319,14 @@
         });
         $(document).ready(function() {
             $('#summernote').summernote({
-                height: 300
+                height: 300,
+                toolbar: [
+                ['style', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+               ]
             });
         });
 

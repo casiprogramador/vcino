@@ -9,10 +9,10 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                <a href="{{ route('config.category.index') }}">Categorias</a>
+                <a href="{{ route('config.category.index') }}">Categorías</a>
             </li>
             <li class="active">
-                <strong>Nueva categoria</strong>
+                <strong>Nueva categoría</strong>
             </li>
         </ol>
     </div>

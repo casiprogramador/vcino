@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinaria</a>
+                    <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinarias</a>
                 </li>
                 <li class="active">
                     <strong>Ver</strong>
@@ -28,7 +28,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Ver {{$equipment->equipo}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle: {{$equipment->equipo}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -36,18 +36,16 @@
 
                                         <div class="form-group{{ $errors->has('equipo') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Equipo</label>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-8">
                                                 <input type="text" class="form-control input-sm" name="equipo" value="{{$equipment->equipo}}" readonly>
 
                                             </div>
                                         </div>
 
                                         <div class="form-group{{ $errors->has('tipo_equipo') ? ' has-error' : '' }}">
-                                            <label class="col-sm-3 control-label">Tipo de equipo</label>
+                                            <label class="col-sm-3 control-label">Tipo de equipamiento</label>
                                             <div class="col-sm-3">
-                                                {{ Form::select('tipo_equipo',array('0' => 'Seleccione el tipo','Equipo' => 'Equipo', 'Mobiliario' => 'Mobiliario', 'Instalaciones' => 'Instalaciones', 'Otro' => 'Otro'),$equipment->tipo_equipo,['class' => 'form-control input-sm','disabled'=>'disabled']) }}
-
-
+                                                {{ Form::select('tipo_equipo',array('0' => 'Seleccione','Equipo' => 'Equipo', 'Mobiliario' => 'Mobiliario', 'Instalaciones' => 'Instalaciones', 'Otro' => 'Otro'),$equipment->tipo_equipo,['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                                             </div>
                                         </div>
 
@@ -71,7 +69,7 @@
 
                                         <div class="form-group{{ $errors->has('fecha_instalacion') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fecha de instalación o compra</label>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-4">
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input type="text" class="form-control date-picker" value="{{date('d/m/Y', strtotime($equipment->fecha_instalacion)) }}" name="fecha_instalacion" readonly>
@@ -84,7 +82,6 @@
                                             <label class="col-sm-3 control-label">Vida útil (meses)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control input-sm" name="vida" value="{{$equipment->vida}}" readonly>
-
                                             </div>
                                         </div>
 
@@ -92,7 +89,6 @@
                                             <label class="col-sm-3 control-label">Garantía (meses)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control input-sm" name="garantia" value="{{$equipment->garantia}}" readonly>
-
                                             </div>
                                         </div>
 
@@ -100,7 +96,6 @@
                                             <label class="col-sm-3 control-label">Frecuencia mantenimiento (meses)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control input-sm" name="mantenimiento" value="{{$equipment->mantenimiento}}" readonly>
-
                                             </div>
                                         </div>
 
@@ -109,7 +104,6 @@
                                         <div class="form-group{{ $errors->has('notas') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Notas</label>
                                             <div class="col-sm-9">
-
                                                 <?php echo $equipment->notas ?>
                                             </div>
 
@@ -119,10 +113,10 @@
 
                                         <div class="form-group{{ $errors->has('documento') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Documento</label>
-                                            <div class="col-sm-4">
-                                                <a href="{{asset($equipment->documento)}}" target="_blank" class="btn btn-info" role="button">Ver Documento</a>
-                                            </div>
                                             <div class="col-sm-3">
+                                                <a href="{{asset($equipment->documento)}}" target="_blank" class="btn btn-default" role="button">Ver Documento</a>
+                                            </div>
+                                            <div class="col-sm-5">
                                                 <p style="font-size: 11px; color: #B0B0B0;">Manual, ficha técnica. Documento que se adjunta al equipo.</p>
                                             </div>
                                         </div>
@@ -165,7 +159,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <a href="{{ route('equipment.machinery.index') }}" class="btn btn-success" >Atras</a>
+                                    <a href="{{ route('equipment.machinery.index') }}" class="btn btn-success">Volver</a>
                                 </div>
                             </div>
 

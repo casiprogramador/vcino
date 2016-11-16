@@ -9,6 +9,9 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
+                Propiedades
+            </li>
+            <li>
                 <a href="{{ route('properties.contact.index') }}">Lista de contactos</a>
             </li>
             <li class="active">
@@ -27,7 +30,7 @@
 					{!! Form::open(array('route' => array('properties.contact.update', $contact->id),'method' => 'patch' ,'class' => 'form-horizontal', 'files' => true)) !!}
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1">Nuevo contacto</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Editar contacto</a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
@@ -190,16 +193,16 @@
                                     <div class="form-group{{ $errors->has('correspondencia') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Correspondencia</label>
                                         <div class="col-sm-3">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }}>Comunicados</label>
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }}>&nbsp;&nbsp;Comunicados</label>
                                         </div>
                                         <div class="col-sm-3">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }}>Cobranzas</label>
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }}>&nbsp;&nbsp;Cobranzas</label>
                                         </div>
                                         <div class="col-sm-3">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }}>Directorio</label>
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }}>&nbsp;&nbsp;Directorio</label>
                                         </div>
                                     </div>
 
@@ -272,9 +275,10 @@
                         </div>
 
                     </div>
+                    <div class="hr-line-dashed"></div>
 					{!! Form::close() !!}
 					{!! Form::open(['route' => ['properties.contact.destroy', $contact->id], 'method' => 'delete']) !!}
-                    {!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
+                    {!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Está seguro que desea eliminar permanentemente el contacto?')"]) !!}
 					{!! Form::close() !!}
                 </div>
             </div>

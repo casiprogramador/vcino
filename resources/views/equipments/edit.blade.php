@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinaria</a>
+                    <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinarias</a>
                 </li>
                 <li class="active">
                     <strong>Editar</strong>
@@ -28,7 +28,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar {{$equipment->equipo}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar: {{$equipment->equipo}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -36,7 +36,7 @@
 
                                         <div class="form-group{{ $errors->has('equipo') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Equipo</label>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-8">
                                                 <input type="text" class="form-control input-sm" name="equipo" value="{{$equipment->equipo}}">
                                                 @if ($errors->has('equipo'))
                                                     <span class="help-block">
@@ -49,7 +49,7 @@
                                         <div class="form-group{{ $errors->has('tipo_equipo') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Tipo de equipo</label>
                                             <div class="col-sm-3">
-                                                {{ Form::select('tipo_equipo',array('0' => 'Seleccione el tipo','Equipo' => 'Equipo', 'Mobiliario' => 'Mobiliario', 'Instalaciones' => 'Instalaciones', 'Otro' => 'Otro'),$equipment->tipo_equipo,['class' => 'form-control input-sm']) }}
+                                                {{ Form::select('tipo_equipo',array('0' => 'Seleccione','Equipo' => 'Equipo', 'Mobiliario' => 'Mobiliario', 'Instalaciones' => 'Instalaciones', 'Otro' => 'Otro'),$equipment->tipo_equipo,['class' => 'form-control input-sm']) }}
 
                                                 @if ($errors->has('tipo_equipo'))
                                                     <span class="help-block">
@@ -87,7 +87,7 @@
 
                                         <div class="form-group{{ $errors->has('fecha_instalacion') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fecha de instalación o compra</label>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-4">
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input type="text" class="form-control date-picker" value="{{date('d/m/Y', strtotime($equipment->fecha_instalacion)) }}" name="fecha_instalacion" >
@@ -106,8 +106,8 @@
                                                 <input type="text" class="form-control input-sm" name="vida" value="{{$equipment->vida}}">
                                                 @if ($errors->has('vida'))
                                                     <span class="help-block">
-                                                                <strong>{{ $errors->first('vida') }}</strong>
-                                                            </span>
+                                                        <strong>{{ $errors->first('vida') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -118,8 +118,8 @@
                                                 <input type="text" class="form-control input-sm" name="garantia" value="{{$equipment->garantia}}">
                                                 @if ($errors->has('garantia'))
                                                     <span class="help-block">
-                                                                <strong>{{ $errors->first('garantia') }}</strong>
-                                                            </span>
+                                                        <strong>{{ $errors->first('garantia') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -130,8 +130,8 @@
                                                 <input type="text" class="form-control input-sm" name="mantenimiento" value="{{$equipment->mantenimiento}}">
                                                 @if ($errors->has('mantenimiento'))
                                                     <span class="help-block">
-                                                                <strong>{{ $errors->first('mantenimiento') }}</strong>
-                                                            </span>
+                                                        <strong>{{ $errors->first('mantenimiento') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -145,8 +145,8 @@
                                             </div>
                                             @if ($errors->has('notas'))
                                                 <span class="help-block">
-                                                            <strong>{{ $errors->first('notas') }}</strong>
-                                                        </span>
+                                                    <strong>{{ $errors->first('notas') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
 
@@ -154,14 +154,14 @@
 
                                         <div class="form-group{{ $errors->has('documento') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Documento</label>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-5">
                                                 <label title="Upload image file" for="inputImage" class="btn btn-white">
                                                     {{Form::file('documento', array('class'=>'') )}}
                                                 </label>
                                                 @if ($errors->has('documento'))
                                                     <span class="help-block">
-                                                            <strong>{{ $errors->first('documento') }}</strong>
-                                                        </span>
+                                                        <strong>{{ $errors->first('documento') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                             <div class="col-sm-3">
@@ -179,8 +179,8 @@
                                                 </label>
                                                 @if ($errors->has('fotografia_1'))
                                                     <span class="help-block">
-                                                            <strong>{{ $errors->first('fotografia_1') }}</strong>
-                                                        </span>
+                                                        <strong>{{ $errors->first('fotografia_1') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -193,8 +193,8 @@
                                                 </label>
                                                 @if ($errors->has('fotografia_2'))
                                                     <span class="help-block">
-                                                            <strong>{{ $errors->first('fotografia_2') }}</strong>
-                                                        </span>
+                                                        <strong>{{ $errors->first('fotografia_2') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -207,8 +207,8 @@
                                                 </label>
                                                 @if ($errors->has('fotografia_3'))
                                                     <span class="help-block">
-                                                            <strong>{{ $errors->first('fotografia_3') }}</strong>
-                                                        </span>
+                                                        <strong>{{ $errors->first('fotografia_3') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -259,10 +259,16 @@
         });
         $(document).ready(function() {
             $('#summernote').summernote({
-                height: 300
+                height: 300,
+                toolbar: [
+                ['style', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+               ]
             });
         });
-
         $('.date-picker').datetimepicker({
             format: 'DD/MM/YYYY'
         });

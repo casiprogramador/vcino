@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong><a href="{{ route('config.category.index') }}">Categorias</a></strong>
+                    <strong><a href="{{ route('config.category.index') }}">Categorías</a></strong>
                 </li>
             </ol>
         </div>
@@ -32,12 +32,12 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th></th>
-                                <th>Categoría</th>
-                                <th>Tipo</th>
-                                <th>Ordinaria/ Extraordinaria</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
+                                <th style="vertical-align:bottom;"></th>
+                                <th style="vertical-align:bottom;">Categoría</th>
+                                <th style="vertical-align:bottom;">Tipo</th>
+                                <th style="vertical-align:bottom;">Clase</th>
+                                <th style="vertical-align:bottom;">Estado</th>
+                                <th style="vertical-align:bottom" width="70"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,19 +48,17 @@
                                         <td style="vertical-align:middle">{{ $category->nombre }}</td>
                                         <td style="vertical-align:middle">{{ $category->tipo_categoria }}</td>
                                         <td style="vertical-align:middle">{{ $category->clase }}</td>
-                                        <td style="vertical-align:middle"><span class="text-success">Activa</span></td>
-                                        <td style="vertical-align:middle">
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Opciones
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.category.show', $category->id) }}">Ver Categoria</a></li>
-                                                    <li><a href="{{ route('config.category.edit', $category->id) }}">Editar Categoria</a></li>
-                                                </ul>
+                                        <td style="vertical-align:middle"><span>Activa</span></td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.category.show', $category->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver categoría">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.category.edit', $category->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar categoría">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </div>
-                                        </td>
+                                       </td>
                                     </tr>
                                 @else
                                     <tr>
@@ -68,19 +66,17 @@
                                         <td style="vertical-align:middle"><span class="text-muted">{{ $category->nombre }}</span></td>
                                         <td style="vertical-align:middle"><span class="text-muted">Egreso</span></td>
                                         <td style="vertical-align:middle"><span class="text-muted">Ordinaria</span></td>
-                                        <td style="vertical-align:middle"><span class="text-danger">Inactiva</span></td>
-                                        <td style="vertical-align:middle">
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Opciones
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.category.show', $category->id) }}">Ver Categoria</a></li>
-                                                    <li><a href="{{ route('config.category.edit', $category->id) }}">Editar Categoria</a></li>
-                                                </ul>
+                                        <td style="vertical-align:middle"><span class="text-muted">Inactiva</span></td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.category.show', $category->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver categoría">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.category.edit', $category->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar categoría">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </div>
-                                        </td>
+                                       </td>
                                     </tr>
                                 @endif
 
@@ -127,6 +123,7 @@
     <script>
         $(document).ready(function() {
             $('.table').DataTable({
+                "order": [[ 1, "asc" ]],
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -152,7 +149,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 0 }, { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

@@ -8,6 +8,9 @@
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
+            <li>
+                Propiedades
+            </li>
             <li class="active">
                 <strong>Lista de contactos</strong>
             </li>
@@ -28,11 +31,27 @@
                     </div>
                 @endif
             <div class="ibox">
+                <div class="ibox-title">
+                    <h5 style="padding-top: 7px;">Lista de contactos</h5>
+                    <div class="ibox-tools" style="padding-bottom: 7px; padding-right: 5px;">
+                        <div class="btn-group" style="margin-right: 10px;">
+                            <select class="input-sm form-control input-s-sm inline" style="width: 150px;">
+                                <option value="0">Todos (Activos)</option>
+                                <option value="1">Propietarios</option>
+                                <option value="2">Inquilinos</option>
+                                <option value="3">Inactivos</option>
+                            </select>
+                        </div>
+                        <div class="btn-group">
+                            <a href="{{ route('properties.contact.create') }}" class="btn btn-sm btn-default" >Nuevo Contacto</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="ibox-content">
                 <div class="row">
-                    <div class="col-sm-6 m-b-xs">
+                    <div class="col-sm-4 m-b-xs">
                         <div class="btn-group">
-                            <a href="{{ route('properties.contact.list', 'todos') }}" class="btn btn-sm btn-white active">
+                            <a href="{{ route('properties.contact.list', 'todos') }}" class="btn btn-sm btn-white active" name="options">
                                 Todos </a>
 							 <a href="{{ route('properties.contact.list', 'propietario') }}" class="btn btn-sm btn-white active">
                                 Propietarios </a>
@@ -52,6 +71,7 @@
                                 <th style="vertical-align:bottom">Tipo</th>
                                 <th style="vertical-align:bottom">E-mail</th>
                                 <th style="vertical-align:bottom">T. móvil</th>
+                                <th style="vertical-align:bottom">Correspondencia</th>
                                 <th style="vertical-align:bottom" width="70"></th>
                             </tr>
                         </thead>
@@ -60,9 +80,20 @@
                             <tr>
                                 <td>{{ $contact->property->nro }}</td>
                                 <td>{{ $contact->nombre }} {{ $contact->apellido }}</td>
-                                <td>{{ $contact->typecontact->nombre }}&nbsp;&nbsp;:&nbsp;&nbsp;{{ $contact->relationcontact->nombre }}</td>
+                                <td>{{ $contact->typecontact->nombre }}:&nbsp;{{ $contact->relationcontact->nombre }}</td>
                                 <td><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>
                                 <td>{{ $contact->telefono_movil }}</td>
+                                <td>
+                                    @if(in_array('Comunicados',explode(',',$contact->correspondencia)))
+                                    <span class="badge">Com</span>
+                                    @endif
+                                    @if(in_array('Cobranzas',explode(',',$contact->correspondencia)))
+                                    <span class="badge">Cob</span>
+                                    @endif
+                                    @if(in_array('Directorio',explode(',',$contact->correspondencia)))
+                                    <span class="badge">Dir</span>
+                                    @endif
+                                </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="{{ route('properties.contact.show', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
@@ -77,7 +108,6 @@
 							@endforeach
                         </tbody>
                     </table>
-					<a href="{{ route('properties.contact.create') }}" class="btn btn-success" >Nuevo Contacto</a>
                 </div>
                 </div>
             </div>
@@ -101,8 +131,8 @@
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sZeroRecords":    "No se encontraron resultados.",
+                    "sEmptyTable":     "No se encontraron registros.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -124,7 +154,7 @@
                 },
                 "paging":   false,
                 "info":     false,
-				"columnDefs": [ { "orderable": false, "targets": 4 },{ "orderable": false, "targets": 5 } ]
+				"columnDefs": [ { "orderable": false, "targets": 5 },{ "orderable": false, "targets": 6 } ]
             });
         } );
     </script>

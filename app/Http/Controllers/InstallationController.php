@@ -126,7 +126,7 @@ class InstallationController extends Controller
         $installation->activa = $activa;
         $installation->company_id = $company->id;
         $installation->save();
-        Session::flash('message', 'Nueva instalacion ingresada correctamente');
+        Session::flash('message', 'Nueva Instalación común registrada correctamente.');
         return redirect()->route('config.installation.index');
     }
 
@@ -263,7 +263,7 @@ class InstallationController extends Controller
 
         $installation->activa = $activa;
         $installation->save();
-        Session::flash('message', 'Instalacion actualizada correctamente');
+        Session::flash('message', 'Instalación común actualizada correctamente.');
         return redirect()->route('config.installation.index');
     }
 

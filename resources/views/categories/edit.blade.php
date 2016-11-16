@@ -9,10 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <a href="{{ route('config.category.index') }}">Categorias</a>
+                    <a href="{{ route('config.category.index') }}">Categorías</a>
                 </li>
                 <li class="active">
-                    <strong>Editar categoria</strong>
+                    <strong>Editar categoría</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +28,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar {{$category->nombre}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar categoría: {{$category->nombre}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">

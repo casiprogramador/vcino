@@ -9,10 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('config.receiptnumber.index') }}">Numero de comprobante</a>
+                    <a href="{{ route('config.receiptnumber.index') }}">Números de comprobantes</a>
                 </li>
                 <li class="active">
-                    <strong>Nuevo numero de comprobante</strong>
+                    <strong>Nuevos números de comprobantes por gestión</strong>
                 </li>
             </ol>
         </div>

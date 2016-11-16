@@ -9,6 +9,9 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
+                Propiedades
+            </li>
+            <li>
                 <a href="{{ route('properties.contact.index') }}">Lista de contactos</a>
             </li>
             <li class="active">
@@ -263,7 +266,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="hr-line-dashed"></div>
 
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">

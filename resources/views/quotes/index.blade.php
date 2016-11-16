@@ -6,13 +6,13 @@
             <h2>Cuotas</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
                     Configuración
                 </li>
                 <li class="active">
-                    <strong>Lista de cuotas</strong>
+                    <strong>Cuotas</strong>
                 </li>
             </ol>
         </div>
@@ -35,12 +35,12 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>Cuota</th>
-                                <th>Categoría</th>
-                                <th>Tipo de propiedad</th>
-                                <th class="text-right">Importe</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
+                                <th style="vertical-align:bottom">Cuota</th>
+                                <th style="vertical-align:bottom">Categoría</th>
+                                <th style="vertical-align:bottom">Tipo propiedad</th>
+                                <th style="vertical-align:bottom" class="text-right">Importe</th>
+                                <th style="vertical-align:bottom" width="70">Estado</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,17 +51,16 @@
                                 <td>{{ $quota->category->nombre }}</td>
                                 <td>{{ $quota->typeProperty->tipo_propiedad }}</td>
                                 <td class="text-right">{{ $quota->importe }}</td>
-                                <td><span class="text-success">Activa</span></td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                            Opciones
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a href="{{ route('config.quota.show', $quota->id) }}">Ver Cuota</a></li>
-                                            <li><a href="{{ route('config.quota.edit', $quota->id) }}">Editar Cuota</a></li>
-                                        </ul>
+                                <td><span>Activa</span></td>
+                                
+                                <td style="vertical-align:middle; text-align:right;">
+                                    <div class="btn-group">
+                                        <a href="{{ route('config.quota.show', $quota->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver cuota">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('config.quota.edit', $quota->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar cuota">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -71,17 +70,15 @@
                                         <td ><span class="text-muted">{{ $quota->category->nombre }}</span></td>
                                         <td ><span class="text-muted">{{ $quota->typeProperty->tipo_propiedad }}</span></td>
                                         <td class="text-right text-muted">{{ $quota->importe }}</td>
-                                        <td><p><span class="text-danger">Inactiva</span></p></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Opciones
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.quota.show', $quota->id) }}">Ver Cuota</a></li>
-                                                    <li><a href="{{ route('config.quota.edit', $quota->id) }}">Editar Cuota</a></li>
-                                                </ul>
+                                        <td><span class="text-muted">Inactiva</span></td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.quota.show', $quota->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver cuota">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.quota.edit', $quota->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar cuota">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -115,7 +112,6 @@
         </div>
 
     </div>
-
 
 
 @endsection
@@ -153,7 +149,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

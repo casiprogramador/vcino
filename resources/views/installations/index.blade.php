@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong><a href="{{ route('config.installation.index') }}">Instalaciones</a></strong>
+                    <strong><a href="{{ route('config.installation.index') }}">Instalaciones comunes</a></strong>
                 </li>
             </ol>
         </div>
@@ -33,12 +33,12 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Fotografía <br>principal</th>
-                                    <th>Instalación</th>
-                                    <th>Costo</th>
-                                    <th>Requiere <br>reserva</th>
-                                    <th>Estado</th>
-                                    <th></th>
+                                    <th style="vertical-align:bottom">Foto<br>principal</th>
+                                    <th style="vertical-align:bottom">Instalación</th>
+                                    <th style="vertical-align:bottom">Costo</th>
+                                    <th style="vertical-align:bottom">Requiere <br>reserva</th>
+                                    <th style="vertical-align:bottom">Estado</th>
+                                    <th style="vertical-align:bottom"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -49,17 +49,15 @@
                                             <td>{{ $installation->instalacion }}</td>
                                             <td>{{ $installation->costo }}</td>
                                             <td>{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</td>
-                                            <td><span class="text-success">Activo</span></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        Opciones
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="{{ route('config.installation.show', $installation->id) }}">Ver Instalacion</a></li>
-                                                        <li><a href="{{ route('config.installation.edit', $installation->id) }}">Editar Instalacion</a></li>
-                                                    </ul>
+                                            <td><span>Activo</span></td>
+                                            <td style="vertical-align:middle; text-align:right;">
+                                                <div class="btn-group">
+                                                    <a href="{{ route('config.installation.show', $installation->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver instalación común">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('config.installation.edit', $installation->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar instalación común">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -69,17 +67,15 @@
                                             <td style="vertical-align:middle"><span class="text-muted">{{ $installation->instalacion }}</span></td>
                                             <td style="vertical-align:middle"><span class="text-muted">{{ $installation->costo }}</span></td>
                                             <td style="vertical-align:middle"><span class="text-muted">{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</span></td>
-                                            <td style="vertical-align:middle"><span class="text-danger">Inactiva</span></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        Opciones
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="{{ route('config.installation.show', $installation->id) }}">Ver Instalacion</a></li>
-                                                        <li><a href="{{ route('config.installation.edit', $installation->id) }}">Editar Instalacion</a></li>
-                                                    </ul>
+                                            <td style="vertical-align:middle"><span class="text-muted">Inactiva</span></td>
+                                            <td style="vertical-align:middle; text-align:right;">
+                                                <div class="btn-group">
+                                                    <a href="{{ route('config.installation.show', $installation->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver instalación común">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('config.installation.edit', $installation->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar instalación común">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -125,6 +121,7 @@
     <script>
         $(document).ready(function() {
             $('.table').DataTable({
+                "order": [[ 1, "asc" ]],
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -150,7 +147,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 0 }, { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

@@ -9,6 +9,9 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
+                Propiedades
+            </li>
+            <li>
                 <a href="{{ route('properties.contact.index') }}">Lista de contactos</a>
             </li>
             <li class="active">
@@ -27,7 +30,7 @@
 					<form action="#" class="form-horizontal">
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1">Nuevo contacto</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Ver contacto</a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
@@ -159,11 +162,11 @@
                                     <div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Fotografía</label>
                                         <div class="col-sm-8">
-                                            <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                            <label title="Upload image file" for="inputImage" >
 												@if(empty($contact->fotografia))
-													<img src="{{ URL::asset('img/system/user150.png')}}" width="150" />
+													<img src="{{ URL::asset('img/system/user150.png')}}" class="img-thumbnail" width="150" />
 												@else
-													<img src="{{asset($contact->fotografia)}}" width="150" />	
+													<img src="{{asset($contact->fotografia)}}" class="img-thumbnail" width="150" />	
 												@endif
                                             </label>
                                         </div>
@@ -189,16 +192,16 @@
                                     <div class="form-group{{ $errors->has('correspondencia') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Correspondencia</label>
                                         <div class="col-sm-3">
-                                            <label class="checkbox-inline">
-											<input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">  Comunicados</label>
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+											<input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Comunicados</label>
                                         </div>
                                         <div class="col-sm-3">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">  Cobranzas</label>
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Cobranzas</label>
                                         </div>
                                         <div class="col-sm-3">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">  Directorio</label>
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Directorio</label>
                                         </div>
                                     </div>
 
@@ -231,7 +234,7 @@
                                             <label><input type="checkbox" class="i-checks" name="mostrar_datos" value="1" {{ ($contact->mostrar_datos == 1) ? 'checked' : '' }} disabled="disabled"></label>
                                         </div>
                                         <div class="col-md-6">
-                                            <p style="font-size: 11px; color: #B0B0B0;">Se refiere a que los datos de contacto son visibles para otros miembros.</p>
+                                            <p style="font-size: 11px; color: #B0B0B0;">Se refiere a que los datos del contacto son visibles para otros miembros.</p>
                                         </div>
                                     </div>
 
@@ -265,7 +268,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <a href="{{ url()->previous() }}" class="btn btn-success" >Atras</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-success" >Volver</a>
                             </div>
                         </div>
 

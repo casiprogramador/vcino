@@ -48,7 +48,7 @@
                                             <div class="form-group{{ $errors->has('tipo_cuenta') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Tipo de cuenta</label>
                                                 <div class="col-sm-4">
-                                                    {{ Form::select('tipo_cuenta',array('0' => 'Seleccione','Caja de Ahorro' => 'Caja de Ahorro', 'Cuenta Corriente' => 'Cuenta Corriente','Efectivo' => 'Efectivo'),  old('tipo_cuenta') , ['class' => 'form-control input-sm','id'=>'tipo-cuenta']) }}
+                                                    {{ Form::select('tipo_cuenta', array('0' => 'Seleccione un tipo','Caja de Ahorro' => 'Caja de Ahorro', 'Cuenta Corriente' => 'Cuenta Corriente','Efectivo' => 'Efectivo'), old('tipo_cuenta') , ['class' => 'form-control input-sm','id'=>'tipo-cuenta']) }}
                                                     @if ($errors->has('tipo_cuenta'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('tipo_cuenta') }}</strong>
@@ -60,7 +60,7 @@
                                             <div class="form-group" id="banco">
                                                 <label class="col-sm-3 control-label">Banco</label>
                                                 <div class="col-sm-4">
-                                                    {{ Form::select('banco',$banks, '1', ['class' => 'form-control input-sm']) }}
+                                                    {{ Form::select('banco', $banks, '1', ['class' => 'form-control input-sm']) }}
                                                 </div>
                                             </div>
 
@@ -83,7 +83,7 @@
                                             <div class="form-group{{ $errors->has('nota') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Notas</label>
                                                 <div class="col-sm-8">
-                                                    <textarea rows="4" class="form-control input-sm" name="nota" value="{{old('nota')}}"></textarea>
+                                                    <textarea rows="4" class="form-control input-sm" name="nota">{{old('nota')}}</textarea>
                                                     @if ($errors->has('nota'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('nota') }}</strong>
@@ -146,7 +146,6 @@
                         $('#banco').hide("slow");
                     }
             });
-
         });
     </script>
 @endsection

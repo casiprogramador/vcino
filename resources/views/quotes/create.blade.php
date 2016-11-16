@@ -48,7 +48,7 @@
 
                                             <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Categoría</label>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-5">
                                                     {{ Form::select('category',$categories,old('category'), ['class' => 'form-control input-sm']) }}
                                                     @if ($errors->has('category'))
                                                         <span class="help-block">
@@ -86,7 +86,7 @@
 
                                             <div class="form-group{{ $errors->has('importe') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Importe</label>
-                                                <div class="col-sm-5">
+                                                <div class="col-sm-3">
                                                     <input type="text" class="form-control input-sm" name="importe" value="{{old('importe')}}">
                                                     @if ($errors->has('importe'))
                                                         <span class="help-block">
@@ -98,7 +98,7 @@
 
                                             <div class="form-group{{ $errors->has('tipo_importe') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Tipo de importe</label>
-                                                <div class="col-sm-5">
+                                                <div class="col-sm-3">
                                                     {{ Form::select('tipo_importe',array('0' => 'Seleccione','Fijo' => 'Fijo', 'Variable' => 'Variable'),old('tipo_importe'),['class' => 'form-control input-sm']) }}
                                                     @if ($errors->has('tipo_importe'))
                                                         <span class="help-block">
@@ -113,7 +113,7 @@
                                             <div class="form-group{{ $errors->has('notas') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Notas</label>
                                                 <div class="col-sm-8">
-                                                    <textarea rows="4" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
+                                                    <textarea rows="3" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
                                                     @if ($errors->has('notas'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('notas') }}</strong>

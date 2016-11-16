@@ -12,7 +12,7 @@
                     Configuración
                 </li>
                 <li class="active">
-                    <strong>Lista de tipos de propiedad</strong>
+                    <strong>Tipos de propiedad</strong>
                 </li>
             </ol>
         </div>
@@ -35,9 +35,9 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>Tipo</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
+                                <th style="vertical-align:bottom">Tipo propiedad</th>
+                                <th style="vertical-align:bottom">Estado</th>
+                                <th style="vertical-align:bottom" width="70"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -45,36 +45,28 @@
                                 @if($typeproperty->activa == 1)
                             <tr>
                                 <td>{{ $typeproperty->tipo_propiedad }}</td>
-                                <td><span class="text-success">Activo</span></td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                            Opciones
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a href="{{ route('config.typeproperty.edit', $typeproperty->id) }}">Editar Tipo de propiedad</a></li>
-                                        </ul>
+                                <td><span>Activo</span></td>
+                                
+                                <td style="vertical-align:middle; text-align:right;">
+                                    <div class="btn-group">
+                                        <a href="{{ route('config.typeproperty.edit', $typeproperty->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar tipo de propiedad">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
                                     </div>
-                                </td>
+                               </td>
                             </tr>
                                 @else
-
-                                <tr>
-                                    <td>{{ $typeproperty->tipo_propiedad }}</td>
-                                    <td style="vertical-align:middle"><span class="text-danger">Inactiva</span></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                Opciones
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a href="{{ route('config.typeproperty.edit', $typeproperty->id) }}">Editar Tipo de propiedad</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{{ $typeproperty->tipo_propiedad }}</td>
+                                <td style="vertical-align:middle"><span class="text-muted">Inactiva</span></td>
+                                <td style="vertical-align:middle; text-align:right;">
+                                    <div class="btn-group">
+                                        <a href="{{ route('config.typeproperty.edit', $typeproperty->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar tipo de propiedad">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </div>
+                               </td>
+                            </tr>
                                 @endif
                             @endforeach
 
@@ -108,7 +100,6 @@
         </div>
 
     </div>
-
 
 @endsection
 @section('style')
@@ -145,7 +136,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 2 } ]
             });
         } );
     </script>

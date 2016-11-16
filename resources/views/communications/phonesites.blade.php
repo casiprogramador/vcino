@@ -3,18 +3,20 @@
 @section('admin-content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Teléfonos y sitios</h2>
+            <h2>Teléfonos y sitios útiles</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></strong>
+                    Comunicación & Información
+                </li>
+                <li class="active">
+                    <strong>Teléfonos y sitios útiles</strong>
                 </li>
             </ol>
         </div>
     </div>
-
 
     <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -26,16 +28,17 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Razón social / Nombre</th>
-                                    <th>Categoría</th>
-                                    <th>Teléfono</th>
-                                    <th><i class="fa fa-phone" style="color: red;"></i> Emergencia</th>
-                                    <th>Sitio web</th>
+                                    <th style="vertical-align:bottom">Razón social/ Nombre</th>
+                                    <th style="vertical-align:bottom">Categoría</th>
+                                    <th style="vertical-align:bottom">Teléfono</th>
+                                    <th style="vertical-align:bottom"><i class="fa fa-phone" style="color: red;"></i> Emergencia</th>
+                                    <th style="vertical-align:bottom">Sitio web</th>
+                                    <th width="30"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($phonesites as $phonesite)
-
+                                    @if($phonesite->activa == 1)
                                     <tr>
                                         <td>{{$phonesite->razon_social}}</td>
                                         <td>{{$phonesite->categoria}}</td>
@@ -43,8 +46,15 @@
                                         <td>{{$phonesite->telefono_emergencia}}</td>
                                         <td><a href="{{$phonesite->sitio_web}}" target="_blank">{{$phonesite->sitio_web}}</a></td>
 
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.phonesite.show', $phonesite->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver detalle">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
-
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>
@@ -56,7 +66,6 @@
         </div>
 
     </div>
-
 
 
 @endsection
@@ -94,7 +103,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 2 }, { "orderable": false, "targets": 3 }, { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

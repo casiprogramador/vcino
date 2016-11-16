@@ -29,7 +29,7 @@ class ContactController extends Controller
     {
 		$company = Auth::user()->company;
 
-        $contacts = Contact::where('company_id',$company->id );
+        $contacts = Contact::where('company_id',$company->id )->where('activa',1);
         return view('contacts.index')->with('contacts',$contacts->get());
     }
 
@@ -66,14 +66,14 @@ class ContactController extends Controller
 			'property' => 'required|not_in:0',
 			'typecontact' => 'required|not_in:0',
 			'relationcontact' => 'required|not_in:0',
-			'media' => 'required|not_in:0',
+			//'media' => 'required|not_in:0',
 			
             'nombre' => 'required',
             'apellido' => 'required',
 			'email' => 'required',
             'fotografia' =>	'required',
 			'correspondencia' => 'required',
-			'notas' => 'required'
+			//'notas' => 'required'
         ]);
 		
 		//Subir fotografia
@@ -124,7 +124,7 @@ class ContactController extends Controller
         $contact->company_id = $company->id;
 
         $contact->save();
-        Session::flash('message', 'Nuevo contacto ingresado');
+        Session::flash('message', 'Nuevo contacto registrado correctamente.');
         return redirect()->route('properties.contact.index');
  
     }
@@ -159,7 +159,9 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        $properties = Property::all()->lists('nro','id');
+    	$company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+		//	$properties = Property::all()->lists('nro','id');
 		$typecontacts = Typecontact::all()->lists('nombre','id');
 		$relationcontacts = Relationcontact::all()->lists('nombre','id');
 		$medias = Media::all()->lists('nombre','id');
@@ -186,13 +188,13 @@ class ContactController extends Controller
 			'property' => 'required|not_in:0',
 			'typecontact' => 'required|not_in:0',
 			'relationcontact' => 'required|not_in:0',
-			'media' => 'required|not_in:0',
+			//'media' => 'required|not_in:0',
 			
             'nombre' => 'required',
             'apellido' => 'required',
 			'email' => 'required',
 			'correspondencia' => 'required',
-			'notas' => 'required'
+			//'notas' => 'required'
         ]);
 		
 		//Subir fotografia
@@ -248,7 +250,7 @@ class ContactController extends Controller
         $contact->company_id = $company->id;
 
         $contact->save();
-        Session::flash('message', 'Contacto actualizado exitosamente');
+        Session::flash('message', 'Contacto actualizado correctamente.');
         return redirect()->route('properties.contact.index');
     }
 	
@@ -258,13 +260,12 @@ class ContactController extends Controller
 		$company = Auth::user()->company;
 		
 		if($option == 'todos'){
-			$contacts = Contact::where('company_id',$company->id );
+			$contacts = Contact::where('company_id',$company->id )->where('activa',1);
 		}  elseif ($option == 'propietario') {
 			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',1);
 		}  elseif ($option == 'inquilino') {
 			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',2);
 		}elseif ($option == 'inactivo') {
-			
 			$contacts = Contact::where('company_id',$company->id )->where('activa',0);
 		}else{
 			$contacts = Contact::where('company_id',$company->id );

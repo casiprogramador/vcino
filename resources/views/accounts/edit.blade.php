@@ -27,7 +27,7 @@
                         {!! Form::open(array('route' => array('config.account.update', $account->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar {{ $account->nombre }}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar cuenta: {{ $account->nombre }}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">

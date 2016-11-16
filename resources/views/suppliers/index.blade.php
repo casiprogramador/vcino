@@ -12,7 +12,7 @@
                     Configuración
                 </li>
                 <li class="active">
-                    <strong>Lista de proveedores</strong>
+                    <strong>Proveedores</strong>
                 </li>
             </ol>
         </div>
@@ -35,11 +35,11 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>Razón social / Nombre</th>
-                                <th>E-mail</th>
-                                <th>Teléfono emergencia</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
+                                <th style="vertical-align:bottom">Razón social/ Nombre</th>
+                                <th style="vertical-align:bottom">E-mail</th>
+                                <th style="vertical-align:bottom">Tel. Emergencia</th>
+                                <th style="vertical-align:bottom">Estado</th>
+                                <th style="vertical-align:bottom"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,38 +49,34 @@
                                         <td>{{ $supplier->razon_social }} {{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }}</td>
                                         <td>{{ $supplier->email }}</td>
                                         <td>{{ $supplier->telefono_emergencia }}</td>
-                                        <td><span class="text-success">Activo</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Opciones
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.supplier.show', $supplier->id) }}">Ver Cuenta</a></li>
-                                                    <li><a href="{{ route('config.supplier.edit', $supplier->id) }}">Editar Cuenta</a></li>
-                                                </ul>
+                                        <td><span>Activo</span></td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.supplier.show', $supplier->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver proveedor">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.supplier.edit', $supplier->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar proveedor">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </div>
-                                        </td>
+                                       </td>
                                     </tr>
                                 @else
                                     <tr>
                                         <td><span class="text-muted">{{ $supplier->razon_social }} {{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }}</span></td>
                                         <td><span class="text-muted">{{ $supplier->email }}</span></td>
                                         <td><span class="text-muted">{{ $supplier->telefono_emergencia }}</span></td>
-                                        <td><span class="text-danger">Inactiva</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Opciones
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="{{ route('config.supplier.show', $supplier->id) }}">Ver Proveedor</a></li>
-                                                    <li><a href="{{ route('config.supplier.edit', $supplier->id) }}">Editar Proveedor</a></li>
-                                                </ul>
+                                        <td><span class="text-muted">Inactiva</span></td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.supplier.show', $supplier->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver proveedor">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.supplier.edit', $supplier->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar proveedor">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </div>
-                                        </td>
+                                       </td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -151,7 +147,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 3 }, { "orderable": false, "targets": 4 } ]                
             });
         } );
     </script>

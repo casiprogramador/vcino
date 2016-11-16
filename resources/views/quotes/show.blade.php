@@ -9,10 +9,13 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Configuración
+                </li>
+                <li>
                     <a href="{{ route('config.quota.index') }}">Cuotas</a>
                 </li>
                 <li class="active">
-                    <strong>Detalle cuota</strong>
+                    <strong>Ver cuota</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +31,7 @@
 
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-1">Detalles de {{ $quota->cuota }}</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#tab-1">Detalle cuota: {{ $quota->cuota }}</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
@@ -48,7 +51,7 @@
 
                                             <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Categoría</label>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-5">
                                                     {{ Form::select('category',$categories, $quota->category_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                                                     @if ($errors->has('category'))
                                                         <span class="help-block">
@@ -86,7 +89,7 @@
 
                                             <div class="form-group{{ $errors->has('importe') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Importe</label>
-                                                <div class="col-sm-5">
+                                                <div class="col-sm-3">
                                                     <input type="text" class="form-control input-sm" name="importe" value="{{$quota->importe}}" readonly>
                                                     @if ($errors->has('importe'))
                                                         <span class="help-block">
@@ -98,7 +101,7 @@
 
                                             <div class="form-group{{ $errors->has('tipo_importe') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Tipo de importe</label>
-                                                <div class="col-sm-5">
+                                                <div class="col-sm-3">
                                                     {{ Form::select('tipo_importe',array('0' => 'Seleccione','Fijo' => 'Fijo', 'Variable' => 'Variable'),$quota->tipo_importe,['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                                                     @if ($errors->has('tipo_importe'))
                                                         <span class="help-block">
@@ -113,7 +116,7 @@
                                             <div class="form-group{{ $errors->has('notas') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Notas</label>
                                                 <div class="col-sm-8">
-                                                    <textarea rows="4" class="form-control input-sm" name="notas" readonly>{{$quota->notas}}</textarea>
+                                                    <textarea rows="3" class="form-control input-sm" name="notas" readonly>{{$quota->notas}}</textarea>
                                                     @if ($errors->has('notas'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('notas') }}</strong>
@@ -135,8 +138,10 @@
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
-                                <div class="col-sm-12">
-                                    <a href="{{ route('config.quota.index') }}" class="btn btn-success" >Atras</a>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <a href="{{ route('config.quota.index') }}" class="btn btn-success" >Volver</a>
+                                    </div>
                                 </div>
                             </div>
                         </form>

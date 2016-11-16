@@ -60,7 +60,7 @@ class TypePropertyController extends Controller
         $typeproperties->company_id = $company->id;
 
         $typeproperties->save();
-        Session::flash('message', 'Nuevo tipo de propiedad ingresado correctamente');
+        Session::flash('message', 'Nuevo tipo de propiedad registrada correctamente.');
         return redirect()->route('config.typeproperty.index');
     }
 
@@ -108,7 +108,7 @@ class TypePropertyController extends Controller
         $typeproperties->activa = $activa;
 
         $typeproperties->save();
-        Session::flash('message', 'Tipo de propiedad actualizada correctamente');
+        Session::flash('message', 'Tipo de propiedad actualizada correctamente.');
         return redirect()->route('config.typeproperty.index');
     }
 

@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <a href="{{ route('config.supplier.index') }}">Proveedor</a>
+                    <a href="{{ route('config.supplier.index') }}">Proveedores</a>
                 </li>
                 <li class="active">
                     <strong>Editar proveedor</strong>
@@ -28,14 +28,14 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar {{$supplier->razon_social}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar proveedor: {{$supplier->razon_social}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
 
                                         <div class="form-group{{ $errors->has('razon_social') ? ' has-error' : '' }}">
-                                            <label class="col-sm-3 control-label">Razón social / Nombre</label>
+                                            <label class="col-sm-3 control-label">Razón social/ Nombre</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control input-sm" name="razon_social" value="{{ $supplier->razon_social }}">
 
@@ -60,7 +60,7 @@
                                             <label class="col-sm-3 control-label">Cheque a nombre de</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control input-sm" style="text-transform: uppercase;" name="nombre_cheque" value="{{ $supplier->nombre_cheque }}">
-                                                <span class="help-block m-b-none">Nombre o razón social para emitir el cheque.</span>
+                                                <span class="help-block m-b-none" style="color: #BDBDBD">Nombre o razón social para emitir el cheque.</span>
                                             </div>
                                         </div>
 
@@ -77,7 +77,7 @@
                                                         <input type="text" placeholder="Móvil" class="form-control" name="telefono_movil" value="{{ $supplier->telefono_movil }}">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input type="text" placeholder="# para Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{ $supplier->telefono_emergencia }}">
+                                                        <input type="text" placeholder="Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{ $supplier->telefono_emergencia }}">
                                                     </div>
                                                 </div>
                                             </div>

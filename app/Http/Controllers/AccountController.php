@@ -51,7 +51,7 @@ class AccountController extends Controller
             'nombre' => 'required',
             'tipo_cuenta' => 'required|not_in:0',
             'banco' => 'required',
-            'nota' => 'required',
+            //'nota' => 'required',
         ]);
 
         $company = Auth::user()->company;
@@ -68,7 +68,7 @@ class AccountController extends Controller
         $account->company_id = $company->id;
 
         $account->save();
-        Session::flash('message', 'Nueva cuenta ingresada correctamente');
+        Session::flash('message', 'Nueva cuenta registrada correctamente.');
         return redirect()->route('config.account.index');
     }
 
@@ -115,7 +115,7 @@ class AccountController extends Controller
             'nombre' => 'required',
             'tipo_cuenta' => 'required|not_in:0',
             'banco' => 'required',
-            'nota' => 'required',
+            //'nota' => 'required',
         ]);
 
         $activa = (empty($request->activa) ? '0' : $request->activa);
@@ -130,7 +130,7 @@ class AccountController extends Controller
         $account->activa = $activa;
 
         $account->save();
-        Session::flash('message', 'Cuenta actualizada correctamente');
+        Session::flash('message', 'Cuenta actualizada correctamente.');
         return redirect()->route('config.account.index');
     }
 

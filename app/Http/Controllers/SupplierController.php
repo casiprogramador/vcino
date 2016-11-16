@@ -68,7 +68,7 @@ class SupplierController extends Controller
         $supplier->company_id = $company->id;
 
         $supplier->save();
-        Session::flash('message', 'Nuevo proveedor ingresado correctamente');
+        Session::flash('message', 'Nuevo proveedor registrado correctamente.');
         return redirect()->route('config.supplier.index');
     }
 
@@ -129,7 +129,7 @@ class SupplierController extends Controller
 
         $supplier->save();
 
-        Session::flash('message', 'Proveedor actualizado correctamente');
+        Session::flash('message', 'Proveedor actualizado correctamente.');
         return redirect()->route('config.supplier.index');
     }
 

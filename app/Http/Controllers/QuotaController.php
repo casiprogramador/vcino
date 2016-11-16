@@ -57,8 +57,7 @@ class QuotaController extends Controller
             'tipo_importe' => 'required|not_in:0',
             'importe' => 'required',
             'category' => 'required|not_in:0',
-            'type_property' => 'required|not_in:0',
-            'notas' => 'required',
+            'type_property' => 'required|not_in:0'
         ]);
 
         $company = Auth::user()->company;
@@ -76,7 +75,7 @@ class QuotaController extends Controller
         $quota->company_id = $company->id;
 
         $quota->save();
-        Session::flash('message', 'Nueva cuota ingresado correctamente');
+        Session::flash('message', 'Nueva cuota registrada correctamente.');
         return redirect()->route('config.quota.index');
     }
 
@@ -131,8 +130,7 @@ class QuotaController extends Controller
             'tipo_importe' => 'required|not_in:0',
             'importe' => 'required',
             'category' => 'required|not_in:0',
-            'type_property' => 'required|not_in:0',
-            'notas' => 'required',
+            'type_property' => 'required|not_in:0'
         ]);
 
         $activa = (empty($request->activa) ? '0' : $request->activa);
@@ -148,7 +146,7 @@ class QuotaController extends Controller
         $quota->activa = $activa;
 
         $quota->save();
-        Session::flash('message', 'Datos de cuota actualizados correctamente');
+        Session::flash('message', 'Cuota actualizada correctamente.');
         return redirect()->route('config.quota.index');
     }
 

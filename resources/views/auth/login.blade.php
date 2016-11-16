@@ -5,20 +5,18 @@
         <div class="col-md-6 col-md-offset-3">
             <div>
 
-                <h1 class="logo-name">VCino</h1>
+                <h1 class="logo-name" style="font-size: 140px;">V-CINO</h1>
 
             </div>
             <div class="col-md-6 col-md-offset-3">
-                    <h3>Bienvenido a V-Cino</h3>
-                    <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-                        <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-                    </p>
-                    <p>Login in. To see it in action.</p>
+                    <h3>Bienvenido a V-CINO</h3>
+                    <p>Diseñado para la administración de propiedades.</p>
+                    
                             <form class="m-t" role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
 
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                        <input id="email" type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
+                                        <input id="email" type="email" class="form-control" placeholder="E-mail" name="email" value="{{ old('email') }}">
 
                                         @if ($errors->has('email'))
                                             <span class="help-block">
@@ -28,7 +26,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                        <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                                        <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña">
 
                                         @if ($errors->has('password'))
                                             <span class="help-block">
@@ -36,13 +34,14 @@
                                             </span>
                                         @endif
                                 </div>
-                                <button type="submit" class="btn btn-primary block full-width m-b">Ingresar</button>
+                                <button type="submit" class="btn btn-success block full-width m-b">Ingresar</button>
 
-                                <a href="#"><small>Forgot password?</small></a>
-                                <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                                <a class="btn btn-sm btn-white btn-block" href="{{ url('/register') }}">Registrar</a>
+                                <a href="#"><small>¿Olvidaste tu contraseña?</small></a>
+                                <p class="text-center"><small>¿No tienes una cuenta?
+                                <a href="{{ url('/register') }}">Registrarse</a></small>.</p>
                             </form>
-                    <p class="m-t"> <small>Sistema &copy; 2016</small> </p>
+                    <p class="m-t"> <small>Constantemente actualizado y mejorado por el equipo de Esfera SAAS.</small> </p>
+                    <p class="m-t"> <small>Esfera SAAS &copy; 2016</small> </p>
                 </div>
         </div>
     </div>

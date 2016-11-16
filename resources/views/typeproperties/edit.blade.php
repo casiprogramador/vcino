@@ -9,10 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('config.typeproperty.index') }}">Tipos de Propiedad</a>
+                    <a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a>
                 </li>
                 <li class="active">
-                    <strong>Editar Tipo de Propiedad</strong>
+                    <strong>Editar tipo de propiedad</strong>
                 </li>
             </ol>
         </div>
@@ -27,7 +27,7 @@
                         {!! Form::open(array('route' => array('config.typeproperty.update', $typeproperty->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar {{$typeproperty->tipo_propiedad}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar tipo: {{$typeproperty->tipo_propiedad}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">

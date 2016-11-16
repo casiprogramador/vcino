@@ -9,10 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('config.receiptnumber.index') }}">Numero de comprobante</a>
+                    <a href="{{ route('config.receiptnumber.index') }}">Números de comprobantes</a>
                 </li>
                 <li class="active">
-                    <strong>Editar Numero de comprobante</strong>
+                    <strong>Editar números de comprobantes</strong>
                 </li>
             </ol>
         </div>
@@ -27,7 +27,7 @@
                         {!! Form::open(array('route' => array('config.receiptnumber.update', $receiptnumber->id),'method' => 'patch' ,'class' => 'form-horizontal', 'files' => true)) !!}
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar Numero comprobante</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar números de comprobantes</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">

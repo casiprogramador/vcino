@@ -33,36 +33,34 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Razón social / Nombre</th>
-                                    <th>Categoría</th>
-                                    <th>Teléfono</th>
-                                    <th><i class="fa fa-phone" style="color: red;"></i> Emergencia</th>
-                                    <th>Sitio web</th>
-                                    <th></th>
+                                    <th style="vertical-align:bottom">Razón social/ Nombre</th>
+                                    <th style="vertical-align:bottom">Categoría</th>
+                                    <th style="vertical-align:bottom">Teléfono</th>
+                                    <th style="vertical-align:bottom">
+                                        <i class="fa fa-phone" style="color: red;"></i> Emergencia</th>
+                                    <th style="vertical-align:bottom">Sitio web</th>
+                                    <th width="70"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($phonesites as $phonesite)
-
-                                        <tr>
-                                            <td>{{$phonesite->razon_social}}</td>
-                                            <td>{{$phonesite->categoria}}</td>
-                                            <td>{{$phonesite->telefono}}</td>
-                                            <td>{{$phonesite->telefono_emergencia}}</td>
-                                            <td><a href="{{$phonesite->sitio_web}}" target="_blank">{{$phonesite->sitio_web}}</a></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        Opciones
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="{{ route('config.phonesite.show', $phonesite->id) }}">Ver</a></li>
-                                                        <li><a href="{{ route('config.phonesite.edit', $phonesite->id) }}">Editar</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{$phonesite->razon_social}}</td>
+                                        <td>{{$phonesite->categoria}}</td>
+                                        <td>{{$phonesite->telefono}}</td>
+                                        <td>{{$phonesite->telefono_emergencia}}</td>
+                                        <td><a href="{{$phonesite->sitio_web}}" target="_blank">{{$phonesite->sitio_web}}</a></td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('config.phonesite.show', $phonesite->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver detalle">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('config.phonesite.edit', $phonesite->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
 
                                 @endforeach
 
@@ -97,8 +95,6 @@
         </div>
 
     </div>
-
-
 
 @endsection
 @section('style')
@@ -135,7 +131,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

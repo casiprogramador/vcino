@@ -9,10 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('config.typeproperty.index') }}">Tipos de Propiedad</a>
+                    <a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a>
                 </li>
                 <li class="active">
-                    <strong>Nuevo Tipo de Propiedad</strong>
+                    <strong>Nuevo tipo de propiedad</strong>
                 </li>
             </ol>
         </div>

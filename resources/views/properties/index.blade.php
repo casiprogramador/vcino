@@ -33,7 +33,12 @@
 			@endif
 			
             <div class="ibox">
-				
+				<div class="ibox-title">
+                    <h5 style="padding-top: 7px;">Lista de propiedades</h5>
+                    <div class="ibox-tools" style="padding-bottom: 7px; padding-right: 5px;">
+                        <a href="{{ route('properties.property.create') }}" class="btn btn-sm btn-default">Nueva Propiedad</a>
+                    </div>
+                </div>
                 <div class="ibox-content">
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
@@ -44,8 +49,8 @@
                                 <th style="vertical-align:bottom">Etiquetas</th>
                                 <th style="vertical-align:bottom">Situación <br>habitacional</th>
                                 <th style="vertical-align:bottom">Propietario</th>
-                                <th style="vertical-align:bottom" width="110"></th>
-                                <th style="vertical-align:bottom" width="70"></th>
+                                <th style="vertical-align:bottom" width="90"></th>
+                                <th style="vertical-align:bottom" width="60"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,10 +74,10 @@
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="{{ route('properties.property.show', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                                        <a href="{{ route('properties.property.show', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver detalle propiedad">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('properties.property.edit', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                                        <a href="{{ route('properties.property.edit', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar propiedad">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>
@@ -81,7 +86,6 @@
 							@endforeach
                         </tbody>
                     </table>
-					<a href="{{ route('properties.property.create') }}" class="btn btn-success" >Nueva Propiedad</a>
                 </div>
                 </div>
             </div>
@@ -90,7 +94,6 @@
     </div>
 
 </div>
-
 
 
 
@@ -107,7 +110,7 @@
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
+                    "sZeroRecords":    "No se encontraron propiedades.",
                     "sEmptyTable":     "Ningún dato disponible en esta tabla",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",

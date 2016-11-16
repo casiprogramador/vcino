@@ -95,7 +95,7 @@
 													<strong>{{ $errors->first('etiquetas') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none">Permite agrupar o clasificar las propiedades por otros criterios.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Permite agrupar o clasificar las propiedades por otros criterios.</span>
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('campo_1') ? ' has-error' : '' }}">
@@ -107,7 +107,7 @@
 													<strong>{{ $errors->first('campo_1') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none">Campo personalizado para almacenar valores o referencias adicionales.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Campo personalizado para almacenar valores o referencias adicionales.</span>
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('campo_2') ? ' has-error' : '' }}">
@@ -119,7 +119,7 @@
 													<strong>{{ $errors->first('campo_2') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none">Campo personalizado para almacenar valores o referencias adicionales.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Campo personalizado para almacenar valores o referencias adicionales.</span>
                                         </div>
                                     </div>
 

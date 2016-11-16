@@ -63,11 +63,11 @@
             <div class="ibox">
 
                 <div class="ibox-title">
-                    <h5>Contactos</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
+                    <h5 style="padding-top: 7px;">Contactos: {{ $property->nro }}</h5>
+                    <div class="ibox-tools" style="padding-bottom: 7px; padding-right: 5px;">
+                        <div class="btn-group">
+                            <a href="{{ route('properties.contact.create') }}" class="btn btn-sm btn-default">Nuevo Contacto</a>
+                        </div>
                     </div>
                 </div>
 
@@ -107,9 +107,9 @@
                                     </td>
                                     <td>
 										@if($contact->activa == 1)
-										Activo
+										  Activo
 										@else
-										Inactivo
+										  Inactivo
 										@endif
 									</td>
                                     <td style="vertical-align:middle; text-align:right;">
@@ -126,7 +126,7 @@
 								@endforeach
                             </tbody>
                         </table>
-						<a href="{{ route('properties.contact.create') }}" class="btn btn-success" >Nuevo Contacto</a>
+                        <a href="{{ route('properties.property.index') }}" class="btn btn-success" >Volver</a>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@
                     <a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a>
                 </li>
                 <li class="active">
-                    <strong>Nueva</strong>
+                    <strong>Nuevo teléfono o sitio web</strong>
                 </li>
             </ol>
         </div>
@@ -35,7 +35,7 @@
                                         <div class="panel-body">
 
                                             <div class="form-group{{ $errors->has('razon_social') ? ' has-error' : '' }}">
-                                                <label class="col-sm-3 control-label">Razón social / Nombre</label>
+                                                <label class="col-sm-3 control-label">Razón social/ Nombre</label>
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control input-sm" name="razon_social" value="{{old('razon_social')}}">
                                                     @if ($errors->has('razon_social'))
@@ -49,7 +49,7 @@
                                             <div class="form-group{{ $errors->has('categoria') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Categoría</label>
                                                 <div class="col-sm-3">
-                                                    {{ Form::select('categoria',array('0' => 'Seleccione la categoria','Servicios basicos' => 'Servicios basicos', 'Taxis' => 'Taxis', 'Fontaneros' => 'Fontaneros', 'Electricistas' => 'Electricistas', 'Policia y Transito' => 'Policia y Transito', 'Salud' => 'Salud'),old('tipo_equipo'),['class' => 'form-control input-sm']) }}
+                                                    {{ Form::select('categoria',array('0' => 'Seleccione','Servicios basicos' => 'Servicios basicos', 'Taxis' => 'Taxis', 'Fontaneros' => 'Fontaneros', 'Electricistas' => 'Electricistas', 'Policia y Transito' => 'Policia y Transito', 'Salud' => 'Salud'),old('tipo_equipo'),['class' => 'form-control input-sm']) }}
                                                     @if ($errors->has('categoria'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('categoria') }}</strong>
@@ -63,7 +63,7 @@
                                                 <div class="col-sm-9">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="Fijo/ Móvil" class="form-control" name="telefono" value="{{old('telefono')}}">
+                                                            <input type="text" placeholder="Fijo/ Móvil" class="form-control input-sm" name="telefono" value="{{old('telefono')}}">
                                                             @if ($errors->has('telefono'))
                                                                 <span class="help-block">
                                                             <strong>{{ $errors->first('telefono') }}</strong>
@@ -71,7 +71,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="Tel. Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
+                                                            <input type="text" placeholder="Tel. Emergencias" class="form-control input-sm" style="background-color: #ffffe6" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -94,7 +94,7 @@
                                             <div class="form-group{{ $errors->has('sitio_web') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Sitio web</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control input-sm" placeholder="Ej: http://website.com" name="sitio_web" value="{{old('sitio_web')}}">
+                                                    <input type="text" class="form-control input-sm" placeholder="http://www.empresa.com" name="sitio_web" value="{{old('sitio_web')}}">
                                                     @if ($errors->has('sitio_web'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('sitio_web') }}</strong>
@@ -115,7 +115,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Notas</label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="4" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
+                                                    <textarea rows="3" class="form-control input-sm" name="notas">{{old('notas')}}</textarea>
                                                 </div>
                                             </div>
 

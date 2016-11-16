@@ -9,10 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <a href="{{ route('config.category.index') }}">Categorias</a>
+                    <a href="{{ route('config.category.index') }}">Categorías</a>
                 </li>
                 <li class="active">
-                    <strong>Ver categoria</strong>
+                    <strong>Ver categoría</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +28,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle {{$category->nombre}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle categoría: {{$category->nombre}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -90,7 +90,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <a href="{{ route('config.category.index') }}" class="btn btn-success" >Atras</a>
+                                    <a href="{{ route('config.category.index') }}" class="btn btn-success" >Volver</a>
                                 </div>
                             </div>
                         </div>

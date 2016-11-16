@@ -52,12 +52,7 @@ class EquipmentController extends Controller
             'equipo' => 'required',
             'tipo_equipo' => 'required|not_in:0',
             'proveedor' => 'required|not_in:0',
-            'ubicacion' => 'required',
             'fecha_instalacion' => 'required',
-            'vida' => 'required',
-            'garantia' => 'required',
-            'mantenimiento' => 'required',
-            'notas' => 'required',
             'documento' => 'required',
             'fotografia_1' => 'required',
             'fotografia_2' => 'required',
@@ -117,7 +112,7 @@ class EquipmentController extends Controller
         $equipment->company_id = $company->id;
         $equipment->save();
 
-        Session::flash('message', 'Nuevo equipo o maquinaria ingresado correctamente');
+        Session::flash('message', 'Nuevo equipo o maquinaria registrado correctamente.');
         return redirect()->route('equipment.machinery.index');
     }
 
@@ -168,10 +163,6 @@ class EquipmentController extends Controller
             'proveedor' => 'required|not_in:0',
             'ubicacion' => 'required',
             'fecha_instalacion' => 'required',
-            'vida' => 'required',
-            'garantia' => 'required',
-            'mantenimiento' => 'required',
-            'notas' => 'required',
         ]);
 
         $id_user = Auth::user()->id;
@@ -245,7 +236,7 @@ class EquipmentController extends Controller
         $equipment->activa = $activa;
         $equipment->save();
 
-        Session::flash('message', 'Equipo actualizado correctamente');
+        Session::flash('message', 'Equipo actualizado correctamente.');
         return redirect()->route('equipment.machinery.index');
     }
 
