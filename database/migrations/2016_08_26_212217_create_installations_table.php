@@ -23,11 +23,11 @@ class CreateInstallationsTable extends Migration
             $table->time('hora_dia_semana_hasta');
             $table->time('hora_fin_de_semana_hasta');
             $table->text('normas');
-            $table->string('reglamento');
+            $table->string('reglamento')->nullable();
             $table->string('fotografia_principal');
-            $table->string('fotografia_1');
-            $table->string('fotografia_2');
-            $table->string('fotografia_3');
+            $table->string('fotografia_1')->nullable();
+            $table->string('fotografia_2')->nullable();
+            $table->string('fotografia_3')->nullable();
             $table->tinyInteger('activa');
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
