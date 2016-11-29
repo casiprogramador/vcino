@@ -50,7 +50,7 @@
 								<td>{{ date_format(date_create($sendcommunication->communication->created_at),"d/m/Y") }}</td>
 								<td>{{ $sendcommunication->communication->asunto }}</td>
 								<td>
-									@if($sendcommunication->dirigido == 'correo')	
+									@if($sendcommunication->dirigido == 'correo' || $sendcommunication->dirigido == 'contacto')	
 										@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
 											<span class="badge">{{$correo}}</span>
 										@endforeach

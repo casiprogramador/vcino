@@ -262,15 +262,16 @@ class CommunicationController extends Controller
 		}elseif ($dirigido == 'prueba') {
 			$contacts = explode(",", trim($request->correo));
 		}
-		
 		if(count($contacts)){
 
+		$correos = array();	
 			foreach ($contacts as $contact) {
 
 				if($dirigido == 'correo' || $dirigido == 'prueba'){
 					$data = [
-					'nombre_remitente' => $request->remitente,
+					'nombre_remitente' => $company->nombre,
 					'email_remitente' => Auth::user()->email,
+					'cuerpo_remitente' => $request->remitente,	
 					'email_contancto' => $contact,
 					'nombre_contacto'=> $contact,
 					'comunicado_cuerpo' => $communication->cuerpo,
@@ -279,8 +280,9 @@ class CommunicationController extends Controller
 				   ];
 				}else{
 				  $data = [
-					'nombre_remitente' => $request->remitente,
+					'nombre_remitente' => $company->nombre,
 					'email_remitente' => Auth::user()->email,
+					'cuerpo_remitente' => $request->remitente,	
 					'email_contancto' => $contact->email,
 					'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
 					'comunicado_cuerpo' => $communication->cuerpo,
@@ -302,28 +304,30 @@ class CommunicationController extends Controller
 					Session::flash('message', 'Error envio comunicacion');
 					return redirect()->route('communication.communication.index');
 				}else{
-					$sendcommunication = new Sendcommunication();
-					$sendcommunication->communication_id = $request->comunicado;
-					$sendcommunication->remitente = $request->remitente;
-
-					$sendcommunication->dirigido = $request->dirigido;
-					if ($dirigido == 'propiedad') {
-						$sendcommunication->propiedad = $request->propiedad;	
-					}
-					if ($dirigido == 'contacto') {
-						$sendcommunication->destinatario = implode(',', $request->destinatario);	
-					}
-					if ($dirigido == 'correo' || $dirigido == 'prueba') {
-						$sendcommunication->correos = $request->correo;
-					}
-					$sendcommunication->enviado = '1';
-					$sendcommunication->company_id = $company->id;
-					$sendcommunication->save();
-					Session::flash('message', 'Comunicado enviado correctamente');
-					return redirect()->route('communication.communication.index');
+					$correos[] = $data['email_contancto'];
 				}
 
+			}//end foreach
+			$sendcommunication = new Sendcommunication();
+			$sendcommunication->communication_id = $request->comunicado;
+			$sendcommunication->remitente = $request->remitente;
+
+			$sendcommunication->dirigido = $request->dirigido;
+			if ($dirigido == 'propiedad') {
+				$sendcommunication->propiedad = $request->propiedad;	
 			}
+			if ($dirigido == 'contacto') {
+				$sendcommunication->destinatario = implode(',', $request->destinatario);	
+			}
+
+			$sendcommunication->correos = implode(',', $correos);
+
+			$sendcommunication->enviado = '1';
+			$sendcommunication->company_id = $company->id;
+			$sendcommunication->save();
+			
+			Session::flash('message', 'Comunicado enviado correctamente');
+			return redirect()->route('communication.communication.index');
 		
 					
 		}else{
