@@ -28,4 +28,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Company');
     }
+	
+	public function accountsreceivable()
+    {
+        return $this->hasMany('App\Accountsreceivable');
+    }
 }

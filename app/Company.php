@@ -55,4 +55,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Communication');
     }
+	
+	public function accountsreceivable()
+    {
+        return $this->hasMany('App\Accountsreceivable');
+    }
 }

@@ -50,4 +50,11 @@ class Property extends Model
     {
         return $this->hasMany('App\Contact','property_id');
     }
+	
+	public function accountsreceivable()
+    {
+        return $this->hasMany('App\Accountsreceivable');
+    }
+	
+	
 }

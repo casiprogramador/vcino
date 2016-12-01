@@ -20,4 +20,9 @@ class Quota extends Model
     {
         return $this->belongsTo('App\TypeProperty');
     }
+	
+	public function accountsreceivable()
+    {
+        return $this->hasMany('App\Accountsreceivable');
+    }
 }

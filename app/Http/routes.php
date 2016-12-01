@@ -69,6 +69,21 @@ Route::group(['prefix' => 'communication'], function () {
         'as' => 'communication.communication.print', 'uses' => 'CommunicationController@printcom'
     ]);
 });
+
+Route::group(['prefix' => 'transaction'], function () {
+	Route::get('/accountsreceivable/index', [
+        'as' => 'transaction.accountsreceivable.index', 'uses' => 'AccountsReceivableController@index'
+    ]);
+	Route::get('/accountsreceivable/create', [
+        'as' => 'transaction.accountsreceivable.create', 'uses' => 'AccountsReceivableController@create'
+    ]);
+	Route::get('/accountsreceivable/generate', [
+        'as' => 'transaction.accountsreceivable.generate', 'uses' => 'AccountsReceivableController@generate'
+    ]);
+	Route::get('/accountsreceivable/send', [
+        'as' => 'transaction.accountsreceivable.send', 'uses' => 'AccountsReceivableController@send'
+    ]);
+});
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
 ]);

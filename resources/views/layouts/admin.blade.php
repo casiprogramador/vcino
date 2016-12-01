@@ -15,6 +15,22 @@
                         VCino
                     </div>
                 </li>
+				<li {!! (Request::is('transaction/*') ? ' class="active"' : '') !!}>
+					<a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label">Transacciones</span> <span class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a href="#/lista-transacciones">Lista de transacciones</a></li>
+						<li><a href="#/lista-cobranzas">Lista de cobranzas</a></li>
+						<li><a href="#/nueva-cobranza">Nueva cobranza</a></li>
+						<li><a href="#/lista-gastos">Lista de gastos</a></li>
+						<li><a href="#/nuevo-gasto">Nuevo gasto</a></li>
+						<li class="{{ MenuRoute::active('transaction/accountsreceivable/index') }}">
+							<a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
+						</li>
+						<li class="{{ MenuRoute::active('transaction/accountsreceivable/send') }}"><a href="{{ route('transaction.accountsreceivable.send') }}">Enviar aviso de cobranza</a></li>
+						<li class="{{ MenuRoute::active('transaction/accountsreceivable/generate') }}">
+							<a href="{{ route('transaction.accountsreceivable.generate') }}">Generar cuotas por cobrar</a></li>
+					</ul>
+				</li>
                 <li {!! (Request::is('communication/*') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-envelope-o"></i> <span
                                 class="nav-label">Comunicación & Info</span> <span class="fa arrow"></span></a>
