@@ -15,4 +15,14 @@ class Accountsreceivable extends Model
     {
         return $this->belongsTo('App\Company');
     }
+	
+	public function property()
+    {
+        return $this->belongsTo('App\Property','property_id');
+    }
+	
+	public function quota()
+    {
+        return $this->belongsTo('App\Quota');
+    }
 }

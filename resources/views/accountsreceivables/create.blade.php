@@ -32,37 +32,39 @@
                 </div>
 
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
-
+                     {!! Form::open(array('route' => 'transaction.accountsreceivable.store', 'class' => 'form-horizontal')) !!}
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Propiedad</label>
                             <div class="col-sm-3">
-                                <select class="form-control input-sm" name="tipo-cuenta">
-                                    <!-- Lista de las propiedades ordenada por campo ORDEN y despliega campo número  -->
-                                    <option>Propiedad 1</option>
-                                    <option>Propiedad 2</option>
-                                    <option>Propiedad 3</option>
-                                    <option>Propiedad 4</option>
-                                    <option>Propiedad 5</option>
-                                </select>
-                            </div>
+								{{ Form::select('propiedad',$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
+								@if ($errors->has('propiedad'))
+								<span class="help-block">
+									<strong>{{ $errors->first('propiedad') }}</strong>
+								</span>
+								@endif
+				</div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Gestión</label>
                             <div class="col-sm-2">
-                                <select class="form-control input-sm" name="tipo-cuenta">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
+                                <select class="form-control input-sm" name="gestion">
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
                                 </select>
+								@if ($errors->has('gestion'))
+								<span class="help-block">
+									<strong>{{ $errors->first('gestion') }}</strong>
+								</span>
+								@endif
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('periodo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Periodo</label>
                             <div class="col-sm-2">
-                                <select class="form-control input-sm" name="tipo-cuenta">
+                                <select class="form-control input-sm" name="periodo">
                                     <option value="1">Enero</option>
                                     <option value="2">Febrero</option>
                                     <option value="3">Marzo</option>
@@ -76,27 +78,40 @@
                                     <option value="11">Noviembre</option>
                                     <option value="12">Diciembre</option>
                                 </select>
+								@if ($errors->has('periodo'))
+								<span class="help-block">
+									<strong>{{ $errors->first('periodo') }}</strong>
+								</span>
+								@endif
                             </div>
                         </div>
 
                         <div class="hr-line-dashed"></div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('cuota') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Cuota</label>
                             <div class="col-sm-5">
-                                <select class="form-control input-sm" name="tipo-cuenta">
-                                    <!-- Lista de las propiedades ordenada por campo ORDEN y despliega campo número  -->
-                                    <option>Expensa tipo 1</option>
-                                    <option>Alquiler de áreas comunes</option>
-                                </select>
+								{{ Form::select('cuota',$quotas, old('propiedad'), ['class' => 'form-control input-sm']) }}
+								@if ($errors->has('cuota'))
+								<span class="help-block">
+									<strong>{{ $errors->first('cuota') }}</strong>
+								</span>
+								@endif
                             </div>
                         </div>
 
-                        <div class="form-group" id="fecha">
+                        <div class="form-group{{ $errors->has('fecha_vencimiento') ? ' has-error' : '' }}" id="fecha">
                             <label class="col-sm-3 control-label">Fecha de vencimiento</label>
                                 <div class="col-sm-3 input-group date" style="padding-left:15px;">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control input-sm" value="30/04/2016">
+
+										<input type="text" name="fecha_vencimiento" class="form-control input-sm date-picker">
+										@if ($errors->has('fecha_vencimiento'))
+										<span class="help-block">
+											<strong>{{ $errors->first('fecha_vencimiento') }}</strong>
+										</span>
+										@endif
+
                                 </div>
                         </div>
 
@@ -104,24 +119,39 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Importe por cobrar</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control input-sm">
+                            <div class="col-sm-2{{ $errors->has('importe_por_cobrar') ? ' has-error' : '' }}">
+                                <input name="importe_por_cobrar" type="text" class="form-control input-sm">
+								@if ($errors->has('importe_por_cobrar'))
+								<span class="help-block">
+									<strong>{{ $errors->first('importe_por_cobrar') }}</strong>
+								</span>
+								@endif
                             </div>
                             <label class="col-sm-3 control-label">Importe abonado</label>
-                            <div class="col-sm-2">
-                                <input type="text" value="0" class="form-control input-sm">
+                            <div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}">
+                                <input name="importe_abonado" type="text" value="0" class="form-control input-sm">
+								@if ($errors->has('importe_abonado'))
+								<span class="help-block">
+									<strong>{{ $errors->first('importe_abonado') }}</strong>
+								</span>
+								@endif
                             </div>
                         </div>
 
                         <div class="hr-line-dashed"></div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('cancelada') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Cancelada</label>
                             <div class="col-sm-1">
-                                <select class="form-control input-sm" name="tipo-cuenta">
-                                    <option>Si</option>
-                                    <option selected="">No</option>
+                                <select class="form-control input-sm" name="cancelada">
+                                    <option value="1">Si</option>
+                                    <option value="0" selected="">No</option>
                                 </select>
+								@if ($errors->has('cancelada'))
+								<span class="help-block">
+									<strong>{{ $errors->first('cancelada') }}</strong>
+								</span>
+								@endif
                             </div>
                         </div>
 
@@ -136,12 +166,12 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-success" type="submit">Guardar</button>
-                                <button class="btn btn-white" type="submit">Cancelar</button>
+                                 <button class="btn btn-success" type="submit">Guardar</button>
+                                 <a href="{{ route('transaction.accountsreceivable.index') }}" class="btn btn-white" >Cancelar</a>
                             </div>
                         </div>
 
-                    </form>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -149,5 +179,12 @@
 </div>
 
 @endsection
-
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/summernote.min.js') }}"></script>
+    <script>
+        $('.date-picker').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    </script>
+@endsection
 

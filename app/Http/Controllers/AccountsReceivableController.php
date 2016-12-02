@@ -33,6 +33,22 @@ class AccountsReceivableController extends Controller
 		->with('quotas',$quotas);
     }
 	
+	public function store(Request $request)
+    {
+        $this->validate($request, [
+            'gestion' => 'required',
+            'periodo' => 'required',
+            'fecha_vencimiento' => 'required',
+            'cantidad' => 'required',
+			'importe_por_cobrar' => 'required',
+			'importe_abonado' => 'required',
+			'cancelada' => 'required',
+			'cuota' => 'required',
+			'propiedad' => 'required',
+        ]);
+    }
+	
+	
 	public function generate()
     {
         return view('accountsreceivables.generate');
