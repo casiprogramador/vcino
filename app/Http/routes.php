@@ -71,16 +71,8 @@ Route::group(['prefix' => 'communication'], function () {
 });
 
 Route::group(['prefix' => 'transaction'], function () {
-	Route::get('/accountsreceivable/index', [
-        'as' => 'transaction.accountsreceivable.index', 'uses' => 'AccountsReceivableController@index'
-    ]);
-	Route::get('/accountsreceivable/create', [
-        'as' => 'transaction.accountsreceivable.create', 'uses' => 'AccountsReceivableController@create'
-    ]);
-	
-	Route::post('/accountsreceivable/store', [
-        'as' => 'transaction.accountsreceivable.store', 'uses' => 'AccountsReceivableController@store'
-    ]);
+	Route::resource('accountsreceivable', 'AccountsReceivableController');
+
 	Route::get('/accountsreceivable/generate', [
         'as' => 'transaction.accountsreceivable.generate', 'uses' => 'AccountsReceivableController@generate'
     ]);

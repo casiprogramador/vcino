@@ -22,6 +22,14 @@
 
     <div class="row">
         <div class="col-lg-12">
+			@if (Session::has('message'))
+				<div class="alert alert-success alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					{!! session('message') !!}
+				</div>
+			@endif
             <div class="ibox">
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Lista de cuotas por cobrar</h5>
@@ -103,54 +111,62 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>3 AB</td>
-                                <td>2016</td>
-                                <td>10</td>
-                                <td>Expensas: Dobles</td>
-                                <td>15/11/2016</td>
-                                <td class="text-right">1.100,00</td>
-                                <td>
-                                    <i class="fa fa-lg fa-check-square text-primary"></i>
-                                </td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
-                                            <i class="fa fa-files-o"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>4 B</td>
-                                <td>2016</td>
-                                <td>10</td>
-                                <td>Expensas: Simples</td>
-                                <td>15/11/2016</td>
-                                <td class="text-right">900,00</td>
-                                <td>
-                                    <i class="fa fa-lg fa-square-o text-muted"></i>
-                                </td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
-                                            <i class="fa fa-files-o"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
+							@foreach ($accountsreceivables as $accountsreceivable)
+                                @if($accountsreceivable->cancelada == 1)
+									<tr>
+										<td>{{ $accountsreceivable->property->nro }}</td>
+										<td>{{ $accountsreceivable->gestion }}</td>
+										<td>{{ $accountsreceivable->periodo }}</td>
+										<td>{{ $accountsreceivable->quota->cuota }}</td>
+										<td>{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
+										<td class="text-right">{{ $accountsreceivable->importe_por_cobrar }}</td>
+										<td>
+											<i class="fa fa-lg fa-check-square text-primary"></i>
+										</td>
+										<td style="vertical-align:middle; text-align:right;">
+											<div class="btn-group">
+												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
+													<i class="fa fa-eye"></i>
+												</a>
+												<a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
+													<i class="fa fa-files-o"></i>
+												</a>
+												<a href="{{ route('transaction.accountsreceivable.edit', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
+													<i class="fa fa-pencil"></i>
+												</a>
+											</div>
+									   </td>
+									</tr>
+								@else
+									<tr>
+										<td>{{ $accountsreceivable->property->nro }}</td>
+										<td>{{ $accountsreceivable->gestion }}</td>
+										<td>{{ $accountsreceivable->periodo }}</td>
+										<td>{{ $accountsreceivable->quota->cuota }}</td>
+										<td>{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
+										<td class="text-right">{{ $accountsreceivable->importe_por_cobrar }}</td>
+										<td>
+											<i class="fa fa-lg fa-square-o text-muted"></i>
+										</td>
+										<td style="vertical-align:middle; text-align:right;">
+											<div class="btn-group">
+												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
+													<i class="fa fa-eye"></i>
+												</a>
+												<a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
+													<i class="fa fa-files-o"></i>
+												</a>
+												<a href="{{ route('transaction.accountsreceivable.edit', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
+													<i class="fa fa-pencil"></i>
+												</a>
+											</div>
+									   </td>
+									</tr>
+								@endif
+
+                            @endforeach
+                            
+                            
 
 
                         </tbody>

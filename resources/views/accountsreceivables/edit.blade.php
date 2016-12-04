@@ -32,11 +32,12 @@
                 </div>
 
                 <div class="ibox-content">
-                     {!! Form::open(array('route' => 'transaction.accountsreceivable.store', 'class' => 'form-horizontal')) !!}
+
+					 {!! Form::open(array('route' => array('transaction.accountsreceivable.update', $accountsreceivable->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Propiedad</label>
                             <div class="col-sm-3">
-								{{ Form::select('propiedad',$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
+								{{ Form::select('propiedad',$properties, $accountsreceivable->property_id, ['class' => 'form-control input-sm']) }}
 								@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -48,12 +49,12 @@
                         <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Gestión</label>
                             <div class="col-sm-2">
-								{{ Form::select('gestion',
+                                {{ Form::select('gestion',
 								array(
 								'2016' => '2016',
 								'2017' => '2017',
 								'2018' => '2018'
-								),old('gestion'),
+								),$accountsreceivable->gestion,
 								['class' => 'form-control input-sm']) }}
 								@if ($errors->has('gestion'))
 								<span class="help-block">
@@ -66,7 +67,7 @@
                         <div class="form-group{{ $errors->has('periodo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Periodo</label>
                             <div class="col-sm-2">
-								{{ Form::select('periodo',
+                                {{ Form::select('periodo',
 								array(
 								'1' => 'Enero',
 								'2' => 'Febrero',
@@ -80,7 +81,7 @@
 								'10' => 'Octubre',
 								'11' => 'Noviembre',
 								'12' => 'Diciembre',
-								),old('periodo'),
+								),$accountsreceivable->periodo,
 								['class' => 'form-control input-sm']) }}
 								@if ($errors->has('periodo'))
 								<span class="help-block">
@@ -95,7 +96,7 @@
                         <div class="form-group{{ $errors->has('cuota') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Cuota</label>
                             <div class="col-sm-5">
-								{{ Form::select('cuota',$quotas, old('propiedad'), ['class' => 'form-control input-sm']) }}
+								{{ Form::select('cuota',$quotas, $accountsreceivable->quota_id, ['class' => 'form-control input-sm']) }}
 								@if ($errors->has('cuota'))
 								<span class="help-block">
 									<strong>{{ $errors->first('cuota') }}</strong>
@@ -109,7 +110,7 @@
                                 <div class="col-sm-3 input-group date" style="padding-left:15px;">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
-										<input type="text" name="fecha_vencimiento" class="form-control input-sm date-picker">
+										<input type="text" name="fecha_vencimiento" class="form-control input-sm date-picker" value="{{date('d/m/Y', strtotime($accountsreceivable->fecha_vencimiento)) }}" >
 										@if ($errors->has('fecha_vencimiento'))
 										<span class="help-block">
 											<strong>{{ $errors->first('fecha_vencimiento') }}</strong>
@@ -124,7 +125,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Importe por cobrar</label>
                             <div class="col-sm-2{{ $errors->has('importe_por_cobrar') ? ' has-error' : '' }}">
-                                <input name="importe_por_cobrar" type="text" class="form-control input-sm">
+                                <input name="importe_por_cobrar" type="text" class="form-control input-sm" value="{{ $accountsreceivable->importe_por_cobrar }}">
 								@if ($errors->has('importe_por_cobrar'))
 								<span class="help-block">
 									<strong>{{ $errors->first('importe_por_cobrar') }}</strong>
@@ -133,7 +134,7 @@
                             </div>
                             <label class="col-sm-3 control-label">Importe abonado</label>
                             <div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}">
-                                <input name="importe_abonado" type="text" value="0" class="form-control input-sm">
+                                <input name="importe_abonado" type="text" value="0" class="form-control input-sm" value="{{ $accountsreceivable->importe_abonado }}">
 								@if ($errors->has('importe_abonado'))
 								<span class="help-block">
 									<strong>{{ $errors->first('importe_abonado') }}</strong>
@@ -147,10 +148,12 @@
                         <div class="form-group{{ $errors->has('cancelada') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Cancelada</label>
                             <div class="col-sm-1">
-                                <select class="form-control input-sm" name="cancelada">
-                                    <option value="1">Si</option>
-                                    <option value="0" selected="">No</option>
-                                </select>
+								{{ Form::select('cancelada',
+								array(
+								'1' => 'SI',
+								'0' => 'NO'
+								),$accountsreceivable->cancelada,
+								['class' => 'form-control input-sm']) }}
 								@if ($errors->has('cancelada'))
 								<span class="help-block">
 									<strong>{{ $errors->first('cancelada') }}</strong>
