@@ -79,6 +79,12 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::get('/accountsreceivable/send', [
         'as' => 'transaction.accountsreceivable.send', 'uses' => 'AccountsReceivableController@send'
     ]);
+	Route::get('/copy/{id}', [
+        'as' => 'transaction.accountsreceivable.copy', 'uses' => 'AccountsReceivableController@copy'
+    ]);
+	Route::post('/copy', [
+        'as' => 'transaction.accountsreceivable.savecopy', 'uses' => 'AccountsReceivableController@savecopy'
+    ]);
 });
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'

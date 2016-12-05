@@ -6,7 +6,7 @@
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
@@ -73,7 +73,7 @@
                             <option value="12">Diciembre</option>
                         </select>
                     </div>
-                    <div class="col-sm-3 m-b-xs">
+                    <div class="col-sm-2 m-b-xs">
                         <select class="input-sm form-control input-s-sm inline">
                             <option value="0">Propiedad: Todas</option>
                             <option value="0">Propiedad número 1</option>
@@ -82,13 +82,14 @@
                             <option value="0">Propiedad número n</option>
                         </select>
                     </div>
-                    <div class="col-sm-3 m-b-xs">
+                    <div class="col-sm-2 m-b-xs">
                         <select class="input-sm form-control input-s-sm inline">
                             <option value="0">Cuota: Todas</option>
                             <option value="0">Expensas: Dobles</option>
                             <option value="0">Expensas: Simples</option>
                         </select>
                     </div>
+					<button class="btn btn-white" type="submit">Buscar</button>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 m-b-xs">
@@ -153,7 +154,7 @@
 												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
 													<i class="fa fa-eye"></i>
 												</a>
-												<a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
+												<a href="{{ route('transaction.accountsreceivable.copy', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
 													<i class="fa fa-files-o"></i>
 												</a>
 												<a href="{{ route('transaction.accountsreceivable.edit', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">

@@ -5,17 +5,14 @@
     <div class="col-lg-10">
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
-            <li>
-                <a href="#/">Inicio</a>
+             <li>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                Transacciones
-            </li>
-            <li>
-                <a href="#">Lista de cuotas por cobrar</a>
+                <a href="{{ route('transaction.accountsreceivable.index') }}">Lista de cuotas por cobrar</a>
             </li>
             <li class="active">
-                <strong>Nueva cuota por cobrar</strong>
+                <strong>Editar cuota por cobrar</strong>
             </li>
         </ol>
     </div>
@@ -28,7 +25,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Nueva cuota por cobrar</h5>
+                    <h5 style="padding-top: 2px;">Editar cuota por cobrar</h5>
                 </div>
 
                 <div class="ibox-content">
@@ -162,14 +159,9 @@
                             </div>
                         </div>
 
-                        <div class="hr-line-dashed"></div>
                         
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button class="btn btn-danger" type="submit">
-                                    <i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
-                            </div>
-                        </div>
+                        
+
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
@@ -179,6 +171,11 @@
                         </div>
 
                     {!! Form::close() !!}
+					<div class="hr-line-dashed"></div>
+					{!! Form::close() !!}
+					{!! Form::open(['route' => ['transaction.accountsreceivable.destroy', $accountsreceivable->id], 'method' => 'delete']) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
+					{!! Form::close() !!}
                 </div>
             </div>
         </div>

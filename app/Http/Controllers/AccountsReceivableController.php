@@ -133,8 +133,21 @@ class AccountsReceivableController extends Controller
     {
         $accountsreceivable = Accountsreceivable::find($id);
 		$accountsreceivable->delete();
-		return redirect()->route('communication.communication.index');
+		return redirect()->route('transaction.accountsreceivable.index');
     }
+	
+	public function copy($id)
+    {
+        $company = Auth::user()->company;
+		$quotas = Quota::where('company_id',$company->id )->lists('cuota','id');
+		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+        $accountsreceivable = Accountsreceivable::find($id);
+        return view('accountsreceivables.copy')
+            ->with('accountsreceivable',$accountsreceivable)
+			->with('properties',$properties)
+			->with('quotas',$quotas);
+    }
+	
 	
 	
 	public function generate()
