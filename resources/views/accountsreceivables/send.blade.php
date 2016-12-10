@@ -31,29 +31,27 @@
 
                 <div class="ibox-content">
 
-                    <form method="get" class="form-horizontal">
+                {!! Form::open(array('route' => 'transaction.accountsreceivable.storealertpayment', 'class' => 'form-horizontal')) !!}
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Propiedad</label>
                         <div class="col-sm-5">
-                            <select class="form-control input-sm" name="propiedad">
-                                <option value="0">Todas las propiedades</option>
-                                <option value="1">Numero propiedad 2</option>
-                                <option value="2">Numero propiedad 3</option>
-                                <option value="3">Numero propiedad 4</option>
-                                <option value="4">Numero propiedad 5</option>
-                                <option value="5">Numero propiedad 6</option>
-                            </select>
+							{{ Form::select('propiedad',['todas'=>'Todas']+$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
+							@if ($errors->has('propiedad'))
+							<span class="help-block">
+								<strong>{{ $errors->first('propiedad') }}</strong>
+							</span>
+							@endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Asunto</label>
                         <div class="col-sm-5">
-                            <select class="form-control input-sm" name="comunicado">
-                                <option value="todos">Aviso de cobranza</option>
-                                <option value="copropietarios">Recordatorio aviso de cobranza</option>
-                                <option value="inquilinos">Propiedad en mora</option>
+                            <select class="form-control input-sm" name="asunto">
+                                <option value="Aviso de cobranza">Aviso de cobranza</option>
+                                <option value="Recordatorio aviso de cobranza">Recordatorio aviso de cobranza</option>
+                                <option value="Propiedad en mora">Propiedad en mora</option>
                             </select>
                         </div>
                     </div>
@@ -61,14 +59,15 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Vencimiento a</label>
                         <div class="col-sm-2 m-b-xs">
-                            <select class="input-sm form-control input-s-sm inline">
-                                <option value="0">2016</option>
-                                <option value="0">2015</option>
-                                <option value="0">2014</option>
+                            <select class="input-sm form-control input-s-sm inline" name="gestion">
+                                <option value="2017">2017</option>
+								<option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
                             </select>
                         </div>
                         <div class="col-sm-3 m-b-xs">
-                            <select class="form-control input-sm" name="vencimiento">
+                            <select class="form-control input-sm" name="periodo">
                                 <option value="1">Enero</option>
                                 <option value="2">Febrero</option>
                                 <option value="3">Marzo</option>
@@ -88,7 +87,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nota</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control input-sm">
+                            <input type="text" class="form-control input-sm" name="nota">
                         </div>
                     </div>
 
@@ -99,6 +98,7 @@
                             <button class="btn btn-success" type="submit">Generar lista de distribución</button>
                         </div>
                     </div>
+				{!! Form::close() !!}
 
                     <div class="hr-line-dashed"></div>
 
@@ -280,7 +280,7 @@
                         </div>
                     </div>
 
-                    </form>
+
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Propiedad</label>
                             <div class="col-sm-3">
-								{{ Form::select('propiedad',$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
+								{{ Form::select('propiedad',['todas'=>'Todas']+$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
 								@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -95,7 +95,13 @@
                         <div class="form-group{{ $errors->has('cuota') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Cuota</label>
                             <div class="col-sm-5">
-								{{ Form::select('cuota',$quotas, old('propiedad'), ['class' => 'form-control input-sm']) }}
+								<select id="cuota" class="form-control input-sm" name="cuota">
+									<option importe="0" value="0">Seleccione una cuota</option> 
+									@foreach($quotas as $quota)
+                                    
+									<option importe="{{$quota->importe}}" value="{{$quota->id}}">{{$quota->cuota}}</option>
+									@endforeach
+                                </select>
 								@if ($errors->has('cuota'))
 								<span class="help-block">
 									<strong>{{ $errors->first('cuota') }}</strong>
@@ -124,7 +130,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Importe por cobrar</label>
                             <div class="col-sm-2{{ $errors->has('importe_por_cobrar') ? ' has-error' : '' }}">
-                                <input name="importe_por_cobrar" type="text" class="form-control input-sm">
+                                <input id="importe-cobrar" name="importe_por_cobrar" type="text" class="form-control input-sm">
 								@if ($errors->has('importe_por_cobrar'))
 								<span class="help-block">
 									<strong>{{ $errors->first('importe_por_cobrar') }}</strong>
@@ -181,9 +187,17 @@
 @section('javascript')
     <script type="text/javascript" src="{{ URL::asset('js/summernote.min.js') }}"></script>
     <script>
+		$(document).ready(function () {
+            $('#cuota').change(function(){
+				
+				$('#importe-cobrar').val($('#cuota option:selected').attr('importe'));
+				
+            });
+        });
         $('.date-picker').datetimepicker({
             format: 'DD/MM/YYYY'
         });
+		
     </script>
 @endsection
 

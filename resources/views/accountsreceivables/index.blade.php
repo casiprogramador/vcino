@@ -108,7 +108,8 @@
                                 <th style="vertical-align:bottom">Vencimiento</th>
                                 <th style="vertical-align:bottom" class="text-right">Importe</th>
                                 <th style="vertical-align:bottom">Cancelada</th>
-                                <th style="vertical-align:bottom" width="100"></th>
+                                <th style="vertical-align:bottom"></th>
+								<th style="vertical-align:bottom"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,6 +162,13 @@
 													<i class="fa fa-pencil"></i>
 												</a>
 											</div>
+									   </td>
+									   <td style="text-align:right;">
+
+										   {!! Form::open(['route' => ['transaction.accountsreceivable.destroy', $accountsreceivable->id], 'method' => 'delete']) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar esta cuota por pagar?')"]) !!}
+					{!! Form::close() !!}
+										   
 									   </td>
 									</tr>
 								@endif
@@ -220,7 +228,7 @@
                 },
                 "paging":   false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 0 }, { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
+                "columnDefs": [ { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

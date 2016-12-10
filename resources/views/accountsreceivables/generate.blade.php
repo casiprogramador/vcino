@@ -29,12 +29,12 @@
                 </div>
 
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
+                    {!! Form::open(array('route' => 'transaction.accountsreceivable.searchgenerate', 'class' => 'form-horizontal')) !!}
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Gestión</label>
                             <div class="col-sm-2">
-                                <select class="form-control input-sm" name="tipo-cuenta">
+                                <select class="form-control input-sm" name="gestion">
                                     <option>2016</option>
                                     <option>2017</option>
                                     <option>2018</option>
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Periodo</label>
                             <div class="col-sm-3">
-                                <select class="form-control input-sm" name="tipo-cuenta">
+                                <select class="form-control input-sm" name="periodo">
                                     <option value="1">Enero</option>
                                     <option value="2">Febrero</option>
                                     <option value="3">Marzo</option>
@@ -69,17 +69,18 @@
                                 <button class="btn btn-success" type="submit">Generar cuotas por cobrar</button>
                             </div>
                         </div>
-
+					{!! Form::close() !!}
                         <div class="hr-line-dashed"></div>
 
-                        <div class="row">
-                            <div class="col-sm-1">
-                            </div>
-                            <div class="col-sm-10">
+                        
+								
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" style="text-align: left;">Gestión: <span style="font-weight: normal;">2016</span></label>
                                     <label class="col-sm-3 control-label" style="text-align: left;">Periodo: <span style="font-weight: normal;">Octubre</span></label>
                                 </div>
+						
+						<div class="row">
+                            <div class="col-sm-10">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered">
                                         <thead>
@@ -154,7 +155,7 @@
                             </div>
                         </div>
 
-                    </form>
+
                 </div>
             </div>
         </div>

@@ -71,17 +71,33 @@ Route::group(['prefix' => 'communication'], function () {
 });
 
 Route::group(['prefix' => 'transaction'], function () {
-	Route::resource('accountsreceivable', 'AccountsReceivableController');
 
 	Route::get('/accountsreceivable/generate', [
         'as' => 'transaction.accountsreceivable.generate', 'uses' => 'AccountsReceivableController@generate'
     ]);
+	
+	Route::post('/accountsreceivable/generate', [
+        'as' => 'transaction.accountsreceivable.searchgenerate', 'uses' => 'AccountsReceivableController@searchgenerate'
+    ]);
+	
 	Route::get('/accountsreceivable/send', [
         'as' => 'transaction.accountsreceivable.send', 'uses' => 'AccountsReceivableController@send'
     ]);
+	
+	Route::post('/accountsreceivable/storealertpayment', [
+        'as' => 'transaction.accountsreceivable.storealertpayment', 'uses' => 'AccountsReceivableController@storealertpayment'
+    ]);
+	
 	Route::get('/copy/{id}', [
         'as' => 'transaction.accountsreceivable.copy', 'uses' => 'AccountsReceivableController@copy'
     ]);
+	
+	Route::get('/accountsreceivable/print', [
+        'as' => 'transaction.accountsreceivable.print', 'uses' => 'AccountsReceivableController@printing'
+    ]);
+	
+	Route::resource('accountsreceivable', 'AccountsReceivableController');
+
 });
 Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
