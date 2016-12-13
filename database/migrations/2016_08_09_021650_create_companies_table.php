@@ -17,7 +17,8 @@ class CreateCompaniesTable extends Migration
             $table->string('nombre');
             $table->string('direccion');
             $table->string('telefono');
-            $table->string('logotipo');
+            $table->string('logotipo')->default('img/system/logo_empresa.jpg');
+			$table->text('forma_pago');
             $table->integer('dias_mora');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

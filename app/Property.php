@@ -56,5 +56,10 @@ class Property extends Model
         return $this->hasMany('App\Accountsreceivable');
     }
 	
+	public function sendalertpayments()
+	{
+		return $this->hasMany('App\Sendalertpayments');
+	}
+	
 	
 }

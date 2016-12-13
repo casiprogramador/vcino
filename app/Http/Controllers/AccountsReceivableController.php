@@ -204,10 +204,24 @@ class AccountsReceivableController extends Controller
 	public function send()
     {
 		$company = Auth::user()->company;
+		$sendalertpayments = Sendalertpayment::where('company_id',$company->id );
+		return view('accountsreceivables.send')->with('sendalertpayments',$sendalertpayments->get());
+    }
+	
+	public function generatenotification(){
+		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
 
-		return view('accountsreceivables.send')->with('properties',$properties);
-    }
+		return view('accountsreceivables.generatenotification')->with('properties',$properties);
+	}
+	
+	public function sendnotification(Request $request){
+		dd($request);
+	}
+	
+	public function registernotification(){
+		//Historial de Notificaciones de pago enviadas
+	}
 	
 	public function storealertpayment(Request $request){
 		$this->validate($request, [
@@ -301,8 +315,17 @@ class AccountsReceivableController extends Controller
 	}
 
 
-	public function printing()
+	public function printing($id)
     {
-        return view('accountsreceivables.print');
+		$company = Auth::user()->company;
+        $sendalertpayment = Sendalertpayment::find($id);
+		$logotipo = $company->logotipo;
+		$formapago = $company->forma_pago;
+		$correoempresa = Auth::user()->email;
+        return view('accountsreceivables.print')
+		->with('sendalertpayment',$sendalertpayment)
+		->with('logotipo',$logotipo)
+		->with('formapago',$formapago)
+		->with('correoempresa',$correoempresa);
     }
 }

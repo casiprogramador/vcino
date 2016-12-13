@@ -46,12 +46,23 @@ class CompanyController extends Controller
             'telefono' => 'required',
             'dias_mora' => 'required',
         ]);
+		
+		if(!empty($request->icono)){
+            $user_id = Auth::user()->id;
+            $file = $request->file('logo');
+            $tmpFilePath = '/img/upload/';
+            $tmpFileName = time() . 'logo-empresa-'.$user_id. '-' . $file->getClientOriginalName();
+            $file->move(public_path() . $tmpFilePath, $tmpFileName);
+            $path = $tmpFilePath . $tmpFileName;
+        }
 
         $company = new Company();
         $company->nombre = $request->nombre;
         $company->direccion = $request->direccion;
         $company->telefono = $request->telefono;
-        $company->logotipo = 'logo.jpg';
+		if(!empty($request->icono)){
+        $company->logotipo = $path;
+		}
         $company->dias_mora = $request->dias_mora;
         $company->user_id = Auth::user()->id;
 

@@ -7,11 +7,23 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Empresa Nueva</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/company') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/company') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
+							<div class="form-group{{ $errors->has('logo') ? ' has-error' : '' }}">
+								 <label for="name" class="col-md-4 control-label">Logotipo</label>
+								<div class="col-md-6">
+								{{Form::file('logo', array('class'=>'') )}}
+								</label>
+								@if ($errors->has('icono'))
+									<span class="help-block">
+										<strong>{{ $errors->first('logo') }}</strong>
+									</span>
+								@endif
+								</div>
+							</div>
 
                             <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Nombre</label>
+                                <label for="name" class="col-md-4 control-label">Nombre Empresa</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
@@ -39,7 +51,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Telefono</label>
+                                <label for="name" class="col-md-4 control-label">Telefono Empresa</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="telefono" value="{{ old('telefono') }}">

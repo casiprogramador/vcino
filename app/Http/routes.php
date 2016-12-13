@@ -84,15 +84,26 @@ Route::group(['prefix' => 'transaction'], function () {
         'as' => 'transaction.accountsreceivable.send', 'uses' => 'AccountsReceivableController@send'
     ]);
 	
+	Route::get('/accountsreceivable/generatenotification', [
+        'as' => 'transaction.accountsreceivable.generatenotification', 'uses' => 'AccountsReceivableController@generatenotification'
+    ]);
+	
+	Route::post('/accountsreceivable/sendnotification', [
+        'as' => 'transaction.accountsreceivable.sendnotification', 'uses' => 'AccountsReceivableController@sendnotification'
+    ]);
+	
 	Route::post('/accountsreceivable/storealertpayment', [
         'as' => 'transaction.accountsreceivable.storealertpayment', 'uses' => 'AccountsReceivableController@storealertpayment'
+    ]);
+	Route::get('/accountsreceivable/registernotification', [
+        'as' => 'transaction.accountsreceivable.registernotification', 'uses' => 'AccountsReceivableController@registernotification'
     ]);
 	
 	Route::get('/copy/{id}', [
         'as' => 'transaction.accountsreceivable.copy', 'uses' => 'AccountsReceivableController@copy'
     ]);
 	
-	Route::get('/accountsreceivable/print', [
+	Route::get('/accountsreceivable/print/{id}', [
         'as' => 'transaction.accountsreceivable.print', 'uses' => 'AccountsReceivableController@printing'
     ]);
 	
