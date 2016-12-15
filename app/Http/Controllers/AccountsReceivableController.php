@@ -11,6 +11,8 @@ use App\Property;
 use App\Quota;
 use App\Accountsreceivable;
 use App\Sendalertpayment;
+use App\Contact;
+use Mail;
 
 class AccountsReceivableController extends Controller
 {
@@ -216,7 +218,58 @@ class AccountsReceivableController extends Controller
 	}
 	
 	public function sendnotification(Request $request){
-		dd($request);
+		$this->validate($request, [
+            'sendalertpayment' => 'required'
+        ]);
+		$company = Auth::user()->company;
+		$sendalertpayments = Sendalertpayment::whereIn('id',$request->sendalertpayment)->get();
+		if(count($sendalertpayments)){
+			foreach ($sendalertpayments as $sendalertpayment) {
+				$correos = array();	
+				$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->get();
+				if(count($contacts)){
+					foreach ($contacts as $contact) {
+
+						$data = [
+							'nombre_remitente' => $company->nombre,
+							'email_remitente' => Auth::user()->email,
+							'cuerpo_remitente' => $request->remitente,	
+							'email_contancto' => $contact->email,
+							'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
+							'comunicado_asunto' => $sendalertpayment->asunto,
+							'sendalertpayment' => $sendalertpayment,
+							'logotipo' => $company->logotipo,
+							'formapago' => $company->forma_pago,
+							'correoempresa' => Auth::user()->email
+						  ];
+		
+						
+						Mail::send('emails.alertpayment',$data, function ($m) use ($data) {
+							$m->from($data['email_remitente'],$data['nombre_remitente']);
+							$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
+						});
+						if (Mail::failures()) {
+							$estado_envio = 0;
+						}else{
+							$correos[] = $data['email_contancto'];
+							$estado_envio = 1;
+						}
+					}//end foreach contacts
+				}
+				$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
+				$sendalertpaymentUp->correos = implode(',', $correos);
+				$sendalertpaymentUp->enviado = $estado_envio;	
+				$sendalertpaymentUp->fecha_envio = date('Y-m-d H:i:s');
+				$sendalertpaymentUp->save();
+			}//end foreach sendpayment
+			
+			
+			
+		}
+		
+		
+		//dd($sendalertpayment);
+		
 	}
 	
 	public function registernotification(){

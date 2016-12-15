@@ -71,7 +71,7 @@
 										@var $gestiones = explode(',',$sendalertpayment->gestiones)
                                         <tr>
                                             <td style="text-align: center;">
-												<input type="checkbox" class="i-checks" name="propiedades[]" value="{{$sendalertpayment->id}}" checked>
+												<input type="checkbox" class="i-checks" name="sendalertpayment[]" value="{{$sendalertpayment->id}}" checked>
                                             </td>
                                             <td>{{ $sendalertpayment->property->nro }}</td>
                                             <td>
