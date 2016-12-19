@@ -27,8 +27,8 @@
 							<a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
 						</li>
 						<li class="{{ MenuRoute::active('transaction/accountsreceivable/send') }}"><a href="{{ route('transaction.accountsreceivable.send') }}">Enviar aviso de cobranza</a></li>
-						<li class="{{ MenuRoute::active('transaction/accountsreceivable/generate') }}">
-							<a href="{{ route('transaction.accountsreceivable.generate') }}">Generar cuotas por cobrar</a></li>
+<!--						<li class="{{ MenuRoute::active('transaction/accountsreceivable/generate') }}">
+							<a href="{{ route('transaction.accountsreceivable.generate') }}">Generar cuotas por cobrar</a></li>-->
 					</ul>
 				</li>
                 <li {!! (Request::is('communication/*') ? ' class="active"' : '') !!}>

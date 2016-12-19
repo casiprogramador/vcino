@@ -29,6 +29,7 @@ class CreateSendalertpaymentsTable extends Migration
 			$table->string('fecha_vencimientos');
 			$table->string('periodos');
 			$table->string('gestiones');
+			$table->string('destinatarios');
 			$table->string('correos');
 			$table->dateTime('fecha_envio');
 			$table->tinyInteger('enviado')->default('0');

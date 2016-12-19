@@ -206,7 +206,7 @@ class AccountsReceivableController extends Controller
 	public function send()
     {
 		$company = Auth::user()->company;
-		$sendalertpayments = Sendalertpayment::where('company_id',$company->id );
+		$sendalertpayments = Sendalertpayment::where('company_id',$company->id )->where('enviado',0);
 		return view('accountsreceivables.send')->with('sendalertpayments',$sendalertpayments->get());
     }
 	
@@ -226,6 +226,7 @@ class AccountsReceivableController extends Controller
 		if(count($sendalertpayments)){
 			foreach ($sendalertpayments as $sendalertpayment) {
 				$correos = array();	
+				$destinatarios = array();	
 				$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->get();
 				if(count($contacts)){
 					foreach ($contacts as $contact) {
@@ -252,12 +253,15 @@ class AccountsReceivableController extends Controller
 							$estado_envio = 0;
 						}else{
 							$correos[] = $data['email_contancto'];
+							$destinatarios[] = $data['nombre_contacto'];
+							
 							$estado_envio = 1;
 						}
 					}//end foreach contacts
 				}
 				$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
 				$sendalertpaymentUp->correos = implode(',', $correos);
+				$sendalertpaymentUp->destinatarios = implode(',', $destinatarios);
 				$sendalertpaymentUp->enviado = $estado_envio;	
 				$sendalertpaymentUp->fecha_envio = date('Y-m-d H:i:s');
 				$sendalertpaymentUp->save();
@@ -267,13 +271,14 @@ class AccountsReceivableController extends Controller
 			
 		}
 		
-		
-		//dd($sendalertpayment);
+		return redirect()->route('transaction.accountsreceivable.registernotification');
 		
 	}
 	
 	public function registernotification(){
-		//Historial de Notificaciones de pago enviadas
+		$company = Auth::user()->company;
+		$sendalertpayments = Sendalertpayment::where('company_id',$company->id )->where('enviado',1);
+		return view('accountsreceivables.registersendnotification')->with('sendalertpayments',$sendalertpayments->get());
 	}
 	
 	public function storealertpayment(Request $request){
@@ -313,6 +318,8 @@ class AccountsReceivableController extends Controller
 				->groupBy('nro')
 				->groupBy('properties.id')
 				->get();
+		
+		
 		}else{
 			$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
@@ -364,7 +371,7 @@ class AccountsReceivableController extends Controller
 			$sendalertpayment->company_id = $company->id;
 			$sendalertpayment->save();
 		}
-		dd($properties);
+		return redirect()->route('transaction.accountsreceivable.send');
 	}
 
 

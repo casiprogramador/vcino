@@ -30,7 +30,7 @@
 					<div class="ibox-tools" style="padding-bottom: 7px;">
                             <a href="{{ route('transaction.accountsreceivable.generatenotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="generar Avisos" style="margin-right: 10px;"> Generar aviso de pago </a>
 
-                            <a href="{{ route('communication.register.send') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de comunicados" data-original-title="Ver registro de envíos de comunicados"> Registro de avisos enviados </a>
+                            <a href="{{ route('transaction.accountsreceivable.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de comunicados" data-original-title="Ver registro de envíos de comunicados"> Registro de avisos enviados </a>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
 						<div class="col-sm-12">
 							
                             <div class="table-responsive">
-								{!! Form::open(['route' => 'transaction.accountsreceivable.sendnotification']) !!}
+								{!! Form::open(array('route' => 'transaction.accountsreceivable.sendnotification','id'=>'form-send-alertpayment')) !!}
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                         <tr>
@@ -122,6 +122,18 @@
 									<button class="btn btn-success" ><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
 								</div>
 								{!! Form::close() !!}
+								<div class="hr-line-dashed"></div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Proceso de envío</label>
+									<div class="col-sm-9" style="margin-top: 5px">
+										<div class="progress">
+											<div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
+												<span id="progress-text">0% Completado</span>
+											</div>
+										</div>
+									</div>
+								</div>
                             </div>
 						</div>
 					</div>
@@ -132,8 +144,6 @@
     </div>
 </div>
 
-
-
 @endsection
 @section('javascript')
     <script>
@@ -142,6 +152,22 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
+			$( "#form-send-alertpayment" ).submit(function( event ) {
+				var value = 0;
+
+				function barAnim(){
+					value += 5;
+					$( ".progress-bar" ).css( "width", value + "%" ).attr( "aria-valuenow", value );
+					$("#progress-text").text(value + "% Completado");
+					if ( value == 25 || value == 55 || value == 85 ) { 
+						return setTimeout(barAnim, 1000); 
+					}
+					return value >= 100 || setTimeout(barAnim, 50);
+				}
+
+				setTimeout(barAnim, 50);
+				$( "#form-send-communication" ).submit();
+			 });
         });
     </script>
 @endsection
