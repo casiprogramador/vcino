@@ -38,6 +38,7 @@ Route::group(['prefix' => 'properties'], function () {
 	Route::get('/contact/list/{option?}', [
         'as' => 'properties.contact.list', 'uses' => 'ContactController@listar'
     ]);
+	
 });
 Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');
@@ -108,6 +109,7 @@ Route::group(['prefix' => 'transaction'], function () {
     ]);
 	
 	Route::resource('accountsreceivable', 'AccountsReceivableController');
+	Route::resource('collection', 'CollectionController');
 
 });
 Route::get('admin', [
@@ -137,3 +139,7 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::resource('relationcontacts', 'Support\RelationcontactController');
 	Route::resource('media', 'Support\MediaController');
 });
+
+//AJAX
+Route::post('contact/{property_id}/property', 'ContactController@contactbyproperty');
+Route::post('accountsreceivable/{property_id}/property', 'AccountsReceivableController@accountsreceivablebyproperty');

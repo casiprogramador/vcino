@@ -288,5 +288,13 @@ class ContactController extends Controller
 		return redirect()->route('properties.contact.index');
     }
 	
+	//AJAX
+	public function contactbyproperty($property_id){
+		$company = Auth::user()->company;
+		$contacts = Contact::where('company_id',$company->id )->where('property_id',$property_id)->get();
+		$contacts = $contacts->lists('FullName','id');
+		return response()->json(['success' => true, 'contacts' => $contacts]);
+	}
+	
 
 }

@@ -49,7 +49,7 @@ class AccountsReceivableController extends Controller
 			'importe_por_cobrar' => 'required',
 			'importe_abonado' => 'required',
 			'cancelada' => 'required',
-			'cuota' => 'required',
+			'cuota' => 'required|not_in:0',
 			'propiedad' => 'required',
         ]);
 		$company = Auth::user()->company;
@@ -388,4 +388,13 @@ class AccountsReceivableController extends Controller
 		->with('formapago',$formapago)
 		->with('correoempresa',$correoempresa);
     }
+	
+	//AJAX
+	
+	public function accountsreceivablebyproperty($property_id){
+		$company = Auth::user()->company;
+        $accountsreceivables = Accountsreceivable::where('company_id',$company->id )->where('property_id',$property_id)->with('quota')->get();
+		//$accountsreceivables = json_encode($accountsreceivables);
+		return response()->json(['success' => true, 'accountsreceivables' => $accountsreceivables]);
+	}
 }

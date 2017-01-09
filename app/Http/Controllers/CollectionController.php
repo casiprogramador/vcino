@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
-use App\Company;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use Auth;
+use App\Property;
+use App\Contact;
+use App\Account;
 use App\Http\Requests;
 
-class CompanyController extends Controller
+class CollectionController extends Controller
 {
-    public function __construct(){
+	public function __construct(){
         $this->middleware('auth');
     }
     /**
@@ -19,7 +21,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-
+        return view('collections.index');
     }
 
     /**
@@ -29,7 +31,12 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('company.create');
+		$company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+        return view('collections.create')
+		->with('properties',$properties)
+		->with('accounts',$accounts);
     }
 
     /**
@@ -40,39 +47,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nombre' => 'required',
-            'direccion' => 'required',
-            'telefono' => 'required',
-            'dias_mora' => 'required',
-			'forma_pago'=> 'required',
-        ]);
-		
-		if(!empty($request->logotipo)){
-            $user_id = Auth::user()->id;
-            $file = $request->file('logotipo');
-            $tmpFilePath = '/img/upload/';
-            $tmpFileName = time() . 'logo-empresa-'.$user_id. '-' . $file->getClientOriginalName();
-            $file->move(public_path() . $tmpFilePath, $tmpFileName);
-            $path = $tmpFilePath . $tmpFileName;
-        }else{
-			$path = 'img/system/logo_empresa.jpg';
-		}
-
-        $company = new Company();
-        $company->nombre = $request->nombre;
-        $company->direccion = $request->direccion;
-        $company->telefono = $request->telefono;
-
-        $company->logotipo = $path;
-
-        $company->dias_mora = $request->dias_mora;
-		$company->forma_pago = $request->forma_pago;
-        $company->user_id = Auth::user()->id;
-
-        $company->save();
-
-        return redirect('admin');
+        //
     }
 
     /**
@@ -83,7 +58,7 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('collections.show');
     }
 
     /**
