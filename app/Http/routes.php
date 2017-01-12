@@ -99,7 +99,11 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::get('/accountsreceivable/registernotification', [
         'as' => 'transaction.accountsreceivable.registernotification', 'uses' => 'AccountsReceivableController@registernotification'
     ]);
+	//Buscar en index
 	
+	Route::post('/accountsreceivable/storealertpayment/search', [
+        'as' => 'transaction.accountsreceivable.search', 'uses' => 'AccountsReceivableController@search'
+    ]);
 	Route::get('/copy/{id}', [
         'as' => 'transaction.accountsreceivable.copy', 'uses' => 'AccountsReceivableController@copy'
     ]);

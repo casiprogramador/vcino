@@ -38,7 +38,7 @@
 						<label class="col-sm-2 control-label">Fecha</label>
 						<div class="col-sm-3 input-group date" style="padding-left:15px;">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{old('fecha')}}">
+							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date('d/m/Y') }}">
 						</div>
 						<div class="col-sm-8 col-md-offset-2">
 							@if ($errors->has('fecha'))

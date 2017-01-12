@@ -53,11 +53,7 @@ class InstallationController extends Controller
             'hora_dia_semana_hasta' => 'required',
             'hora_fin_de_semana_hasta' => 'required',
             'normas' => 'required',
-            'reglamento' => 'required',
-            'fotografia_principal'	=>	'required | mimes:jpeg,jpg,png',
-            'fotografia_1'	=>	'required | mimes:jpeg,jpg,png',
-            'fotografia_2'	=>	'required | mimes:jpeg,jpg,png',
-            'fotografia_3'	=>	'required | mimes:jpeg,jpg,png'
+
         ]);
 
 
@@ -77,35 +73,55 @@ class InstallationController extends Controller
         $dias_permitidos = implode(",", $request->dias_permitidos);
 
         //Reglamento
+		if(!empty($request->reglamento)){
         $fileReglamento = $request->file('reglamento');
         $tmpFilePathReglamento = '/img/upload/';
         $tmpFileNameReglamento = time() .'-'. 'rg-in'.'-'.$id. '-' . $fileReglamento->getClientOriginalName();
         $fileReglamento->move(public_path() . $tmpFilePathReglamento, $tmpFileNameReglamento);
         $pathReglamento = $tmpFilePathReglamento . $tmpFileNameReglamento;
+		}else{
+			$pathReglamento= '/img/system/imagedefault.png';
+		}
         //Foto Principal
+		if(!empty($request->fotografia_principal)){
         $fileFp = $request->file('fotografia_principal');
         $tmpFilePathFp = '/img/upload/';
         $tmpFileNameFp = time() .'-'. 'fp-in'.'-'.$id. '-' . $fileFp->getClientOriginalName();
         $fileFp->move(public_path() . $tmpFilePathFp, $tmpFileNameFp);
         $pathFp = $tmpFilePathFp . $tmpFileNameFp;
+		}else{
+			$pathFp = '/img/system/imagedefault.png';
+		}
         //Foto 1
+		if(!empty($request->fotografia_1)){
         $fileF1 = $request->file('fotografia_1');
         $tmpFilePathF1 = '/img/upload/';
         $tmpFileNameF1 = time() .'-'. 'f1-in'.'-'.$id. '-' . $fileF1->getClientOriginalName();
         $fileF1->move(public_path() . $tmpFilePathF1, $tmpFileNameF1);
         $pathF1 = $tmpFilePathF1 . $tmpFileNameF1;
+		}else{
+			$pathF1 = '/img/system/imagedefault.png';
+		}
         //Foto 2
+		if(!empty($request->fotografia_2)){
         $fileF2 = $request->file('fotografia_2');
         $tmpFilePathF2 = '/img/upload/';
         $tmpFileNameF2 = time() .'-'. 'f2-in'.'-'.$id. '-' . $fileF1->getClientOriginalName();
         $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
         $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
+		}else{
+			$pathF2 = '/img/system/imagedefault.png';
+		}
         //Foto 3
+		if(!empty($request->fotografia_3)){
         $fileF3 = $request->file('fotografia_3');
         $tmpFilePathF3 = '/img/upload/';
         $tmpFileNameF3 = time() .'-'. 'f3-in'.'-'.$id. '-' . $fileF3->getClientOriginalName();
         $fileF3->move(public_path() . $tmpFilePathF3, $tmpFileNameF3);
         $pathF3 = $tmpFilePathF3 . $tmpFileNameF3;
+		}else{
+			$pathF3 = '/img/system/imagedefault.png';
+		}
 
         $installation = new Installation();
         $installation->instalacion = $request->instalacion;
@@ -117,6 +133,7 @@ class InstallationController extends Controller
         $installation->hora_dia_semana_hasta = $request->hora_dia_semana_hasta;
         $installation->hora_fin_de_semana_hasta = $request->hora_fin_de_semana_hasta;
         $installation->normas = $request->normas;
+		
         $installation->reglamento = $pathReglamento;
         $installation->fotografia_principal = $pathFp;
         $installation->fotografia_1 = $pathF1;
