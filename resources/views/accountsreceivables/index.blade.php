@@ -41,24 +41,26 @@
 
                 <div class="ibox-content">
                 <div class="row">
+					{!! Form::open(array('route' => 'transaction.accountsreceivable.search', 'class' => 'form-horizontal')) !!}
                     <div class="col-sm-2 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Estado: Todas</option>
-                            <option value="0">Canceladas</option>
+                        <select class="input-sm form-control input-s-sm inline" name="estado">
+                            <option value="todos">Estado: Todas</option>
+                            <option value="1">Canceladas</option>
                             <option value="0">Pendientes</option>
                         </select>
                     </div>
                     <div class="col-sm-2 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Gestión: Todas</option>
-                            <option value="0">2016</option>
-                            <option value="0">2015</option>
-                            <option value="0">2014</option>
+                        <select class="input-sm form-control input-s-sm inline" name="gestion">
+                            <option value="todos">Gestión: Todas</option>
+                            <option value="2017">2017</option>
+							<option value="2016">2016</option>
+                            <option value="2016">2015</option>
+                            <option value="2014">2014</option>
                         </select>
                     </div>
                     <div class="col-sm-2 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Periodo: Todos</option>
+                        <select class="input-sm form-control input-s-sm inline" name="periodo">
+                            <option value="todos">Periodo: Todos</option>
                             <option value="1">Enero</option>
                             <option value="2">Febrero</option>
                             <option value="3">Marzo</option>
@@ -73,23 +75,14 @@
                             <option value="12">Diciembre</option>
                         </select>
                     </div>
-                    <div class="col-sm-2 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Propiedad: Todas</option>
-                            <option value="0">Propiedad número 1</option>
-                            <option value="0">Propiedad número 2</option>
-                            <option value="0">Propiedad número 3</option>
-                            <option value="0">Propiedad número n</option>
-                        </select>
+                    <div class="col-sm-3 m-b-xs">
+                        {{ Form::select('propiedad',['todos'=>'Propiedad: Todas']+$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
                     </div>
                     <div class="col-sm-2 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Cuota: Todas</option>
-                            <option value="0">Expensas: Dobles</option>
-                            <option value="0">Expensas: Simples</option>
-                        </select>
+                        {{ Form::select('cuota',['todos'=>'Cuota: Todas']+$quotas, old('cutas'), ['class' => 'form-control input-sm']) }}
                     </div>
 					<button class="btn btn-white" type="submit">Buscar</button>
+					{!! Form::close() !!}
                 </div>
                 <div class="row">
                     <div class="col-sm-12 m-b-xs">

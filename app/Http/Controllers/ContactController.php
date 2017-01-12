@@ -71,18 +71,29 @@ class ContactController extends Controller
             'nombre' => 'required',
             'apellido' => 'required',
 			'email' => 'required',
-            'fotografia' =>	'required',
-			'correspondencia' => 'required',
+            //'fotografia' =>	'required',
+			//'correspondencia' => 'required',
 			//'notas' => 'required'
         ]);
 		
 		//Subir fotografia
+		if(!empty($request->fotografia)){
         $id_user = Auth::user()->id;
         $file = $request->file('fotografia');
         $tmpFilePath = '/img/upload/fotografia_contacto/';
         $tmpFileName = time() . '-'.$id_user. '-' . $file->getClientOriginalName();
         $file->move(public_path() . $tmpFilePath, $tmpFileName);
         $path = $tmpFilePath . $tmpFileName;
+		}else{
+			$path = '/img/system/user150.png';
+		}
+		
+		//correcpondencia vacia
+		if(!empty($request->correspondencia)){
+			$correspondencia =implode(",", $request->correspondencia);		
+		}else{
+			$correspondencia = "SA";
+		}
 
         $company = Auth::user()->company;
         
@@ -109,7 +120,7 @@ class ContactController extends Controller
         $contact->notas = $request->notas;
         $contact->fotografia = $path;
 		
-		$contact->correspondencia = implode(",", $request->correspondencia);
+		$contact->correspondencia = $correspondencia;
 		
 		$contact->notas = $request->notas;
 		$contact->miembro_directorio = $miembro_directorio;
@@ -262,9 +273,9 @@ class ContactController extends Controller
 		if($option == 'todos'){
 			$contacts = Contact::where('company_id',$company->id )->where('activa',1);
 		}  elseif ($option == 'propietario') {
-			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',1);
+			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',1)->where('activa',1);
 		}  elseif ($option == 'inquilino') {
-			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',2);
+			$contacts = Contact::where('company_id',$company->id )->where('typecontact_id',2)->where('activa',1);
 		}elseif ($option == 'inactivo') {
 			$contacts = Contact::where('company_id',$company->id )->where('activa',0);
 		}else{
@@ -287,6 +298,14 @@ class ContactController extends Controller
 		$contact->delete();
 		return redirect()->route('properties.contact.index');
     }
+	
+	//AJAX
+	public function contactbyproperty($property_id){
+		$company = Auth::user()->company;
+		$contacts = Contact::where('company_id',$company->id )->where('property_id',$property_id)->get();
+		$contacts = $contacts->lists('FullName','id');
+		return response()->json(['success' => true, 'contacts' => $contacts]);
+	}
 	
 
 }

@@ -25,8 +25,13 @@ class AccountsReceivableController extends Controller
         $company = Auth::user()->company;
 
         $accountsreceivables = Accountsreceivable::where('company_id',$company->id );
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->lists('cuota','id')->all();
+		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
 
-        return view('accountsreceivables.index')->with('accountsreceivables',$accountsreceivables->get());
+        return view('accountsreceivables.index')
+		->with('properties',$properties)
+		->with('quotas',$quotas)
+		->with('accountsreceivables',$accountsreceivables->get());
     }
 
     public function create()
@@ -49,7 +54,7 @@ class AccountsReceivableController extends Controller
 			'importe_por_cobrar' => 'required',
 			'importe_abonado' => 'required',
 			'cancelada' => 'required',
-			'cuota' => 'required',
+			'cuota' => 'required|not_in:0',
 			'propiedad' => 'required',
         ]);
 		$company = Auth::user()->company;
@@ -388,4 +393,44 @@ class AccountsReceivableController extends Controller
 		->with('formapago',$formapago)
 		->with('correoempresa',$correoempresa);
     }
+	
+	public function search(Request $request){
+
+		$company = Auth::user()->company;
+
+        $accountsreceivables = Accountsreceivable::where('company_id',$company->id );
+		if($request->estado != "todos"){
+			$accountsreceivables = $accountsreceivables->where('cancelada',$request->estado);
+		}
+		if($request->gestion != "todos"){
+			$accountsreceivables = $accountsreceivables->where('gestion',$request->gestion);
+		}
+		if($request->periodo != "todos"){
+			$accountsreceivables = $accountsreceivables->where('periodo',$request->periodo);
+		}
+		if($request->propiedad != "todos"){
+			$accountsreceivables = $accountsreceivables->where('property_id',$request->propiedad);
+		}
+		if($request->cuota != "todos"){
+			$accountsreceivables = $accountsreceivables->where('quota_id',$request->cuota);
+		}
+		
+		
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->lists('cuota','id')->all();
+		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+
+        return view('accountsreceivables.index')
+		->with('properties',$properties)
+		->with('quotas',$quotas)
+		->with('accountsreceivables',$accountsreceivables->get());
+	}
+	
+	//AJAX
+	
+	public function accountsreceivablebyproperty($property_id){
+		$company = Auth::user()->company;
+        $accountsreceivables = Accountsreceivable::where('company_id',$company->id )->where('property_id',$property_id)->with('quota')->get();
+		//$accountsreceivables = json_encode($accountsreceivables);
+		return response()->json(['success' => true, 'accountsreceivables' => $accountsreceivables]);
+	}
 }
