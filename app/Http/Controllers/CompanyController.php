@@ -50,7 +50,7 @@ class CompanyController extends Controller
 		
 		if(!empty($request->logotipo)){
             $user_id = Auth::user()->id;
-            $file = $request->file('logo');
+            $file = $request->file('logotipo');
             $tmpFilePath = '/img/upload/';
             $tmpFileName = time() . 'logo-empresa-'.$user_id. '-' . $file->getClientOriginalName();
             $file->move(public_path() . $tmpFilePath, $tmpFileName);
