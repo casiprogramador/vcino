@@ -15,4 +15,9 @@ class Account extends Model
     {
         return $this->belongsTo('App\Bank');
     }
+	
+	public function collections()
+    {
+        return $this->hasMany('App\Collection');
+    }
 }

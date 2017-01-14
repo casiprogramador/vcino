@@ -34,7 +34,7 @@
                         Cobranza de cuotas
                     </h2>
 
-                    <form id="form" action="#" class="wizard-big form-horizontal">
+					{!! Form::open(array('route' => 'transaction.collection.store', 'class' => 'wizard-big form-horizontal', 'id' => 'form')) !!}
 						<h1>Propiedad y contacto</h1>
                         <fieldset>
                             <div class="row">
@@ -102,7 +102,7 @@
                                         <label class="col-sm-4 control-label">Fecha</label>
                                         <div class="col-sm-4 input-group date">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" name="fecha" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}" required>
+                                            <input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}" required>
                                         </div>
                                     </div>
 									<div class="form-group">
@@ -114,7 +114,7 @@
                                     <div class="form-group">
                                          <label class="col-sm-4 control-label">Concepto</label>
 										<div class="col-sm-8 input-group">
-                                        <textarea rows="2" class="form-control input-sm" name="concepto" required></textarea>
+                                        <textarea rows="2" id="concepto" class="form-control input-sm" name="concepto" required></textarea>
 										</div>
                                     </div>
 									
@@ -136,7 +136,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Forma de pago</label>
                                         <div class="col-sm-8 input-group">
-											<select class="form-control input-sm" name="forma_de_pago" id="forma-pago">
+											<select class="form-control input-sm" name="forma_pago" id="forma-pago">
 												<option value="efectivo">Efectivo</option>
 												<option value="cheque">Cheque</option>
 												<option value="deposito">Depósito</option>
@@ -150,13 +150,13 @@
 <!--                                        <label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>-->
 										<label class="col-sm-4 control-label" id="label-transaccion">Nro Transaccion</label>
                                         <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" name="nro_transaccion">
+											<input type="text" class="form-control input-sm" name="nro_forma_pago">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Importe</label>
                                         <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" value="1.400,00" disabled="">
+											<input type="text" class="form-control input-sm" value="0" disabled="" id="importe" name="importe_total">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -169,7 +169,7 @@
                                 </div>
                             </div>
                         </fieldset>
-					</form>
+					{!! Form::close() !!}
 
                 </div>
             </div>
@@ -202,8 +202,20 @@
 			return true;
 			}
 
-			// Forbid suppressing "Warning" step if the user is to young
+			// paso 1 con datos
 			if (newIndex === 1 && Number($( "#propiedades option:selected" ).val()) == 0 || Number($( "#contactos option:selected" ).val()) == 0)
+			{
+			return false;
+			}
+			
+			//paso 2 importe mayor a 0
+			if (newIndex === 2 && Number($( "#importe-total" ).text()) == 0)
+			{
+			return false;
+			}
+			
+			//paso 3 validar campos
+			if (newIndex === 3 && Number($( "#fecha" ).val()) == "" && Number($( "#concepto" ).val()) == "")
 			{
 			return false;
 			}
@@ -332,6 +344,7 @@
 				});
 				//console.log(importe_total);
 				$('#importe-total').text(importe_total.toFixed(2));
+				$('#importe').val(importe_total.toFixed(2));
 			}
 		}, 'json');
 		
@@ -346,6 +359,7 @@
 			
 		});
 		$('#importe-total').text(suma_importe.toFixed(2));
+		$('#importe').val(suma_importe.toFixed(2));
 	});
 	
 	//Cambio tipo de forma de pago

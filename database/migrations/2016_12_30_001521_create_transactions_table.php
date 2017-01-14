@@ -13,14 +13,26 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->increments('id');
-			$table->string('nro_documento');
-			$table->string('id_propiedad');
-			$table->string('id_contacto');
+
+			$table->increments('id');
+			$table->integer('nro_documento');
+			$table->string('tipo_transaccion');
+			$table->date('fecha_pago');
 			$table->string('concepto');
-			$table->string('cuenta');
 			$table->string('forma_pago');
-			$table->date('fecha_cobro');
+			$table->string('numero_forma_pago');
+			$table->decimal('importe_credito', 10, 2)->default(0);
+			$table->decimal('importe_debito', 10, 2)->default(0);
+			$table->text('notas');
+			//$table->string('adjuntos');
+			$table->tinyInteger('excluir_reportes')->default(0);
+			$table->tinyInteger('anulada')->default(0);
+			$table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+			
+			
+			
+			
 			$table->decimal('importe', 10, 2);
             $table->timestamps();
         });

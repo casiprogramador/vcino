@@ -61,5 +61,8 @@ class Property extends Model
 		return $this->hasMany('App\Sendalertpayments');
 	}
 	
-	
+	public function collections()
+    {
+        return $this->hasMany('App\Collection');
+    }
 }

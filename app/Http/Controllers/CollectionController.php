@@ -47,7 +47,18 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$this->validate($request, [
+			'propiedad' => 'required|not_in:0',
+			'contacto' => 'required|not_in:0',
+			'cuotas' => 'required',
+			'fecha' => 'required',
+			'concepto' => 'required',
+            'cuenta' => 'required|not_in:0',
+			'forma_pago' => 'required',
+        ]);
+		
+		
+        dd($request);
     }
 
     /**
