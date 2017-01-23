@@ -29,11 +29,6 @@ class CreateTransactionsTable extends Migration
 			$table->tinyInteger('anulada')->default(0);
 			$table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-			
-			
-			
-			
-			$table->decimal('importe', 10, 2);
             $table->timestamps();
         });
     }

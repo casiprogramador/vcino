@@ -111,6 +111,12 @@
                                         <input type="text" class="form-control input-sm" id="propiedad-contacto" value="" disabled="">
 										</div>
                                     </div>
+									<div class="form-group">
+                                        <label class="col-sm-4 control-label">Cuenta</label>
+                                        <div class="col-sm-8 input-group">
+										{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta'), ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                          <label class="col-sm-4 control-label">Concepto</label>
 										<div class="col-sm-8 input-group">
@@ -127,12 +133,7 @@
                             <div class="row">
                                 <div class="col-lg-8 col-lg-offset-2">
 
-									<div class="form-group">
-                                        <label class="col-sm-4 control-label">Cuenta</label>
-                                        <div class="col-sm-8 input-group">
-										{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta'), ['class' => 'form-control input-sm','id'=>'cuenta']) }}
-                                        </div>
-                                    </div>		
+		
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Forma de pago</label>
                                         <div class="col-sm-8 input-group">
@@ -156,7 +157,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Importe</label>
                                         <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" value="0" disabled="" id="importe" name="importe_total">
+											<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -192,6 +193,8 @@
 <script type="text/javascript" src="{{ URL::asset('js/wizard/jquery.validate.min.js') }}"></script>
 <script>
 	$(document).ready(function(){
+
+		
 	$("#form").steps({
 	bodyTag: "fieldset",
 			onStepChanging: function (event, currentIndex, newIndex)
@@ -215,10 +218,11 @@
 			}
 			
 			//paso 3 validar campos
-			if (newIndex === 3 && Number($( "#fecha" ).val()) == "" && Number($( "#concepto" ).val()) == "")
+			if (newIndex === 3 && Number($("#select-cuenta option:selected" ).val()) == 0)
 			{
 			return false;
 			}
+
 
 			var form = $(this);
 			// Clean up if user went backward before
@@ -281,6 +285,11 @@
 		}
 		}, 'json');
     });
+	
+	$('#select-cuenta').change(function(){
+			
+		console.log($("#select-cuenta option:selected" ).val());
+	});
 	
 	
 	$('#contactos').change(function(){

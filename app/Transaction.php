@@ -8,6 +8,6 @@ class Transaction extends Model
 {
     public function collection()
     {
-        return $this->belongsTo('App\Collection');
+        return $this->hasOne('App\Collection');
     }
 }

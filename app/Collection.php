@@ -28,6 +28,6 @@ class Collection extends Model
 	
     public function transaction()
     {
-        return $this->hasOne('App\Transaction');
+        return $this->belongsTo('App\Transaction');
     }
 }
