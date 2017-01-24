@@ -7,6 +7,9 @@ use Auth;
 use App\Property;
 use App\Contact;
 use App\Account;
+use App\Transaction;
+use App\Collection;
+use App\Accountsreceivable;
 use App\Http\Requests;
 
 class CollectionController extends Controller
@@ -21,7 +24,10 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        return view('collections.index');
+		$company = Auth::user()->company;
+
+		$collections = Collection::where('company_id',$company->id );
+        return view('collections.index')->with('collections',$collections->get());
     }
 
     /**
@@ -47,7 +53,46 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$this->validate($request, [
+			'propiedad' => 'required|not_in:0',
+			'contacto' => 'required|not_in:0',
+			'cuotas' => 'required',
+			'fecha' => 'required',
+			'concepto' => 'required',
+            'cuenta' => 'required|not_in:0',
+			'forma_pago' => 'required',
+        ]);
+		$numero_documento = Transaction::where('user_id',Auth::user()->id)->max('nro_documento');
+		//dd($numero_documento);
+		
+		$company = Auth::user()->company;
+		
+		$transaction = new Transaction();
+		$transaction->nro_documento = $numero_documento+1;
+		$transaction->tipo_transaccion = 'Ingreso';
+		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$transaction->concepto = $request->concepto;
+		$transaction->forma_pago = $request->forma_pago;
+		$transaction->numero_forma_pago = $request->nro_forma_pago;
+		$transaction->importe_credito = $request->importe_total;
+		$transaction->importe_debito= '0';
+		$transaction->notas = $request->notas;
+		$transaction->user_id= Auth::user()->id;
+		$transaction->save();
+		
+		$collection = new Collection();
+		$collection->cuotas = implode(',', $request->cuotas);
+		$collection->property_id = $request->propiedad;
+		$collection->company_id = $request->concepto;
+		$collection->contact_id = $request->contacto;
+		$collection->account_id = $request->cuenta;
+		$collection->company_id = $company->id;
+		//$collection->transaction_id = $request->concepto;
+		$transaction->collection()->save($collection);
+		
+		//$collection->id;
+		return redirect()->route('transaction.collection.show', [$collection->id]);
+        
     }
 
     /**
@@ -58,7 +103,9 @@ class CollectionController extends Controller
      */
     public function show($id)
     {
-        return view('collections.show');
+		$collection = Collection::find($id);
+		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
+		return view('collections.show')->with('collection',$collection)->with('cuotas',$cuotas);
     }
 
     /**
@@ -94,4 +141,5 @@ class CollectionController extends Controller
     {
         //
     }
+	
 }

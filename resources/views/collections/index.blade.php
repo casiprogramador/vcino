@@ -48,14 +48,15 @@
                             </tr>
                         </thead>
                         <tbody>
+							@foreach($collections as $collection)
                             <tr>
-                                <td>10/10/2016</td>
-                                <td>231</td>
-                                <td>3 AB</td>
-                                <td>Juan Perez Fernandez</td>
-                                <td>Pago de expensas</td>
-                                <td>Bco. 0122011-22-11</td>
-                                <td style="text-align: right;">1.400,00</td>
+                                <td>{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</td>
+                                <td>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
+                                <td>{{ $collection->property->nro }}</td>
+                                <td>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</td>
+                                <td>{{$collection->transaction->concepto }}</td>
+                                <td>{{ $collection->account->nombre }}</td>
+                                <td style="text-align: right;">{{$collection->transaction->importe_credito}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
@@ -75,61 +76,7 @@
                                     </div>
                                </td>
                             </tr>
-                            <tr>
-                                <td>12/10/2016</td>
-                                <td>232</td>
-                                <td>15 AB</td>
-                                <td>Mario Jimenez Justiniano</td>
-                                <td>Pago de expensas</td>
-                                <td>Bco. 0122011-22-11</td>
-                                <td style="text-align: right;">900,00</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
-                                            <i class="fa fa-print"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Enviar...">
-                                            <i class="fa fa-envelope-o"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>14/10/2016</td>
-                                <td>233</td>
-                                <td>6 B</td>
-                                <td>Raquel Pereira</td>
-                                <td>Pago de expensas</td>
-                                <td>Caja General</td>
-                                <td style="text-align: right;">900,00</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
-                                            <i class="fa fa-print"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Enviar...">
-                                            <i class="fa fa-envelope-o"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-
+							@endforeach
 
                         </tbody>
                     </table>

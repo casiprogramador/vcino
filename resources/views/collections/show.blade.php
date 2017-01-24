@@ -37,168 +37,6 @@
                     <form id="form" action="#" class="wizard-big">
 
 
-                        <h1>Propiedad y contacto</h1>
-                        <fieldset>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Propiedad</label>
-                                        <select class="form-control input-sm" name="tipo-cuenta">
-                                            <option>Propiedad 1</option>
-                                            <option>Propiedad 2</option>
-                                            <option>Propiedad 3</option>
-                                            <option>Propiedad 4</option>
-                                            <option>Propiedad 5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Contacto (A nombre de)</label>
-                                        <select class="form-control input-sm" name="tipo-cuenta">
-                                            <option>Seleccione contacto</option>
-                                            <option>Contacto 1 de propiedad 1</option>
-                                            <option>Contacto 2 de propiedad 1</option>
-                                            <option>Contacto 3 de propiedad 1</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="text-center">
-                                        <div style="margin-top: 0px">
-                                            <i class="fa fa-sign-in" style="font-size: 160px;color: #e5e5e5 "></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-
-
-                        <h1>Cuotas por cobrar</h1>
-                        <fieldset>
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <div class="form-group">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Gestión</th>
-                                                <th>Periodo</th>
-                                                <th>Cuota</th>
-                                                <th class="text-right">Monto</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
-                                                <td>2016</td>
-                                                <td>Junio</td>
-                                                <td>Expensas: cuota mensual</td>
-                                                <td class="text-right">700,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
-                                                <td>2016</td>
-                                                <td>Julio</td>
-                                                <td>Expensas: cuota mensual</td>
-                                                <td class="text-right">700,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="checkbox" class="i-checks" name="input[]"></td>
-                                                <td>2016</td>
-                                                <td>Julio</td>
-                                                <td>Cuota extraordinaria</td>
-                                                <td class="text-right">1.340,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="checkbox" class="i-checks" name="input[]"></td>
-                                                <td>2016</td>
-                                                <td>Agosto</td>
-                                                <td>Expensas: cuota mensual</td>
-                                                <td class="text-right">700,00</td>
-                                            </tr>
-                                            </tbody>
-                                            <tfoot>
-                                            <tr>
-                                                <th>Total Bs.</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th class="text-right">1.400,00</th>
-                                            </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-
-
-                        <h1>Grabar transacción</h1>
-                        <fieldset>
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <div class="form-group">
-                                        <label>Fecha</label>
-                                        <div class="col-sm-4 input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control input-sm" value="17/10/2016">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Propiedad y contacto</label>
-                                        <input type="text" class="form-control input-sm" value="3 AB - Juan Perez Fernandez" disabled="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Concepto *</label>
-                                        <input type="text" class="form-control input-sm required">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Cuenta</label>
-                                        <div class="col-sm-6 input-group">
-                                        <select class="form-control input-sm" name="forma_de_pago">
-                                            <option>Bco. 323-23232-23</option>
-                                            <option>Caja Chica</option>
-                                            <option>Caja General</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Forma de pago</label>
-                                        <div class="col-sm-4 input-group">
-                                        <select class="form-control input-sm" name="forma_de_pago">
-                                            <option>Efectivo</option>
-                                            <option>Cheque</option>
-                                            <option>Depósito</option>
-                                            <option>Transferencia bancaria</option>
-                                            <option>Tarjeta Débito/Crédito</option>
-                                        </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>
-                                        <div class="col-sm-6 input-group">
-                                        <input type="text" class="form-control input-sm">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Importe</label>
-                                        <div class="col-sm-4 input-group">
-                                        <input type="text" class="form-control input-sm" value="1.400,00" disabled="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Notas</label>
-                                        <textarea rows="2" class="form-control input-sm"></textarea>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </fieldset>
-
-
                         <h1>Imprimir/ Enviar comprobante</h1>
                         <fieldset>
 
@@ -214,12 +52,12 @@
                             <tbody>
                                 <tr>
                                     <td style="border: 0;">
-                                        <div class="p-h-xl"><img src="files/logoEmpresa.png" width="150"></div>
+                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="150"></div>
                                     </td>
                                     <td style="border: 0; vertical-align:bottom">
                                         <div class="p-h-xl text-right">
                                             <h2 style="line-height: 0;">RECIBO DE INGRESO</h2>
-                                            <h3 style="line-height: 0; padding-top: 20px;">N&#186;&nbsp;<span>00123</span></h3>
+                                            <h3 style="line-height: 0; padding-top: 20px;">N&#186;&nbsp;<span>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</span></h3>
                                         </div>
                                     </td>
                                 </tr>
@@ -249,9 +87,9 @@
                                             <span>Propiedad:</span>
                                         </div>
                                         <div class="col-sm-8">
-                                            <span>15/10/2016</span>
+                                            <span>{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</span>
                                             <br/>
-                                            <span style="text-transform: uppercase;"><strong>Cupesi 12 - Juan Perez Fernandez</strong></span>
+                                            <span style="text-transform: uppercase;"><strong>{{ $collection->property->nro }} - {{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</strong></span>
                                         </div>
                                     </div>
                                 </td>
@@ -259,18 +97,16 @@
                             <tr>
                                 <td>
                                     <table cellpadding="0" cellspacing="0" style="width: 100%;">
-                                        <tr>
-                                            <td style="border-top: #333 1px solid; padding: 3px 0;">
-                                                Expensas: cuota mensual - Junio/ 2016
-                                            </td>
-                                            <td style="border-top: #333 1px solid; text-align: right; padding: 3px 0;">700,00</td>
-                                        </tr>
+
+
+										@foreach($cuotas as $cuota)
                                         <tr>
                                             <td style="border-top: #eee 1px solid; padding: 3px 0;">
-                                                Expensas: cuota mensual - Julio/ 2016
+                                                {{ $cuota->quota->category->nombre }} : {{ $cuota->quota->cuota }} {{nombremes($cuota->periodo) }}/{{$cuota->gestion}}
                                             </td>
-                                            <td style="border-top: #eee 1px solid; text-align: right; padding: 3px 0;">700,00</td>
+                                            <td style="border-top: #eee 1px solid; text-align: right; padding: 3px 0;">{{ $cuota->importe_por_cobrar }}</td>
                                         </tr>
+										@endforeach
                                         <tr>
                                             <td style="border-top: #eee 1px solid; padding: 3px 0;">
                                                 &nbsp;
@@ -280,14 +116,14 @@
 
                                         <tr style="font-size: 14px;">
                                             <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
-                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">1.400,00</td>
+                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{$collection->transaction->importe_credito}}</td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding-top: 8px;">
-                                <h4>SON: UN MIL CUATROCIENTOS 00/100 BOLIVIANOS</h4>
+                                <h4>SON: {{ numeroaliteral($collection->transaction->importe_credito) }}</h4>
                                 </td>
                             </tr>
                         </table>

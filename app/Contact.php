@@ -26,6 +26,11 @@ class Contact extends Model
         return $this->belongsTo('App\ModelsSupport\Media','media_id');
     }
 	
+	public function collections()
+    {
+        return $this->hasMany('App\Collection');
+    }
+	
 	//Mutator
 	
 	public function getFullNameAttribute(){
