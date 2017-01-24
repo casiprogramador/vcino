@@ -265,7 +265,7 @@ class ContactController extends Controller
 			$contact->fotografia = $path;
 		}
 
-		$contact->correspondencia = implode(",", $request->correspondencia);
+		$contact->correspondencia = $correspondencia;
 		
 		$contact->notas = $request->notas;
 		$contact->miembro_directorio = $miembro_directorio;
