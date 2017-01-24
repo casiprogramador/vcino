@@ -24,7 +24,10 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        return view('collections.index');
+		$company = Auth::user()->company;
+
+		$collections = Collection::where('company_id',$company->id );
+        return view('collections.index')->with('collections',$collections->get());
     }
 
     /**
@@ -87,7 +90,8 @@ class CollectionController extends Controller
 		//$collection->transaction_id = $request->concepto;
 		$transaction->collection()->save($collection);
 		
-		
+		//$collection->id;
+		return redirect()->route('transaction.collection.show', [$collection->id]);
         
     }
 

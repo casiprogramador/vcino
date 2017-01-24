@@ -70,7 +70,7 @@ class ContactController extends Controller
 			
             'nombre' => 'required',
             'apellido' => 'required',
-			'email' => 'required',
+			//'email' => 'required',
             //'fotografia' =>	'required',
 			//'correspondencia' => 'required',
 			//'notas' => 'required'
@@ -94,6 +94,12 @@ class ContactController extends Controller
 		}else{
 			$correspondencia = "SA";
 		}
+		
+		if(!empty($request->fotografia)){
+			$email = $request->email;
+		}else{
+			$email = '';
+		}
 
         $company = Auth::user()->company;
         
@@ -110,7 +116,7 @@ class ContactController extends Controller
 		$contact->telefono_domicilio = $request->telefono_domicilio;
 		$contact->telefono_oficina = $request->telefono_oficina;
 		
-		$contact->email = $request->email;
+		$contact->email = $email;
 		$contact->email_alterno = $request->email_alterno;
 		
 		$contact->direccion = $request->direccion;

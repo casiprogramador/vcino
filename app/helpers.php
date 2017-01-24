@@ -150,3 +150,15 @@ function numeroaliteral($xcifra)
 		return trim($xcadena);
 }
 
+function subfijo($xx)
+{ // esta función regresa un subfijo para la cifra
+    $xx = trim($xx);
+    $xstrlen = strlen($xx);
+    if ($xstrlen == 1 || $xstrlen == 2 || $xstrlen == 3)
+        $xsub = "";
+    //
+    if ($xstrlen == 4 || $xstrlen == 5 || $xstrlen == 6)
+        $xsub = "MIL";
+    //
+    return $xsub;
+}

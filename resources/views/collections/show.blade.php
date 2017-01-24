@@ -52,7 +52,7 @@
                             <tbody>
                                 <tr>
                                     <td style="border: 0;">
-                                        <div class="p-h-xl"><img src="files/logoEmpresa.png" width="150"></div>
+                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="150"></div>
                                     </td>
                                     <td style="border: 0; vertical-align:bottom">
                                         <div class="p-h-xl text-right">
@@ -123,7 +123,7 @@
                             </tr>
                             <tr>
                                 <td style="padding-top: 8px;">
-                                <h4>SON: UN MIL CUATROCIENTOS 00/100 BOLIVIANOS</h4>
+                                <h4>SON: {{ numeroaliteral($collection->transaction->importe_credito) }}</h4>
                                 </td>
                             </tr>
                         </table>
