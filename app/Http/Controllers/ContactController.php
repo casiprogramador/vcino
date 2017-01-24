@@ -210,7 +210,7 @@ class ContactController extends Controller
             'nombre' => 'required',
             'apellido' => 'required',
 			//'email' => 'required',
-			'correspondencia' => 'required',
+			//'correspondencia' => 'required',
 			//'notas' => 'required'
         ]);
 		
@@ -223,6 +223,14 @@ class ContactController extends Controller
 			$file->move(public_path() . $tmpFilePath, $tmpFileName);
 			$path = $tmpFilePath . $tmpFileName;
 		}
+		
+		//correcpondencia vacia
+		if(!empty($request->correspondencia)){
+			$correspondencia =implode(",", $request->correspondencia);		
+		}else{
+			$correspondencia = "SA";
+		}
+		
 		if(!empty($request->fotografia)){
 			$email = $request->email;
 		}else{
