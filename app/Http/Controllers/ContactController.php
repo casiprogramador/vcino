@@ -209,7 +209,7 @@ class ContactController extends Controller
 			
             'nombre' => 'required',
             'apellido' => 'required',
-			'email' => 'required',
+			//'email' => 'required',
 			'correspondencia' => 'required',
 			//'notas' => 'required'
         ]);
@@ -222,6 +222,11 @@ class ContactController extends Controller
 			$tmpFileName = time() . '-'.$id_user. '-' . $file->getClientOriginalName();
 			$file->move(public_path() . $tmpFilePath, $tmpFileName);
 			$path = $tmpFilePath . $tmpFileName;
+		}
+		if(!empty($request->fotografia)){
+			$email = $request->email;
+		}else{
+			$email = '';
 		}
 
 
@@ -240,7 +245,7 @@ class ContactController extends Controller
 		$contact->telefono_domicilio = $request->telefono_domicilio;
 		$contact->telefono_oficina = $request->telefono_oficina;
 		
-		$contact->email = $request->email;
+		$contact->email = $email;
 		$contact->email_alterno = $request->email_alterno;
 		
 		$contact->direccion = $request->direccion;
