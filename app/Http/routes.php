@@ -113,7 +113,12 @@ Route::group(['prefix' => 'transaction'], function () {
     ]);
 	
 	Route::resource('accountsreceivable', 'AccountsReceivableController');
+	//Collection Routes
 	Route::resource('collection', 'CollectionController');
+	
+	Route::get('collection/{id}/pdf', [
+        'as' => 'transaction.collection.pdf', 'uses' => 'CollectionController@pdf'
+    ]);
 
 });
 Route::get('admin', [

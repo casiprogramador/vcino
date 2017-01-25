@@ -59,7 +59,7 @@
                                 <td style="text-align: right;">{{$collection->transaction->importe_credito}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+                                        <a href="{{ route('transaction.collection.show', $collection->id) }}"class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">

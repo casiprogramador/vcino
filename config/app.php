@@ -162,6 +162,7 @@ return [
 		Prettus\Repository\Providers\RepositoryServiceProvider::class,
 		\InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
 		\InfyOm\CoreTemplates\CoreTemplatesServiceProvider::class, 
+		Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -214,6 +215,7 @@ return [
 		//Crud generator
 		'Html'      => Collective\Html\HtmlFacade::class,
 		'Flash'     => Laracasts\Flash\Flash::class,
+		'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

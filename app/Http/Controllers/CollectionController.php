@@ -142,4 +142,10 @@ class CollectionController extends Controller
         //
     }
 	
+	public function pdf($id){
+		$collection = Collection::find($id);
+		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
+		$pdf = \PDF::loadView('pdf.collection', compact('collection','cuotas'));
+		return $pdf->download('pruebapdf.pdf');
+	}
 }
