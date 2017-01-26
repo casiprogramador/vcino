@@ -116,7 +116,21 @@ class CollectionController extends Controller
      */
     public function edit($id)
     {
-        //
+		$collection= Collection::find($id);
+        $company = Auth::user()->company;
+
+		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		
+		$contacts = Contact::where('company_id',$company->id )->where('property_id', $collection->property_id)->get();
+		$contacts = $contacts->lists('FullName','id')->all();
+		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
+        return view('collections.edit')
+		->with('properties',$properties)
+		->with('contacts',$contacts)
+		->with('accounts',$accounts)
+		->with('cuotas',$cuotas)
+		->with('collection',$collection);
     }
 
     /**
@@ -128,7 +142,7 @@ class CollectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**
