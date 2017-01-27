@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="#">Lista de cobranzas</a>
+                <a href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
             </li>
             <li class="active">
                 <strong>Nueva cobranza</strong>

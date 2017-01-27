@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="#">Lista de cobranzas</a>
+                <a id="direccion-lista" href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
             </li>
             <li class="active">
                 <strong>Nueva cobranza</strong>
@@ -237,6 +237,18 @@
 			form.validate().settings.ignore = ":disabled,:hidden";
 			// Start validation; Prevent going forward if false
 			return form.valid();
+			},
+			labels: {
+				finish: 'Enviar',
+				next: 'Siguiente',
+				previous: 'Retroceder',
+				cancel: 'Cancelar'
+			},
+			onCanceled:function (event)
+			{
+				href = $("#direccion-lista").attr("href");
+				console.log(href);
+				window.location = href;
 			},
 			onFinishing: function (event, currentIndex)
 			{

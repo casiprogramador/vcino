@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="#">Lista de cobranzas</a>
+                <a id="direccion-lista" href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
             </li>
             <li class="active">
                 <strong>Editar cobranza</strong>
@@ -142,7 +142,7 @@
                                         <label class="col-sm-4 control-label">Forma de pago</label>
                                         <div class="col-sm-8 input-group">
 
-											{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), $collection->forma_pago , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
+											{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), $collection->transaction->forma_pago , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
                                         </div>
                                     </div>
 
@@ -150,7 +150,7 @@
 <!--                                        <label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>-->
 										<label class="col-sm-4 control-label" id="label-transaccion">Nro Transaccion</label>
                                         <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" name="nro_forma_pago">
+											<input type="text" class="form-control input-sm" name="nro_forma_pago" value="{{$collection->transaction->numero_forma_pago}}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -193,6 +193,31 @@
 <script>
 	$(document).ready(function(){
 
+	//Detectar forma de pago
+	
+	$foma_pago_val = $("#forma-pago option:selected" ).val();
+	
+	if($foma_pago_val == "cheque"){
+			console.log($foma_pago_val);
+			$('#label-transaccion').text("Banco, Nro. Cheque");
+			$('#cont-forma-pago').show("slow");
+			
+	}else if($foma_pago_val == "deposito"){
+			$('#label-transaccion').text("Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			
+	}else if($foma_pago_val == "transferencia bancaria"){
+			$('#label-transaccion').text("Banco, Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			
+	}else if($foma_pago_val == "tarjeta debito/credito"){
+			$('#label-transaccion').text("Banco, Tipo, Nro. Tarjeta");
+			$('#cont-forma-pago').show("slow");
+			
+	}else{
+			$('#label-transaccion').text("Detalle Transaccion");
+			$('#cont-forma-pago').hide();
+	}
 		
 	$("#form").steps({
 	bodyTag: "fieldset",
@@ -236,6 +261,18 @@
 			form.validate().settings.ignore = ":disabled,:hidden";
 			// Start validation; Prevent going forward if false
 			return form.valid();
+			},
+			labels: {
+				finish: 'Enviar',
+				next: 'Siguiente',
+				previous: 'Retroceder',
+				cancel: 'Cancelar'
+			},
+			onCanceled:function (event)
+			{
+				href = $("#direccion-lista").attr("href");
+				console.log(href);
+				window.location = href;
 			},
 			onFinishing: function (event, currentIndex)
 			{
@@ -371,7 +408,7 @@
 	});
 	
 	//Cambio tipo de forma de pago
-	$('#cont-forma-pago').hide();
+	//$('#cont-forma-pago').hide();
 	$('#forma-pago').change(function(){
 		
 		if($(this).val() == "cheque"){

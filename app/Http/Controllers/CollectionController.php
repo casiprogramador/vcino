@@ -83,7 +83,7 @@ class CollectionController extends Controller
 		$collection = new Collection();
 		$collection->cuotas = implode(',', $request->cuotas);
 		$collection->property_id = $request->propiedad;
-		$collection->company_id = $request->concepto;
+		$collection->company_id = $company->id;
 		$collection->contact_id = $request->contacto;
 		$collection->account_id = $request->cuenta;
 		$collection->company_id = $company->id;
@@ -142,7 +142,37 @@ class CollectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        $this->validate($request, [
+			'propiedad' => 'required|not_in:0',
+			'contacto' => 'required|not_in:0',
+			'cuotas' => 'required',
+			'fecha' => 'required',
+			'concepto' => 'required',
+            'cuenta' => 'required|not_in:0',
+			'forma_pago' => 'required',
+        ]);
+		
+		$company = Auth::user()->company;
+		
+		$collection = Collection::find($id);
+		$collection->cuotas = implode(',', $request->cuotas);
+		$collection->property_id = $request->propiedad;
+		$collection->contact_id = $request->contacto;
+		$collection->account_id = $request->cuenta;
+		$collection->save();
+		
+		$transaction = Transaction::find($collection->transaction_id);
+		$transaction->tipo_transaccion = 'Ingreso';
+		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$transaction->concepto = $request->concepto;
+		$transaction->forma_pago = $request->forma_pago;
+		$transaction->numero_forma_pago = $request->nro_forma_pago;
+		$transaction->importe_credito = $request->importe_total;
+		$transaction->importe_debito= '0';
+		$transaction->notas = $request->notas;
+		$transaction->save();
+		
+		return redirect()->route('transaction.collection.show', [$collection->id]);
     }
 
     /**
@@ -160,6 +190,7 @@ class CollectionController extends Controller
 		$collection = Collection::find($id);
 		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
 		$pdf = \PDF::loadView('pdf.collection', compact('collection','cuotas'));
-		return $pdf->download('pruebapdf.pdf');
+		$nombre_documento = "recibo_ingreso_nro_".str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT);
+		return $pdf->download($nombre_documento.".pdf");
 	}
 }
