@@ -119,6 +119,10 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::get('collection/{id}/pdf', [
         'as' => 'transaction.collection.pdf', 'uses' => 'CollectionController@pdf'
     ]);
+	
+	Route::post('collection/send', [
+        'as' => 'transaction.collection.send', 'uses' => 'CollectionController@sendemail'
+    ]);
 
 });
 Route::get('admin', [

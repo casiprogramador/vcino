@@ -160,28 +160,27 @@
 											<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
 										<a href="{{ route('transaction.collection.pdf', $collection->id) }}" class="btn btn-default">
 											<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>
-										<button class="btn btn-default">
+										<button id="button-enviar" class="btn btn-default">
 											<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar</button>
 										<span class="text-muted" style="margin: 0 10px;">|</span>
-										<button class="btn btn-default">
-											<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nueva cobranza</button>
+										<a href="{{ route('transaction.collection.create') }}" class="btn btn-default">
+											<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nueva cobranza</a>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="row">
+								<div class="row" id="block-enviar">
+									{!! Form::open(array('route' => 'transaction.collection.send', 'class' => '', 'id' => 'form')) !!}
 									<div class="col-md-6">
-										<select class="form-control">
-											<option selected="" value="0">Seleccione contacto</option>
-											<option>Contacto uno - contactouno@gmail.com</option>
-											<option>Contacto dos - contactodos@gmail.com</option>
-											<option>Contacto tres - contactotres@gmail.com</option>
-										</select>
+										{{ Form::select('contacto',['0'=>'Selecciona un contacto']+$contacts, old('contacto'), ['class' => 'form-control input-sm','id'=>'contactos']) }}
 									</div>
+									<input type="hidden" name="id_collection" value="{{$collection->id}}">
 									<div class="col-md-6">
 										<button class="btn btn-success">
 											<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar</button>
 									</div>
+									{!! Form::close() !!}
+									
 								</div>
 							</div>
 
@@ -209,12 +208,17 @@
 <script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>
 	$(document).ready(function () {
+		
 		$("#printButton").click(function () {
 			var mode = 'iframe'; //popup
 			var close = mode == "popup";
 			var options = {mode: mode, popClose: close};
 			$("#printableArea").printArea(options);
 		});
+		$("#block-enviar").hide();
+		$("#button-enviar").click(function() {
+			$("#block-enviar").show("slow");
+		  });
 	});
 </script>
 @endsection

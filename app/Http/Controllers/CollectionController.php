@@ -11,7 +11,8 @@ use App\Transaction;
 use App\Collection;
 use App\Accountsreceivable;
 use App\Http\Requests;
-
+use Mail;
+use Session;
 class CollectionController extends Controller
 {
 	public function __construct(){
@@ -103,9 +104,15 @@ class CollectionController extends Controller
      */
     public function show($id)
     {
+		$company = Auth::user()->company;
+		$contacts = Contact::where('company_id',$company->id )->where('email','<>','')->get();
+		$contacts = $contacts->lists('FullName','id')->all();
 		$collection = Collection::find($id);
 		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
-		return view('collections.show')->with('collection',$collection)->with('cuotas',$cuotas);
+		return view('collections.show')
+				->with('collection',$collection)
+				->with('cuotas',$cuotas)
+				->with('contacts',$contacts);
     }
 
     /**
@@ -181,6 +188,40 @@ class CollectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+	public function sendemail(Request $request){
+		$this->validate($request, [
+			'contacto' => 'required|not_in:0',
+        ]);
+		
+		$company = Auth::user()->company;
+		
+		$collection = Collection::find($request->id_collection);
+		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
+		$contact = Contact::find($request->contacto);
+		
+		$data = [
+				'nombre_remitente' => $company->nombre,
+				'email_remitente' => Auth::user()->email,
+				'email_contancto' => $contact->email,
+				'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
+				'comunicado_asunto' => 'Comprobante de pago',
+				'collection' => $collection,
+				'cuotas' => $cuotas
+			  ];
+		
+						
+			Mail::send('emails.collection',$data, function ($m) use ($data) {
+				$m->from($data['email_remitente'],$data['nombre_remitente']);
+				$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
+			});
+			if (Mail::failures()) {
+				Session::flash('message', 'error');
+			}else{
+				Session::flash('message', 'exito');
+			}
+			return redirect()->route('transaction.collection.index');
+		
+	}
     public function destroy($id)
     {
         //
