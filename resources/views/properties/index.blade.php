@@ -44,7 +44,9 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th style="vertical-align:bottom">Número</th>
+                                
+								<th style="vertical-align:bottom">Orden</th>
+								<th style="vertical-align:bottom">Número</th>
                                 <th style="vertical-align:bottom">Tipo propiedad</th>
                                 <th style="vertical-align:bottom">Etiquetas</th>
                                 <th style="vertical-align:bottom">Situación <br>habitacional</th>
@@ -56,7 +58,9 @@
                         <tbody>
 							@foreach ($properties as $property)
                             <tr>
-                                <td>{{ $property->nro }}</td>
+                                
+								<td>{{ $property->orden }}</td>
+								<td>{{ $property->nro }}</td>
                                 <td>{{ $property->typeProperty->tipo_propiedad }}</td>
                                 <td>{{ $property->etiquetas }}</td>
                                 <td>{{ $property->situacionHabitacionals->nombre }}</td>

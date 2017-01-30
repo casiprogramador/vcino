@@ -181,11 +181,13 @@
 									</div>
 									{!! Form::close() !!}
 									
+									
 								</div>
 							</div>
 
 							<div class="hr-line-dashed"></div>
-
+							{!! Form::open(array('route' => 'transaction.cancel', 'class' => '', 'id' => 'form-anular')) !!}
+							<input type="hidden" name="id_transaction" value="{{$collection->transaction->id}}">
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
@@ -194,7 +196,7 @@
 									</div>
 								</div>
 							</div>
-
+							{!! Form::close() !!}
                         </fieldset>
                     </div>
 

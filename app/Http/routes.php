@@ -123,6 +123,9 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::post('collection/send', [
         'as' => 'transaction.collection.send', 'uses' => 'CollectionController@sendemail'
     ]);
+	Route::post('cancel', [
+        'as' => 'transaction.cancel', 'uses' => 'TransactionController@anular'
+    ]);
 
 });
 Route::get('admin', [

@@ -205,7 +205,7 @@ class CommunicationController extends Controller
 		$properties = Property::where('company_id',$company->id )->lists('nro','id');
 		$communications = Communication::where('company_id',$company->id )->get();
         $communications = $communications->lists('FechaAsunto','id');
-		$contacts = Contact::where('company_id',$company->id )->get();
+		$contacts = Contact::where('company_id',$company->id )->where('email','<>','')->get();
 		$contacts = $contacts->lists('FullName','id');
         return view('communications.send')
 			->with('properties',$properties)
@@ -241,20 +241,21 @@ class CommunicationController extends Controller
 		$communication = Communication::find($request->comunicado);
 		$dirigido = $request->dirigido;
 		
+		
 		$company = Auth::user()->company;
 		//correspondencia
 		if($dirigido == 'todos'){
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('email','<>','')->get();
 		}elseif ($dirigido == 'copropietarios') {
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',1)->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',1)->where('email','<>','')->get();
 		}elseif ($dirigido == 'inquilinos') {
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',2)->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',2)->where('email','<>','')->get();
 
 		}elseif ($dirigido == 'directorio') {
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Directorio%')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Directorio%')->where('email','<>','')->get();
 
 		}elseif ($dirigido == 'propiedad') {
-			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->where('correspondencia','like','%Directorio%')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->where('correspondencia','like','%Directorio%')->where('email','<>','')->get();
 		}elseif ($dirigido == 'contacto') {
 			$contacts = Contact::whereIn('id',$request->destinatario)->get();
 		}elseif ($dirigido == 'correo') {
@@ -277,6 +278,7 @@ class CommunicationController extends Controller
 					'comunicado_cuerpo' => $communication->cuerpo,
 					'comunicado_asunto' => $communication->asunto,
 					'comunicado_adjuntos' => $communication->adjuntos,
+					'communication'=> $communication,
 				   ];
 				}else{
 				  $data = [
@@ -288,15 +290,19 @@ class CommunicationController extends Controller
 					'comunicado_cuerpo' => $communication->cuerpo,
 					'comunicado_asunto' => $communication->asunto,
 					'comunicado_adjuntos' => $communication->adjuntos,
+					'communication'=> $communication,
 				  ];
 				}
-
+				
 				Mail::send('emails.communication',$data, function ($m) use ($data) {
 					$m->from($data['email_remitente'],$data['nombre_remitente']);
 					$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
 					$adjuntos = explode(',',$data['comunicado_adjuntos'] );
-					foreach ($adjuntos as $adjunto) {
-						$m->attach(public_path().$adjunto);
+					if(!empty(array_filter($adjuntos))){
+
+						foreach ($adjuntos as $adjunto) {
+							$m->attach(public_path().$adjunto);
+						}
 					}
 
 				});
