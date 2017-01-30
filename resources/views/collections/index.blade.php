@@ -23,6 +23,24 @@
 
     <div class="row">
         <div class="col-lg-12">
+			@if (Session::has('message'))
+				@if(session('message') == "error")
+				<div class="alert alert-danger alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					Error en el envio de cobranza
+				</div>
+				@endif
+				@if(session('message') == "exito")
+				<div class="alert alert-success alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					Cobranza enviada correctamente
+				</div>
+				@endif
+			@endif
             <div class="ibox">
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Lista de cobranzas</h5>
@@ -59,10 +77,10 @@
                                 <td style="text-align: right;">{{$collection->transaction->importe_credito}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+                                        <a href="{{ route('transaction.collection.show', $collection->id) }}"class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+                                        <a href="{{ route('transaction.collection.edit', $collection->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>

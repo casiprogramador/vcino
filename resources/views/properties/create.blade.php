@@ -48,6 +48,17 @@
 											@endif
 										</div>
                                     </div>
+									<div class="form-group{{ $errors->has('orden') ? ' has-error' : '' }}">
+										<label class="col-sm-3 control-label">Orden *</label>
+                                        <div class="col-sm-3">
+											<input type="text" class="form-control input-sm" name="orden" value="{{old('orden')}}">
+											@if ($errors->has('orden'))
+												<span class="help-block">
+													<strong>{{ $errors->first('orden') }}</strong>
+												</span>
+											@endif
+										</div>
+                                    </div>
                                     <div class="form-group{{ $errors->has('type_property') ? ' has-error' : '' }}">
 										<label class="col-sm-3 control-label">Tipo *</label>
                                         <div class="col-sm-4">

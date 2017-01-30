@@ -30,6 +30,7 @@ class CreatePropertiesTable extends Migration
 			$table->integer('nro_banos');
 			$table->string('plano');
 			$table->text('caracteristicas');
+			$table->integer('orden')->default(0);
 			
 			$table->integer('tvservices_id')->unsigned();
             $table->foreign('tvservices_id')->references('id')->on('tvservices');

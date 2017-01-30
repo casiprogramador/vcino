@@ -20,7 +20,6 @@
 					<ul class="nav nav-second-level">
 						<li><a href="#/lista-transacciones">Lista de transacciones</a></li>
 						<li class="{{ MenuRoute::active('transaction/collection') }}"><a href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a></li>
-						<li><a href="#/nueva-cobranza">Nueva cobranza</a></li>
 						<li><a href="#/lista-gastos">Lista de gastos</a></li>
 						<li><a href="#/nuevo-gasto">Nuevo gasto</a></li>
 						<li class="{{ MenuRoute::active('transaction/accountsreceivable/index') }}">

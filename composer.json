@@ -10,7 +10,8 @@
         "laravelcollective/html": "5.2.*",
         "predis/predis": "~1.0",
 		"infyomlabs/laravel-generator": "5.2.x-dev",
-		"infyomlabs/core-templates": "5.2.x-dev"
+		"infyomlabs/core-templates": "5.2.x-dev",
+        "barryvdh/laravel-dompdf": "^0.7.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

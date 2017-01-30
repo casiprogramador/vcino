@@ -15,7 +15,7 @@
                 <a id="direccion-lista" href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
             </li>
             <li class="active">
-                <strong>Nueva cobranza</strong>
+                <strong>Editar cobranza</strong>
             </li>
         </ol>
     </div>
@@ -27,27 +27,25 @@
         <div class="col-lg-12">
             <div class="ibox">
 				<div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Nueva cobranza</h5>
+                    <h5 style="padding-top: 2px;">Editar cobranza</h5>
                 </div>
                 <div class="ibox-content">
                     <h2>
                         Cobranza de cuotas
                     </h2>
 
-					{!! Form::open(array('route' => 'transaction.collection.store', 'class' => 'wizard-big form-horizontal', 'id' => 'form')) !!}
+					{!! Form::open(array('route' => array('transaction.collection.update', $collection->id),'method' => 'patch' ,'class' => 'wizard-big form-horizontal', 'id' => 'form')) !!}
 						<h1>Propiedad y contacto</h1>
                         <fieldset>
                             <div class="row">
                                 <div class="col-lg-6 col-lg-offset-3">
                                     <div class="form-group">
                                         <label>Propiedad</label>
-										{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, old('propiedad'), ['class' => 'form-control input-sm','id'=>'propiedades']) }}
+										{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $collection->property_id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
                                     </div>
                                     <div class="form-group">
                                         <label>Contacto (A nombre de)</label>
-                                        <select class="form-control input-sm" name="contacto" id="contactos">
-                                            <option value="0">Seleccione contacto</option>
-                                        </select>
+										{{ Form::select('contacto',['0'=>'Selecciona contacto']+$contacts, $collection->contact_id, ['class' => 'form-control input-sm','id'=>'contactos']) }}
                                     </div>
                                 </div>
                             </div>
@@ -69,13 +67,19 @@
 													</tr>
 												</thead>
 												<tbody>
+
+													@foreach($cuotas as $cuota)
 													<tr>
-														<td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
-														<td>2016</td>
-														<td>Junio</td>
-														<td>Expensas: cuota mensual</td>
-														<td class="text-right">700,00</td>
+													
+														<td>
+															<input type="checkbox" importe="{{ $cuota->importe_por_cobrar }}" value="{{ $cuota->id }}" checked class="i-checks check-cuotas" name="cuotas[]">
+														</td>
+														<td>{{$cuota->gestion}}</td>
+														<td>{{nombremes($cuota->periodo) }}</td>
+														<td>{{ $cuota->quota->category->nombre }} : {{ $cuota->quota->cuota }}</td>
+														<td class="text-right">{{ $cuota->importe_por_cobrar }}</td>
 													</tr>
+													@endforeach
 													
 												</tbody>
 												<tfoot>
@@ -84,7 +88,7 @@
 														<th></th>
 														<th></th>
 														<th></th>
-														<th class="text-right" id="importe-total">0</th>
+														<th class="text-right" id="importe-total">{{$collection->transaction->importe_credito}}</th>
 													</tr>
 												</tfoot>
 											</table>
@@ -102,25 +106,25 @@
                                         <label class="col-sm-4 control-label">Fecha</label>
                                         <div class="col-sm-4 input-group date">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}" required>
+                                            <input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}" required>
                                         </div>
                                     </div>
 									<div class="form-group">
                                         <label class="col-sm-4 control-label">Propiedad y contacto</label>
 										<div class="col-sm-6 input-group">
-                                        <input type="text" class="form-control input-sm" id="propiedad-contacto" value="" disabled="">
+                                        <input type="text" class="form-control input-sm" id="propiedad-contacto" value="{{ $collection->property->nro }} - {{ $collection->contact->nombre }} {{ $collection->contact->apellido }}" disabled="">
 										</div>
                                     </div>
 									<div class="form-group">
                                         <label class="col-sm-4 control-label">Cuenta</label>
                                         <div class="col-sm-8 input-group">
-										{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta'), ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
+										{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, $collection->account_id , ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                          <label class="col-sm-4 control-label">Concepto</label>
 										<div class="col-sm-8 input-group">
-                                        <textarea rows="2" id="concepto" class="form-control input-sm" name="concepto" required></textarea>
+                                        <textarea rows="2" id="concepto" class="form-control input-sm" name="concepto" required>{{$collection->transaction->concepto }}</textarea>
 										</div>
                                     </div>
 									
@@ -137,13 +141,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Forma de pago</label>
                                         <div class="col-sm-8 input-group">
-											<select class="form-control input-sm" name="forma_pago" id="forma-pago">
-												<option value="efectivo">Efectivo</option>
-												<option value="cheque">Cheque</option>
-												<option value="deposito">Depósito</option>
-												<option value="transferencia bancaria">Transferencia bancaria</option>
-												<option value="tarjeta debito/credito">Tarjeta Débito/Crédito</option>
-											</select>
+
+											{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), $collection->transaction->forma_pago , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
                                         </div>
                                     </div>
 
@@ -151,19 +150,19 @@
 <!--                                        <label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>-->
 										<label class="col-sm-4 control-label" id="label-transaccion">Nro Transaccion</label>
                                         <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" name="nro_forma_pago">
+											<input type="text" class="form-control input-sm" name="nro_forma_pago" value="{{$collection->transaction->numero_forma_pago}}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Importe</label>
                                         <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total">
+											<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total" value="{{$collection->transaction->importe_credito}}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Notas</label>
 										<div class="col-sm-8 input-group">
-                                        <textarea rows="2" class="form-control input-sm" name="notas"></textarea>
+											<textarea rows="2" class="form-control input-sm" name="notas">{{$collection->transaction->notas}}</textarea>
 										</div>
                                     </div>
 
@@ -194,6 +193,31 @@
 <script>
 	$(document).ready(function(){
 
+	//Detectar forma de pago
+	
+	$foma_pago_val = $("#forma-pago option:selected" ).val();
+	
+	if($foma_pago_val == "cheque"){
+			console.log($foma_pago_val);
+			$('#label-transaccion').text("Banco, Nro. Cheque");
+			$('#cont-forma-pago').show("slow");
+			
+	}else if($foma_pago_val == "deposito"){
+			$('#label-transaccion').text("Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			
+	}else if($foma_pago_val == "transferencia bancaria"){
+			$('#label-transaccion').text("Banco, Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			
+	}else if($foma_pago_val == "tarjeta debito/credito"){
+			$('#label-transaccion').text("Banco, Tipo, Nro. Tarjeta");
+			$('#cont-forma-pago').show("slow");
+			
+	}else{
+			$('#label-transaccion').text("Detalle Transaccion");
+			$('#cont-forma-pago').hide();
+	}
 		
 	$("#form").steps({
 	bodyTag: "fieldset",
@@ -384,7 +408,7 @@
 	});
 	
 	//Cambio tipo de forma de pago
-	$('#cont-forma-pago').hide();
+	//$('#cont-forma-pago').hide();
 	$('#forma-pago').change(function(){
 		
 		if($(this).val() == "cheque"){
@@ -417,3 +441,4 @@
 	
 </script>
 @endsection
+

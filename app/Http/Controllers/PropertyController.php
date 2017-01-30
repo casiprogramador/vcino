@@ -30,7 +30,7 @@ class PropertyController extends Controller
     {
 		$company = Auth::user()->company;
 
-        $properties = Property::where('company_id',$company->id );
+        $properties = Property::orderBy('orden','asc')->where('company_id',$company->id );
         return view('properties.index')->with('properties',$properties->get());
     }
 
@@ -70,6 +70,7 @@ class PropertyController extends Controller
     {
         $this->validate($request, [
             'nro' => 'required',
+			'orden' => 'required',
 			//'nro_intecomunicador' => 'required',
             'type_property' => 'required|not_in:0',
 			'situacion_habitacionals' => 'required|not_in:0',
@@ -98,6 +99,7 @@ class PropertyController extends Controller
 
         $property = new Property();
         $property->nro = $request->nro;
+		$property->orden = $request->orden;
         $property->nro_intecomunicador = $request->nro_intecomunicador;
         $property->type_property_id = $request->type_property;
         $property->situacion_habitacionals_id = $request->situacion_habitacionals;
@@ -196,6 +198,7 @@ class PropertyController extends Controller
     {
          $this->validate($request, [
             'nro' => 'required',
+			'orden' => 'required',
 			//'nro_intecomunicador' => 'required',
             'type_property' => 'required|not_in:0',
 			'situacion_habitacionals' => 'required|not_in:0',
@@ -222,6 +225,7 @@ class PropertyController extends Controller
 
         $property = Property::find($id);
         $property->nro = $request->nro;
+		$property->orden = $request->orden;
         $property->nro_intecomunicador = $request->nro_intecomunicador;
         $property->type_property_id = $request->type_property;
         $property->situacion_habitacionals_id = $request->situacion_habitacionals;
