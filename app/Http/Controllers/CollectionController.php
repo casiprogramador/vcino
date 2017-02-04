@@ -63,7 +63,7 @@ class CollectionController extends Controller
             'cuenta' => 'required|not_in:0',
 			'forma_pago' => 'required',
         ]);
-		$numero_documento = Transaction::where('user_id',Auth::user()->id)->max('nro_documento');
+		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Ingreso')->max('nro_documento');
 		//dd($numero_documento);
 		
 		$company = Auth::user()->company;
@@ -84,7 +84,6 @@ class CollectionController extends Controller
 		$collection = new Collection();
 		$collection->cuotas = implode(',', $request->cuotas);
 		$collection->property_id = $request->propiedad;
-		$collection->company_id = $company->id;
 		$collection->contact_id = $request->contacto;
 		$collection->account_id = $request->cuenta;
 		$collection->company_id = $company->id;

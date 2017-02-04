@@ -113,7 +113,7 @@ Route::group(['prefix' => 'transaction'], function () {
     ]);
 	
 	Route::resource('accountsreceivable', 'AccountsReceivableController');
-	//Collection Routes
+	//cobranzas Routes
 	Route::resource('collection', 'CollectionController');
 	
 	Route::get('collection/{id}/pdf', [
@@ -126,6 +126,9 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::post('cancel', [
         'as' => 'transaction.cancel', 'uses' => 'TransactionController@anular'
     ]);
+	
+	//Gastos Rutas
+	Route::resource('expense', 'ExpensesController');
 
 });
 Route::get('admin', [

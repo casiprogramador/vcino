@@ -10,4 +10,9 @@ class Supplier extends Model
     {
         return $this->belongsTo('App\Company');
     }
+	
+	public function expenses()
+    {
+        return $this->hasMany('App\Expenses');
+    }
 }

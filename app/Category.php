@@ -15,4 +15,9 @@ class Category extends Model
     {
         return $this->hasMany('App\Quota');
     }
+	
+	public function expenses()
+    {
+        return $this->hasMany('App\Expenses');
+    }
 }
