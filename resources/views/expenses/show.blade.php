@@ -29,131 +29,158 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Ver detalle gasto</h5>
-                    <div class="ibox-tools">
 
-                        <div class="btn-group" style="margin-right: 10px;">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Copiar comunicado" data-original-title="Copiar comunicado">
-                                <i class="fa fa-files-o"></i>&nbsp;&nbsp;Copiar
-                            </button>
-
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Editar comunicado" data-original-title="Editar comunicado">
-                                <i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar
-                            </button>
-                        </div>
-
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir..." data-original-title="Imprimir...">
-                                <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
-                            </button>
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar comprobante a PDF" data-original-title="Imprimir...">
-                                <i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...
-                            </button>
-                        </div>
-
-                    </div>
                 </div>
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
 
-                                <div class="panel-body">
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Nro. Documento</label>
-                                            <div class="col-sm-2 input-group date" style="padding-left:15px;">
-                                            <p class="form-control-static">00553</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Fecha</label>
-                                            <div class="col-sm-2 input-group date" style="padding-left:15px;">
-                                            <p class="form-control-static">12/10/2016</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Proveedor</label>
-                                        <div class="col-sm-8">
-                                            <p class="form-control-static">OTIS</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Categoría</label>
-                                        <div class="col-sm-8">
-                                            <p class="form-control-static">Mantenimiento ascensor</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Concepto</label>
-                                        <div class="col-sm-8">
-                                            <p class="form-control-static">Pago servicio mes de octubre 2016</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Cuenta</label>
-                                        <div class="col-sm-8">
-                                            <p class="form-control-static">Bco. 010222-223-32</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Forma de pago</label>
-                                        <div class="col-sm-3">
-                                            <p class="form-control-static">Cheque</p>
-                                        </div>
-                                        <label class="col-sm-3 control-label">Nro. Cheque</label>
-                                        <div class="col-sm-3">
-                                            <p class="form-control-static">67</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Importe</label>
-                                        <div class="col-sm-8">
-                                            <p class="form-control-static">1.600,00</p>
-                                        </div>
-                                    </div>
 
-                                    <div class="hr-line-dashed"></div>
+							<div class="alert alert-success alert-dismissable">
+								<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+								Transacción registrada correctamente.
+							</div>
 
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Nota</label>
-                                        <div class="col-sm-9">
-                                            <div class="ibox-content p-xs form-control-static">
-                                                    <p>dkfj aldsfj lkadsjf lkasdjf lkadsjf lkasdjf l;kjf alsdkfj lkdsafj lakdsfj lksadfj lkdasfj alkdsfj alkdsfj lkasjdf lk</p>
-                                            </div>
-                                        </div>
-                                    </div>
+							<div class="row">
+								<div class="table-responsive">
+									<table class="table" style="width: 80%; margin: auto; margin-bottom: 10px;">
+										<tbody>
+											<tr>
+												<td style="border: 0;">
+													<div class="p-h-xl"><img src="files/logoEmpresa.png" width="150"></div>
+												</td>
+												<td style="border: 0; vertical-align:bottom">
+													<div class="p-h-xl text-right">
+														<h2 style="line-height: 0;">RECIBO DE EGRESO</h2>
+														<h3 style="line-height: 0; padding-top: 20px;">N&#186;&nbsp;<span>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</span></h3>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 
-                                    <div class="hr-line-dashed"></div>
+							<div class="row">
+								<div class="col-sm-3">
+								</div>
+								<div class="col-sm-6">
+									<div class="hr-line-solid"></div>
+								</div>
+								<div class="col-sm-3">
+								</div>
+							</div>
 
-                                    <div class="form-group" style="margin-bottom: 5px;">
-                                        <label class="col-sm-3 control-label">Adjunto</label>
-                                        <div class="col-sm-9">
-                                            <div class="attachment">
-                                                <div class="file-box">
-                                                    <div class="file">
-                                                        <a href="#">
-                                                            <span class="corner"></span>
-                                                            <div class="icon">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </div>
-                                                            <div class="file-name">
-                                                                Documento_adjunto1.pdf
-                                                            </div>
-                                                        </a>
-                                                    </div>
+							<div class="row">
+								<table style="margin: 10px auto; text-align: left; width: 80%; font-size: 13px;">
+									<tr>
+										<td>
+											<div class="row" style="padding: 0 0 30px 0; line-height: 20px;">
+												<div class="col-sm-1" style="width: 80px;">
+													<span>Fecha:</span>
+													<br/>
+													<span>Proveedor:</span>
+												</div>
+												<div class="col-sm-8">
+													<span>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</span>
+													<br/>
+													<span style="text-transform: uppercase;"><strong>{{$expense->supplier->razon_social}}</strong></span>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<table cellpadding="0" cellspacing="0" style="width: 100%;">
+												<tr>
+													<td style="border-top: #333 1px solid; padding: 3px 0;" colspan="2">
+														{{$expense->category->description}}: {{$expense->transaction->concepto}}
+													</td>
+												</tr>
+												<tr>
+													<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
+														{{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}
+													</td>
+												</tr>
+												<tr>
+													<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
+														Forma de pago: {{$expense->transaction->forma_pago}} No. {{$expense->transaction->numero_forma_pago}}
+													</td>
+												</tr>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+												<tr style="font-size: 14px;">
+													<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
+													<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{$expense->transaction->importe_debito}}</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td style="padding-top: 8px;">
+											<h4>SON: {{ numeroaliteral($expense->transaction->importe_debito) }}</h4>
+										</td>
+									</tr>
+								</table>
+							</div>
 
-                        <div class="hr-line-dashed"></div>
+							<div class="row">
+								<div class="table-responsive">
+									<table style="margin: auto; text-align: left; width: 80%; font-size: 14px; margin-top: 10px;">
+										<tr>
+											<td>
+												<div class="col-sm-3" style="width: 190px; padding-left: 0;">
+													<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
+													<span style="font-size: 10px;">Recibí conforme</span><br/>
+													<span style="color: #F2F2F2; font-size: 16px;">_ _ _ _ _ _ _ _ _ _ _ _ _ _</span>
+												</div>
+												<div class="col-sm-1">
+												</div>
+											</td>
+											<td>
+												<div class="col-sm-3" style="width: 190px; padding-left: 0;">
+													<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
+													<span style="font-size: 10px;">Vo. Bo. Tesorero</span><br/>
+													<span style="color: #F2F2F2; font-size: 16px;">_ _ _ _ _ _ _ _ _ _ _ _ _ _</span>
+												</div>
+											</td>
+											<td>
+												<div class="col-sm-1">
+												</div>
+												<div class="col-sm-3" style="width: 190px;">
+													<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
+													<span style="font-size: 10px;">Entregue conforme<br>
+														Administración</span>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
 
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button class="btn btn-success" type="submit">Volver</button>
-                            </div>
-                        </div>
+							<div class="hr-line-dashed"></div>
 
-                  </form>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-12">
+										<button class="btn btn-success" type="submit">
+											<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+										<button class="btn btn-default">
+											<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</button>
+										<span class="text-muted" style="margin: 0 10px;">|</span>
+										<button class="btn btn-default">
+											<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo gasto</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="hr-line-dashed"></div>
+
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-12">
+										<button class="btn btn-danger" type="submit">
+											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
+									</div>
+								</div>
+							</div>
                 </div>
             </div>
         </div>

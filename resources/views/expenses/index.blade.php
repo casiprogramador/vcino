@@ -26,7 +26,7 @@
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Lista de gastos</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px;"> Nuevo gasto </button>
+                        <a type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px;" href="{{ route('transaction.expense.create') }}"> Nuevo gasto </a>
 
                     </div>
                 </div>
@@ -49,19 +49,20 @@
                             </tr>
                         </thead>
                         <tbody>
+							@foreach($expenses as $expense)
                             <tr>
-                                <td>10/10/2016</td>
-                                <td>433</td>
-                                <td>Cia. General Industrial</td>
-                                <td>Mantenimiento Ascensor</td>
-                                <td>Pago mantenimiento jul/2016</td>
-                                <td>Bco. 0122011-22-11</td>
-                                <td>Cheque</td>
-                                <td>122</td>
-                                <td style="text-align: right;">1.600,00</td>
+                                <td>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
+                                <td>{{$expense->transaction->nro_documento}}</td>
+                                <td>{{$expense->supplier->razon_social}}</td>
+                                <td>{{$expense->category->description}}</td>
+                                <td>{{$expense->transaction->concepto}}</td>
+                                <td>{{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}</td>
+                                <td>{{$expense->transaction->forma_pago}}</td>
+                                <td>{{$expense->transaction->numero_forma_pago}}</td>
+                                <td style="text-align: right;">{{$expense->transaction->importe_debito}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+                                        <a href="{{ route('transaction.expense.show', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar gasto">
@@ -78,64 +79,8 @@
                                     </div>
                                </td>
                             </tr>
-                            <tr>
-                                <td>12/10/2016</td>
-                                <td>434</td>
-                                <td>OTAN Secuiry</td>
-                                <td>Vigilancia y Seguridad</td>
-                                <td>Pago septiembre de 2016</td>
-                                <td>Bco. 0122011-22-11</td>
-                                <td>Cheque</td>
-                                <td>132</td>
-                                <td style="text-align: right;">8.000,00</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar gasto">
-                                            <i class="fa fa-files-o"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
-                                            <i class="fa fa-print"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>21/10/2016</td>
-                                <td>454</td>
-                                <td>La Eficaz</td>
-                                <td>Limpieza y productos</td>
-                                <td>Pago servicio mensual</td>
-                                <td>Caja General</td>
-                                <td>Efectivo</td>
-                                <td></td>
-                                <td style="text-align: right;">3.400,00</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar gasto">
-                                            <i class="fa fa-files-o"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
-                                            <i class="fa fa-print"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
+							@endforeach
+                           
 
                         </tbody>
                     </table>

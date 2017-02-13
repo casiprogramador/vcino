@@ -19,8 +19,10 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-		
-        return view('expenses.index');
+		$company = Auth::user()->company;
+
+		$expenses = Expenses::where('company_id',$company->id );
+        return view('expenses.index')->with('expenses',$expenses->get());
     }
 
     /**
@@ -104,7 +106,9 @@ class ExpensesController extends Controller
      */
     public function show($id)
     {
-        //
+		$expense = Expenses::find($id);
+
+        return view('expenses.show')->with('expense',$expense);
     }
 
     /**
@@ -140,4 +144,13 @@ class ExpensesController extends Controller
     {
         //
     }
+	
+	//Ajax
+	
+	public function expensesbysupplier($supplier_id){
+		$company = Auth::user()->company;
+        $expenses = Expenses::where('company_id',$company->id )->where('supplier_id',$supplier_id)->with('supplier')->with('transaction')->take(2)->get();
+
+		return response()->json(['success' => true, 'expenses' => $expenses]);
+	}
 }
