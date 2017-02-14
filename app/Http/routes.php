@@ -128,7 +128,12 @@ Route::group(['prefix' => 'transaction'], function () {
     ]);
 	
 	//Gastos Rutas
+
+	Route::get('expense/{expense}/copy', [
+        'as' => 'transaction.expense.copy', 'uses' => 'ExpensesController@copy'
+    ]);
 	Route::resource('expense', 'ExpensesController');
+	
 
 });
 Route::get('admin', [

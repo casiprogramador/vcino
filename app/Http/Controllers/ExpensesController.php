@@ -64,9 +64,13 @@ class ExpensesController extends Controller
 			$id_user = Auth::user()->id;
 			$file = $request->adjunto;
 			$tmpFilePath = '/img/upload/gastos/';
-			$tmpFileName = time() . '-'.$id_user. '-gasto-' . $file->getClientOriginalName();
+			$tmpFileName = time() . '-'.$id_user. '-gasto-name-' . $file->getClientOriginalName();
 			$file->move(public_path() . $tmpFilePath, $tmpFileName);
 			$path = $tmpFilePath . $tmpFileName;
+		}elseif(isset ($request->adjunto_ori)){
+			$path = $request->adjunto_ori;
+		}else{
+			$path="";
 		}
 		
 		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Egreso')->max('nro_documento');
@@ -92,9 +96,9 @@ class ExpensesController extends Controller
 		$expense->supplier_id = $request->proveedor;
 		$expense->account_id = $request->cuenta;
 		$expense->company_id = $company->id;
-		if(!empty($request->adjunto)){
-			$expense->adjunto = $path;
-		}
+
+		$expense->adjunto = $path;
+
 		$transaction->expense()->save($expense);
     }
 
@@ -119,7 +123,16 @@ class ExpensesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = Auth::user()->company;
+		$categories = Category::where('company_id',$company->id )->lists('nombre','id')->all();
+		$suppliers = Supplier::where('company_id',$company->id )->lists('razon_social','id')->all();
+		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		$expense = Expenses::find($id);
+        return view('expenses.edit')
+		->with('categories',$categories)
+		->with('suppliers',$suppliers)
+		->with('accounts',$accounts)
+		->with('expense',$expense);
     }
 
     /**
@@ -131,7 +144,65 @@ class ExpensesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+			'proveedor' => 'required|not_in:0',
+			'categoria' => 'required|not_in:0',
+            'concepto' => 'required',
+			'importe' => 'required',
+			'forma_pago' => 'required',
+            'cuenta' => 'required|not_in:0',
+            
+        ]);
+		dd($request);
+		if(!empty($request->adjunto)){
+			$id_user = Auth::user()->id;
+			$file = $request->adjunto;
+			$tmpFilePath = '/img/upload/gastos/';
+			$tmpFileName = time() . '-'.$id_user. '-gasto-name-' . $file->getClientOriginalName();
+			$file->move(public_path() . $tmpFilePath, $tmpFileName);
+			$path = $tmpFilePath . $tmpFileName;
+		}elseif(isset ($request->adjunto_ori)){
+			$path = $request->adjunto_ori;
+		}else{
+			$path="";
+		}
+		
+		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Egreso')->max('nro_documento');
+		//dd($numero_documento);
+		
+		$company = Auth::user()->company;
+		
+		$transaction = Transaction::find($request->transaction_id);
+		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$transaction->concepto = $request->concepto;
+		$transaction->forma_pago = $request->forma_pago;
+		$transaction->numero_forma_pago = $request->nro_forma_pago;
+		$transaction->importe_debito = $request->importe;
+		$transaction->notas = $request->notas;
+		$transaction->save();
+		
+		$expense = Expenses::find($id);
+		$expense->category_id = $request->categoria;
+		$expense->supplier_id = $request->proveedor;
+		$expense->account_id = $request->cuenta;
+
+		$expense->adjunto = $path;
+		$transaction->expense()->save($expense);
+		
+    }
+	
+	public function copy($id)
+    {
+         $company = Auth::user()->company;
+		$categories = Category::where('company_id',$company->id )->lists('nombre','id')->all();
+		$suppliers = Supplier::where('company_id',$company->id )->lists('razon_social','id')->all();
+		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		$expense = Expenses::find($id);
+        return view('expenses.copy')
+		->with('categories',$categories)
+		->with('suppliers',$suppliers)
+		->with('accounts',$accounts)
+		->with('expense',$expense);
     }
 
     /**

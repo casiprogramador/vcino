@@ -65,10 +65,10 @@
                                         <a href="{{ route('transaction.expense.show', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar gasto">
+                                        <a href="{{ route('transaction.expense.copy', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar gasto">
                                             <i class="fa fa-files-o"></i>
                                         </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+                                        <a href="{{ route('transaction.expense.edit', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>

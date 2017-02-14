@@ -13,7 +13,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="#">Lista de gastos</a>
+                <a id="direccion-lista" href="{{ route('transaction.expense.index') }}">Lista de gastos</a>
             </li>
             <li class="active">
                 <strong>Ver detalle gasto</strong>
