@@ -12,6 +12,9 @@ use App\Transaction;
 use App\Expenses;
 class ExpensesController extends Controller
 {
+	public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -100,6 +103,8 @@ class ExpensesController extends Controller
 		$expense->adjunto = $path;
 
 		$transaction->expense()->save($expense);
+		
+		return redirect()->route('transaction.expense.show', [$expense->id]);
     }
 
     /**
@@ -133,6 +138,8 @@ class ExpensesController extends Controller
 		->with('suppliers',$suppliers)
 		->with('accounts',$accounts)
 		->with('expense',$expense);
+		
+		
     }
 
     /**
@@ -153,7 +160,7 @@ class ExpensesController extends Controller
             'cuenta' => 'required|not_in:0',
             
         ]);
-		dd($request);
+
 		if(!empty($request->adjunto)){
 			$id_user = Auth::user()->id;
 			$file = $request->adjunto;
@@ -168,7 +175,7 @@ class ExpensesController extends Controller
 		}
 		
 		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Egreso')->max('nro_documento');
-		//dd($numero_documento);
+
 		
 		$company = Auth::user()->company;
 		
@@ -188,6 +195,8 @@ class ExpensesController extends Controller
 
 		$expense->adjunto = $path;
 		$transaction->expense()->save($expense);
+		
+		return redirect()->route('transaction.expense.show', [$expense->id]);
 		
     }
 	
@@ -215,6 +224,13 @@ class ExpensesController extends Controller
     {
         //
     }
+	
+	public function pdf($id){
+		$expense = Expenses::find($id);
+		$pdf = \PDF::loadView('pdf.expense', compact('expense'));
+		$nombre_documento = "recibo_egreso_nro_".str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT);
+		return $pdf->download($nombre_documento.".pdf");
+	}
 	
 	//Ajax
 	

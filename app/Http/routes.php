@@ -132,6 +132,9 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::get('expense/{expense}/copy', [
         'as' => 'transaction.expense.copy', 'uses' => 'ExpensesController@copy'
     ]);
+	Route::get('expense/{id}/pdf', [
+        'as' => 'transaction.expense.pdf', 'uses' => 'ExpensesController@pdf'
+    ]);
 	Route::resource('expense', 'ExpensesController');
 	
 
