@@ -65,7 +65,13 @@ class CollectionController extends Controller
         ]);
 		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Ingreso')->max('nro_documento');
 		//dd($numero_documento);
-		
+		$cuotas = $request->cuotas;
+		foreach ($cuotas as $cuota_id){
+			$cuota = Accountsreceivable::find($cuota_id);
+			$cuota->cancelada = 1;
+			$cuota->save();
+		}
+
 		$company = Auth::user()->company;
 		
 		$transaction = new Transaction();

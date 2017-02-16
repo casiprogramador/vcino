@@ -95,7 +95,7 @@ class ContactController extends Controller
 			$correspondencia = "SA";
 		}
 		
-		if(!empty($request->fotografia)){
+		if(!empty($request->email)){
 			$email = $request->email;
 		}else{
 			$email = '';
@@ -231,7 +231,7 @@ class ContactController extends Controller
 			$correspondencia = "SA";
 		}
 		
-		if(!empty($request->fotografia)){
+		if(!empty($request->email)){
 			$email = $request->email;
 		}else{
 			$email = '';
