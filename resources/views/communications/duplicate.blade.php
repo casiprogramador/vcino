@@ -81,7 +81,7 @@
 						<label class="col-sm-2 control-label">Adjuntos</label>
 						<div class="col-sm-8">
 							<?php
-								$adjuntos_array = explode(",",$communication->adjuntos);
+								$adjuntos_array = array_filter(explode(",",$communication->adjuntos));
 							?>
 
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">

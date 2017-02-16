@@ -24,7 +24,6 @@ class CreateTransactionsTable extends Migration
 			$table->decimal('importe_credito', 10, 2)->default(0);
 			$table->decimal('importe_debito', 10, 2)->default(0);
 			$table->text('notas');
-			//$table->string('adjuntos');
 			$table->tinyInteger('excluir_reportes')->default(0);
 			$table->tinyInteger('anulada')->default(0);
 			$table->integer('user_id')->unsigned();

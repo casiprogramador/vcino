@@ -20,4 +20,9 @@ class Account extends Model
     {
         return $this->hasMany('App\Collection');
     }
+	
+	public function expenses()
+    {
+        return $this->hasMany('App\Expenses');
+    }
 }

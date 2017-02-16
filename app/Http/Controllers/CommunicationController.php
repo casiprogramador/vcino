@@ -108,20 +108,20 @@ class CommunicationController extends Controller
             'cuerpo' => 'required'
         ]);
 
-
-		if(array_filter($request->adjunto)){
-			$array_path = array();
-			foreach ($request->adjunto as $posicion => $adjunto){
-				if(!empty($adjunto)){
-					$id_user = Auth::user()->id;
-					$file = $adjunto;
-					$tmpFilePath = '/img/upload/comunicados/';
-					$tmpFileName = time() . '-' .$posicion.'-'.$id_user. '-name-' . $file->getClientOriginalName();
-					$file->move(public_path() . $tmpFilePath, $tmpFileName);
-					$path = $tmpFilePath . $tmpFileName;
-					array_push($array_path, $path);
-				}
-
+		$adjunto = $request->adjunto;
+		$adjunto_ori = $request->adjunto_ori;
+		$array_path = array();
+		$id_user = Auth::user()->id;
+		for ($i = 0; $i <= 2; $i++) {
+			if(isset($adjunto[$i])){
+				$file = $adjunto[$i];
+				$tmpFilePath = '/img/upload/comunicados/';
+				$tmpFileName = time() . '-' .$i.'-'.$id_user. '-name-' . $file->getClientOriginalName();
+				$file->move(public_path() . $tmpFilePath, $tmpFileName);
+				$path = $tmpFilePath . $tmpFileName;
+				array_push($array_path, $path);
+			}elseif (isset($adjunto_ori[$i])) {
+				array_push($array_path, $adjunto_ori[$i]);
 			}
 		}
 		
@@ -129,8 +129,8 @@ class CommunicationController extends Controller
         $communication->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
         $communication->asunto = $request->asunto;
         $communication->cuerpo = $request->cuerpo;
-		if(array_filter($request->adjunto)){
-			$communication->adjuntos = implode(",", $array_path);
+		if(array_filter($request->adjunto) || array_filter($request->adjunto_ori)){
+			$communication->adjuntos = implode(",",array_filter ( $array_path) );
 		}
         $communication->save();
         Session::flash('message', 'Comunicado actualizado correctamente');

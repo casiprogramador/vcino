@@ -80,16 +80,20 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Adjuntos</label>
 						<div class="col-sm-8">
+							<?php
+								$adjuntos_array = array_filter(explode(",",$communication->adjuntos));
+							?>
 
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename"></span>
+									<span class="fileinput-filename">{{ (isset($adjuntos_array[0]) ) ? MenuRoute::filename($adjuntos_array[0]) : "" }}</span>
 								</div>
 								<span class="input-group-addon btn btn-default btn-file">
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
+									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[0]) ) ? $adjuntos_array[0] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
@@ -99,12 +103,13 @@
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename"></span>
+									<span class="fileinput-filename">{{ (isset($adjuntos_array[1]) ) ? MenuRoute::filename($adjuntos_array[1]) : "" }}</span>
 								</div>
 								<span class="input-group-addon btn btn-default btn-file">
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
+									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[1]) ) ? $adjuntos_array[1] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
@@ -112,12 +117,13 @@
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
-									<span class="fileinput-filename"></span>
+									<span class="fileinput-filename">{{ (isset($adjuntos_array[2]) ) ? MenuRoute::filename($adjuntos_array[2]) : "" }}</span>
 								</div>
 								<span class="input-group-addon btn btn-default btn-file">
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
+									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[2]) ) ? $adjuntos_array[2] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>

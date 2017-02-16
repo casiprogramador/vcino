@@ -113,7 +113,7 @@ Route::group(['prefix' => 'transaction'], function () {
     ]);
 	
 	Route::resource('accountsreceivable', 'AccountsReceivableController');
-	//Collection Routes
+	//cobranzas Routes
 	Route::resource('collection', 'CollectionController');
 	
 	Route::get('collection/{id}/pdf', [
@@ -126,6 +126,17 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::post('cancel', [
         'as' => 'transaction.cancel', 'uses' => 'TransactionController@anular'
     ]);
+	
+	//Gastos Rutas
+
+	Route::get('expense/{expense}/copy', [
+        'as' => 'transaction.expense.copy', 'uses' => 'ExpensesController@copy'
+    ]);
+	Route::get('expense/{id}/pdf', [
+        'as' => 'transaction.expense.pdf', 'uses' => 'ExpensesController@pdf'
+    ]);
+	Route::resource('expense', 'ExpensesController');
+	
 
 });
 Route::get('admin', [
@@ -159,3 +170,5 @@ Route::group(['prefix' => 'admin'], function () {
 //AJAX
 Route::post('contact/{property_id}/property', 'ContactController@contactbyproperty');
 Route::post('accountsreceivable/{property_id}/property', 'AccountsReceivableController@accountsreceivablebyproperty');
+
+Route::post('expenses/{supplier_id}/supplier', 'ExpensesController@expensesbysupplier');

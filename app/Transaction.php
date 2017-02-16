@@ -10,4 +10,9 @@ class Transaction extends Model
     {
         return $this->hasOne('App\Collection');
     }
+	
+	public function expense()
+    {
+        return $this->hasOne('App\Expenses');
+    }
 }
