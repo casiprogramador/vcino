@@ -156,13 +156,13 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12">
-								<a href="{{ route('transaction.expense.pdf', $expense->id) }}" class="btn btn-success" type="submit" id="printButton">
-									<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</a>
-								<button class="btn btn-default">
-									<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</button>
+								<button class="btn btn-success" type="submit" id="printButton">
+									<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+								<a href="{{ route('transaction.expense.pdf', $expense->id) }}" class="btn btn-default">
+									<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>
 								<span class="text-muted" style="margin: 0 10px;">|</span>
-								<button class="btn btn-default">
-									<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo gasto</button>
+								<a href="{{ route('transaction.expense.create') }}" class="btn btn-default">
+									<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo gasto</a>
 							</div>
 						</div>
 					</div>
