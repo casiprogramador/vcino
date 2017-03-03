@@ -137,6 +137,9 @@ Route::group(['prefix' => 'transaction'], function () {
     ]);
 	Route::resource('expense', 'ExpensesController');
 	
+	//Traspasos
+	Route::resource('transfer', 'TransferController');
+	
 
 });
 Route::get('admin', [

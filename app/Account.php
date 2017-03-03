@@ -25,4 +25,12 @@ class Account extends Model
     {
         return $this->hasMany('App\Expenses');
     }
+	
+	public function origen(){
+		return $this->hasMany('App\Transfer', 'ori_account_id');
+	}
+	
+	public function destino(){
+		return $this->hasMany('App\Transfer', 'des_account_id');
+	}
 }
