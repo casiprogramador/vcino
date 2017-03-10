@@ -32,26 +32,7 @@
                 </div>
 
                 <div class="ibox-content">
-				{!! Form::open(array('route' => 'transaction.search', 'class' => 'form-horizontal')) !!}
-                <div class="row">
-                    <div class="col-sm-2 m-b-xs">
-                        <select name="tipo" class="input-sm form-control input-s-sm inline">
-                            <option value="todas">Tipo: Todos</option>
-                            <option value="Ingreso">Cobranzas</option>
-                            <option value="Egreso">Gastos</option>
-                            <option value="Traspaso">Traspasos</option>
-                            <option value="Otro">Otros ingresos</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 m-b-xs">
-                        {{ Form::select('categoria',['todas'=>'Todas las Categorias']+$categories, old('categoria'), ['class' => 'form-control input-sm inline','id'=>'select-categoria']) }}
-                    </div>
-                    <div class="col-sm-4 m-b-xs">
-                        {{ Form::select('cuenta',['todas'=>'Todas las Cuentas']+$accounts, old('cuenta'), ['class' => 'form-control input-sm inline','id'=>'select-cuenta']) }}
-                    </div>
-					<button class="btn btn-white" type="submit">Buscar</button>
-                </div>
-				{!! Form::close() !!}
+
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
