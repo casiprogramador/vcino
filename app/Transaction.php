@@ -15,4 +15,14 @@ class Transaction extends Model
     {
         return $this->hasOne('App\Expenses');
     }
+	
+	public function transfersOrigin()
+    {
+        return $this->hasMany('App\Transfer','ori_transaction_id');
+    }
+	
+	public function transfersDestiny()
+    {
+        return $this->hasMany('App\Transfer','des_transaction_id');
+    }
 }

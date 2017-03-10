@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>Transacciones</h2>
@@ -13,7 +12,7 @@
                 Transacciones
             </li>
             <li class="active">
-                <strong>Lista de cobranzas</strong>
+                <strong>Lista de transacciones</strong>
             </li>
         </ol>
     </div>
@@ -23,78 +22,70 @@
 
     <div class="row">
         <div class="col-lg-12">
-			@if (Session::has('message'))
-				@if(session('message') == "error")
-				<div class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					Error en el envio de cobranza
-				</div>
-				@endif
-				@if(session('message') == "exito")
-				<div class="alert alert-success alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					Cobranza enviada correctamente
-				</div>
-				@endif
-			@endif
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Lista de cobranzas</h5>
+                    <h5 style="padding-top: 7px;">Lista de transacciones</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <a href="{{ route('transaction.collection.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px;"> Nueva cobranza </a>
-
+                        <a href="{{ route('transaction.transfer.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 10px;"> Nuevo traspaso</a>
+                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px;">Nuevo gasto  </button>
                     </div>
                 </div>
 
                 <div class="ibox-content">
+
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
                                 <th style="vertical-align:bottom">Fecha</th>
-                                <th style="vertical-align:bottom">Nro. Documento</th>
-                                <th style="vertical-align:bottom">Propiedad</th>
-                                <th style="vertical-align:bottom">Contacto</th>
+                                <th style="vertical-align:bottom">Nro.<br/>Documento</th>
+                                <th style="vertical-align:bottom">Tipo</th>
                                 <th style="vertical-align:bottom">Concepto</th>
-                                <th style="vertical-align:bottom">Cuenta</th>
+                                <th style="vertical-align:bottom">Forma<br/> de pago</th>
+                                <th style="vertical-align:bottom">Ref. pago</th>
                                 <th style="vertical-align:bottom; text-align: right;">Importe</th>
-                                <th style="vertical-align:bottom" width="120"></th>
+                                <th style="vertical-align:bottom" width="50"></th>
                             </tr>
                         </thead>
                         <tbody>
-							@foreach($collections as $collection)
+							@foreach($transactions as $transaction)
                             <tr>
-                                <td>{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</td>
-                                <td>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
-                                <td>{{ $collection->property->nro }}</td>
-                                <td>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</td>
-                                <td>{{$collection->transaction->concepto }}</td>
-                                <td>{{ $collection->account->nombre }}</td>
-                                <td style="text-align: right;">{{$collection->transaction->importe_credito}}</td>
+                                <td>{{$transaction->fecha_pago}}</td>
+                                <td>{{$transaction->nro_documento}}</td>
+                                <td>{{$transaction->tipo_transaccion}}</td>
+								
+                                <td>{{$transaction->concepto}}</td>
+                                <td>{{$transaction->forma_pago}}</td>
+                                <td>{{$transaction->numero_forma_pago}}</td>
+								@if($transaction->tipo_transaccion == "Ingreso")
+                                <td style="text-align: right;">{{$transaction->importe_credito}}</td>
+								@else
+								<td style="text-align: right;">{{$transaction->importe_debito}}</td>
+								@endif
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="{{ route('transaction.collection.show', $collection->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+										@if($transaction->tipo_transaccion == "Ingreso")
+										<a href="{{ route('transaction.collection.show', $transaction->collection->id ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+											   <i class="fa fa-eye"></i>
+										   </a>
+										   
+										@elseif($transaction->tipo_transaccion == "Egreso")
+										<a href="{{ route('transaction.expense.show', $transaction->expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('transaction.collection.edit', $collection->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
-                                            <i class="fa fa-pencil"></i>
+										@else
+										<a href="{{ route('transaction.transfer.show', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+                                            <i class="fa fa-eye"></i>
                                         </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
-                                            <i class="fa fa-print"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Enviar...">
-                                            <i class="fa fa-envelope-o"></i>
-                                        </a>
+										
+										@endif
+                                       
+										
                                     </div>
                                </td>
                             </tr>
 							@endforeach
+
 
                         </tbody>
                     </table>
@@ -106,6 +97,9 @@
     </div>
 
 </div>
+
+
+
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />

@@ -18,10 +18,9 @@
 				<li {!! (Request::is('transaction/*') ? ' class="active"' : '') !!}>
 					<a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label">Transacciones</span> <span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="#/lista-transacciones">Lista de transacciones</a></li>
+						<li class="{{ MenuRoute::active('transaction/transfer') }}"><a href="{{ route('transaction.transfer.index') }}">Lista de transacciones</a></li>
 						<li class="{{ MenuRoute::active('transaction/collection') }}"><a href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a></li>
 						<li class="{{ MenuRoute::active('transaction/expense') }}"><a href="{{ route('transaction.expense.index') }}">Lista de gastos</a></li>
-						<li><a href="#/nuevo-gasto">Nuevo gasto</a></li>
 						<li class="{{ MenuRoute::active('transaction/accountsreceivable/index') }}">
 							<a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
 						</li>

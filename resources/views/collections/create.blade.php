@@ -298,11 +298,6 @@
 		}, 'json');
     });
 	
-	$('#select-cuenta').change(function(){
-			
-		console.log($("#select-cuenta option:selected" ).val());
-	});
-	
 	
 	$('#contactos').change(function(){
 		//Cabio campo propiedades y contacto
