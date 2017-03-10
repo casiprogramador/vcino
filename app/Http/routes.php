@@ -139,6 +139,12 @@ Route::group(['prefix' => 'transaction'], function () {
 	
 	//Traspasos
 	Route::resource('transfer', 'TransferController');
+	Route::get('transfer/{id}/pdf', [
+        'as' => 'transaction.transfer.pdf', 'uses' => 'TransferController@pdf'
+    ]);
+	Route::post('search', [
+        'as' => 'transaction.search', 'uses' => 'TransactionController@search'
+    ]);
 	
 
 });

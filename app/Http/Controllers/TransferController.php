@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Account;
 use App\Transaction;
 use App\Transfer;
+use App\Category;
 use Auth;
 
 class TransferController extends Controller
@@ -22,9 +23,14 @@ class TransferController extends Controller
      */
     public function index()
     {
-
-		$transactions = Transaction::where('user_id',Auth::user()->id );
-        return view('transfers.index')->with('transactions',$transactions->get());
+		$company = Auth::user()->company;
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria', 'Ingreso')->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		$transactions = Transaction::where('user_id',Auth::user()->id )->groupBy('nro_documento');
+        return view('transfers.index')
+				->with('transactions',$transactions->get())
+				->with('categories',$categories)
+				->with('accounts',$accounts);
     }
 
     /**
@@ -168,4 +174,16 @@ class TransferController extends Controller
     {
         //
     }
+	
+	public function saarch(Request $request)
+    {
+        dd($request);
+    }
+	
+	public function pdf($id){
+		$transfer = Transfer::find($id);
+		$pdf = \PDF::loadView('pdf.transfer', compact('transfer'));
+		$nombre_documento = "recibo_traspaso_nro_".str_pad($transfer->transactionOrigin->nro_documento, 6, "0", STR_PAD_LEFT);
+		return $pdf->download($nombre_documento.".pdf");
+	}
 }

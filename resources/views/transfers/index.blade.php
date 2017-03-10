@@ -32,34 +32,26 @@
                 </div>
 
                 <div class="ibox-content">
+				{!! Form::open(array('route' => 'transaction.search', 'class' => 'form-horizontal')) !!}
                 <div class="row">
                     <div class="col-sm-2 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Tipo: Todos</option>
-                            <option value="1">Cobranzas</option>
-                            <option value="2">Gastos</option>
-                            <option value="3">Traspasos</option>
-                            <option value="4">Otros ingresos</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Categoría: Todas</option>
-                            <option value="1">Categoría uno</option>
-                            <option value="2">Categoría dos</option>
-                            <option value="3">Categoría tres...</option>
+                        <select name="tipo" class="input-sm form-control input-s-sm inline">
+                            <option value="todas">Tipo: Todos</option>
+                            <option value="Ingreso">Cobranzas</option>
+                            <option value="Egreso">Gastos</option>
+                            <option value="Traspaso">Traspasos</option>
+                            <option value="Otro">Otros ingresos</option>
                         </select>
                     </div>
                     <div class="col-sm-4 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline">
-                            <option value="0">Cuentas: Todas</option>
-                            <option value="1">Bco. 0122011-22-11</option>
-                            <option value="2">Caja general</option>
-                            <option value="3">Caja chica</option>
-                        </select>
+                        {{ Form::select('categoria',['todas'=>'Todas las Categorias']+$categories, old('categoria'), ['class' => 'form-control input-sm inline','id'=>'select-categoria']) }}
                     </div>
+                    <div class="col-sm-4 m-b-xs">
+                        {{ Form::select('cuenta',['todas'=>'Todas las Cuentas']+$accounts, old('cuenta'), ['class' => 'form-control input-sm inline','id'=>'select-cuenta']) }}
+                    </div>
+					<button class="btn btn-white" type="submit">Buscar</button>
                 </div>
-
+				{!! Form::close() !!}
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
@@ -100,7 +92,11 @@
 										<a href="{{ route('transaction.expense.show', $transaction->expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
-										   
+										@else
+										<a href="{{ route('transaction.transfer.show', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+										
 										@endif
                                        
 										

@@ -156,7 +156,7 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12">
-								<button class="btn btn-success" type="submit" id="printButton">
+								<button class="btn btn-success" id="printButton">
 									<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
 								<a href="{{ route('transaction.expense.pdf', $expense->id) }}" class="btn btn-default">
 									<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>

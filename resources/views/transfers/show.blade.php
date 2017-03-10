@@ -41,7 +41,7 @@
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                         Transacción registrada correctamente.
                     </div>
-
+					<div id="printableArea">		
                     <div class="row">
                         <div class="table-responsive">
                         <table class="table" style="width: 80%; margin: auto; margin-bottom: 10px;">
@@ -134,8 +134,7 @@
                             </tr>
                         </table>
                     </div>
-
-                    <div class="row">
+					<div class="row">
                         <div class="table-responsive">
                         <table style="margin: auto; text-align: left; width: 80%; font-size: 14px; margin-top: 10px;">
                             <tr>
@@ -159,35 +158,39 @@
                         </table>
                         </div>
                     </div>
+					</div>
+                    
 
                     <div class="hr-line-dashed"></div>
 
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-success" type="submit">
-                                    <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
-                                <button class="btn btn-default">
-                                    <i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</button>
+                                <button class="btn btn-success" id="printButton">
+									<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+                                <a href="{{ route('transaction.transfer.pdf', $transfer->id) }}" class="btn btn-default">
+									<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>
                                 <span class="text-muted" style="margin: 0 10px;">|</span>
-                                <button class="btn btn-default">
-                                    <i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo traspaso</button>
+                                <a href="{{ route('transaction.transfer.create') }}" class="btn btn-default">
+									<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo traspaso</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="hr-line-dashed"></div>
 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button class="btn btn-danger" type="submit">
-                                    <i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
-                            </div>
-                        </div>
-                    </div>
-
-                        </fieldset>
+                    {!! Form::open(array('route' => 'transaction.cancel', 'class' => '', 'id' => 'form-anular')) !!}
+							<input type="hidden" name="id_transaction" value="{{$transfer->transactionOrigin->id}}">
+							<input type="hidden" name="id_transaction_destino" value="{{$transfer->transactionDestiny->id}}">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-12">
+										<button class="btn btn-danger" type="submit">
+											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
+									</div>
+								</div>
+							</div>
+					{!! Form::close() !!}
                     </div>
 
                 </div>
