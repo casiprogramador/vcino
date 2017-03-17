@@ -13,8 +13,11 @@ class WaterServiceSeeder extends Seeder
     {
         DB::table('waterservices')->delete();
         $sectors = array(
-            array( 'nombre' => 'Water service 1'),
-			array( 'nombre' => 'Water service 2')
+            array( 'nombre' => 'Sin especificar'),
+            array( 'nombre' => 'SAGUAPAC'),
+            array( 'nombre' => 'AGUAYSES'),
+            array( 'nombre' => 'SEMAPA'),
+            array( 'nombre' => 'EPSAS')
         );
         DB::table('waterservices')->insert($sectors);
     }

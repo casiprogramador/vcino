@@ -7,7 +7,7 @@
             <h2>Comunicados</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
                     Comunicación & Información
@@ -37,7 +37,7 @@
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <a href="{{ route('communication.communication.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo comunicado" style="margin-right: 10px;"> Nuevo comunicado </a>
 
-                            <a href="{{ route('communication.register.send') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de comunicados" data-original-title="Ver registro de envíos de comunicados"> Registro de envíos </a>
+                            <a href="{{ route('communication.register.send') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de comunicados" data-original-title="Ver registro de envíos de comunicados" style="margin-right: 5px;"> Registro de envíos </a>
                         </div>
                     </div>
 
@@ -64,6 +64,8 @@
 												@foreach( ( explode(",",$send->correos) ) as $correo)
 													<span class="badge">{{$correo}}</span>
 												@endforeach
+											@elseif($send->dirigido == 'todos')							
+												<span class="badge">Todos los contactos</span>
 											@else
 												<span class="badge">{{ ucwords($send->dirigido) }}</span>
 											@endif

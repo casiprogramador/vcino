@@ -14,7 +14,7 @@ class TypeContactSeeder extends Seeder
         DB::table('typecontacts')->delete();
         $data = array(
             array( 'nombre' => 'Propietario','activa' => '1'),
-			array( 'nombre' => 'Inquilino','activa' => '1'),
+            array( 'nombre' => 'Inquilino','activa' => '1'),
         );
         DB::table('typecontacts')->insert($data);
     }

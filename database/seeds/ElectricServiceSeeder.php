@@ -13,8 +13,10 @@ class ElectricServiceSeeder extends Seeder
     {
         DB::table('electricservices')->delete();
         $sectors = array(
-            array( 'nombre' => 'Electric service 1'),
-			array( 'nombre' => 'Electric service 2')
+            array( 'nombre' => 'Sin especificar'),
+            array( 'nombre' => 'C.R.E.'),
+            array( 'nombre' => 'ELFEC'),
+            array( 'nombre' => 'DELAPAZ')
         );
         DB::table('electricservices')->insert($sectors);
     }

@@ -13,14 +13,19 @@ class BankTableSeeder extends Seeder
     {
         DB::table('banks')->delete();
         $sectors = array(
-            array( 'nombre' => 'Sin Banco'),
-            array( 'nombre' => 'Banco BISA'),
-            array( 'nombre' => 'Banco de Crédito BCP'),
-            array( 'nombre' => 'Banco Económico'),
-            array( 'nombre' => 'Banco Ganadero'),
-            array( 'nombre' => 'Banco Mercantil Santa Cruz'),
-            array( 'nombre' => 'Banco Nacional de Bolivia'),
-            array( 'nombre' => 'Banco Unión'),
+            array( 'nombre' => 'Sin especificar'),
+            array( 'nombre' => 'Banco BISA S.A.'),
+            array( 'nombre' => 'Banco Económico S.A.'),
+            array( 'nombre' => 'Banco FASSIL S.A.'),
+            array( 'nombre' => 'Banco FIE S.A.'),
+            array( 'nombre' => 'Banco Fortaleza S.A.'),
+            array( 'nombre' => 'Banco Ganadero S.A.'),
+            array( 'nombre' => 'Banco Los Andes Procredit S.A.'),
+            array( 'nombre' => 'Banco Mercantil Santa Cruz S.A.'),
+            array( 'nombre' => 'Banco Nacional de Bolivia S.A.'),
+            array( 'nombre' => 'Banco Solidario S.A.'),
+            array( 'nombre' => 'Banco Unión S.A.'),
+            array( 'nombre' => 'Banco de Crédito de Bolivia S.A.'),
             array( 'nombre' => 'Mi banco no aparece en la lista'),
         );
         DB::table('banks')->insert($sectors);

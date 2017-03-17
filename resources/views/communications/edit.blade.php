@@ -6,7 +6,7 @@
 		<h2>Comunicados</h2>
 		<ol class="breadcrumb">
 			<li>
-				<a href="#/">Inicio</a>
+				<a href="{{ route('admin.home') }}">Inicio</a>
 			</li>
 			<li>
 				Comunicación & Información
@@ -161,7 +161,6 @@
 			height: 300
 		});
 	});
-
 	$('.date-picker').datetimepicker({
 		format: 'DD/MM/YYYY'
 	});

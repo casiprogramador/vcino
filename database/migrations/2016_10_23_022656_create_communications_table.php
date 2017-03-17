@@ -17,7 +17,7 @@ class CreateCommunicationsTable extends Migration
             $table->date('fecha');
             $table->string('asunto');
             $table->text('cuerpo');
-            $table->string('adjuntos')->nullable();
+            $table->string('adjuntos',100)->nullable();
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();

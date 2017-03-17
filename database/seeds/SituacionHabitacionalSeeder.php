@@ -14,8 +14,8 @@ class SituacionHabitacionalSeeder extends Seeder
         DB::table('situacion_habitacionals')->delete();
         $sectors = array(
             array( 'nombre' => 'Habitada'),
-			array( 'nombre' => 'Alquilada'),
-			array( 'nombre' => 'Deshabitada')
+            array( 'nombre' => 'Alquilada'),
+            array( 'nombre' => 'Deshabitada')
         );
         DB::table('situacion_habitacionals')->insert($sectors);
     }

@@ -41,7 +41,7 @@ class ContactController extends Controller
     public function create()
     {
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'desc')->lists('nro','id');
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
 		$typecontacts = Typecontact::all()->lists('nombre','id');
 		$relationcontacts = Relationcontact::all()->lists('nombre','id');
 		$medias = Media::all()->lists('nombre','id');

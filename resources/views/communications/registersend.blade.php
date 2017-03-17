@@ -7,13 +7,13 @@
         <h2>Comunicados</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Comunicación & Información
             </li>
             <li>
-                <a href="#">Comunicados</a>
+                <a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
             </li>
             <li class="active">
                 <strong>Registro de envíos</strong>

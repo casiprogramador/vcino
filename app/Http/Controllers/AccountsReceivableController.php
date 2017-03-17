@@ -38,7 +38,7 @@ class AccountsReceivableController extends Controller
     {
 		$company = Auth::user()->company;
 		$quotas = Quota::where('company_id',$company->id );
-		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
         return view('accountsreceivables.create')
 		->with('properties',$properties)
 		->with('quotas',$quotas->get());
