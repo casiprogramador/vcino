@@ -5,15 +5,15 @@
         <div class="col-lg-10">
             <h2>Comunicados</h2>
             <ol class="breadcrumb">
-                <li>
-                    <a href="#/">Inicio</a>
-                </li>
-                <li>
-                    Comunicación & Información
-                </li>
-                <li>
-                    <a href="#">Lista de comunicados</a>
-                </li>
+            <li>
+                <a href="{{ route('admin.home') }}">Inicio</a>
+            </li>
+            <li>
+                Comunicación & Información
+            </li>
+            <li>
+                <a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+            </li>
                 <li class="active">
                     <strong>Reenviar comunicado</strong>
                 </li>
@@ -161,7 +161,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button class="btn btn-success" type="submit">Enviar</button>
-                                    <button class="btn btn-white" type="submit">Cancelar</button>
+                                    <button href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</button>
                                 </div>
                             </div>
 

@@ -13,8 +13,11 @@ class PhoneServiceSeeder extends Seeder
     {
         DB::table('phone_services')->delete();
         $sectors = array(
-            array( 'nombre' => 'Phone service 1'),
-			array( 'nombre' => 'Phone service 2')
+            array( 'nombre' => 'Sin especificar'),
+            array( 'nombre' => 'COTAS'),
+            array( 'nombre' => 'ENTEL'),
+            array( 'nombre' => 'TIGO'),
+            array( 'nombre' => 'VIVA')
         );
         DB::table('phone_services')->insert($sectors);
     }

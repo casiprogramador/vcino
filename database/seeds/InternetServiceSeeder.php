@@ -13,8 +13,11 @@ class InternetServiceSeeder extends Seeder
     {
         DB::table('internetservices')->delete();
         $sectors = array(
-            array( 'nombre' => 'Internet service 1'),
-			array( 'nombre' => 'Internet service 2')
+            array( 'nombre' => 'Sin especificar'),
+            array( 'nombre' => 'COTAS NET'),
+            array( 'nombre' => 'AXS BOLIVIA S.A.'),
+            array( 'nombre' => 'ENTEL S.A.'),
+            array( 'nombre' => 'TIGO STAR')
         );
         DB::table('internetservices')->insert($sectors);
     }

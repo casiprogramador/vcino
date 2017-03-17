@@ -39,7 +39,7 @@ class CollectionController extends Controller
     public function create()
     {
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
 		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
         return view('collections.create')
 		->with('properties',$properties)

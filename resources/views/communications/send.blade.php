@@ -5,15 +5,15 @@
         <div class="col-lg-10">
             <h2>Comunicados</h2>
             <ol class="breadcrumb">
-                <li>
-                    <a href="#/">Inicio</a>
-                </li>
-                <li>
-                    Comunicación & Información
-                </li>
-                <li>
-                    <a href="#">Lista de comunicados</a>
-                </li>
+            <li>
+                <a href="{{ route('admin.home') }}">Inicio</a>
+            </li>
+            <li>
+                Comunicación & Información
+            </li>
+            <li>
+                <a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+            </li>
                 <li class="active">
                     <strong>Enviar comunicado</strong>
                 </li>

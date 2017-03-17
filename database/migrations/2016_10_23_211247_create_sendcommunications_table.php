@@ -18,7 +18,7 @@ class CreateSendcommunicationsTable extends Migration
 			$table->string('dirigido');
 			$table->string('propiedad')->nullable();
 			$table->string('destinatario')->nullable();
-			$table->string('correos')->nullable();
+			$table->string('correos',5000)->nullable();
 			$table->tinyInteger('enviado')->default('0');
 			$table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');

@@ -38,7 +38,7 @@
                             <tbody>
                                 <tr>
                                     <td style="border: 0;">
-                                        <div class="p-h-xl"><img src="files/logoEmpresa.png" width="150"></div>
+                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="150"></div>
                                     </td>
                                     <td style="border: 0; vertical-align:bottom">
                                         <div class="p-h-xl text-right">
@@ -63,31 +63,15 @@
 
                     <div class="row">
                         <div class="col-sm-1">
-                            Fecha:
+                            <span>Fecha:</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="margin-left: -15px;">{{ date_format(date_create($communication->fecha),'d/m/Y') }}</span>
                             <br/>
-                            De:
-                        </div>
-                        <div class="col-sm-5">
-                            <span style="margin-left: -15px;">{{ date_format(date_create($communication->fecha),'d/m/Y') }}</span>
-                            <br/>
-                            <span style="margin-left: -15px;"></span>
-                        </div>
-                        <div class="col-sm-1">
-                            <br/>
-                            Para:
-                        </div>
-                        <div class="col-sm-5">
-                            <br/>
-                            <span style="margin-left: -15px;"></span>
+                            <span>De:</span>&nbsp&nbsp&nbsp<span style="margin-left: -15px;"></span>
                         </div>
                     </div>
 
                     <div class="row" style="padding: 15px 0 30px 0;">
-                        <div class="col-sm-1">
-                            Asunto:
-                        </div>
-                        <div class="col-sm-11">
-                            <span style="margin-left: -15px;"><strong>{{$communication->asunto}}</strong></span>
+                        <div class="col-sm-7">
+                            <span>Asunto:</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="margin-left: -15px;"><strong>{{$communication->asunto}}</strong></span>
                         </div>
                     </div>
 
@@ -110,14 +94,8 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6">
-                            <h6>&copy; 2016 V-CINO. Todos los derechos reservados.</h6>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-3 text-right">
-                        <h6>F.P. 2016-09-29 15:58:34</h6>
-                        </div>
+                        <span >&copy; 2016 V-CINO. Todos los derechos reservados.</span><span style="float:right">F.P. 2016-09-29 15:58:34</span>
+
                     </div>
 
                 </div>

@@ -7,7 +7,7 @@
         <h2>Propiedades</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Propiedades
@@ -66,7 +66,7 @@
                                 <td>{{ $property->situacionHabitacionals->nombre }}</td>
                                 <td>
 									@foreach ( $property->contact as $contact)
-										@if( $contact->typecontact->nombre == 'Propietario' && $contact->relationcontact->nombre == 'Titular')
+										@if( $contact->typecontact->nombre == 'Propietario' && $contact->relationcontact->nombre == 'Titular' && $contact->activa == 1)
 											{{$contact->nombre}} {{$contact->apellido}}
 											<br>
 										@endif
@@ -137,7 +137,7 @@
                 },
                 "paging":   false,
                 "info":     false,
-				"columnDefs": [ { "orderable": false, "targets": 5 },{ "orderable": false, "targets": 6 } ]
+				"columnDefs": [ { "targets": [0],"visible": false,"searchable": false },{ "orderable": false, "targets": 5 },{ "orderable": false, "targets": 6 } ]
             });
         } );
     </script>

@@ -6,7 +6,7 @@
 		<h2>Comunicados</h2>
 		<ol class="breadcrumb">
 			<li>
-				<a href="#/">Inicio</a>
+				<a href="{{ route('admin.home') }}">Inicio</a>
 			</li>
 			<li>
 				Comunicación & Información
@@ -149,7 +149,16 @@
 <script>
 	$(document).ready(function () {
 		$('#summernote').summernote({
-			height: 300
+			height: 300,
+			toolbar: [
+			    ['style', ['style']],
+			    ['font', ['bold', 'italic', 'underline']],
+			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['insert', ['link', 'hr']],
+			    ['view', ['codeview']],
+			    ['help', ['help']]
+			],
 		});
 	});
 

@@ -13,8 +13,11 @@ class TvServiceSeeder extends Seeder
     {
         DB::table('tvservices')->delete();
         $sectors = array(
-            array( 'nombre' => 'TV service 1'),
-			array( 'nombre' => 'TV service 2')
+            array( 'nombre' => 'Sin especificar'),
+            array( 'nombre' => 'COTAS CABLE TV'),
+            array( 'nombre' => 'ENTEL S.A.'),
+            array( 'nombre' => 'I.T.S. TV CABLE'),
+            array( 'nombre' => 'TIGO STAR')
         );
         DB::table('tvservices')->insert($sectors);
     }

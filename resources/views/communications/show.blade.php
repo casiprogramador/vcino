@@ -59,6 +59,16 @@
 							<?php echo $communication->cuerpo ?>
 						</div>
 					</div>
+					<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
+						<label class="col-sm-2 control-label">Correos:</label>
+						<div class="col-sm-8">
+							
+								@foreach ($communication->sendcommunication as $sendcommunication)
+								{{$sendcommunication->correos}} <br>
+								@endforeach
+
+						</div>
+					</div>
 
 					<div class="hr-line-dashed"></div>
 
