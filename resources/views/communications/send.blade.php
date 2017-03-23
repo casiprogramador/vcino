@@ -49,7 +49,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style="display: none">
                                 <label class="col-sm-3 control-label">Remitente</label>
                                 <div class="col-sm-5">
                                     <select class="form-control input-sm" name="remitente">

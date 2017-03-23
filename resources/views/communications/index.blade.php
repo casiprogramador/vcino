@@ -82,6 +82,7 @@
 									</td>
                                     <td style="vertical-align:middle; text-align:right;">
                                         <div class="btn-group">
+											
                                             <a href="{{ route('communication.communication.show', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
                                                 <i class="fa fa-eye"></i>
                                             </a>
