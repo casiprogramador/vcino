@@ -77,6 +77,19 @@
                                     @endif
                                 </div>
                             </div>
+							<div class="form-group{{ $errors->has('email_prueba') ? ' has-error' : '' }}">
+                                <label for="name" class="col-md-3 control-label">Email para pruebas:</label>
+
+                                <div class="col-md-6">
+                                    <input id="email-prueba" type="text" class="form-control" name="email_prueba" value="{{ old('email_prueba') }}">
+
+                                    @if ($errors->has('dias_mora'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('email_prueba') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
 							<div class="form-group{{ $errors->has('forma_pago') ? ' has-error' : '' }}">
 								<label class="col-sm-3 control-label">Forma de Pago:</label>
 								<div class="col-sm-9">

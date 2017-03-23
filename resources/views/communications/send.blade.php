@@ -99,7 +99,7 @@
                             <div class="form-group" id="correo">
                                 <label class="col-sm-3 control-label">Dirección de correo</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" name="correo" value="{{old('correo')}}">
+                                    <input type="text" class="form-control input-sm" name="correo" value="{{Auth::user()->company->email_prueba}}">
                                 </div>
                             </div>
 

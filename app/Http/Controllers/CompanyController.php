@@ -67,6 +67,7 @@ class CompanyController extends Controller
         $company->logotipo = $path;
 
         $company->dias_mora = $request->dias_mora;
+		$company->email_prueba = $request->email_prueba;
 		$company->forma_pago = $request->forma_pago;
         $company->user_id = Auth::user()->id;
 

@@ -20,8 +20,10 @@ class CreateCompaniesTable extends Migration
             $table->string('logotipo')->default('img/system/logo_empresa.jpg');
 			$table->text('forma_pago');
             $table->integer('dias_mora');
+			$table->string('email_prueba')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+			
             $table->timestamps();
         });
     }
