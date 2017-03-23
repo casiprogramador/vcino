@@ -141,8 +141,10 @@ class CommunicationController extends Controller
     public function show($id)
     {
         $communication = Communication::find($id);
+		$sendcommunications = Sendcommunication::where('communication_id',$id );
         return view('communications.show')
-            ->with('communication',$communication);
+            ->with('communication',$communication)
+			->with('sendcommunications',$sendcommunications->get());
     }
 	
 	public function destroy($id)

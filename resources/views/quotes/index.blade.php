@@ -21,7 +21,7 @@
     <div class="wrapper wrapper-content animated fadeInRight">
 
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 @if (Session::has('message'))
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -31,6 +31,18 @@
                     </div>
                 @endif
                 <div class="ibox">
+					<div class="ibox-title">
+                        <h5 style="padding-top: 7px;">Lista de cuotas</h5>
+                        <div class="ibox-tools" style="padding-bottom: 7px;">
+                            <div class="btn-group">
+                                <a href="{{ route('config.quota.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
+                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="ibox-content">
                         <table class="table table-hover table-striped">
                             <thead>
@@ -50,7 +62,7 @@
                                 <td>{{ $quota->cuota }}</td>
                                 <td>{{ $quota->category->nombre }}</td>
                                 <td>{{ $quota->typeProperty->tipo_propiedad }}</td>
-                                <td class="text-right">{{ $quota->importe }}</td>
+                                <td style="padding-right: 30px;" class="text-right">{{ $quota->importe }}</td>
                                 <td><span>Activa</span></td>
                                 
                                 <td style="vertical-align:middle; text-align:right;">
@@ -69,7 +81,7 @@
                                         <td ><span class="text-muted">{{ $quota->cuota }}</span></td>
                                         <td ><span class="text-muted">{{ $quota->category->nombre }}</span></td>
                                         <td ><span class="text-muted">{{ $quota->typeProperty->tipo_propiedad }}</span></td>
-                                        <td class="text-right text-muted">{{ $quota->importe }}</td>
+                                        <td style="padding-right: 30px;" class="text-right text-muted">{{ $quota->importe }}</td>
                                         <td><span class="text-muted">Inactiva</span></td>
                                         <td style="vertical-align:middle; text-align:right;">
                                             <div class="btn-group">
@@ -87,24 +99,6 @@
 
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title text-left" style="padding-left: 20px;">
-                        <a href="{{ route('config.quota.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nueva Cuenta" data-original-title="Nueva Cuenta" style="margin-right: 10px;"> Nueva </a>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista..." data-original-title="Imprimir lista..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar" data-original-title="Exportar"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
-                    </div>
-                    <div class="ibox-content">
-                        <h5>
-                            Cuotas
-                        </h5>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
-                        </p>
                     </div>
                 </div>
             </div>

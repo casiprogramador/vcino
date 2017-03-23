@@ -32,71 +32,110 @@
 				</div>
 
 				<div class="ibox-content">
-					 <form action="#" class="form-horizontal">
 
-					<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha">
-						<label class="col-sm-2 control-label">Fecha</label>
-						<div class="col-sm-3 input-group date" style="padding-left:15px;">
-							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($communication->fecha)) }}" readonly>
+							@foreach($sendcommunications as $sendcommunication)
+                            <!--    PANEL REGISTRO DE ENVIO DE COMUNICADOS              -->
+                            <div class="form-group">
+
+                                <div class="col-sm-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Registro de envío
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Fecha envío</label>
+                                                <div class="col-sm-2">
+                                                    <p>{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y") }}</p>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Hora envío</label>
+                                                <div class="col-sm-2">
+                                                    <p>{{ date_format(date_create( $sendcommunication->created_at ),"H:i") }}</p>
+                                                </div>
+												<label class="col-sm-2 control-label">Destinatarios</label>
+                                                <div class="col-sm-2">
+                                                    @if($sendcommunication->dirigido == 'correo')	
+														@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
+															<span class="badge">{{$correo}}</span>
+														@endforeach
+													@else
+														<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
+													@endif		
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							@endforeach
+
+                            <div class="hr-line-dashed"></div>
+                            <!--    FIN - PANEL REGISTRO DE ENVIO DE COMUNICADOS            -->					
+					<div class="form-horizontal">
+
+						<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha">
+							<label class="col-sm-2 control-label">Fecha</label>
+							<div class="col-sm-3 input-group date" style="padding-left:15px;">
+								<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+								<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($communication->fecha)) }}" readonly>
+							</div>
+							<div class="col-sm-8 col-md-offset-2">
+
+							</div>
 						</div>
-						<div class="col-sm-8 col-md-offset-2">
 
+						<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
+							<label class="col-sm-2 control-label">Asunto</label>
+							<div class="col-sm-8">
+								<input type="text" name="asunto" class="form-control input-sm" value="{{$communication->asunto}}" readonly>
+
+							</div>
 						</div>
-					</div>
 
-					<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
-						<label class="col-sm-2 control-label">Asunto</label>
-						<div class="col-sm-8">
-							<input type="text" name="asunto" class="form-control input-sm" value="{{$communication->asunto}}" readonly>
-
+						<div class="form-group{{ $errors->has('cuerpo') ? ' has-error' : '' }}">
+							<label class="col-sm-2 control-label">Cuerpo</label>
+							<div class="col-sm-9">
+								<?php echo $communication->cuerpo ?>
+							</div>
 						</div>
-					</div>
+						<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
+							<label class="col-sm-2 control-label">Correos:</label>
+							<div class="col-sm-8">
 
-					<div class="form-group{{ $errors->has('cuerpo') ? ' has-error' : '' }}">
-						<label class="col-sm-2 control-label">Cuerpo</label>
-						<div class="col-sm-9">
-							<?php echo $communication->cuerpo ?>
-						</div>
-					</div>
-					<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
-						<label class="col-sm-2 control-label">Correos:</label>
-						<div class="col-sm-8">
-							
 								@foreach ($communication->sendcommunication as $sendcommunication)
 								{{$sendcommunication->correos}} <br>
 								@endforeach
 
+							</div>
 						</div>
-					</div>
 
-					<div class="hr-line-dashed"></div>
+						<div class="hr-line-dashed"></div>
 
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Adjuntos</label>
-						<div class="col-sm-8">
-							<div class="row">
-								@if(!empty($communication->adjuntos))
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Adjuntos</label>
+							<div class="col-sm-8">
+								<div class="row">
+									@if(!empty($communication->adjuntos))
 									@foreach (explode(",",$communication->adjuntos) as $adjunto)
-									<?php 
-										$filename = explode("-name-",$adjunto);
-										$ext_array = explode(".",$adjunto);
-										$ext = end($ext_array);
+									<?php
+									$filename = explode("-name-", $adjunto);
+									$ext_array = explode(".", $adjunto);
+									$ext = end($ext_array);
 									?>
 									<div class="col-sm-4">
 										<div class="thumbnail">
 											@if($ext == 'jpg' || $ext == 'png')
 											<h3 class="text-center"><i class="fa fa-file-image-o fa-5x"></i></h3>
 											@elseif($ext == 'pdf')
-												<h3 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h3>
+											<h3 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h3>
 											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
-												<h3 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h3>
+											<h3 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h3>
 											@elseif($ext == 'xls' || $ext == 'xlsx')
-												<h3 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h3>
+											<h3 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h3>
 											@elseif($ext == 'rar' || $ext == 'zip')
-												<h3 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h3>
+											<h3 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h3>
 											@else
-												<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
+											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
 											@endif
 											<div class="caption">
 												<h4 class="text-center">{{$filename[1]}}</h4>
@@ -104,18 +143,18 @@
 										</div>
 									</div>
 									@endforeach
-								@endif
+									@endif
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="hr-line-dashed"></div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<a href="{{ route('communication.communication.index') }}" class="btn btn-success" type="submit">Atras</a>
+						<div class="hr-line-dashed"></div>
+						<div class="form-group">
+							<div class="col-sm-12">
+								<a href="{{ route('communication.communication.index') }}" class="btn btn-success" type="submit">Atras</a>
+							</div>
 						</div>
-					</div>
 
-					 </form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -140,4 +179,3 @@
 	});
 </script>
 @endsection
- 

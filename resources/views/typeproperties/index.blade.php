@@ -6,7 +6,7 @@
             <h2>Tipos de propiedad</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#/">Inicio</a>
+                    <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
                     Configuración
@@ -21,7 +21,7 @@
     <div class="wrapper wrapper-content animated fadeInRight">
 
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 @if (Session::has('message'))
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -31,6 +31,18 @@
                     </div>
                 @endif
                 <div class="ibox">
+					<div class="ibox-title">
+                        <h5 style="padding-top: 7px;">Lista de tipos de propiedad</h5>
+                        <div class="ibox-tools" style="padding-bottom: 7px;">
+                            <div class="btn-group">
+                                <a href="{{ route('config.typeproperty.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
+                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="ibox-content">
                         <table class="table table-hover table-striped">
                             <thead>
@@ -76,26 +88,6 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title text-left" style="padding-left: 20px;">
-                        <a href="{{ route('config.typeproperty.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo tipo de propiedad" data-original-title="Nuevo tipo de propiedad" style="margin-right: 10px;"> Nuevo </a>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista..." data-original-title="Imprimir lista..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar" data-original-title="Exportar"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
-                    </div>
-                    <div class="ibox-content">
-                        <h5>
-                            Tipos de propiedad
-                        </h5>
-                        <p>
-                            Los tipos de propiedad sirven para clasificar a cada una de las propiedades.
-                        </p>
-                        <p>
-                            Cada tipo representa una, servirá para... Cada tipo representa una, servirá para... Cada tipo representa una, servirá para... Cada tipo representa una, servirá para...
-                        </p>
-                    </div>
-                </div>
-            </div>
 
         </div>
 

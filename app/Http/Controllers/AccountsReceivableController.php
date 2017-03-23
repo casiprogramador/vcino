@@ -93,7 +93,7 @@ class AccountsReceivableController extends Controller
 			$accountsreceivable->user_id = Auth::user()->id;
 			$accountsreceivable->save();
 		}
-        Session::flash('message', 'Nueva cuota por cobrar correctamente.');
+        Session::flash('message', 'Nueva cuota por cobrar ingresada correctamente.');
         return redirect()->route('transaction.accountsreceivable.index');
 		 
     }
