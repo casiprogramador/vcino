@@ -4,19 +4,19 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Imprimir aviso de cobranza</h2>
+        <h2>Ver aviso de cobranza</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
             </li>
             <li>
-                Aviso de cobranza
+                <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
             </li>
             <li class="active">
-                <strong>Imprimir aviso de cobranza</strong>
+                <strong>Ver aviso de cobranza</strong>
             </li>
         </ol>
     </div>
@@ -39,7 +39,8 @@
                             <tbody>
                                 <tr>
                                     <td style="border: 0;">
-                                        <div class="p-h-xl"><img src="{{ URL::asset($logotipo)}}" width="150"></div>
+                                        <!-- <div class="p-h-xl"><img src="{{ URL::asset($logotipo)}}" width="200"></div>   -->
+                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="200"></div>
                                     </td>
                                     <td style="border: 0; vertical-align:bottom">
                                         <div class="p-h-xl text-right">
@@ -52,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div class="row" style="padding: 0 0 20px 0;">
+                    <div class="row" style="padding: 0 0 10px 0;">
                         <div class="col-sm-3">
                         </div>
                         <div class="col-sm-6">
@@ -66,7 +67,7 @@
                         <table style="margin: 10px auto; text-align: left; width: 80%; font-size: 14px;">
                             <tr>
                                 <td>
-                                    <div class="row" style="padding: 0 0 40px 0;">
+                                    <div class="row" style="padding: 0 0 30px 0;">
                                         <div class="col-sm-6">
                                             Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span>
                                         </div>
@@ -114,8 +115,8 @@
                                     <table cellpadding="0" cellspacing="0" style="width: 100%;">
 										@for ($i = 0; $i < count($categorias); $i++)
                                         <tr>
-                                            <td style="border-top: #eee 1px solid; padding: 5px 0;">{{ $categorias[$i] }}: {{ $nombrecuotas[$i] }} - {{ $periodos[$i] }}/{{ $gestiones[$i] }}</td>
-                                            <td style="border-top: #eee 1px solid; text-align: right; padding: 5px 0;">{{money_format('%i', $importes[$i] ) }}</td>
+                                            <td style="border-top: #999 1px solid; padding: 5px 0;">{{ $categorias[$i] }}: {{ $nombrecuotas[$i] }} - {{ $periodos[$i] }}/{{ $gestiones[$i] }}</td>
+                                            <td style="border-top: #999 1px solid; text-align: right; padding: 5px 0;">{{money_format('%i', $importes[$i] ) }}</td>
                                         </tr>
 										@endfor
 
@@ -129,7 +130,7 @@
                         </table>
                     </div>
 
-                    <div class="row" style="padding: 20px 0;">
+                    <div class="row" style="padding: 10px 0;">
                         <div class="col-sm-3">
                         </div>
                         <div class="col-sm-6">
@@ -143,13 +144,54 @@
                         <tr>
                             <td>
                                 <address style="color: #9ba3a9;">
-                                    <?php echo $formapago?>
+                                    <?php echo $formapago ?>
                                 </address>
+                            </td>
+                        </tr>
+                    </table>
 
-                                <address style="color: #9ba3a9;">
-                                    <strong>Nota</strong>
-                                    <p>{{ $sendalertpayment->nota }}</p>
-                                </address>
+                    <?php
+                        if ($sendalertpayment->nota <> '') { ?>
+
+                            <div class="row" style="padding: 0;">
+                                <div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="hr-line-solid"></div>
+                                </div>
+                                <div class="col-sm-3">
+                                </div>
+                            </div>
+                    <?php
+                          }
+                    ?>
+
+                    <table style="margin: auto; text-align: left; width: 80%; font-size: 11px;">
+                        <tr>
+                            <td>
+                                <?php
+                                if ($sendalertpayment->nota <> '') { ?>
+                                
+                                <div class="col-lg-12">
+                                    <div class="widget style1" style="background-color: #f2f2f2;">
+                                        <div class="row vertical-align">
+                                            <div class="col-xs-1">
+                                                <i class="fa fa-bell fa-3x"></i>
+                                            </div>
+                                            <div class="col-xs-11">
+                                                <h5 class="no-margins">
+                                                    Nota: 
+                                                </h5>
+                                                <p>{{ $sendalertpayment->nota }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php
+                                    }
+                                ?>
+
                             </td>
                         </tr>
                     </table>
@@ -166,7 +208,7 @@
 
                     <table width="100%">
                         <tr>
-                            <td style="text-align: center;">Consultas o comentarios: <a href="mailto:">{{ $correoempresa }}</a>
+                            <td style="text-align: center;">Consultas o comentarios: <a href="mailto:{{ $correoempresa }}">{{ $correoempresa }}</a>
                             </td>
                         </tr>
                     </table>
