@@ -48,11 +48,12 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Asunto</label>
                         <div class="col-sm-5">
-                            <select class="form-control input-sm" name="asunto">
-                                <option value="Aviso de cobranza">Aviso de cobranza</option>
-                                <option value="Recordatorio aviso de cobranza">Recordatorio aviso de cobranza</option>
-                                <option value="Propiedad en mora">Propiedad en mora</option>
-                            </select>
+                            {{ Form::select('asunto',$subjects, old('asunto'), ['class' => 'form-control input-sm']) }}
+							@if ($errors->has('asunto'))
+							<span class="help-block">
+								<strong>{{ $errors->first('asunto') }}</strong>
+							</span>
+							@endif
                         </div>
                     </div>
 

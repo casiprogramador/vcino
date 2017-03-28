@@ -113,7 +113,7 @@
 
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Adjuntos</label>
-							<div class="col-sm-8">
+							<div class="col-sm-10">
 								<div class="row">
 									@if(!empty($communication->adjuntos))
 									@foreach (explode(",",$communication->adjuntos) as $adjunto)
@@ -125,21 +125,48 @@
 									<div class="col-sm-4">
 										<div class="thumbnail">
 											@if($ext == 'jpg' || $ext == 'png')
-											<h3 class="text-center"><i class="fa fa-file-image-o fa-5x"></i></h3>
+											<a href="{{ URL::asset($adjunto)}}" target="_blank">
+												<img src="{{ URL::asset($adjunto)}}">
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
 											@elseif($ext == 'pdf')
-											<h3 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h3>
+											<a href="{{ URL::asset($adjunto)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
 											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
-											<h3 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h3>
+											<a href="{{ URL::asset($adjunto)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
 											@elseif($ext == 'xls' || $ext == 'xlsx')
-											<h3 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h3>
+											<a href="{{ URL::asset($adjunto)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
 											@elseif($ext == 'rar' || $ext == 'zip')
-											<h3 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h3>
+											<a href="{{ URL::asset($adjunto)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
 											@else
 											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
 											@endif
-											<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-											</div>
+
 										</div>
 									</div>
 									@endforeach

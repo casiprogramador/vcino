@@ -7,7 +7,7 @@
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
@@ -23,14 +23,22 @@
     <div class="row">
         <div class="col-lg-12">
 
-            <div class="ibox float-e-margins">
+            <div class="ibox">
+				@if (Session::has('message'))
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Enviar aviso de cobranza</h5>
+                    <h5 style="padding-top: 7px;">Avisos de cobranza</h5>
 					<div class="ibox-tools" style="padding-bottom: 7px;">
-                            <a href="{{ route('transaction.accountsreceivable.generatenotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="generar Avisos" style="margin-right: 10px;"> Generar aviso de pago </a>
+                            <a href="{{ route('transaction.accountsreceivable.generatenotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Generar nuevos avisos de cobranza" data-original-title="generar nuevos avisos de cobranza" style="margin-right: 5px;"> Generar avisos de cobranza </a>
 
-                            <a href="{{ route('transaction.accountsreceivable.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de comunicados" data-original-title="Ver registro de envíos de comunicados"> Registro de avisos enviados </a>
+                            <a href="{{ route('transaction.accountsreceivable.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de avisos de cobranza" data-original-title="Ver registro de envíos de avisos de cobranza" style="margin-right: 5px;"> Registro de envios </a>
                     </div>
                 </div>
 
@@ -38,15 +46,7 @@
 
 
                     <!--        LISTA DE DISTRIBUCIÓN QUE SE GENERA CON TODAS LAS PROPIEDADES EN MORA       -->
-                    <div class="row">
-
-						<div class="col-sm-12">
-							 <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: left;">Propiedad: <span style="font-weight: normal;">Todas</span></label>
-                                <label class="col-sm-3 control-label" style="text-align: left;">Vencimiento: <span style="font-weight: normal;">Octubre</span></label>
-                            </div>
-						</div>
-					</div>
+                    
 					<div class="row">
 						<div class="col-sm-12">
 							
@@ -56,10 +56,10 @@
                                     <thead>
                                         <tr>
                                             <th style="vertical-align:bottom; text-align: center;" width="50">
-                                                <input type="checkbox" checked="">
+                                                <input type="checkbox" checked="" id="check-all">
                                             </th>
                                             <th style="vertical-align:bottom">Propiedad</th>
-                                            <th style="vertical-align:bottom">Periodo/Gestion</th>
+                                            <th style="vertical-align:bottom">Periodo/Gestión</th>
                                             <th style="vertical-align:bottom; text-align: right;">Importe total</th>
                                             <th style="vertical-align:bottom" width="50"></th>
                                         </tr>
@@ -70,11 +70,11 @@
 										@var $periodos = explode(',',$sendalertpayment->periodos)
 										@var $gestiones = explode(',',$sendalertpayment->gestiones)
                                         <tr>
-                                            <td style="text-align: center;">
-												<input type="checkbox" class="i-checks" name="sendalertpayment[]" value="{{$sendalertpayment->id}}" checked>
+                                            <td style="vertical-align:middle; text-align: center;">
+												<input type="checkbox" class="i-checks check-submit" name="sendalertpayment[]" value="{{$sendalertpayment->id}}" checked>
                                             </td>
-                                            <td>{{ $sendalertpayment->property->nro }}</td>
-                                            <td>
+                                            <td style="vertical-align:middle;">{{ $sendalertpayment->property->nro }}</td>
+                                            <td style="vertical-align:middle;">
 												@for ($i = 0; $i < count($periodos); $i++)
 												 @if($periodos[$i] == 1)
 													{{ 'Enero'.'/'.$gestiones[$i] }}
@@ -103,38 +103,46 @@
 												 @endif
 												@endfor
 											</td>
-                                            <td style="text-align: right;">{{ $sendalertpayment->importe_total }}</td>
-                                            <td style="text-align:right;">
+											<td style="vertical-align:middle; text-align: right;">{{ $sendalertpayment->importe_total }}</td>
+                                            <td style="vertical-align:middle; text-align: center;">
                                                 <div class="btn-group">
-                                                    <a href="{{ route('transaction.accountsreceivable.print', $sendalertpayment->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver aviso" style="margin-bottom: 0px;">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
+                                                    <a href="{{ route('transaction.accountsreceivable.print', $sendalertpayment->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver aviso de cobranza" style="margin-bottom: 0px;">
+														<i class="fa fa-eye"></i>
+													</a>
                                                 </div>
-                                           </td>
+											</td>
                                         </tr>
 
 											
 										@endforeach
                                     </tbody>
                                 </table>
-								<div class="col-sm-12">
-									<button class="btn btn-success" type="submit"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar</button>
-									<button class="btn btn-success" ><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
-								</div>
-								{!! Form::close() !!}
+
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
-									<label class="col-sm-2 control-label">Proceso de envío</label>
-									<div class="col-sm-9" style="margin-top: 5px">
-										<div class="progress">
-											<div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
-												<span id="progress-text">0% Completado</span>
-											</div>
+									<button name="submit" class="btn btn-success" type="submit" value="enviar" style="margin-right: 10px;"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar a seleccionados</button>
+									<button name="submit"class="btn btn-success"type="submit" value="imprimir" ><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+									<span class="text-muted" style="margin: 0 10px;">|</span>
+									<button name="submit" class="btn btn-danger" type="submit" value="borrar"><i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar seleccionados</button>
+								</div>
+							
+							{!! Form::close() !!}
+							</div>
+
+							<div class="hr-line-dashed"></div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Proceso de envío</label>
+								<div class="col-sm-9" style="margin-top: 5px">
+									<div class="progress">
+										<div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
+											<span id="progress-text">0% Completado</span>
 										</div>
 									</div>
 								</div>
-                            </div>
+							</div>
+                            
 						</div>
 					</div>
 
@@ -145,13 +153,58 @@
 </div>
 
 @endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
 @section('javascript')
+<script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
+<script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "order": [[ 1, "asc" ]],
+                "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "paging":   false,
+                "info":     false
+            });
+        } );
+    </script>
     <script>
         $(document).ready(function () {
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
+			$('#check-all').change(function() {
+				if ($('#check-all').is(':checked')) {
+					
+					console.log("checked");
+					$('.check-submit').prop( "checked", true );
+				}else{
+					console.log("NO checked");
+					$('.check-submit').prop( "checked", false );
+				}
+			});
+
 			$( "#form-send-alertpayment" ).submit(function( event ) {
 				var value = 0;
 
@@ -171,3 +224,4 @@
         });
     </script>
 @endsection
+

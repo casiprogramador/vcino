@@ -46,6 +46,7 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
+									<th style="vertical-align:bottom">Fecha Original</th>
                                     <th style="vertical-align:bottom">Fecha</th>
                                     <th style="vertical-align:bottom">Asunto</th>
                                     <th style="vertical-align:bottom">Destinatario(s)</th>
@@ -56,6 +57,7 @@
                                 <tbody>
 									@foreach ($communications as $communication)
                                 <tr>
+									<td>{{ $communication->fecha }}</td>
                                     <td>{{ date_format(date_create($communication->fecha),'d/m/Y') }}</td>
                                     <td>{{$communication->asunto}}</td>
                                     <td>
@@ -166,7 +168,7 @@
                 },
                 "paging":   false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 4 } ]
+                "columnDefs": [ { "targets": [0],"visible": false,"searchable": false },{ "orderable": false, "targets": 4 } ]
             });
         } );
     </script>

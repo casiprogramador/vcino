@@ -107,13 +107,17 @@ class CommunicationController extends Controller
             'asunto' => 'required',
             'cuerpo' => 'required'
         ]);
+		//dd($request);
+		
 
 		$adjunto = $request->adjunto;
+		//dd($adjunto);
 		$adjunto_ori = $request->adjunto_ori;
 		$array_path = array();
 		$id_user = Auth::user()->id;
 		for ($i = 0; $i <= 2; $i++) {
-			if(isset($adjunto[$i])){
+			if(isset($adjunto[$i]) && !empty($adjunto[$i])){
+				//dd($adjunto[$i]);
 				$file = $adjunto[$i];
 				$tmpFilePath = '/img/upload/comunicados/';
 				$tmpFileName = time() . '-' .$i.'-'.$id_user. '-name-' . $file->getClientOriginalName();
@@ -122,8 +126,11 @@ class CommunicationController extends Controller
 				array_push($array_path, $path);
 			}elseif (isset($adjunto_ori[$i])) {
 				array_push($array_path, $adjunto_ori[$i]);
+			}else{
+				
 			}
 		}
+		//dd($array_path);
 		
 		$communication = Communication::find($id);
         $communication->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
@@ -131,6 +138,8 @@ class CommunicationController extends Controller
         $communication->cuerpo = $request->cuerpo;
 		if(array_filter($request->adjunto) || array_filter($request->adjunto_ori)){
 			$communication->adjuntos = implode(",",array_filter ( $array_path) );
+		}else{
+			$communication->adjuntos = '';
 		}
         $communication->save();
         Session::flash('message', 'Comunicado actualizado correctamente');
@@ -173,7 +182,7 @@ class CommunicationController extends Controller
 		$array_path = array();
 		$id_user = Auth::user()->id;
 		for ($i = 0; $i <= 2; $i++) {
-			if(isset($adjunto[$i])){
+			if(isset($adjunto[$i]) && !empty($adjunto[$i])){
 				$file = $adjunto[$i];
 				$tmpFilePath = '/img/upload/comunicados/';
 				$tmpFileName = time() . '-' .$i.'-'.$id_user. '-name-' . $file->getClientOriginalName();
@@ -182,6 +191,8 @@ class CommunicationController extends Controller
 				array_push($array_path, $path);
 			}elseif (isset($adjunto_ori[$i])) {
 				array_push($array_path, $adjunto_ori[$i]);
+			}else{
+				
 			}
 		}
 
@@ -194,6 +205,8 @@ class CommunicationController extends Controller
 		$communication->company_id = $company->id;
 		if(array_filter($request->adjunto) || array_filter($request->adjunto_ori)){
 			$communication->adjuntos = implode(",",array_filter ( $array_path) );
+		}else{
+			$communication->adjuntos = '';
 		}
         $communication->save();
         Session::flash('message', 'Nuevo comunicado ingresado correctamente');

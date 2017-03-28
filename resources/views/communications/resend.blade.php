@@ -99,7 +99,7 @@
                             <div class="form-group" id="correo">
                                 <label class="col-sm-3 control-label">Dirección de correo</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" name="correo" value="{{old('correo')}}">
+                                    <input type="text" class="form-control input-sm" name="correo" value="{{Auth::user()->company->email_prueba}}">
                                 </div>
                             </div>
 
@@ -161,7 +161,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button class="btn btn-success" type="submit">Enviar</button>
-                                    <button href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</button>
+                                    <a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
                                 </div>
                             </div>
 
