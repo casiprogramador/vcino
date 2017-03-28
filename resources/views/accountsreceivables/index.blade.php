@@ -50,13 +50,8 @@
                         </select>
                     </div>
                     <div class="col-sm-2 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline" name="gestion">
-                            <option value="todos">Gestión: Todas</option>
-                            <option value="2017">2017</option>
-							<option value="2016">2016</option>
-                            <option value="2016">2015</option>
-                            <option value="2014">2014</option>
-                        </select>
+
+						{{ Form::select('gestion',['todos'=>'Gestión: Todas']+$gestiones, old('gestion'), ['class' => 'form-control input-sm']) }}
                     </div>
                     <div class="col-sm-2 m-b-xs">
                         <select class="input-sm form-control input-s-sm inline" name="periodo">

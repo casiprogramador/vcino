@@ -13,6 +13,7 @@ use App\Accountsreceivable;
 use App\Sendalertpayment;
 use App\Contact;
 use App\Subject;
+use App\Gestion;
 use Mail;
 
 class AccountsReceivableController extends Controller
@@ -28,10 +29,12 @@ class AccountsReceivableController extends Controller
         $accountsreceivables = Accountsreceivable::where('company_id',$company->id );
 		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->lists('cuota','id')->all();
 		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$gestiones = Gestion::lists('nombre','nombre')->all();
 
         return view('accountsreceivables.index')
 		->with('properties',$properties)
 		->with('quotas',$quotas)
+		->with('gestiones',$gestiones)
 		->with('accountsreceivables',$accountsreceivables->get());
     }
 
@@ -203,8 +206,8 @@ class AccountsReceivableController extends Controller
 						'"'.$periodo.'" as periodo,'.
 						'importe as importe_por_cobrar,0 as importe_abonado,0 as cantidad,0 as cancelada, importe,tipo_importe'))
 				->get();
-		dd($quotas);
-		//$accountsreceivables = DB::table('accountsreceivables');
+
+		$accountsreceivables = DB::table('accountsreceivables');
 		
 		
 	}
@@ -220,10 +223,12 @@ class AccountsReceivableController extends Controller
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
 		$subjects = Subject::where('company_id',$company->id )->lists('nombre','nombre')->all();
+		$gestiones = Gestion::lists('nombre','nombre')->all();
 
 		return view('accountsreceivables.generatenotification')
 				->with('properties',$properties)
-				->with('subjects',$subjects);
+				->with('subjects',$subjects)
+				->with('gestiones',$gestiones);
 	}
 	
 	public function sendnotification(Request $request){
@@ -241,7 +246,7 @@ class AccountsReceivableController extends Controller
 					$correos = array();	
 					$destinatarios = array();	
 					$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->where('email','!=','')->get();
-					dd($contacts);
+
 					if(count($contacts)){
 						foreach ($contacts as $contact) {
 
