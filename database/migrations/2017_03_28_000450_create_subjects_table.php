@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommunicationsTable extends Migration
+class CreateSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class CreateCommunicationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('communications', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
-            $table->string('asunto');
-            $table->text('cuerpo');
-            $table->string('adjuntos',1000)->nullable();
-            $table->integer('company_id')->unsigned();
+			$table->string('nombre');
+			$table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
@@ -31,6 +28,6 @@ class CreateCommunicationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('communications');
+        Schema::drop('subjects');
     }
 }

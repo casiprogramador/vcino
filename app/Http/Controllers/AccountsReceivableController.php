@@ -12,6 +12,7 @@ use App\Quota;
 use App\Accountsreceivable;
 use App\Sendalertpayment;
 use App\Contact;
+use App\Subject;
 use Mail;
 
 class AccountsReceivableController extends Controller
@@ -218,66 +219,87 @@ class AccountsReceivableController extends Controller
 	public function generatenotification(){
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$subjects = Subject::where('company_id',$company->id )->lists('nombre','nombre')->all();
 
-		return view('accountsreceivables.generatenotification')->with('properties',$properties);
+		return view('accountsreceivables.generatenotification')
+				->with('properties',$properties)
+				->with('subjects',$subjects);
 	}
 	
 	public function sendnotification(Request $request){
 		$this->validate($request, [
             'sendalertpayment' => 'required'
         ]);
+		
 		$company = Auth::user()->company;
-		$sendalertpayments = Sendalertpayment::whereIn('id',$request->sendalertpayment)->get();
-		if(count($sendalertpayments)){
-			foreach ($sendalertpayments as $sendalertpayment) {
-				$correos = array();	
-				$destinatarios = array();	
-				$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->get();
-				if(count($contacts)){
-					foreach ($contacts as $contact) {
+		if($request->submit == "enviar"){
+		
+			
+			$sendalertpayments = Sendalertpayment::whereIn('id',$request->sendalertpayment)->get();
+			if(count($sendalertpayments)){
+				foreach ($sendalertpayments as $sendalertpayment) {
+					$correos = array();	
+					$destinatarios = array();	
+					$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->where('email','!=','')->get();
+					dd($contacts);
+					if(count($contacts)){
+						foreach ($contacts as $contact) {
 
-						$data = [
-							'nombre_remitente' => $company->nombre,
-							'email_remitente' => Auth::user()->email,
-							'cuerpo_remitente' => $request->remitente,	
-							'email_contancto' => $contact->email,
-							'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
-							'comunicado_asunto' => $sendalertpayment->asunto,
-							'sendalertpayment' => $sendalertpayment,
-							'logotipo' => $company->logotipo,
-							'formapago' => $company->forma_pago,
-							'correoempresa' => Auth::user()->email
-						  ];
-		
-						
-						Mail::send('emails.alertpayment',$data, function ($m) use ($data) {
-							$m->from($data['email_remitente'],$data['nombre_remitente']);
-							$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
-						});
-						if (Mail::failures()) {
-							$estado_envio = 0;
-						}else{
-							$correos[] = $data['email_contancto'];
-							$destinatarios[] = $data['nombre_contacto'];
-							
-							$estado_envio = 1;
-						}
-					}//end foreach contacts
-				}
-				$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
-				$sendalertpaymentUp->correos = implode(',', $correos);
-				$sendalertpaymentUp->destinatarios = implode(',', $destinatarios);
-				$sendalertpaymentUp->enviado = $estado_envio;	
-				$sendalertpaymentUp->fecha_envio = date('Y-m-d H:i:s');
-				$sendalertpaymentUp->save();
-			}//end foreach sendpayment
+							$data = [
+								'nombre_remitente' => $company->nombre,
+								'email_remitente' => Auth::user()->email,
+								'cuerpo_remitente' => $request->remitente,	
+								'email_contancto' => $contact->email,
+								'nombre_contacto'=> $contact->nombre.' '.$contact->apellido,
+								'comunicado_asunto' => $sendalertpayment->asunto,
+								'sendalertpayment' => $sendalertpayment,
+								'logotipo' => $company->logotipo,
+								'formapago' => $company->forma_pago,
+								'correoempresa' => Auth::user()->email
+							  ];
+
+
+							Mail::send('emails.alertpayment',$data, function ($m) use ($data) {
+								$m->from($data['email_remitente'],$data['nombre_remitente']);
+								$m->to($data['email_contancto'], $data['nombre_contacto'])->subject($data['comunicado_asunto']);
+							});
+							if (Mail::failures()) {
+								$estado_envio = 0;
+							}else{
+								$correos[] = $data['email_contancto'];
+								$destinatarios[] = $data['nombre_contacto'];
+
+								$estado_envio = 1;
+							}
+						}//end foreach contacts
+					}else{
+						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos');
+						return redirect()->route('transaction.accountsreceivable.registernotification');
+					}
+					$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
+					$sendalertpaymentUp->correos = implode(',', $correos);
+					$sendalertpaymentUp->destinatarios = implode(',', $destinatarios);
+					$sendalertpaymentUp->enviado = $estado_envio;	
+					$sendalertpaymentUp->fecha_envio = date('Y-m-d H:i:s');
+					$sendalertpaymentUp->save();
+				}//end foreach sendpayment
+
+
+
+			}
+
+			return redirect()->route('transaction.accountsreceivable.registernotification');
 			
+		}elseif($request->submit == "borrar"){
+			foreach ($request->sendalertpayment as $sendalertpayment) {
+				$sendalertpayment = Sendalertpayment::find($sendalertpayment);
+				$sendalertpayment->delete();
+			}
 			
-			
+			return redirect()->route('transaction.accountsreceivable.send');
+		}else{
+			dd("imprimir");
 		}
-		
-		return redirect()->route('transaction.accountsreceivable.registernotification');
-		
 	}
 	
 	public function registernotification(){
@@ -291,9 +313,9 @@ class AccountsReceivableController extends Controller
             'gestion' => 'required',
             'periodo' => 'required',
             'propiedad' => 'required',
-			'asunto' => 'required',
-			'nota' => 'required'
+			'asunto' => 'required'
         ]);
+		
 		
 		
 		
@@ -329,10 +351,11 @@ class AccountsReceivableController extends Controller
 			$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
+				->join('categories', 'categories.id', '=', 'quotas.category_id')
 				->leftJoin('contacts', 'contacts.property_id', '=', 'accountsreceivables.property_id')	
 				->where('gestion','<=',$request->gestion)
 				->where('periodo','<=',$request->periodo)
-				->where('property_id',$request->propiedad)	
+				->where('accountsreceivables.property_id',$request->propiedad)	
 				->where('correspondencia','like','%Cobranzas%')	
 				->where('cancelada','0')	
 				->select(

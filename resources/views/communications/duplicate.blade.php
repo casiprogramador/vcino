@@ -77,14 +77,14 @@
 
 					<div class="hr-line-dashed"></div>
 
-					<div class="form-group">
+										<div class="form-group">
 						<label class="col-sm-2 control-label">Adjuntos</label>
 						<div class="col-sm-8">
 							<?php
 								$adjuntos_array = array_filter(explode(",",$communication->adjuntos));
 							?>
 
-							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
+							<div  id="adjunto1" class="fileinput input-group {{isset($adjuntos_array[0]) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
 									<span class="fileinput-filename">{{ (isset($adjuntos_array[0]) ) ? MenuRoute::filename($adjuntos_array[0]) : "" }}</span>
@@ -93,14 +93,14 @@
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
-									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[0]) ) ? $adjuntos_array[0] : '' }}">
+									<input id="adjunto-ori1" type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[0]) ) ? $adjuntos_array[0] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
 
 
 							<!--    Para el caso de mas de un attach        -->
-							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
+							<div id="adjunto2" class="fileinput input-group {{isset($adjuntos_array[1]) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
 									<span class="fileinput-filename">{{ (isset($adjuntos_array[1]) ) ? MenuRoute::filename($adjuntos_array[1]) : "" }}</span>
@@ -109,12 +109,12 @@
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
-									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[1]) ) ? $adjuntos_array[1] : '' }}">
+									<input id="adjunto-ori2" type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[1]) ) ? $adjuntos_array[1] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
 							<!--    Para el caso de mas de un attach        -->
-							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
+							<div id="adjunto3" class="fileinput input-group {{isset($adjuntos_array[2]) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
 									<i class="glyphicon glyphicon-file fileinput-exists"></i> 
 									<span class="fileinput-filename">{{ (isset($adjuntos_array[2]) ) ? MenuRoute::filename($adjuntos_array[2]) : "" }}</span>
@@ -123,7 +123,7 @@
 									<span class="fileinput-new">Seleccionar archivo...</span>
 									<span class="fileinput-exists">Cambiar</span>
 									<input type="hidden" value=""><input type="file" name="adjunto[]">
-									<input type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[2]) ) ? $adjuntos_array[2] : '' }}">
+									<input id="adjunto-ori3" type="hidden" name="adjunto_ori[]" value="{{ (isset($adjuntos_array[2]) ) ? $adjuntos_array[2] : '' }}">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
@@ -164,6 +164,15 @@
 			    ['view', ['codeview']],
 			    ['help', ['help']]
 			],
+		});
+		$('#adjunto1').on('clear.bs.fileinput', function(event) {
+			$('#adjunto-ori1').val('');
+		});
+		$('#adjunto2').on('clear.bs.fileinput', function(event) {
+			$('#adjunto-ori2').val('');
+		});
+		$('#adjunto3').on('clear.bs.fileinput', function(event) {
+			$('#adjunto-ori3').val('');
 		});
 	});
 

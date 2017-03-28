@@ -176,28 +176,36 @@
                                         <div class="form-group{{ $errors->has('fotografia_principal') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía principal</label>
                                             <div class="col-sm-9">
+												<a href="{{ URL::asset($installation->fotografia_principal)}}" target="_blank">
                                                 <img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="100">
+												</a>
                                             </div>
                                         </div>
 
                                         <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #1</label>
                                             <div class="col-sm-9">
+												<a href="{{ URL::asset($installation->fotografia_1)}}" target="_blank">
                                                 <img src="{{ $installation->fotografia_1 }}" class="img-responsive" width="100">
+												</a>
                                             </div>
                                         </div>
 
                                         <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #2</label>
                                             <div class="col-sm-9">
+												<a href="{{ URL::asset($installation->fotografia_2)}}" target="_blank">
                                                 <img src="{{ $installation->fotografia_2 }}" class="img-responsive" width="100">
+												</a>
                                             </div>
                                         </div>
 
                                         <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #3</label>
                                             <div class="col-sm-9">
+												<a href="{{ URL::asset($installation->fotografia_3)}}" target="_blank">
                                                 <img src="{{ $installation->fotografia_3 }}" class="img-responsive" width="100">
+												</a>
                                             </div>
                                         </div>
 

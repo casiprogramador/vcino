@@ -7,13 +7,16 @@
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
             </li>
+            <li>
+                <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
+            </li>
             <li class="active">
-                <strong>Enviar aviso de cobranza</strong>
+                <strong>Generar avisos de cobranza</strong>
             </li>
         </ol>
     </div>
@@ -26,7 +29,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Enviar aviso de cobranza</h5>
+                    <h5 style="padding-top: 2px;">Generar avisos de cobranza</h5>
                 </div>
 
                 <div class="ibox-content">
@@ -48,11 +51,12 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Asunto</label>
                         <div class="col-sm-5">
-                            <select class="form-control input-sm" name="asunto">
-                                <option value="Aviso de cobranza">Aviso de cobranza</option>
-                                <option value="Recordatorio aviso de cobranza">Recordatorio aviso de cobranza</option>
-                                <option value="Propiedad en mora">Propiedad en mora</option>
-                            </select>
+                            {{ Form::select('asunto',$subjects, old('asunto'), ['class' => 'form-control input-sm']) }}
+							@if ($errors->has('asunto'))
+							<span class="help-block">
+								<strong>{{ $errors->first('asunto') }}</strong>
+							</span>
+							@endif
                         </div>
                     </div>
 
@@ -95,7 +99,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <button class="btn btn-success" type="submit">Generar lista de distribución</button>
+                            <button class="btn btn-success" type="submit" style="margin-right: 10px;">Generar avisos de cobranza</button>
 							<a href="{{ route('transaction.accountsreceivable.send') }}" class="btn btn-white" >Cancelar</a>
                         </div>
                     </div>
