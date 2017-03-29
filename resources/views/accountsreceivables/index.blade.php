@@ -34,7 +34,7 @@
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Lista de cuotas por cobrar</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px;"> Nueva cuota </a>
+                        <a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 10px;"> Nueva cuota </a>
 
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                     <div class="col-sm-2 m-b-xs">
                         {{ Form::select('cuota',['todos'=>'Cuota: Todas']+$quotas, old('cutas'), ['class' => 'form-control input-sm']) }}
                     </div>
-					<button class="btn btn-white" type="submit">Buscar</button>
+					<button class="btn btn-white btn-sm" type="submit">Buscar</button>
 					{!! Form::close() !!}
                 </div>
                 <div class="row">
@@ -114,7 +114,7 @@
 											<i class="fa fa-lg fa-check-square text-primary"></i>
 										</td>
 										<td style="vertical-align:middle; text-align:right;">
-											<div class="btn-group">
+											<div class="btn-group" style="width: 69px;">
 												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
 													<i class="fa fa-eye"></i>
 												</a>
@@ -126,6 +126,13 @@
 												</a>
 											</div>
 									   </td>
+                                        <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group" style="width: 21px;">
+                                            <a class="btn btn-default btn-xs disabled">
+                                               <i class="fa fa-trash"></i>
+                                            </a>
+                                            </div>
+                                       </td>
 									</tr>
 								@else
 									<tr>
@@ -139,7 +146,7 @@
 											<i class="fa fa-lg fa-square-o text-muted"></i>
 										</td>
 										<td style="vertical-align:middle; text-align:right;">
-											<div class="btn-group">
+											<div class="btn-group" style="width: 69px;">
 												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
 													<i class="fa fa-eye"></i>
 												</a>
@@ -151,12 +158,12 @@
 												</a>
 											</div>
 									   </td>
-									   <td style="text-align:right;">
-
-										   {!! Form::open(['route' => ['transaction.accountsreceivable.destroy', $accountsreceivable->id], 'method' => 'delete']) !!}
-					{!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar esta cuota por pagar?')"]) !!}
-					{!! Form::close() !!}
-										   
+									   <td style="vertical-align:middle; text-align:right;">
+                                            <div class="btn-group" style="width: 21px;">
+    										   {!! Form::open(['route' => ['transaction.accountsreceivable.destroy', $accountsreceivable->id], 'method' => 'delete']) !!}
+    					{!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('¿Está seguro de eliminar esta cuota por pagar?')"]) !!}
+    					{!! Form::close() !!}
+                                            </div>
 									   </td>
 									</tr>
 								@endif

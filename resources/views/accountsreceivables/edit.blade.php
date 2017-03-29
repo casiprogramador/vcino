@@ -9,7 +9,10 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                <a href="{{ route('transaction.accountsreceivable.index') }}">Lista de cuotas por cobrar</a>
+                Transacciones
+            </li>
+            <li>
+                <a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
             </li>
             <li class="active">
                 <strong>Editar cuota por cobrar</strong>
@@ -157,9 +160,7 @@
 								</span>
 								@endif
                             </div>
-                        </div>
-
-                        
+                        </div>                        
                         
 
                         <div class="hr-line-dashed"></div>

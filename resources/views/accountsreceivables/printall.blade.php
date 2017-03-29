@@ -31,8 +31,9 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content p-xl" id="printableArea">
+            <div class="ibox float-e-margins" id="printableArea">
+				@foreach($sendalertpayments as $sendalertpayment)
+                <div class="ibox-content p-xl">
                     <div class="row">
                         <div class="table-responsive">
                         <table class="table">
@@ -213,6 +214,8 @@
                     </table>
 
                 </div>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				@endforeach
             </div>
 
         </div>
