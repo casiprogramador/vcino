@@ -9,10 +9,13 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                <a href="{{ route('transaction.accountsreceivable.index') }}">Lista de cuotas por cobrar</a>
+                Transacciones
+            </li>
+            <li>
+                <a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
             </li>
             <li class="active">
-                <strong>Editar cuota por cobrar</strong>
+                <strong>Copiar cuota por cobrar</strong>
             </li>
         </ol>
     </div>
@@ -25,7 +28,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Editar cuota por cobrar</h5>
+                    <h5 style="padding-top: 2px;">Copiar cuota por cobrar</h5>
                 </div>
 
                 <div class="ibox-content">

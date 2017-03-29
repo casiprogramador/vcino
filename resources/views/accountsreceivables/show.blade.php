@@ -9,7 +9,10 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                <a href="{{ route('transaction.accountsreceivable.index') }}">Lista de cuotas por cobrar</a>
+                Transacciones
+            </li>
+            <li>
+                <a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
             </li>
             <li class="active">
                 <strong>Nueva cuota por cobrar</strong>
@@ -160,11 +163,9 @@
                         </div>
 
                         <div class="hr-line-dashed"></div>
-                        
-                        <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                 <a href="{{ route('transaction.accountsreceivable.index') }}" class="btn btn-success" >Atras</a>
+                                 <a href="{{ route('transaction.accountsreceivable.index') }}" class="btn btn-success" >Volver</a>
                             </div>
                         </div>
 

@@ -39,7 +39,7 @@ class QuotaController extends Controller
     {
         $company = Auth::user()->company;
         $categories = Category::where('company_id',$company->id )->where('tipo_categoria', 'Ingreso')->lists('nombre','id');
-        $typeProperty = TypeProperty::where('company_id',$company->id )->lists('tipo_propiedad','id');
+        $typeProperty = TypeProperty::where('company_id',$company->id )->lists('tipo_propiedad','id')->all();
         return view('quotes.create')->with('categories',$categories)->with('typeProperties',$typeProperty);
     }
 
@@ -62,19 +62,37 @@ class QuotaController extends Controller
 
         $company = Auth::user()->company;
         $activa = (empty($request->activa) ? '0' : $request->activa);
+		if($request->type_property == 'todos'){
+			$typeProperties = TypeProperty::all();
+			foreach ($typeProperties as $typeProperty){
 
-        $quota = new Quota();
-        $quota->cuota = $request->cuota;
-        $quota->frecuencia_pago = $request->frecuencia_pago;
-        $quota->tipo_importe = $request->tipo_importe;
-        $quota->importe = $request->importe;
-        $quota->notas = $request->notas;
-        $quota->category_id = $request->category;
-        $quota->type_property_id = $request->type_property;
-        $quota->activa = $activa;
-        $quota->company_id = $company->id;
+				$quota = new Quota();
+				$quota->cuota = $request->cuota;
+				$quota->frecuencia_pago = $request->frecuencia_pago;
+				$quota->tipo_importe = $request->tipo_importe;
+				$quota->importe = $request->importe;
+				$quota->notas = $request->notas;
+				$quota->category_id = $request->category;
+				$quota->type_property_id = $typeProperty->id;
+				$quota->activa = $activa;
+				$quota->company_id = $company->id;
+				$quota->save();
+			}
+			
+		}else{
+			$quota = new Quota();
+			$quota->cuota = $request->cuota;
+			$quota->frecuencia_pago = $request->frecuencia_pago;
+			$quota->tipo_importe = $request->tipo_importe;
+			$quota->importe = $request->importe;
+			$quota->notas = $request->notas;
+			$quota->category_id = $request->category;
+			$quota->type_property_id = $request->type_property;
+			$quota->activa = $activa;
+			$quota->company_id = $company->id;
 
-        $quota->save();
+			$quota->save();
+		}
         Session::flash('message', 'Nueva cuota registrada correctamente.');
         return redirect()->route('config.quota.index');
     }

@@ -248,6 +248,7 @@ class AccountsReceivableController extends Controller
 					$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->where('email','!=','')->get();
 
 					if(count($contacts)){
+						
 						foreach ($contacts as $contact) {
 
 							$data = [
@@ -279,7 +280,7 @@ class AccountsReceivableController extends Controller
 						}//end foreach contacts
 					}else{
 						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos');
-						return redirect()->route('transaction.accountsreceivable.registernotification');
+						return redirect()->route('transaction.accountsreceivable.send');
 					}
 					$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
 					$sendalertpaymentUp->correos = implode(',', $correos);
@@ -292,7 +293,6 @@ class AccountsReceivableController extends Controller
 
 
 			}
-
 			return redirect()->route('transaction.accountsreceivable.registernotification');
 			
 		}elseif($request->submit == "borrar"){
@@ -303,7 +303,12 @@ class AccountsReceivableController extends Controller
 			
 			return redirect()->route('transaction.accountsreceivable.send');
 		}else{
-			dd("imprimir");
+			//dd("imprimir");
+			$company = Auth::user()->company;
+			$sendalertpayments = Sendalertpayment::whereIn('id',$request->sendalertpayment)->get();
+			return view('accountsreceivables.printall')
+			->with('sendalertpayments',$sendalertpayments);
+
 		}
 	}
 	
@@ -320,9 +325,6 @@ class AccountsReceivableController extends Controller
             'propiedad' => 'required',
 			'asunto' => 'required'
         ]);
-		
-		
-		
 		
 		$company = Auth::user()->company;
 
@@ -352,17 +354,18 @@ class AccountsReceivableController extends Controller
 				->get();
 		
 		
+		
 		}else{
+			
+			
 			$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
-				->join('categories', 'categories.id', '=', 'quotas.category_id')
-				->leftJoin('contacts', 'contacts.property_id', '=', 'accountsreceivables.property_id')	
+				->join('categories', 'categories.id', '=', 'quotas.category_id')	
 				->where('gestion','<=',$request->gestion)
 				->where('periodo','<=',$request->periodo)
 				->where('accountsreceivables.property_id',$request->propiedad)	
-				->where('correspondencia','like','%Cobranzas%')	
-				->where('cancelada','0')	
+				->where('cancelada','0')
 				->select(
 						array('properties.id as id','accountsreceivables.id as accountsreceivable_id', 'nro as propiedad', 'gestion','periodo','fecha_vencimiento','importe_por_cobrar','accountsreceivables.property_id','quota_id','user_id','cuota','frecuencia_pago','tipo_importe',
 							DB::raw("GROUP_CONCAT(accountsreceivables.id SEPARATOR ',') as id_cuenta_pagar,
@@ -376,12 +379,19 @@ class AccountsReceivableController extends Controller
 									 sum(importe_por_cobrar) as importe_total")
 							)
 						)
-				->groupBy('nro')				
+				->groupBy('nro')
+				->groupBy('properties.id')
 				->get();
+
 		}
-		
+		//
 		foreach ($properties as $propertypayment){
-		 
+			$sendalertpayments_deletes = Sendalertpayment::where('property_id',$propertypayment->id)
+					->where('enviado',0)->get();
+			foreach ($sendalertpayments_deletes as $sendalertpayments_delete) {
+				$sendalertpayment_group = Sendalertpayment::find($sendalertpayments_delete->id);
+				$sendalertpayment_group->delete();
+			}
 			$sendalertpayment = new Sendalertpayment();
 			$sendalertpayment->asunto = $request->asunto;
 			$sendalertpayment->nota = $request->nota;
@@ -412,14 +422,8 @@ class AccountsReceivableController extends Controller
     {
 		$company = Auth::user()->company;
         $sendalertpayment = Sendalertpayment::find($id);
-		$logotipo = $company->logotipo;
-		$formapago = $company->forma_pago;
-		$correoempresa = Auth::user()->email;
         return view('accountsreceivables.print')
-		->with('sendalertpayment',$sendalertpayment)
-		->with('logotipo',$logotipo)
-		->with('formapago',$formapago)
-		->with('correoempresa',$correoempresa);
+		->with('sendalertpayment',$sendalertpayment);
     }
 	
 	public function search(Request $request){

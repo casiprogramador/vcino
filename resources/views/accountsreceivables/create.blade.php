@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="#">Lista de cuotas por cobrar</a>
+                <a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
             </li>
             <li class="active">
                 <strong>Nueva cuota por cobrar</strong>
@@ -157,8 +157,8 @@
 						<label class="col-sm-3 control-label">Cancelada</label>
 						<div class="col-sm-1">
 							<select class="form-control input-sm" name="cancelada">
-								<option value="1">Si</option>
-								<option value="0" selected="">No</option>
+								<option value="1">SI</option>
+								<option value="0" selected="">NO</option>
 							</select>
 							@if ($errors->has('cancelada'))
 							<span class="help-block">

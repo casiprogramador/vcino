@@ -61,7 +61,7 @@
                                             <div class="form-group{{ $errors->has('type_property') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Tipo propiedad</label>
                                                 <div class="col-sm-5">
-                                                    {{ Form::select('type_property',$typeProperties,old('type_property'), ['class' => 'form-control input-sm']) }}
+                                                    {{ Form::select('type_property',['todos'=>'Todos']+$typeProperties,old('type_property'), ['class' => 'form-control input-sm']) }}
                                                     @if ($errors->has('type_property'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('type_property') }}</strong>

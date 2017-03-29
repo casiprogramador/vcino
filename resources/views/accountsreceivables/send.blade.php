@@ -205,21 +205,28 @@
 				}
 			});
 
-			$( "#form-send-alertpayment" ).submit(function( event ) {
-				var value = 0;
+			$( "#form-send-alertpayment" ).on("click", ":submit", function(e){
+				
+				var value_submit = $( this ).val();
+				console.log(value_submit);
+				if(value_submit == "enviar"){
+					var value = 0;
 
-				function barAnim(){
-					value += 5;
-					$( ".progress-bar" ).css( "width", value + "%" ).attr( "aria-valuenow", value );
-					$("#progress-text").text(value + "% Completado");
-					if ( value == 25 || value == 55 || value == 85 ) { 
-						return setTimeout(barAnim, 1000); 
+					function barAnim(){
+						value += 5;
+						$( ".progress-bar" ).css( "width", value + "%" ).attr( "aria-valuenow", value );
+						$("#progress-text").text(value + "% Completado");
+						if ( value == 25 || value == 55 || value == 85 ) { 
+							return setTimeout(barAnim, 1000); 
+						}
+						return value >= 100 || setTimeout(barAnim, 50);
 					}
-					return value >= 100 || setTimeout(barAnim, 50);
-				}
 
-				setTimeout(barAnim, 50);
+					setTimeout(barAnim, 50);
+				}
+				
 				$( "#form-send-communication" ).submit();
+				//e.preventDefault();
 			 });
         });
     </script>
