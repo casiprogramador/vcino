@@ -245,7 +245,7 @@ class AccountsReceivableController extends Controller
 				foreach ($sendalertpayments as $sendalertpayment) {
 					$correos = array();	
 					$destinatarios = array();	
-					$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->where('email','!=','')->get();
+					$contacts = Contact::where('company_id',$company->id)->where('property_id',$sendalertpayment->property_id)->where('correspondencia','like','%Cobranzas%')->where('email','!=','')->where('activa',1)->get();
 
 					if(count($contacts)){
 						
