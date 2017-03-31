@@ -41,10 +41,12 @@ class AccountsReceivableController extends Controller
     public function create()
     {
 		$company = Auth::user()->company;
-		$quotas = Quota::where('company_id',$company->id );
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 );
+		$gestiones = Gestion::lists('nombre','nombre')->all();
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
         return view('accountsreceivables.create')
 		->with('properties',$properties)
+		->with('gestiones',$gestiones)
 		->with('quotas',$quotas->get());
     }
 	
@@ -62,41 +64,35 @@ class AccountsReceivableController extends Controller
 			'propiedad' => 'required',
         ]);
 		$company = Auth::user()->company;
-		if($request->propiedad == 'todas'){
-			$properties = Property::where('company_id',$company->id )->get();
-			
-			foreach($properties as $property){
+		$year=$request->gestion;
+		$month=$request->periodo;
+		$date = new \DateTime($year.'-'.$month.'-'.'01');
+		
+			//Validar propiedad, gestion, periodo, cuota
+			$accountsreceivable_validate = Accountsreceivable::where('gestion',$request->gestion)
+					->where('periodo',$request->periodo)
+					->where('property_id',$request->propiedad)
+					->where('quota_id',$request->cuota)->get();
+			if(count($accountsreceivable_validate)){
+				Session::flash('message', 'La cuota por pagar ya fue creada, No se ingreso registros nuevos.');
+				return redirect()->route('transaction.accountsreceivable.index');
+			}else{
 				$accountsreceivable = new Accountsreceivable();
 				$accountsreceivable->gestion = $request->gestion;
 				$accountsreceivable->periodo = $request->periodo;
+				$accountsreceivable->fecha_gestion_periodo = $date->format('Y-m-d');
 				$accountsreceivable->fecha_vencimiento = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha_vencimiento)));
 				$accountsreceivable->cantidad = '0';
 				$accountsreceivable->importe_por_cobrar = $request->importe_por_cobrar;
 				$accountsreceivable->importe_abonado = $request->importe_abonado;
 				$accountsreceivable->cancelada = $request->cancelada;
 				$accountsreceivable->quota_id = $request->cuota;
-				$accountsreceivable->property_id = $property->id;
+				$accountsreceivable->property_id = $request->propiedad;
 				$accountsreceivable->company_id = $company->id;
 				$accountsreceivable->user_id = Auth::user()->id;
 				$accountsreceivable->save();
 			}
-			
-		}else{
 
-			$accountsreceivable = new Accountsreceivable();
-			$accountsreceivable->gestion = $request->gestion;
-			$accountsreceivable->periodo = $request->periodo;
-			$accountsreceivable->fecha_vencimiento = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha_vencimiento)));
-			$accountsreceivable->cantidad = '0';
-			$accountsreceivable->importe_por_cobrar = $request->importe_por_cobrar;
-			$accountsreceivable->importe_abonado = $request->importe_abonado;
-			$accountsreceivable->cancelada = $request->cancelada;
-			$accountsreceivable->quota_id = $request->cuota;
-			$accountsreceivable->property_id = $request->propiedad;
-			$accountsreceivable->company_id = $company->id;
-			$accountsreceivable->user_id = Auth::user()->id;
-			$accountsreceivable->save();
-		}
         Session::flash('message', 'Nueva cuota por cobrar ingresada correctamente.');
         return redirect()->route('transaction.accountsreceivable.index');
 		 
@@ -130,10 +126,14 @@ class AccountsReceivableController extends Controller
 
 		
 		$company = Auth::user()->company;
+		$year=$request->gestion;
+		$month=$request->periodo;
+		$date = new \DateTime($year.'-'.$month.'-'.'01');
 		 
 		$accountsreceivable = Accountsreceivable::find($id);
 		$accountsreceivable->gestion = $request->gestion;
 		$accountsreceivable->periodo = $request->periodo;
+		$accountsreceivable->fecha_gestion_periodo = $date->format('Y-m-d');
 		$accountsreceivable->fecha_vencimiento = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha_vencimiento)));
 		$accountsreceivable->cantidad = '0';
 		$accountsreceivable->importe_por_cobrar = $request->importe_por_cobrar;
@@ -184,8 +184,53 @@ class AccountsReceivableController extends Controller
 	
 	public function generate()
     {
-        return view('accountsreceivables.generate');
+		$gestiones = Gestion::lists('nombre','nombre')->all();
+        return view('accountsreceivables.generate')->with('gestiones',$gestiones);
     }
+	
+	public function storegenerate(Request $request){
+		$this->validate($request, [
+            'gestion' => 'required',
+            'periodo' => 'required',
+        ]);
+		$company = Auth::user()->company;
+		$year=$request->gestion;
+		$month=$request->periodo;
+		$date = new \DateTime($year.'-'.$month.'-'.'01');
+		
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->get();
+		$properties = Property::where('company_id',$company->id )->get();
+		$fecha_vencimiento = date('Y-m-d', strtotime($date->format('Y-m-d').'+ '.$company->dias_mora.' days'));
+		foreach($properties as $property){	
+			foreach($quotas as $quota){
+				$accountsreceivable_validate = Accountsreceivable::where('gestion',$request->gestion)
+					->where('periodo',$request->periodo)
+					->where('property_id',$property->id)
+					->where('quota_id',$quota->id)->get();
+				if(count($accountsreceivable_validate)){
+					//Session::flash('message', 'Algunas cuotas ya fueron ingresadas.');
+				}else{
+					$accountsreceivable = new Accountsreceivable();
+					$accountsreceivable->gestion = $request->gestion;
+					$accountsreceivable->periodo = $request->periodo;
+					$accountsreceivable->fecha_gestion_periodo = $date->format('Y-m-d');
+					$accountsreceivable->fecha_vencimiento = $fecha_vencimiento;
+					$accountsreceivable->cantidad = '0';
+					$accountsreceivable->importe_por_cobrar = $quota->importe;
+					$accountsreceivable->importe_abonado = '0';
+					$accountsreceivable->cancelada = '0';
+					$accountsreceivable->quota_id = $quota->id;
+					$accountsreceivable->property_id = $property->id;
+					$accountsreceivable->company_id = $company->id;
+					$accountsreceivable->user_id = Auth::user()->id;
+					$accountsreceivable->save();
+					
+				}
+			}
+		}
+		Session::flash('message', 'Nuevas cuotas por cobrar ingresadas correctamente.');
+        return redirect()->route('transaction.accountsreceivable.index');
+	}
 	
 	public function searchgenerate(Request $request){
 		$this->validate($request, [
@@ -327,14 +372,17 @@ class AccountsReceivableController extends Controller
         ]);
 		
 		$company = Auth::user()->company;
+		$year=$request->gestion;
+		$month=$request->periodo;
+		$date_gestion_periodo = new \DateTime($year.'-'.$month.'-'.'02');
 
 		if($request->propiedad == 'todas'){
 		$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
 				->join('categories', 'categories.id', '=', 'quotas.category_id')	
-				->where('gestion','<=',$request->gestion)
-				->where('periodo','<=',$request->periodo)
+				//->where('gestion','<=',$request->gestion)
+				//->where('periodo','<=',$request->periodo)
 				->where('cancelada','0')
 				->select(
 						array('properties.id as id','accountsreceivables.id as accountsreceivable_id', 'nro as propiedad', 'gestion','periodo','fecha_vencimiento','importe_por_cobrar','accountsreceivables.property_id','quota_id','user_id','cuota','frecuencia_pago','tipo_importe',
@@ -362,8 +410,8 @@ class AccountsReceivableController extends Controller
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
 				->join('categories', 'categories.id', '=', 'quotas.category_id')	
-				->where('gestion','<=',$request->gestion)
-				->where('periodo','<=',$request->periodo)
+				//->where('gestion','<=',$request->gestion)
+				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
 				->where('accountsreceivables.property_id',$request->propiedad)	
 				->where('cancelada','0')
 				->select(

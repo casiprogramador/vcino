@@ -28,48 +28,60 @@
                     <h5 style="padding-top: 2px;">Generar cuotas por cobrar</h5>
                 </div>
 
-                <div class="ibox-content">
-                    {!! Form::open(array('route' => 'transaction.accountsreceivable.searchgenerate', 'class' => 'form-horizontal')) !!}
+                 <div class="ibox-content">
+					{!! Form::open(array('route' => 'transaction.accountsreceivable.storegenerate', 'class' => 'form-horizontal')) !!}
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Gestión</label>
-                            <div class="col-sm-2">
-                                <select class="form-control input-sm" name="gestion">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                </select>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Periodo</label>
-                            <div class="col-sm-3">
-                                <select class="form-control input-sm" name="periodo">
-                                    <option value="1">Enero</option>
-                                    <option value="2">Febrero</option>
-                                    <option value="3">Marzo</option>
-                                    <option value="4">Abril</option>
-                                    <option value="5">Mayo</option>
-                                    <option value="6">Junio</option>
-                                    <option value="7">Julio</option>
-                                    <option value="8">Agosto</option>
-                                    <option value="9">Septiembre</option>
-                                    <option value="10">Octubre</option>
-                                    <option value="11">Noviembre</option>
-                                    <option value="12">Diciembre</option>
-                                </select>
-                            </div>
-                        </div>
+					<div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
+						<label class="col-sm-3 control-label">Gestión</label>
+						<div class="col-sm-2">
+							{{ Form::select('gestion',$gestiones, old('gestion'), ['class' => 'form-control input-sm']) }}
+							@if ($errors->has('gestion'))
+							<span class="help-block">
+								<strong>{{ $errors->first('gestion') }}</strong>
+							</span>
+							@endif
+						</div>
+					</div>
 
-                        <div class="hr-line-dashed"></div>
-                        
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button class="btn btn-success" type="submit">Generar cuotas por cobrar</button>
-                            </div>
-                        </div>
-					{!! Form::close() !!}
+					<div class="form-group{{ $errors->has('periodo') ? ' has-error' : '' }}">
+						<label class="col-sm-3 control-label">Periodo</label>
+						<div class="col-sm-2">
+							{{ Form::select('periodo',
+							array(
+							'1' => 'Enero',
+							'2' => 'Febrero',
+							'3' => 'Marzo',
+							'4' => 'Abril',
+							'5' => 'Mayo',
+							'6' => 'Junio',
+							'7' => 'Julio',
+							'8' => 'Agosto',
+							'9' => 'Septiembre',
+							'10' => 'Octubre',
+							'11' => 'Noviembre',
+							'12' => 'Diciembre',
+							),old('periodo'),
+							['class' => 'form-control input-sm']) }}
+							@if ($errors->has('periodo'))
+							<span class="help-block">
+								<strong>{{ $errors->first('periodo') }}</strong>
+							</span>
+							@endif
+						</div>
+					</div>
+
+					<div class="hr-line-dashed"></div>
+
+					<div class="hr-line-dashed"></div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<button class="btn btn-success" type="submit">Guardar</button>
+							<a href="{{ route('transaction.accountsreceivable.index') }}" class="btn btn-white" >Cancelar</a>
+						</div>
+					</div>
+
+                    {!! Form::close() !!}
 
                 </div>
             </div>

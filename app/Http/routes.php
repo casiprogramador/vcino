@@ -81,6 +81,10 @@ Route::group(['prefix' => 'transaction'], function () {
         'as' => 'transaction.accountsreceivable.searchgenerate', 'uses' => 'AccountsReceivableController@searchgenerate'
     ]);
 	
+	Route::post('/accountsreceivable/storegenerate', [
+        'as' => 'transaction.accountsreceivable.storegenerate', 'uses' => 'AccountsReceivableController@storegenerate'
+    ]);
+	
 	Route::get('/accountsreceivable/send', [
         'as' => 'transaction.accountsreceivable.send', 'uses' => 'AccountsReceivableController@send'
     ]);

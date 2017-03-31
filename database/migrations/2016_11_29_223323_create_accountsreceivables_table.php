@@ -16,6 +16,7 @@ class CreateAccountsreceivablesTable extends Migration
             $table->increments('id');
 			$table->integer('gestion');
 			$table->integer('periodo');
+			$table->date('fecha_gestion_periodo')->nullable();
 			$table->date('fecha_vencimiento');
 			$table->decimal('cantidad', 10, 2);
 			$table->decimal('importe_por_cobrar', 10, 2);
