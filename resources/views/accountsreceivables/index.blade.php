@@ -33,8 +33,10 @@
             <div class="ibox">
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Lista de cuotas por cobrar</h5>
+					
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 10px;"> Nueva cuota </a>
+                        <a href="{{ route('transaction.accountsreceivable.generate') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Generar Cuotas" data-original-title="Generar Cuotas" style="margin-right: 10px;">Generar Cuotas</a>
+						<a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo cuota" data-original-title="Nuevo cuota por cobrar" style="margin-right: 10px;"> Nueva cuota </a>
 
                     </div>
                 </div>
