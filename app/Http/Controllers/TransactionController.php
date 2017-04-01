@@ -19,6 +19,9 @@ class TransactionController extends Controller
 	
     public function anular(Request $request){
 		
+		$transaction = Transaction::find($request->id_transaction);
+		$transaction->anulada = '1';
+		$transaction->save();
 		
 		if(!empty($request->id_collection)){
 			$collection= Collection::find($request->id_collection);
@@ -30,9 +33,7 @@ class TransactionController extends Controller
 			$transaction->anulada = '1';
 			$transaction->save();
 		}
-		$transaction = Transaction::find($request->id_transaction);
-		$transaction->anulada = '1';
-		$transaction->save();
+		
 		return redirect()->route('transaction.transfer.index');
 	}
 	
