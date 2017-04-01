@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use App\Collection;
+use App\Accountsreceivable;
 use App\Http\Requests;
 use DB;
 class TransactionController extends Controller
@@ -16,14 +18,21 @@ class TransactionController extends Controller
     }
 	
     public function anular(Request $request){
-		$transaction = Transaction::find($request->id_transaction);
-		$transaction->anulada = '1';
-		$transaction->save();
+		
+		
+		if(!empty($request->id_collection)){
+			$collection= Collection::find($request->id_collection);
+			$quotes = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->update(['cancelada' => '0']);
+			return redirect()->route('transaction.collection.index');
+		}
 		if(!empty($request->id_transaction_destino)){
 			$transaction = Transaction::find($request->id_transaction_destino);
 			$transaction->anulada = '1';
 			$transaction->save();
 		}
+		$transaction = Transaction::find($request->id_transaction);
+		$transaction->anulada = '1';
+		$transaction->save();
 		return redirect()->route('transaction.transfer.index');
 	}
 	
