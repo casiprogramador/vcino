@@ -321,7 +321,7 @@ class ContactController extends Controller
 	//AJAX
 	public function contactbyproperty($property_id){
 		$company = Auth::user()->company;
-		$contacts = Contact::where('company_id',$company->id )->where('property_id',$property_id)->get();
+		$contacts = Contact::where('company_id',$company->id )->where('property_id',$property_id)->where('activa',1)->get();
 		$contacts = $contacts->lists('FullName','id');
 		return response()->json(['success' => true, 'contacts' => $contacts]);
 	}

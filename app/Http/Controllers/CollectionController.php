@@ -97,6 +97,7 @@ class CollectionController extends Controller
 		$transaction->collection()->save($collection);
 		
 		//$collection->id;
+		Session::flash('message', 'Transacción registrada correctamente.');
 		return redirect()->route('transaction.collection.show', [$collection->id]);
         
     }
@@ -110,9 +111,10 @@ class CollectionController extends Controller
     public function show($id)
     {
 		$company = Auth::user()->company;
-		$contacts = Contact::where('company_id',$company->id )->where('email','<>','')->get();
-		$contacts = $contacts->lists('FullName','id')->all();
 		$collection = Collection::find($id);
+		$contacts = Contact::where('company_id',$company->id )->where('activa',1)->where('email','<>','')->where('property_id',$collection->property_id)->get();
+		$contacts = $contacts->lists('FullName','id')->all();
+		
 		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
 		return view('collections.show')
 				->with('collection',$collection)

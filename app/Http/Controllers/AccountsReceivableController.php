@@ -381,6 +381,7 @@ class AccountsReceivableController extends Controller
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
 				->join('categories', 'categories.id', '=', 'quotas.category_id')	
+				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
 				//->where('gestion','<=',$request->gestion)
 				//->where('periodo','<=',$request->periodo)
 				->where('cancelada','0')
@@ -498,10 +499,12 @@ class AccountsReceivableController extends Controller
 		
 		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->lists('cuota','id')->all();
 		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$gestiones = Gestion::lists('nombre','nombre')->all();
 
         return view('accountsreceivables.index')
 		->with('properties',$properties)
 		->with('quotas',$quotas)
+		->with('gestiones',$gestiones)
 		->with('accountsreceivables',$accountsreceivables->get());
 	}
 	
@@ -509,7 +512,7 @@ class AccountsReceivableController extends Controller
 	
 	public function accountsreceivablebyproperty($property_id){
 		$company = Auth::user()->company;
-        $accountsreceivables = Accountsreceivable::where('company_id',$company->id )->where('property_id',$property_id)->with('quota')->get();
+        $accountsreceivables = Accountsreceivable::where('company_id',$company->id )->where('cancelada',0)->where('property_id',$property_id)->with('quota')->get();
 		//$accountsreceivables = json_encode($accountsreceivables);
 		return response()->json(['success' => true, 'accountsreceivables' => $accountsreceivables]);
 	}

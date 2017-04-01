@@ -40,12 +40,12 @@
                         <h1>Imprimir/ Enviar comprobante</h1>
                         <fieldset>
 
-
+							@if (Session::has('message'))
 							<div class="alert alert-success alert-dismissable">
 								<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 								Transacción registrada correctamente.
 							</div>
-
+							@endif
 							<div id="printableArea">
 								<div class="row">
 									<div class="table-responsive">
@@ -188,10 +188,11 @@
 							<div class="hr-line-dashed"></div>
 							{!! Form::open(array('route' => 'transaction.cancel', 'class' => '', 'id' => 'form-anular')) !!}
 							<input type="hidden" name="id_transaction" value="{{$collection->transaction->id}}">
+							<input type="hidden" name="id_collection" value="{{$collection->id}}">
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
-										<button class="btn btn-danger" type="submit">
+										<button class="btn btn-danger" type="submit" onclick="return confirm('¿Esta usted seguro de anular el registro?')">
 											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
 									</div>
 								</div>

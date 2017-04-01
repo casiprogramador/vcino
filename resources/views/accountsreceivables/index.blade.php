@@ -52,7 +52,6 @@
                         </select>
                     </div>
                     <div class="col-sm-2 m-b-xs">
-
 						{{ Form::select('gestion',['todos'=>'Gestión: Todas']+$gestiones, old('gestion'), ['class' => 'form-control input-sm']) }}
                     </div>
                     <div class="col-sm-2 m-b-xs">

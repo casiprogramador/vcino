@@ -67,6 +67,23 @@
                         </thead>
                         <tbody>
 							@foreach($collections as $collection)
+							@if($collection->transaction->anulada == 1)
+							
+							<tr>
+                                <td><s>{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</s></td>
+                                <td><s>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
+                                <td><s>{{ $collection->property->nro }}</s></td>
+                                <td><s>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</s></td>
+                                <td><s>{{$collection->transaction->concepto }}</s></td>
+                                <td><s>{{ $collection->account->nombre }}</s></td>
+                                <td style="text-align: right;"><s>{{$collection->transaction->importe_credito}}</s></td>
+                                <td style="vertical-align:middle; text-align:right;">
+                                    <span class="label label-warning">ANULADA</span>
+                               </td>
+                            </tr>
+							
+							@else
+							
                             <tr>
                                 <td>{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</td>
                                 <td>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
@@ -94,6 +111,9 @@
                                     </div>
                                </td>
                             </tr>
+							
+							@endif
+							
 							@endforeach
 
                         </tbody>
