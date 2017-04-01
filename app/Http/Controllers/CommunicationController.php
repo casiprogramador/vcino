@@ -270,7 +270,7 @@ class CommunicationController extends Controller
 			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Directorio%')->where('email','<>','')->get();
 
 		}elseif ($dirigido == 'propiedad') {
-			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->where('correspondencia','like','%Directorio%')->where('email','<>','')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->where('correspondencia','like','%Comunicados%')->where('email','<>','')->get();
 		}elseif ($dirigido == 'contacto') {
 			$contacts = Contact::whereIn('id',$request->destinatario)->get();
 		}elseif ($dirigido == 'correo') {
