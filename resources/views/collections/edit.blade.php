@@ -35,6 +35,7 @@
                     </h2>
 
 					{!! Form::open(array('route' => array('transaction.collection.update', $collection->id),'method' => 'patch' ,'class' => 'wizard-big form-horizontal', 'id' => 'form')) !!}
+					<input type="hidden" class="form-control input-sm" id="cuotas" name="cuotas_originales" value="{{$collection->cuotas}}">
 						<h1>Propiedad y contacto</h1>
                         <fieldset>
                             <div class="row">
@@ -67,8 +68,7 @@
 													</tr>
 												</thead>
 												<tbody>
-
-													@foreach($cuotas as $cuota)
+													@foreach($cuotas_cobradas as $cuota)
 													<tr>
 													
 														<td>
@@ -80,6 +80,19 @@
 														<td class="text-right">{{ $cuota->importe_por_cobrar }}</td>
 													</tr>
 													@endforeach
+													@foreach($cuotas as $cuota)
+													<tr>
+													
+														<td>
+															<input type="checkbox" importe="{{ $cuota->importe_por_cobrar }}" value="{{ $cuota->id }}" class="i-checks check-cuotas" name="cuotas[]">
+														</td>
+														<td>{{$cuota->gestion}}</td>
+														<td>{{nombremes($cuota->periodo) }}</td>
+														<td>{{ $cuota->quota->category->nombre }} : {{ $cuota->quota->cuota }}</td>
+														<td class="text-right">{{ $cuota->importe_por_cobrar }}</td>
+													</tr>
+													@endforeach
+													
 													
 												</tbody>
 												<tfoot>
@@ -169,6 +182,7 @@
                                 </div>
                             </div>
                         </fieldset>
+						
 					{!! Form::close() !!}
 
                 </div>

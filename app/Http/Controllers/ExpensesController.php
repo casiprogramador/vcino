@@ -37,8 +37,8 @@ class ExpensesController extends Controller
     {
         
 		$company = Auth::user()->company;
-		$categories = Category::where('company_id',$company->id )->lists('nombre','id')->all();
-		$suppliers = Supplier::where('company_id',$company->id )->lists('razon_social','id')->all();
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->lists('nombre','id')->all();
+		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->lists('razon_social','id')->all();
 		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
         return view('expenses.create')
 		->with('categories',$categories)
@@ -129,7 +129,7 @@ class ExpensesController extends Controller
     public function edit($id)
     {
         $company = Auth::user()->company;
-		$categories = Category::where('company_id',$company->id )->lists('nombre','id')->all();
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->lists('nombre','id')->all();
 		$suppliers = Supplier::where('company_id',$company->id )->lists('razon_social','id')->all();
 		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
 		$expense = Expenses::find($id);
@@ -236,7 +236,7 @@ class ExpensesController extends Controller
 	
 	public function expensesbysupplier($supplier_id){
 		$company = Auth::user()->company;
-        $expenses = Expenses::where('company_id',$company->id )->where('supplier_id',$supplier_id)->with('supplier')->with('transaction')->take(2)->get();
+        $expenses = Expenses::where('company_id',$company->id )->where('supplier_id',$supplier_id)->with('supplier')->with('transaction')->take(3)->get();
 
 		return response()->json(['success' => true, 'expenses' => $expenses]);
 	}

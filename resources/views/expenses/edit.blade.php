@@ -68,7 +68,7 @@
 					<fieldset>
 						<div class="row">
 							<div class="col-lg-10 col-lg-offset-1">
-								<h5>Lista de últimos gastos categoría: Mantenimiento ascensores</h5>
+								<h5>Lista de últimos gastos proveedor: <span id="nombre-proveedor"></span></h5>
 								<div class="form-group">
                                     <div class="table-responsive">
                                         <table class="table table-striped" style="font-size: 12px;" id="gastos-table">
@@ -215,6 +215,8 @@
 		var proveedor_id = $("#proveedor-select option:selected").val();
 		var table_gastos = $('#gastos-table tbody').empty();
 		$.post('/expenses/'+ proveedor_id +'/supplier', function(response){
+			var proveedor_text = $('#proveedor-select option:selected').text(); 
+			$('#nombre-proveedor').text(proveedor_text);
 			if (response.success)
 			{
 				var table_gastos = $('#gastos-table tbody').empty();

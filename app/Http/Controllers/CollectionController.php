@@ -138,12 +138,14 @@ class CollectionController extends Controller
 		
 		$contacts = Contact::where('company_id',$company->id )->where('property_id', $collection->property_id)->get();
 		$contacts = $contacts->lists('FullName','id')->all();
-		$cuotas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
+		$cuotas_cobradas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
+		$cuotas =  Accountsreceivable::where('company_id',$company->id )->where('cancelada',0)->where('property_id',$collection->property_id)->get();
         return view('collections.edit')
 		->with('properties',$properties)
 		->with('contacts',$contacts)
 		->with('accounts',$accounts)
 		->with('cuotas',$cuotas)
+		->with('cuotas_cobradas',$cuotas_cobradas)
 		->with('collection',$collection);
     }
 
@@ -165,16 +167,23 @@ class CollectionController extends Controller
             'cuenta' => 'required|not_in:0',
 			'forma_pago' => 'required',
         ]);
-		
 		$company = Auth::user()->company;
+		if($request->cuotas_originales == implode(',', $request->cuotas)){
+			$cuotas_guardar = $request->cuotas_originales;
+			
+		}else{
+			$quotes = Accountsreceivable::whereIn('id',  explode(',', $request->cuotas_originales))->update(['cancelada' => '0']);
+			$quotes = Accountsreceivable::whereIn('id',  $request->cuotas)->update(['cancelada' => '1']);
+			$cuotas_guardar = implode(',', $request->cuotas);
+		}
 		
 		$collection = Collection::find($id);
-		$collection->cuotas = implode(',', $request->cuotas);
+		$collection->cuotas = $cuotas_guardar;
 		$collection->property_id = $request->propiedad;
 		$collection->contact_id = $request->contacto;
 		$collection->account_id = $request->cuenta;
 		$collection->save();
-		
+
 		$transaction = Transaction::find($collection->transaction_id);
 		$transaction->tipo_transaccion = 'Ingreso';
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
