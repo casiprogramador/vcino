@@ -66,7 +66,7 @@
 					<fieldset>
 						<div class="row">
 							<div class="col-lg-10 col-lg-offset-1">
-								<h5>Lista de últimos gastos categoría: Mantenimiento ascensores</h5>
+								<h5>Lista de últimos gastos proveedor: <span id="nombre-proveedor"></span></h5>
 								<div class="form-group">
                                     <div class="table-responsive">
                                         <table class="table table-striped" style="font-size: 12px;" id="gastos-table">
@@ -287,17 +287,19 @@
 	});
 	$('#proveedor-select').change(function(){
 		var proveedor_id = $(this).val();
+		var proveedor_text = $('#proveedor-select option:selected').text(); 
+		$('#nombre-proveedor').text(proveedor_text);
 		$.post('/expenses/'+ proveedor_id +'/supplier', function(response){
 			if (response.success)
 			{
 				
 				var table_gastos = $('#gastos-table tbody').empty();
 				$.each(response.expenses, function(i, expense){
-					console.log(expense);
+
 					var fecha_pago = new Date(expense.transaction.fecha_pago);
 					mes = fecha_pago.getMonth()+1;
 					var fecha_pago_format = ("0" + fecha_pago.getDate()).slice(-2)+"/"+("0" + mes).slice(-2)+"/"+fecha_pago.getFullYear()
-					console.log(fecha_pago);
+
 					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.supplier.razon_social+'</td><td>'+expense.transaction.concepto+'</td><td>'+expense.transaction.forma_pago+'</td><td class="text-right">'+expense.transaction.importe_debito+'</td></tr>';
 					table_gastos.append(trHtml);
 				})
