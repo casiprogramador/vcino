@@ -166,12 +166,12 @@
 								<div class="form-group">
 									<label>Adjunto:</label>
 
-									<div class="fileinput input-group fileinput-new" data-provides="fileinput">
-										<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (isset($expense->adjunto) ) ? MenuRoute::filename($expense->adjunto) : "" }}</span></div>
+									<div id="adjunto-file" class="fileinput input-group {{!empty($expense->adjunto) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+										<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($expense->adjunto) ) ? MenuRoute::filename($expense->adjunto) : "" }}</span></div>
 										<span class="input-group-addon btn btn-default btn-file">
 											<span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
 											<input type="file" name="adjunto">
-											<input type="hidden" name="adjunto_ori" value="{{ (isset($expense->adjunto) ) ? $expense->adjunto : '' }}">
+											<input type="hidden" id="adjunto-ori" name="adjunto_ori" value="{{ (isset($expense->adjunto) ) ? $expense->adjunto : '' }}">
 										</span>
 										<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 									</div>
@@ -206,6 +206,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/wizard/jquery.validate.min.js') }}"></script>
 <script>
 	$(document).ready(function(){
+
 		$.ajaxSetup({
 		headers: {
 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -358,26 +359,30 @@
 	});
 
 	//Cambio tipo de forma de pago
-	$('#forma-pago').change(function(){
+		$('#forma-pago').change(function(){
 
-	if ($(this).val() == "cheque"){
-	$('#label-transaccion').text("Banco, Nro. Cheque");
-	$('#cont-forma-pago').show("slow");
-	} else if ($(this).val() == "deposito"){
-	$('#label-transaccion').text("Nro. Transacción");
-	$('#cont-forma-pago').show("slow");
-	} else if ($(this).val() == "transferencia bancaria"){
-	$('#label-transaccion').text("Banco, Nro. Transacción");
-	$('#cont-forma-pago').show("slow");
-	} else if ($(this).val() == "tarjeta debito/credito"){
-	$('#label-transaccion').text("Banco, Tipo, Nro. Tarjeta");
-	$('#cont-forma-pago').show("slow");
-	} else{
-	$('#label-transaccion').text("Detalle Transaccion");
-	$('#cont-forma-pago').hide();
-	}
+			if ($(this).val() == "cheque"){
+			$('#label-transaccion').text("Banco, Nro. Cheque");
+			$('#cont-forma-pago').show("slow");
+			} else if ($(this).val() == "deposito"){
+			$('#label-transaccion').text("Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			} else if ($(this).val() == "transferencia bancaria"){
+			$('#label-transaccion').text("Banco, Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			} else if ($(this).val() == "tarjeta debito/credito"){
+			$('#label-transaccion').text("Banco, Tipo, Nro. Tarjeta");
+			$('#cont-forma-pago').show("slow");
+			} else{
+			$('#label-transaccion').text("Detalle Transaccion");
+			$('#cont-forma-pago').hide();
+			}
 
-	});
+		});
+		$('#adjunto-file').on('clear.bs.fileinput', function(event) {
+			console.log('eliminar');
+			$('#adjunto-ori').val('');
+		});
 	});
 
 

@@ -7,7 +7,7 @@
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
@@ -33,11 +33,12 @@
                 </div>
                 <div class="ibox-content">
 
-
+					@if (Session::has('message'))
 					<div class="alert alert-success alert-dismissable">
 						<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 						Transacción registrada correctamente.
 					</div>
+					@endif
 					<div id="printableArea">
 						<div class="row">
 							<div class="table-responsive">
@@ -87,7 +88,7 @@
 										<table cellpadding="0" cellspacing="0" style="width: 100%;">
 											<tr>
 												<td style="border-top: #333 1px solid; padding: 3px 0;" colspan="2">
-													{{$expense->category->description}}: {{$expense->transaction->concepto}}
+													{{$expense->category->nombre}}: {{$expense->transaction->concepto}}
 												</td>
 											</tr>
 											<tr>
@@ -97,7 +98,7 @@
 											</tr>
 											<tr>
 												<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
-													Forma de pago: {{$expense->transaction->forma_pago}} No. {{$expense->transaction->numero_forma_pago}}
+													Forma de pago: {{strtoupper($expense->transaction->forma_pago)}} No. {{$expense->transaction->numero_forma_pago}}
 												</td>
 											</tr>
 
@@ -155,7 +156,7 @@
 
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<button class="btn btn-success" id="printButton">
 									<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
 								<a href="{{ route('transaction.expense.pdf', $expense->id) }}" class="btn btn-default">
@@ -163,6 +164,11 @@
 								<span class="text-muted" style="margin: 0 10px;">|</span>
 								<a href="{{ route('transaction.expense.create') }}" class="btn btn-default">
 									<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo gasto</a>
+							</div>
+							<div class="col-md-6">
+									<a href="{{ URL::asset($expense->adjunto)}}" target="_blank">
+										<img src="{{ URL::asset($expense->adjunto)}}" width="300px">
+									</a>
 							</div>
 						</div>
 					</div>
@@ -174,13 +180,14 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
-										<button class="btn btn-danger" type="submit">
+										<button class="btn btn-danger" type="submit" onclick="return confirm('¿Esta usted seguro de anular el registro?')">
 											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
 									</div>
 								</div>
 							</div>
-							{!! Form::close() !!}
+					{!! Form::close() !!}
                 </div>
+				
             </div>
         </div>
     </div>

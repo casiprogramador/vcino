@@ -57,7 +57,7 @@
                                 <td>{{$expense->category->nombre}}</td>
                                 <td>{{$expense->transaction->concepto}}</td>
                                 <td>{{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}</td>
-                                <td>{{$expense->transaction->forma_pago}}</td>
+                                <td>{{strtoupper($expense->transaction->forma_pago)}}</td>
                                 <td>{{$expense->transaction->numero_forma_pago}}</td>
                                 <td style="text-align: right;">{{$expense->transaction->importe_debito}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
@@ -70,11 +70,6 @@
                                         </a>
                                         <a href="{{ route('transaction.expense.edit', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
                                             <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Imprimir...">
-                                            <i class="fa fa-print"></i>
                                         </a>
                                     </div>
                                </td>
