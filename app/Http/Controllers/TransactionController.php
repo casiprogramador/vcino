@@ -21,6 +21,7 @@ class TransactionController extends Controller
 		
 		$transaction = Transaction::find($request->id_transaction);
 		$transaction->anulada = '1';
+		$transaction->excluir_reportes = '1';
 		$transaction->save();
 		
 		if(!empty($request->id_collection)){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 use App\Http\Requests;
 use App\Category;
 use App\Supplier;
@@ -70,7 +71,7 @@ class ExpensesController extends Controller
 			$tmpFileName = time() . '-'.$id_user. '-gasto-name-' . $file->getClientOriginalName();
 			$file->move(public_path() . $tmpFilePath, $tmpFileName);
 			$path = $tmpFilePath . $tmpFileName;
-		}elseif(isset ($request->adjunto_ori)){
+		}elseif(!empty($request->adjunto_ori)){
 			$path = $request->adjunto_ori;
 		}else{
 			$path="";
@@ -103,7 +104,7 @@ class ExpensesController extends Controller
 		$expense->adjunto = $path;
 
 		$transaction->expense()->save($expense);
-		
+		Session::flash('message', 'Transacción registrada correctamente.');
 		return redirect()->route('transaction.expense.show', [$expense->id]);
     }
 
@@ -168,7 +169,7 @@ class ExpensesController extends Controller
 			$tmpFileName = time() . '-'.$id_user. '-gasto-name-' . $file->getClientOriginalName();
 			$file->move(public_path() . $tmpFilePath, $tmpFileName);
 			$path = $tmpFilePath . $tmpFileName;
-		}elseif(isset ($request->adjunto_ori)){
+		}elseif(!empty($request->adjunto_ori)){
 			$path = $request->adjunto_ori;
 		}else{
 			$path="";
