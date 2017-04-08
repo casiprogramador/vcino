@@ -165,11 +165,13 @@
 								<a href="{{ route('transaction.expense.create') }}" class="btn btn-default">
 									<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo gasto</a>
 							</div>
+							@if(!empty($expense->adjunto))
 							<div class="col-md-6">
 									<a href="{{ URL::asset($expense->adjunto)}}" target="_blank">
 										<img src="{{ URL::asset($expense->adjunto)}}" width="300px">
 									</a>
 							</div>
+							@endif
 						</div>
 					</div>
 
@@ -180,6 +182,7 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
+										<input type="hidden" name="id_expense" value="{{$expense->id}}">
 										<button class="btn btn-danger" type="submit" onclick="return confirm('¿Esta usted seguro de anular el registro?')">
 											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
 									</div>

@@ -342,7 +342,7 @@
 	});
 	
 	
-	$('#contactos').change(function(){
+	$('#propiedades').change(function(){
 		//Cabio campo propiedades y contacto
 		propiedad = $( "#propiedades option:selected" ).text();
 		contacto = $( "#contactos option:selected" ).text();

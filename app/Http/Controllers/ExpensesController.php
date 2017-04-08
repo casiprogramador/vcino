@@ -237,7 +237,7 @@ class ExpensesController extends Controller
 	
 	public function expensesbysupplier($supplier_id){
 		$company = Auth::user()->company;
-        $expenses = Expenses::where('company_id',$company->id )->where('supplier_id',$supplier_id)->with('supplier')->with('transaction')->take(3)->get();
+        $expenses = Expenses::where('company_id',$company->id )->where('supplier_id',$supplier_id)->orderBy('created_at', 'desc')->with('supplier')->with('transaction')->take(3)->get();
 
 		return response()->json(['success' => true, 'expenses' => $expenses]);
 	}
