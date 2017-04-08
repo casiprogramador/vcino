@@ -50,7 +50,23 @@
                         </thead>
                         <tbody>
 							@foreach($expenses as $expense)
+							@if($expense->transaction->anulada == 1)
                             <tr>
+                                <td><s>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</s></td>
+                                <td><s>{{$expense->transaction->nro_documento}}</s></td>
+                                <td><s>{{$expense->supplier->razon_social}}</s></td>
+                                <td><s>{{$expense->category->nombre}}</s></td>
+                                <td><s>{{$expense->transaction->concepto}}</s></td>
+                                <td><s>{{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}</s></td>
+                                <td><s>{{strtoupper($expense->transaction->forma_pago)}}</s></td>
+                                <td><s>{{$expense->transaction->numero_forma_pago}}</s></td>
+                                <td style="text-align: right;"><s>{{$expense->transaction->importe_debito}}</s></td>
+                                <td style="vertical-align:middle; text-align:right;">
+                                     <span class="label label-warning">ANULADA</span>
+                               </td>
+                            </tr>
+							@else
+							<tr>
                                 <td>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
                                 <td>{{$expense->transaction->nro_documento}}</td>
                                 <td>{{$expense->supplier->razon_social}}</td>
@@ -74,6 +90,8 @@
                                     </div>
                                </td>
                             </tr>
+							
+							@endif
 							@endforeach
                            
 

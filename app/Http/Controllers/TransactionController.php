@@ -29,6 +29,9 @@ class TransactionController extends Controller
 			$quotes = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->update(['cancelada' => '0']);
 			return redirect()->route('transaction.collection.index');
 		}
+		if(!empty($request->id_expense)){
+			return redirect()->route('transaction.expense.index');
+		}
 		if(!empty($request->id_transaction_destino)){
 			$transaction = Transaction::find($request->id_transaction_destino);
 			$transaction->anulada = '1';
