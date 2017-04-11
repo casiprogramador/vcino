@@ -63,7 +63,7 @@ class QuotaController extends Controller
         $company = Auth::user()->company;
         $activa = (empty($request->activa) ? '0' : $request->activa);
 		if($request->type_property == 'todos'){
-			$typeProperties = TypeProperty::all();
+			$typeProperties = TypeProperty::where('company_id',$company->id )->get();
 			foreach ($typeProperties as $typeProperty){
 
 				$quota = new Quota();
