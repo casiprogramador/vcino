@@ -184,4 +184,4 @@ Route::group(['prefix' => 'admin'], function () {
 Route::post('contact/{property_id}/property', 'ContactController@contactbyproperty');
 Route::post('accountsreceivable/{property_id}/property', 'AccountsReceivableController@accountsreceivablebyproperty');
 
-Route::post('expenses/{supplier_id}/supplier', 'ExpensesController@expensesbysupplier');
+Route::post('expenses/{category_id}/category', 'ExpensesController@expensesbycategory');

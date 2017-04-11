@@ -42,7 +42,8 @@
                                 <div class="col-lg-6 col-lg-offset-3">
                                     <div class="form-group">
                                         <label>Propiedad</label>
-										{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $collection->property_id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
+										{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $collection->property_id, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
+										<input type="hidden" class="form-control input-sm" id="propiedad" name="propiedad" value="{{$collection->property_id}}">
                                     </div>
                                     <div class="form-group">
                                         <label>Contacto (A nombre de)</label>

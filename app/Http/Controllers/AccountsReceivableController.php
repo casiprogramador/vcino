@@ -198,33 +198,35 @@ class AccountsReceivableController extends Controller
 		$month=$request->periodo;
 		$date = new \DateTime($year.'-'.$month.'-'.'01');
 		
-		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->get();
+		$quotas = Quota::where('company_id',$company->id )->where('frecuencia_pago','Mensual' )->where('activa',1 )->get();
 		$properties = Property::where('company_id',$company->id )->get();
 		$fecha_vencimiento = date('Y-m-d', strtotime($date->format('Y-m-d').'+ '.$company->dias_mora.' days'));
 		foreach($properties as $property){	
 			foreach($quotas as $quota){
+				if($property->type_property_id == $quota->type_property_id){
 				$accountsreceivable_validate = Accountsreceivable::where('gestion',$request->gestion)
 					->where('periodo',$request->periodo)
 					->where('property_id',$property->id)
 					->where('quota_id',$quota->id)->get();
-				if(count($accountsreceivable_validate)){
-					//Session::flash('message', 'Algunas cuotas ya fueron ingresadas.');
-				}else{
-					$accountsreceivable = new Accountsreceivable();
-					$accountsreceivable->gestion = $request->gestion;
-					$accountsreceivable->periodo = $request->periodo;
-					$accountsreceivable->fecha_gestion_periodo = $date->format('Y-m-d');
-					$accountsreceivable->fecha_vencimiento = $fecha_vencimiento;
-					$accountsreceivable->cantidad = '0';
-					$accountsreceivable->importe_por_cobrar = $quota->importe;
-					$accountsreceivable->importe_abonado = '0';
-					$accountsreceivable->cancelada = '0';
-					$accountsreceivable->quota_id = $quota->id;
-					$accountsreceivable->property_id = $property->id;
-					$accountsreceivable->company_id = $company->id;
-					$accountsreceivable->user_id = Auth::user()->id;
-					$accountsreceivable->save();
-					
+					if(count($accountsreceivable_validate)){
+						//Session::flash('message', 'Algunas cuotas ya fueron ingresadas.');
+					}else{
+						$accountsreceivable = new Accountsreceivable();
+						$accountsreceivable->gestion = $request->gestion;
+						$accountsreceivable->periodo = $request->periodo;
+						$accountsreceivable->fecha_gestion_periodo = $date->format('Y-m-d');
+						$accountsreceivable->fecha_vencimiento = $fecha_vencimiento;
+						$accountsreceivable->cantidad = '0';
+						$accountsreceivable->importe_por_cobrar = $quota->importe;
+						$accountsreceivable->importe_abonado = '0';
+						$accountsreceivable->cancelada = '0';
+						$accountsreceivable->quota_id = $quota->id;
+						$accountsreceivable->property_id = $property->id;
+						$accountsreceivable->company_id = $company->id;
+						$accountsreceivable->user_id = Auth::user()->id;
+						$accountsreceivable->save();
+
+					}
 				}
 			}
 		}
@@ -375,36 +377,6 @@ class AccountsReceivableController extends Controller
 		$year=$request->gestion;
 		$month=$request->periodo;
 		$date_gestion_periodo = new \DateTime($year.'-'.$month.'-'.'02');
-
-		if($request->propiedad == 'todas'){
-		$properties = DB::table('properties')
-				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
-				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
-				->join('categories', 'categories.id', '=', 'quotas.category_id')	
-				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
-				//->where('gestion','<=',$request->gestion)
-				//->where('periodo','<=',$request->periodo)
-				->where('cancelada','0')
-				->select(
-						array('properties.id as id','accountsreceivables.id as accountsreceivable_id', 'nro as propiedad', 'gestion','periodo','fecha_vencimiento','importe_por_cobrar','accountsreceivables.property_id','quota_id','user_id','cuota','frecuencia_pago','tipo_importe',
-							DB::raw("GROUP_CONCAT(accountsreceivables.id SEPARATOR ',') as id_cuenta_pagar,
-								     GROUP_CONCAT(cuota SEPARATOR ',') as cuotas,
-									 GROUP_CONCAT(importe_por_cobrar SEPARATOR ',') as importes,
-									 GROUP_CONCAT(frecuencia_pago SEPARATOR ',') as frecuencias,
-									 GROUP_CONCAT(fecha_vencimiento SEPARATOR ',') as fechas_vencimientos,
-									 GROUP_CONCAT(periodo SEPARATOR ',') as periodos,
-									 GROUP_CONCAT(gestion SEPARATOR ',') as gestiones,
-									 GROUP_CONCAT(categories.nombre SEPARATOR ',') as categorias,
-									 sum(importe_por_cobrar) as importe_total")
-							)
-						)
-				->groupBy('nro')
-				->groupBy('properties.id')
-				->get();
-		
-		
-		
-		}else{
 			
 			
 			$properties = DB::table('properties')
@@ -432,8 +404,6 @@ class AccountsReceivableController extends Controller
 				->groupBy('properties.id')
 				->get();
 
-		}
-		//
 		foreach ($properties as $propertypayment){
 			$sendalertpayments_deletes = Sendalertpayment::where('property_id',$propertypayment->id)
 					->where('enviado',0)->get();

@@ -26,7 +26,7 @@ class TransferController extends Controller
 		$company = Auth::user()->company;
 		$categories = Category::where('company_id',$company->id )->where('tipo_categoria', 'Ingreso')->lists('nombre','id')->all();
 		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
-		$transactions = Transaction::where('user_id',Auth::user()->id )->groupBy('nro_documento');
+		$transactions = Transaction::where('user_id',Auth::user()->id );
         return view('transfers.index')
 				->with('transactions',$transactions->get())
 				->with('categories',$categories)
