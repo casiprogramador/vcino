@@ -35,7 +35,7 @@
 					<div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
 						<label class="col-sm-3 control-label">Gestión</label>
 						<div class="col-sm-2">
-							{{ Form::select('gestion',$gestiones, old('gestion'), ['class' => 'form-control input-sm']) }}
+							{{ Form::select('gestion',$gestiones,  date("Y"), ['class' => 'form-control input-sm']) }}
 							@if ($errors->has('gestion'))
 							<span class="help-block">
 								<strong>{{ $errors->first('gestion') }}</strong>
@@ -61,7 +61,7 @@
 							'10' => 'Octubre',
 							'11' => 'Noviembre',
 							'12' => 'Diciembre',
-							),old('periodo'),
+							),date("m"),
 							['class' => 'form-control input-sm']) }}
 							@if ($errors->has('periodo'))
 							<span class="help-block">

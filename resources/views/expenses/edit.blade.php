@@ -46,7 +46,7 @@
 								</div>
 								<div class="form-group">
 									<label>Categoría</label>
-									{{ Form::select('categoria',['0'=>'Selecciona una categoria']+$categories,$expense->category_id, ['class' => 'form-control input-sm','id'=>'cotegoria-select']) }}
+									{{ Form::select('categoria',['0'=>'Selecciona una categoria']+$categories,$expense->category_id, ['class' => 'form-control input-sm','id'=>'categoria-select']) }}
 								</div>
 								<div class="form-group">
 									<label>Concepto *</label>
@@ -68,7 +68,7 @@
 					<fieldset>
 						<div class="row">
 							<div class="col-lg-10 col-lg-offset-1">
-								<h5>Lista de últimos gastos proveedor: <span id="nombre-proveedor"></span></h5>
+								<h5>Lista de últimos gastos categoria: <span id="nombre-proveedor"></span></h5>
 								<div class="form-group">
                                     <div class="table-responsive">
                                         <table class="table table-striped" style="font-size: 12px;" id="gastos-table">
@@ -213,23 +213,24 @@
 		}
 		});
 		//llenado e gastos al inicios
-		var proveedor_id = $("#proveedor-select option:selected").val();
-		var table_gastos = $('#gastos-table tbody').empty();
-		$.post('/expenses/'+ proveedor_id +'/supplier', function(response){
-			var proveedor_text = $('#proveedor-select option:selected').text(); 
-			$('#nombre-proveedor').text(proveedor_text);
+		var proveedor_id = $(this).val();
+		var proveedor_text = $('#categoria-select option:selected').text(); 
+		$('#nombre-proveedor').text(proveedor_text);
+		$.post('/expenses/'+ proveedor_id +'/category', function(response){
 			if (response.success)
 			{
+				console.log(response.expenses);
 				var table_gastos = $('#gastos-table tbody').empty();
 				$.each(response.expenses, function(i, expense){
-					console.log(expense);
-					var fecha_pago = new Date(expense.transaction.fecha_pago);
+					console.log(expense.fecha_pago)
+					var fecha_pago = new Date(expense.fecha_pago);
 					fecha_pago.setDate(fecha_pago.getDate() + 1);
 					mes = fecha_pago.getMonth()+1;
 					dia = fecha_pago.getDate();
 					var fecha_pago_format = ("0" + dia).slice(-2)+"/"+("0" + mes).slice(-2)+"/"+fecha_pago.getFullYear();
-					console.log(fecha_pago);
-					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.supplier.razon_social+'</td><td>'+expense.transaction.concepto+'</td><td>'+expense.transaction.forma_pago+'</td><td class="text-right">'+expense.transaction.importe_debito+'</td></tr>';
+					//console.log(fecha_pago);
+
+					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.razon_social+'</td><td>'+expense.concepto+'</td><td>'+expense.forma_pago+'</td><td class="text-right">'+expense.importe_debito+'</td></tr>';
 					table_gastos.append(trHtml);
 				})
 			}
@@ -340,20 +341,26 @@
 
 	//ajax contactos por propiedad
 
-	$('#proveedor-select').change(function(){
+	$('#categoria-select').change(function(){
+		//se cambio a categoria en lugar de proveedor
 		var proveedor_id = $(this).val();
-		$.post('/expenses/'+ proveedor_id +'/supplier', function(response){
+		var proveedor_text = $('#categoria-select option:selected').text(); 
+		$('#nombre-proveedor').text(proveedor_text);
+		$.post('/expenses/'+ proveedor_id +'/category', function(response){
 			if (response.success)
 			{
-				
+				console.log(response.expenses);
 				var table_gastos = $('#gastos-table tbody').empty();
 				$.each(response.expenses, function(i, expense){
-					console.log(expense);
-					var fecha_pago = new Date(expense.transaction.fecha_pago);
+					console.log(expense.fecha_pago)
+					var fecha_pago = new Date(expense.fecha_pago);
+					fecha_pago.setDate(fecha_pago.getDate() + 1);
 					mes = fecha_pago.getMonth()+1;
-					var fecha_pago_format = ("0" + fecha_pago.getDate()).slice(-2)+"/"+("0" + mes).slice(-2)+"/"+fecha_pago.getFullYear()
-					console.log(fecha_pago);
-					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.supplier.razon_social+'</td><td>'+expense.transaction.concepto+'</td><td>'+expense.transaction.forma_pago+'</td><td class="text-right">'+expense.transaction.importe_debito+'</td></tr>';
+					dia = fecha_pago.getDate();
+					var fecha_pago_format = ("0" + dia).slice(-2)+"/"+("0" + mes).slice(-2)+"/"+fecha_pago.getFullYear();
+					//console.log(fecha_pago);
+
+					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.razon_social+'</td><td>'+expense.concepto+'</td><td>'+expense.forma_pago+'</td><td class="text-right">'+expense.importe_debito+'</td></tr>';
 					table_gastos.append(trHtml);
 				})
 			}

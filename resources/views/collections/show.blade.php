@@ -15,7 +15,7 @@
                 <a href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
             </li>
             <li class="active">
-                <strong>Nueva cobranza</strong>
+                <strong>Ver cobranza</strong>
             </li>
         </ol>
     </div>
@@ -27,7 +27,7 @@
         <div class="col-lg-12">
             <div class="ibox">
 				<div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Nueva cobranza</h5>
+                    <h5 style="padding-top: 2px;">Ver cobranza</h5>
                 </div>
                 <div class="ibox-content" >
                     <h2>
@@ -53,7 +53,7 @@
 											<tbody>
 												<tr>
 													<td style="border: 0;">
-														<div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="150"></div>
+														<div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="{{Auth::user()->company->width_logo}}"></div>
 													</td>
 													<td style="border: 0; vertical-align:bottom">
 														<div class="p-h-xl text-right">

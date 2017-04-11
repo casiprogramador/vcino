@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Session;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Category;
 use App\Supplier;
@@ -64,6 +65,7 @@ class ExpensesController extends Controller
             'cuenta' => 'required|not_in:0',
             
         ]);
+		
 		if(!empty($request->adjunto)){
 			$id_user = Auth::user()->id;
 			$file = $request->adjunto;
@@ -88,7 +90,11 @@ class ExpensesController extends Controller
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$transaction->concepto = $request->concepto;
 		$transaction->forma_pago = $request->forma_pago;
+		if($transaction->forma_pago == 'efectivo'){
+		$transaction->numero_forma_pago = '';	
+		}else{	
 		$transaction->numero_forma_pago = $request->nro_forma_pago;
+		}
 		$transaction->importe_credito = '0';
 		$transaction->importe_debito = $request->importe;
 		$transaction->notas = $request->notas;
@@ -184,7 +190,11 @@ class ExpensesController extends Controller
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$transaction->concepto = $request->concepto;
 		$transaction->forma_pago = $request->forma_pago;
+		if($transaction->forma_pago == 'efectivo'){
+		$transaction->numero_forma_pago = '';	
+		}else{	
 		$transaction->numero_forma_pago = $request->nro_forma_pago;
+		}
 		$transaction->importe_debito = $request->importe;
 		$transaction->notas = $request->notas;
 		$transaction->save();
@@ -234,11 +244,20 @@ class ExpensesController extends Controller
 	}
 	
 	//Ajax
+	//Se cambio a busqueda por categoria en lugar de proveedor
 	
-	public function expensesbysupplier($supplier_id){
+	public function expensesbycategory($category_id){
 		$company = Auth::user()->company;
-        $expenses = Expenses::where('company_id',$company->id )->where('supplier_id',$supplier_id)->orderBy('created_at', 'desc')->with('supplier')->with('transaction')->take(3)->get();
-
+        //$expenses = Expenses::where('company_id',$company->id )->where('category_id',$category_id)->with('supplier')->with('transaction')->orderBy('transactions.fecha_pago', 'desc')->take(3)->get();
+		$expenses = DB::table('expenses')
+            ->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+            ->join('suppliers', 'suppliers.id', '=', 'expenses.supplier_id')
+			->where('expenses.category_id',$category_id)
+            ->select('transactions.fecha_pago', 'suppliers.razon_social', 'transactions.concepto','transactions.forma_pago','transactions.importe_debito')
+			->orderBy('fecha_pago', 'desc')
+			->take(3)
+            ->get();
+		//dd($expenses);
 		return response()->json(['success' => true, 'expenses' => $expenses]);
 	}
 }

@@ -46,7 +46,7 @@
 									<tbody>
 										<tr>
 											<td style="border: 0;">
-												<div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="150"></div>
+												<div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="{{Auth::user()->company->width_logo}}"></div>
 											</td>
 											<td style="border: 0; vertical-align:bottom">
 												<div class="p-h-xl text-right">
