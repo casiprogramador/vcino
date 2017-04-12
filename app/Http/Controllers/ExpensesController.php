@@ -253,6 +253,7 @@ class ExpensesController extends Controller
             ->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
             ->join('suppliers', 'suppliers.id', '=', 'expenses.supplier_id')
 			->where('expenses.category_id',$category_id)
+			->where('transactions.anulada','0')
             ->select('transactions.fecha_pago', 'suppliers.razon_social', 'transactions.concepto','transactions.forma_pago','transactions.importe_debito')
 			->orderBy('fecha_pago', 'desc')
 			->take(3)

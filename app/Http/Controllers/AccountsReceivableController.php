@@ -377,7 +377,35 @@ class AccountsReceivableController extends Controller
 		$year=$request->gestion;
 		$month=$request->periodo;
 		$date_gestion_periodo = new \DateTime($year.'-'.$month.'-'.'02');
-			
+		if($request->propiedad == 'todas'){
+		$properties = DB::table('properties')
+				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
+				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
+				->join('categories', 'categories.id', '=', 'quotas.category_id')	
+				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
+				//->where('gestion','<=',$request->gestion)
+				//->where('periodo','<=',$request->periodo)
+				->where('cancelada','0')
+				->select(
+						array('properties.id as id','accountsreceivables.id as accountsreceivable_id', 'nro as propiedad', 'gestion','periodo','fecha_vencimiento','importe_por_cobrar','accountsreceivables.property_id','quota_id','user_id','cuota','frecuencia_pago','tipo_importe',
+							DB::raw("GROUP_CONCAT(accountsreceivables.id SEPARATOR ',') as id_cuenta_pagar,
+								     GROUP_CONCAT(cuota SEPARATOR ',') as cuotas,
+									 GROUP_CONCAT(importe_por_cobrar SEPARATOR ',') as importes,
+									 GROUP_CONCAT(frecuencia_pago SEPARATOR ',') as frecuencias,
+									 GROUP_CONCAT(fecha_vencimiento SEPARATOR ',') as fechas_vencimientos,
+									 GROUP_CONCAT(periodo SEPARATOR ',') as periodos,
+									 GROUP_CONCAT(gestion SEPARATOR ',') as gestiones,
+									 GROUP_CONCAT(categories.nombre SEPARATOR ',') as categorias,
+									 sum(importe_por_cobrar) as importe_total")
+							)
+						)
+				->groupBy('nro')
+				->groupBy('properties.id')
+				->get();
+		
+		
+		
+		}else{	
 			
 			$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
@@ -403,7 +431,7 @@ class AccountsReceivableController extends Controller
 				->groupBy('nro')
 				->groupBy('properties.id')
 				->get();
-
+		}
 		foreach ($properties as $propertypayment){
 			$sendalertpayments_deletes = Sendalertpayment::where('property_id',$propertypayment->id)
 					->where('enviado',0)->get();
