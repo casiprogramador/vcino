@@ -40,7 +40,10 @@
                                 <th style="vertical-align:bottom">Fecha</th>
                                 <th style="vertical-align:bottom">Nro.<br/>Documento</th>
                                 <th style="vertical-align:bottom">Tipo</th>
+								<th style="vertical-align:bottom">Beneficiario</th>
+								<th style="vertical-align:bottom">Categoria</th>
                                 <th style="vertical-align:bottom">Concepto</th>
+								<th style="vertical-align:bottom">Cuenta</th>
                                 <th style="vertical-align:bottom">Forma<br/> de pago</th>
                                 <th style="vertical-align:bottom">Ref. pago</th>
                                 <th style="vertical-align:bottom; text-align: right;">Importe</th>
@@ -49,41 +52,91 @@
                         </thead>
                         <tbody>
 							@foreach($transactions as $transaction)
-                            <tr>
-                                <td>{{$transaction->fecha_pago}}</td>
-                                <td>{{$transaction->nro_documento}}</td>
-                                <td>{{$transaction->tipo_transaccion}}</td>
-								
-                                <td>{{$transaction->concepto}}</td>
-                                <td>{{$transaction->forma_pago}}</td>
-                                <td>{{$transaction->numero_forma_pago}}</td>
 								@if($transaction->tipo_transaccion == "Ingreso")
-                                <td style="text-align: right;">{{$transaction->importe_credito}}</td>
+									<tr>
+										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td>{{$transaction->nro_documento}}</td>
+										<td><i class="fa fa-long-arrow-up"></i>&nbsp;&nbsp;Cobranza</td>
+										<td>{{$transaction->collection->property->nro}}&nbsp;-&nbsp;{{$transaction->collection->contact->nombre}} {{$transaction->collection->contact->apellido}}</td>
+										<td></td>
+										<td>{{$transaction->concepto}}</td>
+										<td>{{$transaction->collection->account->nombre}}</td>
+										<td>{{strtoupper($transaction->forma_pago)}}</td>
+										<td>{{$transaction->numero_forma_pago}}</td>
+										<td style="text-align: right;">{{$transaction->importe_credito}}</td>
+										<td style="vertical-align:middle; text-align:right;">
+											<div class="btn-group">
+												<a href="{{ route('transaction.collection.show', $transaction->collection->id ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+													   <i class="fa fa-eye"></i>
+												   </a>
+											</div>
+									   </td>
+									</tr>
+								@elseif($transaction->tipo_transaccion == "Egreso")
+									<tr>
+										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td>{{$transaction->nro_documento}}</td>
+										<td><i class="fa fa-long-arrow-down"></i>&nbsp;&nbsp;Gasto</td>
+										<td>{{$transaction->expense->supplier->razon_social}}</td>
+										<td>{{$transaction->expense->category->nombre}}</td>
+										<td>{{$transaction->concepto}}</td>
+										<td>{{$transaction->expense->account->nombre}}</td>
+										<td>{{strtoupper($transaction->forma_pago)}}</td>
+										<td>{{$transaction->numero_forma_pago}}</td>
+										<td style="text-align: right;">{{$transaction->importe_debito}}</td>
+										<td style="vertical-align:middle; text-align:right;">
+											<div class="btn-group">
+												<a href="{{ route('transaction.expense.show', $transaction->expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+													<i class="fa fa-eye"></i>
+												</a>
+											</div>
+									   </td>
+									</tr>
+								@elseif($transaction->tipo_transaccion == "Traspaso-Egreso")
+									<tr>
+										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td>{{$transaction->nro_documento}}</td>
+										<td><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</td>
+										<td></td>
+										<td></td>
+										<td>{{$transaction->concepto}}</td>
+										<td>{{$transaction->transfersOrigin[0]->accountOrigin->nombre}}</td>
+										<td>{{strtoupper($transaction->forma_pago)}}</td>
+										<td>{{$transaction->numero_forma_pago}}</td>
+										<td style="text-align: right;">- {{$transaction->importe_debito}}</td>
+										<td style="vertical-align:middle; text-align:right;">
+											<div class="btn-group">
+												
+												<a href="{{ route('transaction.transfer.show', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+													<i class="fa fa-eye"></i>
+												</a>
+											</div>
+									   </td>
+									</tr>
 								@else
-								<td style="text-align: right;">{{$transaction->importe_debito}}</td>
+									<tr>
+										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td>{{$transaction->nro_documento}}</td>
+										<td><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</td>
+										<td></td>
+										<td></td>
+										<td>{{$transaction->concepto}}</td>
+										<td>{{$transaction->transfersDestiny[0]->accountDestiny->nombre}}</td>
+										<td>{{strtoupper($transaction->forma_pago)}}</td>
+										<td>{{$transaction->numero_forma_pago}}</td>
+										<td style="text-align: right;">+{{$transaction->importe_credito}}</td>
+										<td style="vertical-align:middle; text-align:right;">
+											<div class="btn-group">
+												
+												<a href="{{ route('transaction.transfer.show', $transaction->transfersDestiny[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+													<i class="fa fa-eye"></i>
+												</a>
+											</div>
+									   </td>
+									</tr>
 								@endif
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-										@if($transaction->tipo_transaccion == "Ingreso")
-										<a href="{{ route('transaction.collection.show', $transaction->collection->id ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
-											   <i class="fa fa-eye"></i>
-										   </a>
-										   
-										@elseif($transaction->tipo_transaccion == "Egreso")
-										<a href="{{ route('transaction.expense.show', $transaction->expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-										@else
-										<a href="{{ route('transaction.transfer.show', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-										
-										@endif
-                                       
-										
-                                    </div>
-                               </td>
-                            </tr>
+
+                            
 							@endforeach
 
 
@@ -134,9 +187,9 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "paging":   false,
+				"pageLength": 25,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 4 } ]
+                "columnDefs": [ { "orderable": false, "targets": 7 } ]
             });
         } );
     </script>

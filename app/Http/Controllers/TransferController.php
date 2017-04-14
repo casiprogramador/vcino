@@ -84,7 +84,7 @@ class TransferController extends Controller
 		
 		$transaction = new Transaction();
 		$transaction->nro_documento = $numero_documento+1;
-		$transaction->tipo_transaccion = 'Traspaso';
+		$transaction->tipo_transaccion = 'Traspaso-Egreso';
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$transaction->concepto = $request->concepto;
 		$transaction->forma_pago = $request->modo_traspaso;
@@ -98,7 +98,7 @@ class TransferController extends Controller
 		
 		$transaction = new Transaction();
 		$transaction->nro_documento = $numero_documento+1;
-		$transaction->tipo_transaccion = 'Traspaso';
+		$transaction->tipo_transaccion = 'Traspaso-Ingreso';
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$transaction->concepto = $request->concepto;
 		$transaction->forma_pago = $request->modo_traspaso;
