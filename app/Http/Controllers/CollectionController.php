@@ -40,7 +40,7 @@ class CollectionController extends Controller
     {
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
-		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
         return view('collections.create')
 		->with('properties',$properties)
 		->with('accounts',$accounts);
@@ -134,7 +134,7 @@ class CollectionController extends Controller
         $company = Auth::user()->company;
 
 		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
-		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
 		
 		$contacts = Contact::where('company_id',$company->id )->where('property_id', $collection->property_id)->where('activa','1')->get();
 		$contacts = $contacts->lists('FullName','id')->all();

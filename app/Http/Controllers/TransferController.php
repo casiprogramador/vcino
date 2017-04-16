@@ -9,6 +9,7 @@ use App\Account;
 use App\Transaction;
 use App\Transfer;
 use App\Category;
+use App\Expenses;
 use Auth;
 
 class TransferController extends Controller
@@ -24,9 +25,9 @@ class TransferController extends Controller
     public function index()
     {
 		$company = Auth::user()->company;
-		$categories = Category::where('company_id',$company->id )->where('tipo_categoria', 'Ingreso')->lists('nombre','id')->all();
-		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
-		$transactions = Transaction::where('user_id',Auth::user()->id );
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('activa',1)->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+		$transactions = Transaction::where('user_id',Auth::user()->id )->orderBy('fecha_pago', 'desc');
         return view('transfers.index')
 				->with('transactions',$transactions->get())
 				->with('categories',$categories)
@@ -41,7 +42,7 @@ class TransferController extends Controller
     public function create()
     {
 		$company = Auth::user()->company;
-		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
         return view('transfers.create')
 		->with('accounts',$accounts);
     }
@@ -77,7 +78,7 @@ class TransferController extends Controller
 			$path="";
 		}
 		
-		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Egreso')->max('nro_documento');
+		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Traspaso-Egreso')->max('nro_documento');
 		//dd($numero_documento);
 		
 		$company = Auth::user()->company;
@@ -175,9 +176,37 @@ class TransferController extends Controller
         //
     }
 	
-	public function saarch(Request $request)
+	public function search(Request $request)
     {
-        dd($request);
+        $transactions = Transaction::where('user_id',Auth::user()->id );
+		$company = Auth::user()->company;
+		//Busqueda por tipo		
+		if($request->tipo == "cobranza"){
+			$transactions = $transactions->where('tipo_transaccion','Ingreso');
+		}elseif ($request->tipo == "gasto") {
+			$transactions = $transactions->where('tipo_transaccion','Egreso');
+	
+		}elseif ($request->tipo == "traspaso") {
+			$transactions = $transactions->where('tipo_transaccion','Traspaso-Egreso')->orWhere('tipo_transaccion','Traspaso-Ingreso');
+		}
+		//Busqueda por categoria
+		if($request->categoria != "todos"){
+			$expenses = Expenses::where('company_id',$company->id )->where('category_id',$request->categoria)->get();
+			$id_transactions = array();
+			foreach($expenses as $expense){
+				array_push($id_transactions, $expense->transaction_id);	
+			}
+			$transactions = $transactions->whereIn('id',$id_transactions);
+		}
+		
+		
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('activa',1)->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+        return view('transfers.index')
+				->with('transactions',$transactions->get())
+				->with('categories',$categories)
+				->with('accounts',$accounts);
+		
     }
 	
 	public function pdf($id){

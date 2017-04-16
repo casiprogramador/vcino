@@ -32,6 +32,26 @@
                 </div>
 
                 <div class="ibox-content">
+					<div class="row">
+					{!! Form::open(array('route' => 'transaction.transfer.search', 'class' => 'form-horizontal')) !!}
+                    <div class="col-sm-2 m-b-xs">
+                        <select name="tipo" class="input-sm form-control input-s-sm inline">
+                            <option value="todos">Tipo: Todos</option>
+                            <option value="cobranza">Cobranzas</option>
+                            <option value="gasto">Gastos</option>
+                            <option value="traspaso">Traspasos</option>
+                            <option value="4">Otros ingresos</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 m-b-xs">
+                        {{ Form::select('categoria',['todos'=>'Categoria: Todas']+$categories, old('categoria'), ['class' => 'input-sm form-control input-s-sm inline']) }}
+                    </div>
+                    <div class="col-sm-4 m-b-xs">
+                        {{ Form::select('cuenta',['todos'=>'Cuentas: Todas']+$accounts, old('cuenta'), ['class' => 'input-sm form-control input-s-sm inline']) }}
+                    </div>
+					<button class="btn btn-white btn-sm" type="submit">Buscar</button>
+					{!! Form::close() !!}
+                </div>
 
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
@@ -55,7 +75,7 @@
 								@if($transaction->tipo_transaccion == "Ingreso")
 									<tr>
 										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
-										<td>{{$transaction->nro_documento}}</td>
+										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa-long-arrow-up"></i>&nbsp;&nbsp;Cobranza</td>
 										<td>{{$transaction->collection->property->nro}}&nbsp;-&nbsp;{{$transaction->collection->contact->nombre}} {{$transaction->collection->contact->apellido}}</td>
 										<td></td>
@@ -75,7 +95,7 @@
 								@elseif($transaction->tipo_transaccion == "Egreso")
 									<tr>
 										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
-										<td>{{$transaction->nro_documento}}</td>
+										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa-long-arrow-down"></i>&nbsp;&nbsp;Gasto</td>
 										<td>{{$transaction->expense->supplier->razon_social}}</td>
 										<td>{{$transaction->expense->category->nombre}}</td>
@@ -95,7 +115,7 @@
 								@elseif($transaction->tipo_transaccion == "Traspaso-Egreso")
 									<tr>
 										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
-										<td>{{$transaction->nro_documento}}</td>
+										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</td>
 										<td></td>
 										<td></td>
@@ -116,7 +136,7 @@
 								@else
 									<tr>
 										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
-										<td>{{$transaction->nro_documento}}</td>
+										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</td>
 										<td></td>
 										<td></td>

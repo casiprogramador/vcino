@@ -6,13 +6,13 @@
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
             </li>
             <li>
-                <a href="#">Lista de transacciones</a>
+                <a id="direccion-lista" href="{{ route('transaction.transfer.index') }}">Lista de transacciones</a>
             </li>
             <li class="active">
                 <strong>Nuevo traspaso</strong>
@@ -96,7 +96,7 @@
 								</div>
 								<div class="form-group">
 									<label>Concepto</label>
-									<input type="text" name="concepto" class="form-control input-sm" value="{{old('concepto')}}">
+									<input type="text" name="concepto" id="concepto-input" class="form-control input-sm" value="{{old('concepto')}}">
 								</div>
 
 							</div>
@@ -111,7 +111,7 @@
 								<div class="form-group">
 									<label>Importe</label>
 									<div class="col-sm-4 input-group">
-										<input type="text" class="form-control input-sm" name="importe" value="{{old('importe')}}">
+										<input type="text" id="importe-input" class="form-control input-sm" name="importe" value="{{old('importe')}}">
 									</div>
 								</div>
 								<div class="form-group">
@@ -175,13 +175,14 @@
 			}
 
 			//paso 2 importe mayor a 0
-			if (newIndex === 2 && Number($("#importe-total").text()) == 0)
+			if (newIndex === 2 && $("#concepto-input").val() == "")
 			{
-			//return false;
+				console.log($("#concepto-input").val());
+			return false;
 			}
 
 			//paso 3 validar campos
-			if (newIndex === 3 && Number($("#select-cuenta option:selected").val()) == 0)
+			if (newIndex === 3 && $("#importe-input").val() == "")
 			{
 			return false;
 			}

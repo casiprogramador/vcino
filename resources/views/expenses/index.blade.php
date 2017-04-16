@@ -53,7 +53,7 @@
 							@if($expense->transaction->anulada == 1)
                             <tr>
                                 <td><s>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</s></td>
-                                <td><s>{{$expense->transaction->nro_documento}}</s></td>
+                                <td><s>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
                                 <td><s>{{$expense->supplier->razon_social}}</s></td>
                                 <td><s>{{$expense->category->nombre}}</s></td>
                                 <td><s>{{$expense->transaction->concepto}}</s></td>
@@ -68,7 +68,7 @@
 							@else
 							<tr>
                                 <td>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
-                                <td>{{$expense->transaction->nro_documento}}</td>
+                                <td>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
                                 <td>{{$expense->supplier->razon_social}}</td>
                                 <td>{{$expense->category->nombre}}</td>
                                 <td>{{$expense->transaction->concepto}}</td>
