@@ -73,8 +73,9 @@
                         <tbody>
 							@foreach($transactions as $transaction)
 								@if($transaction->tipo_transaccion == "Ingreso")
+									@if($transaction->anulada == 0)
 									<tr>
-										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td data-order="{{$transaction->fecha_pago}}">{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
 										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa-long-arrow-up"></i>&nbsp;&nbsp;Cobranza</td>
 										<td>{{$transaction->collection->property->nro}}&nbsp;-&nbsp;{{$transaction->collection->contact->nombre}} {{$transaction->collection->contact->apellido}}</td>
@@ -92,9 +93,27 @@
 											</div>
 									   </td>
 									</tr>
-								@elseif($transaction->tipo_transaccion == "Egreso")
+									@else
 									<tr>
-										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td data-order="{{$transaction->fecha_pago}}"><s>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</s></td>
+										<td><s>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
+										<td><s><i class="fa fa-long-arrow-up"></i>&nbsp;&nbsp;Cobranza</s></td>
+										<td><s>{{$transaction->collection->property->nro}}&nbsp;-&nbsp;{{$transaction->collection->contact->nombre}} {{$transaction->collection->contact->apellido}}</s></td>
+										<td></td>
+										<td><s>{{$transaction->concepto}}</s></td>
+										<td><s>{{$transaction->collection->account->nombre}}</s></td>
+										<td><s>{{strtoupper($transaction->forma_pago)}}</s></td>
+										<td><s>{{$transaction->numero_forma_pago}}</s></td>
+										<td style="text-align: right;"><s>{{$transaction->importe_credito}}</s></td>
+										<td style="vertical-align:middle; text-align:right;">
+											 <span class="label label-warning">ANULADA</span>
+									   </td>
+									</tr>
+									@endif
+								@elseif($transaction->tipo_transaccion == "Egreso")
+									@if($transaction->anulada == 0)
+									<tr>
+										<td data-order="{{$transaction->fecha_pago}}">{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
 										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa-long-arrow-down"></i>&nbsp;&nbsp;Gasto</td>
 										<td>{{$transaction->expense->supplier->razon_social}}</td>
@@ -112,9 +131,27 @@
 											</div>
 									   </td>
 									</tr>
-								@elseif($transaction->tipo_transaccion == "Traspaso-Egreso")
+									@else
 									<tr>
-										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td data-order="{{$transaction->fecha_pago}}"><s>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</s></td>
+										<td><s>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
+										<td><s><i class="fa fa-long-arrow-down"></i>&nbsp;&nbsp;Gasto</s></td>
+										<td><s>{{$transaction->expense->supplier->razon_social}}</s></td>
+										<td><s>{{$transaction->expense->category->nombre}}</s></td>
+										<td><s>{{$transaction->concepto}}</s></td>
+										<td><s>{{$transaction->expense->account->nombre}}</s></td>
+										<td><s>{{strtoupper($transaction->forma_pago)}}</s></td>
+										<td><s>{{$transaction->numero_forma_pago}}</s></td>
+										<td style="text-align: right;"><s>{{$transaction->importe_debito}}</s></td>
+										<td style="vertical-align:middle; text-align:right;">
+											<span class="label label-warning">ANULADA</span>
+									   </td>
+									</tr>
+									@endif
+								@elseif($transaction->tipo_transaccion == "Traspaso-Egreso")
+									@if($transaction->anulada == 0)
+									<tr>
+										<td data-order="{{$transaction->fecha_pago}}">{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
 										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</td>
 										<td></td>
@@ -130,12 +167,34 @@
 												<a href="{{ route('transaction.transfer.show', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													<i class="fa fa-eye"></i>
 												</a>
+												<a href="{{ route('transaction.transfer.edit', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+													<i class="fa fa-pencil"></i>
+												</a>
 											</div>
 									   </td>
 									</tr>
-								@else
+									@else
 									<tr>
-										<td>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
+										<td data-order="{{$transaction->fecha_pago}}"><s>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</s></td>
+										<td><s>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
+										<td><s><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</s></td>
+										<td></td>
+										<td></td>
+										<td><s>{{$transaction->concepto}}</s></td>
+										<td><s>{{$transaction->transfersOrigin[0]->accountOrigin->nombre}}</s></td>
+										<td><s>{{strtoupper($transaction->forma_pago)}}</s></td>
+										<td><s>{{$transaction->numero_forma_pago}}</s></td>
+										<td style="text-align: right;"><s>- {{$transaction->importe_debito}}</s></td>
+										<td style="vertical-align:middle; text-align:right;">
+											<span class="label label-warning">ANULADA</span>
+									   </td>
+									</tr>
+									@endif
+									
+								@else
+									@if($transaction->anulada == 0)
+									<tr>
+										<td data-order="{{$transaction->fecha_pago}}">{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</td>
 										<td>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
 										<td><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</td>
 										<td></td>
@@ -151,9 +210,29 @@
 												<a href="{{ route('transaction.transfer.show', $transaction->transfersDestiny[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													<i class="fa fa-eye"></i>
 												</a>
+												<a href="{{ route('transaction.transfer.edit', $transaction->transfersDestiny[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+													<i class="fa fa-pencil"></i>
+												</a>
 											</div>
 									   </td>
 									</tr>
+									@else
+									<tr>
+										<td data-order="{{$transaction->fecha_pago}}"><s>{{ date_format(date_create($transaction->fecha_pago),'d/m/Y') }}</s></td>
+										<td><s>{{ str_pad($transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
+										<td><s><i class="fa fa fa-arrows-v"></i>&nbsp;&nbsp;{{$transaction->tipo_transaccion}}</s></td>
+										<td></td>
+										<td></td>
+										<td><s>{{$transaction->concepto}}</td>
+										<td><s>{{$transaction->transfersDestiny[0]->accountDestiny->nombre}}</s></td>
+										<td><s>{{strtoupper($transaction->forma_pago)}}</s></td>
+										<td><s>{{$transaction->numero_forma_pago}}</s></td>
+										<td style="text-align: right;"><s>+{{$transaction->importe_credito}}</s></td>
+										<td style="vertical-align:middle; text-align:right;">
+											<span class="label label-warning">ANULADA</span>
+									   </td>
+									</tr>
+									@endif
 								@endif
 
                             

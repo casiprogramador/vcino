@@ -10,6 +10,7 @@ use App\Transaction;
 use App\Transfer;
 use App\Category;
 use App\Expenses;
+use App\Collection;
 use Auth;
 
 class TransferController extends Controller
@@ -150,7 +151,12 @@ class TransferController extends Controller
      */
     public function edit($id)
     {
-        //
+       $company = Auth::user()->company;
+	   $accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+	   $transfer = Transfer::find($id);
+        return view('transfers.edit')
+		->with('accounts',$accounts)
+		->with('transfer',$transfer);
     }
 
     /**
@@ -162,7 +168,68 @@ class TransferController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dd($request);
+		$this->validate($request, [
+			'cuenta_origen' => 'required|not_in:0',
+			'cuenta_destino' => 'required|not_in:0',
+            'concepto' => 'required',
+			'importe' => 'required',
+			'modo_traspaso' => 'required',
+            'fecha' => 'required',   
+       ]);
+		
+		if(!empty($request->adjunto)){
+			$id_user = Auth::user()->id;
+			$file = $request->adjunto;
+			$tmpFilePath = '/img/upload/gastos/';
+			$tmpFileName = time() . '-'.$id_user. '-gasto-name-' . $file->getClientOriginalName();
+			$file->move(public_path() . $tmpFilePath, $tmpFileName);
+			$path = $tmpFilePath . $tmpFileName;
+		}elseif(!empty($request->adjunto_ori)){
+			$path = $request->adjunto_ori;
+		}else{
+			$path="";
+		}
+		
+		
+		$company = Auth::user()->company;
+		
+		$transaction = Transaction::find($request->transaction_ori);
+		$transaction->tipo_transaccion = 'Traspaso-Egreso';
+		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$transaction->concepto = $request->concepto;
+		$transaction->forma_pago = $request->modo_traspaso;
+		$transaction->numero_forma_pago = $request->nro_transanccion;
+		$transaction->importe_credito = '0';
+		$transaction->importe_debito = $request->importe;
+		$transaction->notas = $request->nota;
+		$transaction->user_id= Auth::user()->id;
+		$transaction->save();
+		
+		$transaction = Transaction::find($request->transaction_des);
+		$transaction->tipo_transaccion = 'Traspaso-Ingreso';
+		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$transaction->concepto = $request->concepto;
+		$transaction->forma_pago = $request->modo_traspaso;
+		$transaction->numero_forma_pago = $request->nro_transanccion;
+		$transaction->importe_debito = '0';
+		$transaction->importe_credito = $request->importe;
+		$transaction->notas = $request->nota;
+		$transaction->user_id= Auth::user()->id;
+		$transaction->save();
+		
+		//ori_transaction_id
+		
+		$transfer = Transfer::find($id);
+		$transfer->ori_account_id = $request->cuenta_origen;
+		$transfer->des_account_id = $request->cuenta_destino;
+		$transfer->company_id = $company->id;
+
+		$transfer->adjunto = $path;
+
+		$transfer->save();
+		
+		return redirect()->route('transaction.transfer.show', [$id]);
     }
 
     /**
@@ -195,6 +262,28 @@ class TransferController extends Controller
 			$id_transactions = array();
 			foreach($expenses as $expense){
 				array_push($id_transactions, $expense->transaction_id);	
+			}
+			$transactions = $transactions->whereIn('id',$id_transactions);
+		}
+		
+		//Busqueda por cuentas
+		if($request->cuenta != "todos"){
+			$id_transactions = array();
+			$expenses = Expenses::where('company_id',$company->id )->where('account_id',$request->cuenta)->get();
+			foreach($expenses as $expense){
+				array_push($id_transactions, $expense->transaction_id);	
+			}
+			$collections = Collection::where('company_id',$company->id )->where('account_id',$request->cuenta)->get();
+			foreach($collections as $collection){
+				array_push($id_transactions, $collection->transaction_id);	
+			}
+			$transfers = Transfer::where('company_id',$company->id )->where('ori_account_id',$request->cuenta)->get();
+			foreach($transfers as $transfer){
+				array_push($id_transactions, $transfer->ori_transaction_id);	
+			}
+			$transfers = Transfer::where('company_id',$company->id )->where('des_account_id',$request->cuenta)->get();
+			foreach($transfers as $transfer){
+				array_push($id_transactions, $transfer->des_transaction_id);	
 			}
 			$transactions = $transactions->whereIn('id',$id_transactions);
 		}
