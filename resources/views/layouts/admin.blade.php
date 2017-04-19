@@ -21,12 +21,12 @@
 						<li class="{{ MenuRoute::active('transaction/transfer') }}"><a href="{{ route('transaction.transfer.index') }}">Lista de transacciones</a></li>
 						<li class="{{ MenuRoute::active('transaction/collection') }}"><a href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a></li>
 						<li class="{{ MenuRoute::active('transaction/expense') }}"><a href="{{ route('transaction.expense.index') }}">Lista de gastos</a></li>
-						<li class="{{ MenuRoute::active('transaction/accountsreceivable/index') }}">
+						
+                        <li class="{{ MenuRoute::active('transaction/accountsreceivable') }}">
 							<a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
 						</li>
-						<li class="{{ MenuRoute::active('transaction/accountsreceivable/send') }}"><a href="{{ route('transaction.accountsreceivable.send') }}">Enviar aviso de cobranza</a></li>
-<!--						<li class="{{ MenuRoute::active('transaction/accountsreceivable/generate') }}">
-							<a href="{{ route('transaction.accountsreceivable.generate') }}">Generar cuotas por cobrar</a></li>-->
+						<li class="{{ MenuRoute::active('transaction/accountsreceivable.send') }}">
+                            <a href="{{ route('transaction.accountsreceivable.send') }}">Enviar aviso de cobranza</a></li>
 					</ul>
 				</li>
                 <li {!! (Request::is('communication/*') ? ' class="active"' : '') !!}>

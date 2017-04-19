@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Cuotas por cobrar</h2>
         <ol class="breadcrumb">
              <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -43,7 +43,7 @@
 									<strong>{{ $errors->first('propiedad') }}</strong>
 								</span>
 								@endif
-				</div>
+				            </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
@@ -132,6 +132,7 @@
 								</span>
 								@endif
                             </div>
+                            <!--
                             <label class="col-sm-3 control-label">Importe abonado</label>
                             <div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}">
                                 <input name="importe_abonado" type="text" value="0" class="form-control input-sm" value="{{ $accountsreceivable->importe_abonado }}">
@@ -141,6 +142,7 @@
 								</span>
 								@endif
                             </div>
+                            -->
                         </div>
 
                         <div class="hr-line-dashed"></div>
@@ -166,7 +168,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                 <button class="btn btn-success" type="submit">Guardar</button>
+                                 <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                                  <a href="{{ route('transaction.accountsreceivable.index') }}" class="btn btn-white" >Cancelar</a>
                             </div>
                         </div>

@@ -4,7 +4,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Avisos de cobranza</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -36,23 +36,20 @@
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Avisos de cobranza</h5>
 					<div class="ibox-tools" style="padding-bottom: 7px;">
-                            <a href="{{ route('transaction.accountsreceivable.generatenotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Generar nuevos avisos de cobranza" data-original-title="generar nuevos avisos de cobranza" style="margin-right: 5px;"> Generar avisos de cobranza </a>
+                            <a href="{{ route('transaction.accountsreceivable.generatenotification') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo aviso de cobranza para cada propiedad" data-original-title="Nuevo aviso de cobranza para cada propiedad" style="margin-right: 5px; color: white;">Nuevo aviso de cobranza</a>
 
-                            <a href="{{ route('transaction.accountsreceivable.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de avisos de cobranza" data-original-title="Ver registro de envíos de avisos de cobranza" style="margin-right: 5px;"> Registro de envios </a>
+                            <a href="{{ route('transaction.accountsreceivable.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de avisos de cobranza" data-original-title="Ver registro de envíos de avisos de cobranza" style="margin-right: 5px;"> Registro de envíos </a>
                     </div>
                 </div>
 
                 <div class="ibox-content">
 
-
-                    <!--        LISTA DE DISTRIBUCIÓN QUE SE GENERA CON TODAS LAS PROPIEDADES EN MORA       -->
-                    
 					<div class="row">
 						<div class="col-sm-12">
 							
+                            {!! Form::open(array('route' => 'transaction.accountsreceivable.sendnotification','id'=>'form-send-alertpayment')) !!}
                             <div class="table-responsive">
-								{!! Form::open(array('route' => 'transaction.accountsreceivable.sendnotification','id'=>'form-send-alertpayment')) !!}
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-striped">
                                     <thead>
                                         <tr>
                                             <th style="vertical-align:bottom; text-align: center;" width="50">
@@ -103,7 +100,7 @@
 												 @endif
 												@endfor
 											</td>
-											<td style="vertical-align:middle; text-align: right;">{{ $sendalertpayment->importe_total }}</td>
+											<td style="vertical-align:middle; text-align: right; padding-right: 30px;">{{ $sendalertpayment->importe_total }}</td>
                                             <td style="vertical-align:middle; text-align: center;">
                                                 <div class="btn-group">
                                                     <a href="{{ route('transaction.accountsreceivable.print', $sendalertpayment->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver aviso de cobranza" style="margin-bottom: 0px;">
@@ -112,7 +109,6 @@
                                                 </div>
 											</td>
                                         </tr>
-
 											
 										@endforeach
                                     </tbody>
@@ -121,14 +117,14 @@
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
-									<button name="submit" class="btn btn-success" type="submit" value="enviar" style="margin-right: 10px;"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar a seleccionados</button>
-									<button name="submit"class="btn btn-success"type="submit" value="imprimir" ><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+									<button name="submit" class="btn btn-success" type="submit" value="enviar" style="margin-right: 10px;"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar seleccionados</button>
+									<button name="submit"class="btn btn-success"type="submit" value="imprimir" ><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir seleccionados</button>
 									<span class="text-muted" style="margin: 0 10px;">|</span>
 									<button name="submit" class="btn btn-danger" type="submit" value="borrar"><i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar seleccionados</button>
 								</div>
 							
-							{!! Form::close() !!}
 							</div>
+                            {!! Form::close() !!}
 
 							<div class="hr-line-dashed"></div>
 
@@ -136,8 +132,7 @@
 								<label class="col-sm-2 control-label">Proceso de envío</label>
 								<div class="col-sm-9" style="margin-top: 5px">
 									<div class="progress">
-										<div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
-											<span id="progress-text">0% Completado</span>
+										<div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">&nbsp;&nbsp;<span id="progress-text">0% Completado</span>
 										</div>
 									</div>
 								</div>
@@ -157,6 +152,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
 @endsection
+
 @section('javascript')
 <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
 <script>
@@ -166,8 +162,8 @@
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sZeroRecords":    "No se encontraron resultados.",
+                    "sEmptyTable":     "No se encontraron Avisos de cobranza.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -188,7 +184,8 @@
                     }
                 },
                 "paging":   false,
-                "info":     false
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 0 }, { "orderable": false, "targets": 4 } ]
             });
         } );
     </script>

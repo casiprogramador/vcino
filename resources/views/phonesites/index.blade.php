@@ -3,7 +3,7 @@
 @section('admin-content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Teléfonos y sitios</h2>
+            <h2>Teléfonos y sitios útiles</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
@@ -29,14 +29,10 @@
                 @endif
                 <div class="ibox">
 					<div class="ibox-title">
-                        <h5 style="padding-top: 7px;">Lista de telefonos y sitios</h5>
+                        <h5 style="padding-top: 7px;">Teléfonos y sitios útiles</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <div class="btn-group">
-                                <a href="{{route('config.phonesite.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
+                                <a href="{{route('config.phonesite.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo teléfono o sitio web de utilidad" data-original-title="Nuevo teléfono o sitio web de utilidad" style="margin-right: 5px;"> Nuevo </a>
                             </div>
                         </div>
                     </div>
@@ -101,7 +97,7 @@
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
                     "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sEmptyTable":     "No se encontraron teléfonos o sitios web de utilidad.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",

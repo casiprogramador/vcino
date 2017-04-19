@@ -12,7 +12,7 @@
                 Comunicación & Información
             </li>
             <li>
-                <a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+                <a href="{{ route('communication.communication.index') }}">Comunicados</a>
             </li>
                 <li class="active">
                     <strong>Reenviar comunicado</strong>
@@ -48,14 +48,12 @@
 									{{ Form::select('comunicado',$communications, $id_comunication, ['class' => 'form-control input-sm']) }}
                                 </div>
                             </div>
-
-                            <div class="form-group">
+                            
+                            <div class="form-group" style="display: none;">
                                 <label class="col-sm-3 control-label">Remitente</label>
                                 <div class="col-sm-5">
                                     <select class="form-control input-sm" name="remitente">
-                                        <option value="Administracion">Administración</option>
-                                        <option value="Directorio">Directorio</option>
-                                        <option value="Sin remitente">Sin remitente</option>
+                                        <option value="Administracion" selected>Administración</option>
                                     </select>
                                 </div>
                             </div>
@@ -76,7 +74,6 @@
                                 </div>
                             </div>
 
-
                             <!--    ESTE SELECT PARA: Seleccionar propiedad             -->
                             <div class="form-group" id="select-propiedad">
                                 <label class="col-sm-3 control-label">Propiedad</label>
@@ -84,7 +81,6 @@
 									{{ Form::select('propiedad',$properties, old('property'), ['class' => 'form-control input-sm']) }}
                                 </div>
                             </div>
-
 
                             <!--    ESTE SELECT PARA: Seleccionar contacto(s)             -->
                             <div class="form-group" id="select-contacto">
@@ -94,7 +90,6 @@
                                 </div>
                             </div>
 
-
                             <!--    ESTE SELECT PARA: Dirección de correo                -->
                             <div class="form-group" id="correo">
                                 <label class="col-sm-3 control-label">Dirección de correo</label>
@@ -103,19 +98,8 @@
                                 </div>
                             </div>
 
-
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Proceso de envío</label>
-                                <div class="col-sm-9" style="margin-top: 5px">
-                                    <div class="progress">
-                                        <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
-                                            <span id="progress-text">0% Completado</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 							@foreach($sendcommunications as $sendcommunication)
                             <!--    PANEL REGISTRO DE ENVIO DE COMUNICADOS              -->
                             <div class="form-group">
@@ -126,41 +110,62 @@
                                             Registro de envío
                                         </div>
                                         <div class="panel-body">
-                                            <div class="form-group">
+                                            <div class="form-group" style="padding: 0; margin-top: 0; margin-bottom: 0;">
                                                 <label class="col-sm-2 control-label">Fecha envío</label>
                                                 <div class="col-sm-3">
-                                                    <p class="form-control-static">{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y") }}</p>
+                                                    <p style="padding-top: 8px;">{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y") }}</p>
                                                 </div>
                                                 <label class="col-sm-2 control-label">Hora envío</label>
                                                 <div class="col-sm-3">
-                                                    <p class="form-control-static">{{ date_format(date_create( $sendcommunication->created_at ),"H:i") }}</p>
+                                                    <p style="padding-top: 8px;">{{ date_format(date_create( $sendcommunication->created_at ),"H:i") }}</p>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style="padding: 0; margin-top: 0; margin-bottom: 0;">
                                                 <label class="col-sm-2 control-label">Destinatarios</label>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-8"><p style="padding-top: 8px;">
                                                     @if($sendcommunication->dirigido == 'correo')	
 														@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
 															<span class="badge">{{$correo}}</span>
 														@endforeach
 													@else
 														<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
-													@endif		
+													@endif
+                                                    </p>	
                                                 </div>
                                             </div>
+                                            <div class="form-group" style="padding: 0; margin-top: 0; margin-bottom: 0;">
+                                            <label class="col-sm-2 control-label">E-mail(s)</label>
+                                            <div class="col-sm-8">
+                                                @foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
+                                                    <p style="padding-top: 8px;">{{$correo}}</p>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 							@endforeach
-
-                            <div class="hr-line-dashed"></div>
                             <!--    FIN - PANEL REGISTRO DE ENVIO DE COMUNICADOS            -->
 
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Proceso de envío</label>
+                                <div class="col-sm-9" style="margin-top: 5px">
+                                    <div class="progress">
+                                        <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
+                                            <span id="progress-text">&nbsp;&nbsp;0% Completado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
 
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Enviar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Reenviar</button>
                                     <a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
                                 </div>
                             </div>

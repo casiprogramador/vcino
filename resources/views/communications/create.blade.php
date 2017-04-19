@@ -12,7 +12,7 @@
 				Comunicación & Información
 			</li>
 			<li>
-				<a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+				<a href="{{ route('communication.communication.index') }}">Comunicados</a>
 			</li>
 			<li class="active">
 				<strong>Nuevo comunicado</strong>
@@ -65,7 +65,7 @@
 						<label class="col-sm-2 control-label">Cuerpo</label>
 						<div class="col-sm-9">
 							<div class="no-padding">
-								<textarea id="summernote" name="cuerpo">Escribir cuerpo...</textarea>
+								<textarea id="summernote" name="cuerpo"></textarea>
 							</div>
 							@if ($errors->has('cuerpo'))
 							<span class="help-block">
@@ -93,7 +93,6 @@
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 							</div>
-
 
 							<!--    Para el caso de mas de un attach        -->
 							<div class="fileinput input-group fileinput-new" data-provides="fileinput">
@@ -128,7 +127,7 @@
 					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button class="btn btn-success" type="submit">Guardar</button>
+							<button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear comunicado</button>
 							<a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
 						</div>
 					</div>
@@ -155,7 +154,7 @@
 			    ['font', ['bold', 'italic', 'underline']],
 			    ['color', ['color']],
 			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['insert', ['link', 'hr']],
+			    ['insert', ['hr']],
 			    ['view', ['codeview']],
 			    ['help', ['help']]
 			],

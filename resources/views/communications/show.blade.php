@@ -6,13 +6,13 @@
 		<h2>Comunicados</h2>
 		<ol class="breadcrumb">
 			<li>
-				<a href="#/">Inicio</a>
-			</li>
+                <a href="{{ route('admin.home') }}">Inicio</a>
+            </li>
 			<li>
 				Comunicación & Información
 			</li>
 			<li>
-				<a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+				<a href="{{ route('communication.communication.index') }}">Comunicados</a>
 			</li>
 			<li class="active">
 				<strong>Ver comunicado</strong>
@@ -33,44 +33,6 @@
 
 				<div class="ibox-content">
 
-							@foreach($sendcommunications as $sendcommunication)
-                            <!--    PANEL REGISTRO DE ENVIO DE COMUNICADOS              -->
-                            <div class="form-group">
-
-                                <div class="col-sm-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            Registro de envío
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Fecha envío</label>
-                                                <div class="col-sm-2">
-                                                    <p>{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y") }}</p>
-                                                </div>
-                                                <label class="col-sm-2 control-label">Hora envío</label>
-                                                <div class="col-sm-2">
-                                                    <p>{{ date_format(date_create( $sendcommunication->created_at ),"H:i") }}</p>
-                                                </div>
-												<label class="col-sm-2 control-label">Destinatarios</label>
-                                                <div class="col-sm-2">
-                                                    @if($sendcommunication->dirigido == 'correo')	
-														@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
-															<span class="badge">{{$correo}}</span>
-														@endforeach
-													@else
-														<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
-													@endif		
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-							@endforeach
-
-                            <div class="hr-line-dashed"></div>
-                            <!--    FIN - PANEL REGISTRO DE ENVIO DE COMUNICADOS            -->					
 					<div class="form-horizontal">
 
 						<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha">
@@ -80,7 +42,6 @@
 								<input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($communication->fecha)) }}" readonly>
 							</div>
 							<div class="col-sm-8 col-md-offset-2">
-
 							</div>
 						</div>
 
@@ -88,27 +49,18 @@
 							<label class="col-sm-2 control-label">Asunto</label>
 							<div class="col-sm-8">
 								<input type="text" name="asunto" class="form-control input-sm" value="{{$communication->asunto}}" readonly>
-
 							</div>
 						</div>
 
 						<div class="form-group{{ $errors->has('cuerpo') ? ' has-error' : '' }}">
 							<label class="col-sm-2 control-label">Cuerpo</label>
-							<div class="col-sm-9">
+							<div class="col-sm-9" style="background-color: #EBEBEB; margin-left: 15px;">
+								<br>
 								<?php echo $communication->cuerpo ?>
 							</div>
 						</div>
-						<div class="form-group{{ $errors->has('asunto') ? ' has-error' : '' }}">
-							<label class="col-sm-2 control-label">Correos:</label>
-							<div class="col-sm-8">
 
-								@foreach ($communication->sendcommunication as $sendcommunication)
-								{{$sendcommunication->correos}} <br>
-								@endforeach
-
-							</div>
-						</div>
-
+						@if(!empty($communication->adjuntos))
 						<div class="hr-line-dashed"></div>
 
 						<div class="form-group">
@@ -174,10 +126,11 @@
 								</div>
 							</div>
 						</div>
+						@endif
 						<div class="hr-line-dashed"></div>
 						<div class="form-group">
 							<div class="col-sm-12">
-								<a href="{{ route('communication.communication.index') }}" class="btn btn-success" type="submit">Atras</a>
+								<a href="{{ route('communication.communication.index') }}" class="btn btn-success" type="submit">Volver</a>
 							</div>
 						</div>
 
@@ -185,6 +138,79 @@
 				</div>
 			</div>
 		</div>
+		@if( count($communication->sendcommunication) )
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Registro de envíos</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                	<div class="row">
+                        <!--    PANEL REGISTRO DE ENVIO DE COMUNICADOS              -->
+						@foreach($sendcommunications as $sendcommunication)
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Registro de envío
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Fecha envío</label>
+                                            <div class="col-sm-2">
+                                                <p>{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y") }}</p>
+                                            </div>
+                                            <label class="col-sm-2 control-label">Hora envío</label>
+                                            <div class="col-sm-2">
+                                                <p>{{ date_format(date_create( $sendcommunication->created_at ),"H:i") }}</p>
+                                            </div>
+											<label class="col-sm-2 control-label">Destinatarios</label>
+                                            <div class="col-sm-2">
+                                                @if($sendcommunication->dirigido == 'correo')	
+													@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
+														<span class="badge">{{$correo}}</span>
+													@endforeach
+												@else
+													<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
+												@endif		
+                                            </div>
+                                        </div>
+										<br>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">E-mail(s)</label>
+											<div class="col-sm-8">
+												@foreach( ( explode(",",$sendcommunication->correos) ) as $correo)
+													<p>{{$correo}}</p>
+												@endforeach
+												<!--
+												@foreach ($communication->sendcommunication as $sendcommunication)
+													<p>{{$sendcommunication->correos}}</p>
+												@endforeach
+												-->
+											</div>
+										</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						@endforeach
+                        <!--    FIN - PANEL REGISTRO DE ENVIO DE COMUNICADOS            -->
+					</div>
+					<div class="hr-line-dashed"></div>
+					<div class="form-group">
+						<a href="{{ route('communication.communication.index') }}" class="btn btn-success" type="submit">Volver</a>
+					</div>
+                </div>
+            </div>
+        </div>
+        @endif
+
 	</div>
 </div>
 @endsection

@@ -1,45 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>V-cino</title>
-		<link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}" />
-	</head>
-	<body>
-		<div class="row">
-			<div class="table-responsive">
-			<img src="{{ URL::asset(Auth::user()->company->logotipo)}}">
-			<h1 style="text-align: center;">COMUNICADO</h1>
-			<h2 style="text-align: center;"> Asunto:{{$communication->asunto}}</h2>
-			</div>
-		</div>
+@extends('layouts.app')
 
-		</div>
-		<h3 style="text-align: center;">{{ $cuerpo_remitente }}</h3>
-		<div><?php echo $comunicado_cuerpo ?></div>
-		
-		<div class="row" style="padding: 20px 0;">
-			<div class="col-sm-3">
-			</div>
-			<div class="col-sm-6">
-				<div class="hr-line-solid"></div>
-			</div>
-			<div class="col-sm-3">
-			</div>
-		</div>
+@section('content')
 
-		<div class="row">
-			<div class="text-center">
-				<h6 style="text-align: center;">&copy; 2016 V-CINO. Todos los derechos reservados.</h6>
-			</div>
-	
-			<div class="text-center">
-			<h6 style="text-align: center;">F.P. 2016-09-29 15:58:34</h6>
-			</div>
-		</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content p-xl">
+                    <div class="row">
+                        <table style="margin: 0 auto; width: 90%; padding-top: 10px;">
+                            <tbody>
+                                <tr>
+                                    <td style="border: 0; width: 50%; padding-right: 20px;">
+                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="{{Auth::user()->company->width_logo}}"></div>
+                                    </td>
+                                    <td style="border: 0; vertical-align:bottom;">
+                                        <div class="p-h-xl text-right">
+                                            <h3 style="line-height: 16px; text-align: right;">COMUNICADO</h3>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-	</body>
+                    <div class="row">
+                        <table style="margin: 10px auto; text-align: left; width: 90%; font-size: 14px;">
+                            <tr>
+                                <td>
+                                    <div class="row" style="padding: 10px 0 20px 0;">
+                                        <div class="col-sm-6">
+                                            Fecha:&nbsp;&nbsp;{{ $communication->fecha }}
+                                        </div>
+                                        <div class="col-sm-6">
+                                            Asunto:&nbsp;<span><strong>{{ $communication->asunto }}</strong></span>
+                                        </div>
+                                    </div>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>									
+                                    <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                                        <tr>
+                                            <td style="border-top: #eee 1px solid; padding: 5px 0;">
+                                            	<?php echo $comunicado_cuerpo ?>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-</html>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@endsection

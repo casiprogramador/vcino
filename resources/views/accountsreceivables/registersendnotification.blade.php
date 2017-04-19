@@ -4,7 +4,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Avisos de cobranza</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,8 +12,11 @@
             <li>
                 Transacciones
             </li>
+            <li>
+                <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
+            </li>
             <li class="active">
-                <strong>Registro de envios</strong>
+                <strong>Registro de envíos</strong>
             </li>
         </ol>
     </div>
@@ -26,16 +29,11 @@
             <div class="ibox">
 
                 <div class="ibox-title">
-					<div class="ibox-tools" style="padding-bottom: 7px;">
-                            <a href="{{ route('transaction.accountsreceivable.generatenotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Generar nuevos avisos de cobranza" data-original-title="generar nuevos avisos de cobranza" style="margin-right: 5px;"> Generar avisos de cobranza </a>
-
-                            <a href="{{ route('transaction.accountsreceivable.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de avisos de cobranza" data-original-title="Ver registro de envíos de avisos de cobranza" style="margin-right: 5px;"> Registro de envios </a>
-                    </div>
+                    <h5 style="padding-top: 2px;">Registro de envíos</h5>
                 </div>
 
                 <div class="ibox-content">
                     
-
                     <!--    INFORME DE ENVIO        -->
                     <div class="row">
                         <div class="col-sm-12">
@@ -47,9 +45,8 @@
                                             <th style="vertical-align:bottom">Destinatario</th>
                                             <th style="vertical-align:bottom">E-mail</th>
                                             <th style="vertical-align:bottom">Periodo(s)</th>
-    										<th style="vertical-align:bottom">Fecha Envio</th>
+    										<th style="vertical-align:bottom">Fecha envio</th>
                                             <th style="vertical-align:bottom">Estado</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -94,7 +91,7 @@
     											 @endif
     											@endfor
     										</td>
-    										<td>
+    										<td style="width: 130px;">
     											{{ $sendalertpayment->fecha_envio}}
     										</td>
     										@if($sendalertpayment->enviado == 1)
@@ -110,11 +107,14 @@
     									@endforeach
                                     </tbody>
                                 </table>
-								<div class="form-group">
-									<div class="col-sm-12">
-										 <a href="{{ route('transaction.accountsreceivable.send') }}" class="btn btn-success" >Atras</a>
-									</div>
-								</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <a href="{{ route('transaction.accountsreceivable.send') }}" class="btn btn-success" >Volver</a>
                             </div>
                         </div>
                     </div>
@@ -125,20 +125,23 @@
     </div>
 </div>
 
-
-
 @endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
+
 @section('javascript')
 <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
 <script>
         $(document).ready(function() {
             $('.table').DataTable({
-                "order": [[ 1, "asc" ]],
+                "order": [[ 4, "desc" ]],
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
                     "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sEmptyTable":     "No existen registros de envíos.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -158,7 +161,12 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "info":     false
+                "pageLength": 50,
+                "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
+                "paging":   true,
+                "bLengthChange" : false,
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 3 }, { "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

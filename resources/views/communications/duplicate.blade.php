@@ -12,7 +12,7 @@
 				Comunicación & Información
 			</li>
 			<li>
-				<a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+				<a href="{{ route('communication.communication.index') }}">Comunicados</a>
 			</li>
 			<li class="active">
 				<strong>Copiar comunicado</strong>
@@ -134,7 +134,7 @@
 					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button class="btn btn-success" type="submit">Guardar</button>
+							<button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
 							<a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
 						</div>
 					</div>

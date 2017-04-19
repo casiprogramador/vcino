@@ -6,7 +6,7 @@
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
@@ -26,7 +26,7 @@
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Lista de gastos</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <a type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px;" href="{{ route('transaction.expense.create') }}"> Nuevo gasto </a>
+                        <a type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px; color: white;" href="{{ route('transaction.expense.create') }}"> Nuevo gasto </a>
 
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                                 <th style="vertical-align:bottom">Forma<br/> de pago</th>
                                 <th style="vertical-align:bottom">Ref. pago</th>
                                 <th style="vertical-align:bottom; text-align: right;">Importe</th>
-                                <th style="vertical-align:bottom" width="120"></th>
+                                <th style="vertical-align:bottom" width="100"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
 							@if($expense->transaction->anulada == 1)
                             <tr>
                                 <td><s>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</s></td>
-                                <td><s>{{$expense->transaction->nro_documento}}</s></td>
+                                <td><s>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
                                 <td><s>{{$expense->supplier->razon_social}}</s></td>
                                 <td><s>{{$expense->category->nombre}}</s></td>
                                 <td><s>{{$expense->transaction->concepto}}</s></td>
@@ -68,7 +68,7 @@
 							@else
 							<tr>
                                 <td>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
-                                <td>{{$expense->transaction->nro_documento}}</td>
+                                <td>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
                                 <td>{{$expense->supplier->razon_social}}</td>
                                 <td>{{$expense->category->nombre}}</td>
                                 <td>{{$expense->transaction->concepto}}</td>
@@ -107,6 +107,10 @@
 </div>
 
 @endsection
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
+
 @section('javascript')
     <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
     <script>
@@ -135,7 +139,13 @@
                         "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
-                }
+                },
+                "pageLength": 25,
+                "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
+                "paging":   true,
+                "bLengthChange" : false,
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 4 }, {"orderable": false, "targets": 6 }, {"orderable": false, "targets": 9 } ]
             });
         } );
     </script>

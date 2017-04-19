@@ -74,7 +74,7 @@ class AccountsReceivableController extends Controller
 					->where('property_id',$request->propiedad)
 					->where('quota_id',$request->cuota)->get();
 			if(count($accountsreceivable_validate)){
-				Session::flash('message', 'La cuota por pagar ya fue creada, No se ingreso registros nuevos.');
+				Session::flash('message', 'Cuota por cobrar duplicada. No se registro una nueva cuota.');
 				return redirect()->route('transaction.accountsreceivable.index');
 			}else{
 				$accountsreceivable = new Accountsreceivable();
@@ -268,7 +268,7 @@ class AccountsReceivableController extends Controller
 	
 	public function generatenotification(){
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$properties = Property::orderBy('orden','asc')->where('company_id',$company->id )->lists('nro','id')->all();
 		$subjects = Subject::where('company_id',$company->id )->lists('nombre','nombre')->all();
 		$gestiones = Gestion::lists('nombre','nombre')->all();
 
@@ -326,7 +326,7 @@ class AccountsReceivableController extends Controller
 							}
 						}//end foreach contacts
 					}else{
-						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos');
+						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos.');
 						return redirect()->route('transaction.accountsreceivable.send');
 					}
 					$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);

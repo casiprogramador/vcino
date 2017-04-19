@@ -9,43 +9,31 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content p-xl" id="printableArea">
                     <div class="row">
-                        <div class="table-responsive">
-                        <table class="table">
+                        <table style="margin: 0 auto; width: 90%; padding-top: 10px;">
                             <tbody>
                                 <tr>
-                                    <td style="border: 0;">
-                                        <div class="p-h-xl"><img src="{{ URL::asset($logotipo)}}" width="150"></div>
+                                    <td style="border: 0; width: 50%; padding-right: 20px;">
+                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="{{Auth::user()->company->width_logo}}"></div>
                                     </td>
-                                    <td style="border: 0; vertical-align:bottom">
+                                    <td style="border: 0; vertical-align:bottom;">
                                         <div class="p-h-xl text-right">
-                                            <h2 style="line-height: 0;">AVISO DE COBRANZA</h2>
+                                            <h3 style="line-height: 16px; text-align: right;">AVISO DE COBRANZA</h3>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
-                    </div>
-
-                    <div class="row" style="padding: 0 0 20px 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
                     </div>
 
                     <div class="row">
-                        <table style="margin: 10px auto; text-align: left; width: 80%; font-size: 14px;">
+                        <table style="margin: 10px auto; text-align: left; width: 90%; font-size: 14px;">
                             <tr>
                                 <td>
-                                    <div class="row" style="padding: 0 0 40px 0;">
+                                    <div class="row" style="padding: 10px 0 20px 0;">
                                         <div class="col-sm-6">
                                             Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span>
                                         </div>
-                                        <div class="col-sm-6 text-right">
+                                        <div class="col-sm-6">
                                             Al periodo:&nbsp;&nbsp;<span><strong>
 
 												 @if($sendalertpayment->limite_periodo == 1)
@@ -87,9 +75,40 @@
 									@var $importes = explode(',',$sendalertpayment->importes)
 									
                                     <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                                        <tr>
+                                            <td style="border-top: 0px solid #333; border-bottom: 2px solid #333; font-weight: 500;" class="alignright" width="80%; padding: 5px 0;">Cuota(s)</td>
+                                            <td style="border-top: 0px solid #333; border-bottom: 2px solid #333; font-weight: 500; text-align: right; padding: 3px 0;">Importe</td>
+                                        </tr>
+
 										@for ($i = 0; $i < count($categorias); $i++)
                                         <tr>
-                                            <td style="border-top: #eee 1px solid; padding: 5px 0;">{{ $categorias[$i] }}: {{ $nombrecuotas[$i] }} - {{ $periodos[$i] }}/{{ $gestiones[$i] }}</td>
+                                            <td style="border-top: #eee 1px solid; padding: 5px 0;">{{ $nombrecuotas[$i] }} - 
+                                                @if($periodos[$i] == 1)
+                                                    {{ ' Enero' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 2)
+                                                    {{ ' Febrero' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 3)
+                                                    {{ ' Marzo' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 4)
+                                                    {{ ' Abril' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 5)
+                                                    {{ ' Mayo' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 6)
+                                                    {{ ' Junio' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 7)
+                                                    {{ ' Julio' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 8)
+                                                    {{ ' Agosto' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 9)
+                                                    {{ ' Septiembre' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 10)
+                                                    {{ ' Octubre' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 11)
+                                                    {{ ' Noviembre' }}/{{ $gestiones[$i] }}
+                                                @elseif($periodos[$i] == 12)
+                                                    {{ ' Diciembre' }}/{{ $gestiones[$i] }}
+                                                @endif
+                                            </td>
                                             <td style="border-top: #eee 1px solid; text-align: right; padding: 5px 0;">{{money_format('%i', $importes[$i] ) }}</td>
                                         </tr>
 										@endfor
@@ -104,44 +123,19 @@
                         </table>
                     </div>
 
-                    <div class="row" style="padding: 20px 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                    </div>
-
-                    <table style="margin: auto; text-align: left; width: 80%; font-size: 11px;">
+                    <table style="margin: auto; text-align: left; width: 90%; font-size: 11px;">
                         <tr>
                             <td>
                                 <address style="color: #9ba3a9;">
                                     <?php echo $formapago?>
                                 </address>
 
-                                <address style="color: #9ba3a9;">
-                                    <strong>Nota</strong>
-                                    <p>{{ $sendalertpayment->nota }}</p>
-                                </address>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div class="row" style="padding: 10px 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                    </div>
-
-                    <table width="100%">
-                        <tr>
-                            <td style="text-align: center;">Consultas o comentarios: <a href="mailto:">{{ $correoempresa }}</a>
+                                @if($sendalertpayment->nota<>'')
+                                    <address style="color: #9ba3a9;">
+                                        <strong>Nota: </strong>
+                                        <p>{{ $sendalertpayment->nota }}</p>
+                                    </address>
+                                @endif
                             </td>
                         </tr>
                     </table>

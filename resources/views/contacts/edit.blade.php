@@ -12,7 +12,7 @@
                 Propiedades
             </li>
             <li>
-                <a href="{{ route('properties.contact.index') }}">Lista de contactos</a>
+                <a href="{{ route('properties.contact.index') }}">Contactos</a>
             </li>
             <li class="active">
                 <strong>Editar contacto</strong>
@@ -162,7 +162,7 @@
                                     <div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Fotografía</label>
                                         <div class="col-sm-8">
-                                            <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                            <label title="Upload image file" for="inputImage">
                                                 {{Form::file('fotografia', array('class'=>'') )}}
 												@if ($errors->has('fotografia'))
 												<span class="help-block">
@@ -229,6 +229,7 @@
 
                                     <div class="hr-line-dashed"></div>
 
+                                    <!--
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Mostrar mis datos</label>
                                         <div class="col-sm-1">
@@ -240,6 +241,7 @@
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
+                                    -->
 
                                     <div class="form-group{{ $errors->has('notas') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Notas</label>
@@ -269,7 +271,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-success" type="submit">Guardar</button>
+                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                                 <a href="{{ url()->previous() }}" class="btn btn-white" >Cancelar</a>
                             </div>
                         </div>

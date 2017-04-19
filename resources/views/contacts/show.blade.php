@@ -12,7 +12,7 @@
                 Propiedades
             </li>
             <li>
-                <a href="{{ route('properties.contact.index') }}">Lista de contactos</a>
+                <a href="{{ route('properties.contact.index') }}">Contactos</a>
             </li>
             <li class="active">
                 <strong>Ver contacto</strong>
@@ -164,7 +164,7 @@
                                         <div class="col-sm-8">
                                             <label title="Upload image file" for="inputImage" >
 												@if(empty($contact->fotografia))
-													<img src="{{ URL::asset('img/system/user150.png')}}" class="img-thumbnail" width="150" />
+													<img src="{{ URL::asset('img/system/user150.png')}}" class="img-thumbnail" width="100" />
 												@else
 													<img src="{{asset($contact->fotografia)}}" class="img-thumbnail" width="150" />	
 												@endif
@@ -228,6 +228,7 @@
 
                                     <div class="hr-line-dashed"></div>
                                     
+                                    <!--
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Mostrar mis datos</label>
                                         <div class="col-sm-1">
@@ -239,6 +240,7 @@
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
+                                    -->
 
                                     <div class="form-group{{ $errors->has('notas') ? ' has-error' : '' }}">
                                         <label class="col-sm-3 control-label">Notas</label>

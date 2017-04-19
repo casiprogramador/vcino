@@ -15,7 +15,7 @@
                 <a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
             </li>
             <li class="active">
-                <strong>Nueva cuota por cobrar</strong>
+                <strong>Ver cuota por cobrar</strong>
             </li>
         </ol>
     </div>
@@ -43,7 +43,7 @@
 									<strong>{{ $errors->first('propiedad') }}</strong>
 								</span>
 								@endif
-				</div>
+				            </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
@@ -132,6 +132,7 @@
 								</span>
 								@endif
                             </div>
+                            <!--
                             <label class="col-sm-3 control-label">Importe abonado</label>
                             <div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}">
                                 <input name="importe_abonado" type="text" value="0" class="form-control input-sm" value="{{ $accountsreceivable->importe_abonado }}" readonly>
@@ -141,6 +142,7 @@
 								</span>
 								@endif
                             </div>
+                            -->
                         </div>
 
                         <div class="hr-line-dashed"></div>

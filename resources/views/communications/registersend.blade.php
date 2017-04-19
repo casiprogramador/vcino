@@ -13,7 +13,7 @@
                 Comunicación & Información
             </li>
             <li>
-                <a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+                <a href="{{ route('communication.communication.index') }}">Comunicados</a>
             </li>
             <li class="active">
                 <strong>Registro de envíos</strong>
@@ -58,7 +58,7 @@
 										<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
 									@endif											
 								</td>
-								<td>{{ date_format(date_create( $sendcommunication->created_at ),"d/m/Y H:i") }}</td>
+								<td>{{ date_format(date_create( $sendcommunication->created_at ),"Y-m-d H:i") }}</td>
 									<td style="vertical-align:middle; text-align:right;">
 										<div class="btn-group">
 											<a href="{{ route('communication.communication.show', $sendcommunication->communication_id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comunicado">
@@ -77,6 +77,12 @@
                         
                         </tbody>
                     </table>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <a href="{{ route('communication.communication.index') }}" class="btn btn-success" type="submit">Volver</a>
+                    </div>
+
                 </div>
                 </div>
             </div>
@@ -102,7 +108,7 @@
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
                     "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sEmptyTable":     "No se encontraron Registros de envíos.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -122,9 +128,10 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
+                "order": [[ 3, "desc" ]],
                 "paging":   false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 5 } ]
+                "columnDefs": [ { "orderable": false, "targets": 4 } ]
             });
         } );
     </script>

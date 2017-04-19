@@ -132,6 +132,7 @@
 								</span>
 								@endif
                             </div>
+                            <!--
                             <label class="col-sm-3 control-label">Importe abonado</label>
                             <div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}">
                                 <input name="importe_abonado" type="text" value="0" class="form-control input-sm" value="{{ $accountsreceivable->importe_abonado }}">
@@ -141,6 +142,7 @@
 								</span>
 								@endif
                             </div>
+                            -->
                         </div>
 
                         <div class="hr-line-dashed"></div>

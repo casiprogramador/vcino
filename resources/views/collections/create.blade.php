@@ -58,36 +58,38 @@
                                 <div class="col-lg-10 col-lg-offset-1">
                                     <div class="form-group">
 										<div class="table-responsive">
-											<table class="table table-striped" id="cuentas-cobrar">
-												<thead>
-													<tr>
-														<th></th>
-														<th>Gestión</th>
-														<th>Periodo</th>
-														<th>Cuota</th>
-														<th class="text-right">Monto</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
-														<td>2016</td>
-														<td>Junio</td>
-														<td>Expensas: cuota mensual</td>
-														<td class="text-right">700,00</td>
-													</tr>
-													
-												</tbody>
-												<tfoot>
-													<tr>
-														<th>Total Bs.</th>
-														<th></th>
-														<th></th>
-														<th></th>
-														<th class="text-right" id="importe-total">0</th>
-													</tr>
-												</tfoot>
-											</table>
+											<div style="height:300px; overflow: auto;" >
+												<table class="table table-striped" id="cuentas-cobrar">
+													<thead>
+														<tr>
+															<th></th>
+															<th>Gestión</th>
+															<th>Periodo</th>
+															<th>Cuota</th>
+															<th class="text-right">Monto</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+															<td>2016</td>
+															<td>Junio</td>
+															<td>Expensas: cuota mensual</td>
+															<td class="text-right">700,00</td>
+														</tr>
+														
+													</tbody>
+													<tfoot>
+														<tr>
+															<th>Total Bs.</th>
+															<th></th>
+															<th></th>
+															<th></th>
+															<th class="text-right" id="importe-total">0</th>
+														</tr>
+													</tfoot>
+												</table>
+											</div>
 										</div>
                                     </div>
                                 </div>

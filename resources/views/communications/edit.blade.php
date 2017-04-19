@@ -12,7 +12,7 @@
 				Comunicación & Información
 			</li>
 			<li>
-				<a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+				<a href="{{ route('communication.communication.index') }}">Comunicados</a>
 			</li>
 			<li class="active">
 				<strong>Editar comunicado</strong>
@@ -134,14 +134,15 @@
 					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button class="btn btn-success" type="submit">Guardar</button>
+							<button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
 							<a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
 						</div>
 					</div>
 
+					<div class="hr-line-dashed"></div>
 					{!! Form::close() !!}
 					{!! Form::open(['route' => ['communication.communication.destroy', $communication->id], 'method' => 'delete']) !!}
-					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
 					{!! Form::close() !!}
 				</div>
 			</div>
@@ -164,7 +165,7 @@
 			    ['font', ['bold', 'italic', 'underline']],
 			    ['color', ['color']],
 			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['insert', ['link', 'hr']],
+			    ['insert', ['hr']],
 			    ['view', ['codeview']],
 			    ['help', ['help']]
 			],

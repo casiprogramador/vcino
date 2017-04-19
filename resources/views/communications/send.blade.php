@@ -12,7 +12,7 @@
                 Comunicación & Información
             </li>
             <li>
-                <a href="{{ route('communication.communication.index') }}">Lista de comunicados</a>
+                <a href="{{ route('communication.communication.index') }}">Comunicados</a>
             </li>
                 <li class="active">
                     <strong>Enviar comunicado</strong>
@@ -76,7 +76,6 @@
                                 </div>
                             </div>
 
-
                             <!--    ESTE SELECT PARA: Seleccionar propiedad             -->
                             <div class="form-group" id="select-propiedad">
                                 <label class="col-sm-3 control-label">Propiedad</label>
@@ -84,7 +83,6 @@
 									{{ Form::select('propiedad',$properties, old('property'), ['class' => 'form-control input-sm']) }}
                                 </div>
                             </div>
-
 
                             <!--    ESTE SELECT PARA: Seleccionar contacto(s)             -->
                             <div class="form-group" id="select-contacto">
@@ -94,7 +92,6 @@
                                 </div>
                             </div>
 
-
                             <!--    ESTE SELECT PARA: Dirección de correo                -->
                             <div class="form-group" id="correo">
                                 <label class="col-sm-3 control-label">Dirección de correo</label>
@@ -103,7 +100,6 @@
                                 </div>
                             </div>
 
-
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group">
@@ -111,7 +107,7 @@
                                 <div class="col-sm-9" style="margin-top: 5px">
                                     <div class="progress">
                                         <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success">
-                                            <span id="progress-text">0% Completado</span>
+                                            <span id="progress-text">&nbsp;&nbsp;0% Completado</span>
                                         </div>
                                     </div>
                                 </div>
@@ -120,10 +116,9 @@
                             <div class="hr-line-dashed"></div>
                             <!--    FIN - PANEL REGISTRO DE ENVIO DE COMUNICADOS            -->
 
-
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Enviar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Enviar</button>
                                     <a href="{{ route('communication.communication.index') }}" class="btn btn-white" type="submit">Cancelar</a>
                                 </div>
                             </div>

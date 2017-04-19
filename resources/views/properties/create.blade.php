@@ -9,7 +9,7 @@
 				<a href="{{ route('admin.home') }}">Inicio</a>
 			</li>
 			<li>
-				<a href="{{ route('properties.property.index') }}">Lista de propiedades</a>
+				<a href="{{ route('properties.property.index') }}">Propiedades</a>
 			</li>
 			<li class="active">
 				<strong>Nueva propiedad</strong>
@@ -38,7 +38,7 @@
                                 <div class="panel-body">
 
                                     <div class="form-group{{ $errors->has('nro') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Número *</label>
+										<label class="col-sm-3 control-label">Número</label>
                                         <div class="col-sm-3">
 											<input type="text" class="form-control input-sm" name="nro" value="{{old('nro')}}">
 											@if ($errors->has('nro'))
@@ -49,7 +49,7 @@
 										</div>
                                     </div>
 									<div class="form-group{{ $errors->has('orden') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Orden *</label>
+										<label class="col-sm-3 control-label">Orden</label>
                                         <div class="col-sm-3">
 											<input type="text" class="form-control input-sm" name="orden" value="{{old('orden')}}">
 											@if ($errors->has('orden'))
@@ -57,10 +57,11 @@
 													<strong>{{ $errors->first('orden') }}</strong>
 												</span>
 											@endif
+											<span class="help-block m-b-none" style="color: #d1d1d1">Orden para listar propiedades.</span>
 										</div>
                                     </div>
                                     <div class="form-group{{ $errors->has('type_property') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Tipo *</label>
+										<label class="col-sm-3 control-label">Tipo</label>
                                         <div class="col-sm-4">
                                              {{ Form::select('type_property',$typeproperties,old('type_property'), ['class' => 'form-control input-sm']) }}
 											 @if ($errors->has('type_property'))
@@ -71,7 +72,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('situacion_habitacionals') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Situación habitacional *</label>
+										<label class="col-sm-3 control-label">Situación habitacional</label>
                                         <div class="col-sm-4">
                                              {{ Form::select('situacion_habitacionals',$sithabs, old('situacion_habitacionals'), ['class' => 'form-control input-sm']) }}
 											 @if ($errors->has('situacion_habitacionals'))
@@ -106,7 +107,7 @@
 													<strong>{{ $errors->first('etiquetas') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none" style="color: #d1d1d1">Permite agrupar o clasificar las propiedades por otros criterios.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Permite agrupar o clasificar las propiedades por otros criterios. Ingrese valores separados por comas ",".</span>
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('campo_1') ? ' has-error' : '' }}">
@@ -296,6 +297,7 @@
 										</div>
                                     </div>
                                     <div class="hr-line-dashed"></div>
+                                    <!--
                                     <div class="form-group{{ $errors->has('plano') ? ' has-error' : '' }}">
 										<label class="col-sm-3 control-label">Plano de distribución</label>
                                         <div class="col-sm-8">
@@ -307,6 +309,7 @@
 											@endif
 										</div>
                                     </div>
+                                    -->
                                     <div class="form-group{{ $errors->has('caracteristicas') ? ' has-error' : '' }}">
 										<label class="col-sm-3 control-label">Características</label>
                                         <div class="col-sm-8">
@@ -324,7 +327,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
 							<div class="col-sm-12">
-								<button class="btn btn-success" type="submit">Guardar</button>
+								<button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear propiedad</button>
 								<a href="{{ route('properties.property.index') }}" class="btn btn-white" >Cancelar</a>
 							</div>
 						</div>
