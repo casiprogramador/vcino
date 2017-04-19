@@ -149,6 +149,9 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::post('search', [
         'as' => 'transaction.search', 'uses' => 'TransactionController@search'
     ]);
+	Route::post('search', [
+        'as' => 'transaction.transfer.search', 'uses' => 'TransferController@search'
+    ]);
 	
 
 });

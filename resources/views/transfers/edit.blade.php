@@ -15,7 +15,7 @@
                 <a id="direccion-lista" href="{{ route('transaction.transfer.index') }}">Lista de transacciones</a>
             </li>
             <li class="active">
-                <strong>Nuevo traspaso</strong>
+                <strong>Editar traspaso</strong>
             </li>
         </ol>
     </div>
@@ -27,38 +27,39 @@
         <div class="col-lg-12">
             <div class="ibox">
 				<div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Nuevo traspaso</h5>
+                    <h5 style="padding-top: 2px;">Editar traspaso</h5>
                 </div>
                 <div class="ibox-content">
                     <h2>
                         Registro de traspaso
                     </h2>
 
-					{!! Form::open(array('route' => 'transaction.transfer.store', 'class' => 'wizard-big form-horizontal', 'id' => 'form', 'files' => true)) !!}
-
-					<h1>Cuentas</h1>
+					{!! Form::open(array('route' => array('transaction.transfer.update', $transfer->id), 'method' => 'patch' ,'class' => 'wizard-big form-horizontal', 'id' => 'form', 'files' => true)) !!}
+					<input type="hidden" id="transaction-ori" name="transaction_ori" value="{{ $transfer->ori_transaction_id }}">
+					<input type="hidden" id="transaction-des" name="transaction_des" value="{{ $transfer->des_transaction_id }}">
+					<h1>Cuentas{{$transfer->transaction}}</h1>
 					<fieldset>
 						<div class="row">
 							<div class="col-lg-6 col-lg-offset-1">
 								<div class="form-group">
 									<label>Cuenta origen</label>
-									{{ Form::select('cuenta_origen',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta_origen'), ['class' => 'form-control input-sm','id'=>'select-cuenta-origen']) }}
+									{{ Form::select('cuenta_origen',['0'=>'Selecciona una cuenta']+$accounts,$transfer->ori_account_id, ['class' => 'form-control input-sm','id'=>'select-cuenta-origen']) }}
 								</div>
 								<div class="form-group">
 									<label>Modo de traspaso</label>
 									<div class="col-sm-6 input-group">
-										{{ Form::select('modo_traspaso', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'),old('modo_traspaso'), ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
+										{{ Form::select('modo_traspaso', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'),$transfer->transactionOrigin->forma_pago, ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
 									</div>
 								</div>
 								<div class="form-group" id="cont-forma-pago">
 									<label class="control-label" id="label-transaccion">Nro Transaccion</label>
 
-									<input type="text" class="form-control input-sm" name="nro_transanccion" id="nro-pago-input">
+									<input type="text" class="form-control input-sm" name="nro_transanccion" id="nro-pago-input" value="{{$transfer->transactionOrigin->numero_forma_pago}}">
 
 								</div>
 								<div class="form-group">
 									<label>Cuenta destino</label>
-									{{ Form::select('cuenta_destino',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta_destino'), ['class' => 'form-control input-sm','id'=>'select-cuenta-destino']) }}
+									{{ Form::select('cuenta_destino',['0'=>'Selecciona una cuenta']+$accounts, $transfer->des_account_id, ['class' => 'form-control input-sm','id'=>'select-cuenta-destino']) }}
 								</div>
 							</div>
 							<div class="col-lg-6">
@@ -79,7 +80,7 @@
 									<label class="control-label">Fecha</label>
 									<div class="input-group date">
 										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-										<input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}" required>
+										<input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date_format(date_create($transfer->transactionOrigin->fecha_pago),'d/m/Y') }}" required>
 									</div>
 								</div>
 								<div class="form-group">
@@ -96,7 +97,7 @@
 								</div>
 								<div class="form-group">
 									<label>Concepto</label>
-									<input type="text" name="concepto" id="concepto-input" class="form-control input-sm" value="{{old('concepto')}}">
+									<input type="text" name="concepto" id="concepto-input" class="form-control input-sm" value="{{$transfer->transactionOrigin->concepto}}">
 								</div>
 
 							</div>
@@ -111,20 +112,23 @@
 								<div class="form-group">
 									<label>Importe</label>
 									<div class="col-sm-4 input-group">
-										<input type="text" id="importe-input" class="form-control input-sm" name="importe" value="{{old('importe')}}">
+										<input type="text" id="importe-input" class="form-control input-sm" name="importe" value="{{$transfer->transactionOrigin->importe_debito}}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label>Nota</label>
-									<textarea rows="2" class="form-control input-sm" name="nota">{{old('nota')}}</textarea>
+									<textarea rows="2" class="form-control input-sm" name="nota">{{$transfer->transactionOrigin->notas}}</textarea>
 								</div>
 
 								<div class="form-group">
 									<label>Adjunto</label>
 
-									<div class="fileinput input-group fileinput-new" data-provides="fileinput">
-										<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-										<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="adjunto"></span>
+									<div class="fileinput input-group {{!empty($transfer->adjunto) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+										<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($transfer->adjunto) ) ? MenuRoute::filename($transfer->adjunto) : "" }}</span></div>
+										<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+											<input type="file" name="adjunto">
+											<input type="hidden" id="adjunto-ori" name="adjunto_ori" value="{{ (isset($transfer->adjunto) ) ? $transfer->adjunto : '' }}">
+										</span>
 										<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>									
 										
 									</div>
@@ -289,6 +293,25 @@
 		$("#select-cuenta-destino").change(function(){	
 			$('#input-cuenta-destino').val($("#select-cuenta-destino option:selected" ).text());
 		});
+		//Solo para edicion
+		$('#input-cuenta-origen').val($("#select-cuenta-origen option:selected" ).text());
+		$('#input-cuenta-destino').val($("#select-cuenta-destino option:selected" ).text());
+		if ($('#forma-pago').val() == "cheque"){
+			$('#label-transaccion').text("Banco, Nro. Cheque");
+			$('#cont-forma-pago').show("slow");
+			} else if ($('#forma-pago').val() == "deposito"){
+			$('#label-transaccion').text("Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			} else if ($('#forma-pago').val() == "transferencia bancaria"){
+			$('#label-transaccion').text("Banco, Nro. Transacción");
+			$('#cont-forma-pago').show("slow");
+			} else if ($('#forma-pago').val() == "tarjeta debito/credito"){
+			$('#label-transaccion').text("Banco, Tipo, Nro. Tarjeta");
+			$('#cont-forma-pago').show("slow");
+			} else{
+			$('#label-transaccion').text("Detalle Transaccion");
+			$('#cont-forma-pago').hide();
+			}
 	});
 
 
