@@ -206,7 +206,7 @@ class ExpensesController extends Controller
 
 		$expense->adjunto = $path;
 		$transaction->expense()->save($expense);
-		
+		Session::flash('message', 'Transacción actualizada correctamente.');
 		return redirect()->route('transaction.expense.show', [$expense->id]);
 		
     }

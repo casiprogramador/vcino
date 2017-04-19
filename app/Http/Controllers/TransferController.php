@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Session;
 use App\Http\Requests;
 use App\Account;
 use App\Transaction;
@@ -124,7 +124,7 @@ class TransferController extends Controller
 		$transfer->adjunto = $path;
 
 		$transfer->save();
-		
+		Session::flash('message', 'Transacción registrada correctamente.');
 		return redirect()->route('transaction.transfer.show', [$transfer->id]);
 		
 		
@@ -228,7 +228,7 @@ class TransferController extends Controller
 		$transfer->adjunto = $path;
 
 		$transfer->save();
-		
+		Session::flash('message', 'Transacción registrada correctamente.');
 		return redirect()->route('transaction.transfer.show', [$id]);
     }
 

@@ -36,11 +36,13 @@
                     </h2>
 
                     <div id="form" action="#" class="wizard-big">
+					@if (Session::has('message'))
+					<div class="alert alert-success alert-dismissable">
+						<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+						Transacción registrada correctamente.
+					</div>
+					@endif
 
-                    <div class="alert alert-success alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        Transacción registrada correctamente.
-                    </div>
 					<div id="printableArea">		
                     <div class="row">
                         <div class="table-responsive">
@@ -101,12 +103,12 @@
                                         </tr>
                                         <tr>
                                             <td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
-                                                - {{$transfer->accountOrigin->nombre}}: {{$transfer->accountOrigin->tipo_cuenta}} {{$transfer->accountOrigin->nro_cuenta}}
+                                                Cuenta Origen: {{$transfer->accountOrigin->nombre}}: {{$transfer->accountOrigin->tipo_cuenta}} {{$transfer->accountOrigin->nro_cuenta}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
-                                                - {{$transfer->accountDestiny->nombre}}: {{$transfer->accountDestiny->tipo_cuenta}} {{$transfer->accountDestiny->nro_cuenta}}
+                                                Cuenta Destino: {{$transfer->accountDestiny->nombre}}: {{$transfer->accountDestiny->tipo_cuenta}} {{$transfer->accountDestiny->nro_cuenta}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -114,12 +116,13 @@
                                                 &nbsp;
                                             </td>
                                         </tr>
+										@if(!empty($transfer->transactionOrigin->notas))
                                         <tr>
                                             <td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
                                                 Nota: {{$transfer->transactionOrigin->notas }}
                                             </td>
                                         </tr>
-
+										@endif
                                         <tr style="font-size: 14px;">
                                             <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
                                             <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{$transfer->transactionOrigin->importe_debito }}</td>
@@ -165,7 +168,7 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <button class="btn btn-success" id="printButton">
 									<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
                                 <a href="{{ route('transaction.transfer.pdf', $transfer->id) }}" class="btn btn-default">
@@ -174,6 +177,13 @@
                                 <a href="{{ route('transaction.transfer.create') }}" class="btn btn-default">
 									<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo traspaso</a>
                             </div>
+							@if(!empty($transfer->adjunto))
+							<div class="col-md-6">
+									<a href="{{ URL::asset($transfer->adjunto)}}" target="_blank">
+										<img src="{{ URL::asset($transfer->adjunto)}}" width="300px">
+									</a>
+							</div>
+							@endif
                         </div>
                     </div>
 
@@ -185,7 +195,7 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
-										<button class="btn btn-danger" type="submit">
+										<button class="btn btn-danger" type="submit" onclick="return confirm('¿Esta usted seguro de anular el registro?')">
 											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
 									</div>
 								</div>
