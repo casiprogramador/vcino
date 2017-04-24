@@ -16,7 +16,7 @@
                                     </td>
                                     <td style="border: 0; vertical-align:bottom;">
                                         <div class="p-h-xl text-right">
-                                            <h3 style="line-height: 16px; text-align: right;">COMUNICADO</h3>
+                                            <h2 style="line-height: 16px; text-align: right;">COMUNICADO</h2>
                                         </div>
                                     </td>
                                 </tr>
@@ -29,8 +29,8 @@
                             <tr>
                                 <td>
                                     <div class="row" style="padding: 10px 0 20px 0;">
-                                        <div class="col-sm-6">
-                                            Fecha:&nbsp;&nbsp;{{ $communication->fecha }}
+                                        <div class="col-sm-6" style="padding-bottom: 10px;">
+                                            Fecha:&nbsp;&nbsp;&nbsp;{{ date_format(date_create($communication->fecha),'d/m/Y') }}
                                         </div>
                                         <div class="col-sm-6">
                                             Asunto:&nbsp;<span><strong>{{ $communication->asunto }}</strong></span>
