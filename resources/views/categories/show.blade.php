@@ -8,7 +8,10 @@
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
-                <li class="active">
+                <li>
+                    Configuración
+                </li>
+                <li>
                     <a href="{{ route('config.category.index') }}">Categorías</a>
                 </li>
                 <li class="active">
@@ -28,7 +31,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle categoría: {{$category->nombre}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Ver categoría: {{$category->nombre}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">

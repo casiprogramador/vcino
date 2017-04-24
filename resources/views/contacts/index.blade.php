@@ -41,7 +41,7 @@
                 </div>
                 <div class="ibox-content">
                 <div class="row">
-                    <div class="col-sm-4 m-b-xs">
+                    <div class="col-sm-8 m-b-xs">
                         <div class="btn-group">
                             <a href="{{ route('properties.contact.list', 'todos') }}" class="btn btn-sm btn-white">
                                 Todos (Activos) </a>

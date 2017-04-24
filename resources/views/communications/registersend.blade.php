@@ -92,8 +92,6 @@
 
 </div>
 
-
-
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
