@@ -3,7 +3,7 @@
 @section('admin-content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Teléfonos y sitios</h2>
+            <h2>Teléfonos y sitios útiles</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
@@ -135,7 +135,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Guardar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                                     <a href="{{ route('config.phonesite.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>

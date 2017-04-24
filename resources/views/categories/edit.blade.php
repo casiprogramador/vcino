@@ -8,7 +8,10 @@
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
-                <li class="active">
+                <li>
+                    Configuración
+                </li>
+                <li>
                     <a href="{{ route('config.category.index') }}">Categorías</a>
                 </li>
                 <li class="active">
@@ -28,7 +31,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar categoría: {{$category->nombre}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar categoría</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -87,9 +90,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Icono</label>
                                             <div class="col-sm-8">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
-
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
 
 													<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 														<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
@@ -97,11 +98,10 @@
 														<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 													</div>
                                                 </label>
-                                                </label>
                                                 @if ($errors->has('icono'))
                                                     <span class="help-block">
-                                                            <strong>{{ $errors->first('icono') }}</strong>
-                                                        </span>
+                                                        <strong>{{ $errors->first('icono') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Guardar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                                     <a href="{{ route('config.category.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>

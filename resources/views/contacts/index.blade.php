@@ -12,7 +12,7 @@
                 Propiedades
             </li>
             <li class="active">
-                <strong>Lista de contactos</strong>
+                <strong>Contactos</strong>
             </li>
         </ol>
     </div>
@@ -32,41 +32,33 @@
                 @endif
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Lista de contactos</h5>
+                    <h5 style="padding-top: 7px;">Contactos</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px; padding-right: 5px;">
-                        <div class="btn-group" style="margin-right: 10px;">
-                            <select class="input-sm form-control input-s-sm inline" style="width: 150px;">
-                                <option value="0">Todos (Activos)</option>
-                                <option value="1">Propietarios</option>
-                                <option value="2">Inquilinos</option>
-                                <option value="3">Inactivos</option>
-                            </select>
-                        </div>
                         <div class="btn-group">
-                            <a href="{{ route('properties.contact.create') }}" class="btn btn-sm btn-default" >Nuevo Contacto</a>
+                            <a href="{{ route('properties.contact.create') }}" class="btn btn-sm btn-default" >Nuevo contacto</a>
                         </div>
                     </div>
                 </div>
                 <div class="ibox-content">
                 <div class="row">
-                    <div class="col-sm-4 m-b-xs">
+                    <div class="col-sm-8 m-b-xs">
                         <div class="btn-group">
-                            <a href="{{ route('properties.contact.list', 'todos') }}" class="btn btn-sm btn-white active" name="options">
-                                Todos </a>
-							 <a href="{{ route('properties.contact.list', 'propietario') }}" class="btn btn-sm btn-white active">
+                            <a href="{{ route('properties.contact.list', 'todos') }}" class="btn btn-sm btn-white">
+                                Todos (Activos) </a>
+							 <a href="{{ route('properties.contact.list', 'propietario') }}" class="btn btn-sm btn-white">
                                 Propietarios </a>
-							 <a href="{{ route('properties.contact.list', 'inquilino') }}" class="btn btn-sm btn-white active">
+							 <a href="{{ route('properties.contact.list', 'inquilino') }}" class="btn btn-sm btn-white">
                                 Inquilinos </a>
-							 <a href="{{ route('properties.contact.list', 'inactivo') }}" class="btn btn-sm btn-white active">
+							 <a href="{{ route('properties.contact.list', 'inactivo') }}" class="btn btn-sm btn-white">
                                 Inactivos </a>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th style="vertical-align:bottom">Número</th>
+                                <th style="vertical-align:bottom">Propiedad</th>
                                 <th style="vertical-align:bottom">Nombre completo</th>
                                 <th style="vertical-align:bottom">Tipo</th>
                                 <th style="vertical-align:bottom">E-mail</th>
@@ -96,10 +88,10 @@
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="{{ route('properties.contact.show', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                                        <a href="{{ route('properties.contact.show', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver contacto">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('properties.contact.edit', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                                        <a href="{{ route('properties.contact.edit', $contact->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar contacto">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>

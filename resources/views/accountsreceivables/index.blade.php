@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Cuotas por cobrar</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -35,9 +35,8 @@
                     <h5 style="padding-top: 7px;">Lista de cuotas por cobrar</h5>
 					
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <a href="{{ route('transaction.accountsreceivable.generate') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Generar Cuotas" data-original-title="Generar Cuotas" style="margin-right: 10px;">Generar Cuotas</a>
-						<a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo cuota" data-original-title="Nuevo cuota por cobrar" style="margin-right: 10px;"> Nueva cuota </a>
-
+                        <a href="{{ route('transaction.accountsreceivable.generate') }}" type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevas cuotas por cobrar para todas las propiedades" data-original-title="Nuevas cuotas por cobrar para todas las propiedades" style="margin-right: 10px; color: white;">Nueva cuota - Todas las propiedades</a>
+						<a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuota por cobrar" data-original-title="Nueva cuota por cobrar" style="margin-right: 5px;"> Nueva cuota - Por propiedad</a>
                     </div>
                 </div>
 
@@ -77,7 +76,9 @@
                     <div class="col-sm-2 m-b-xs">
                         {{ Form::select('cuota',['todos'=>'Cuota: Todas']+$quotas, old('cutas'), ['class' => 'form-control input-sm']) }}
                     </div>
-					<button class="btn btn-white btn-sm" type="submit">Buscar</button>
+                    <div class="col-sm-1 m-b-xs">
+                        <button class="btn btn-white btn-sm" type="submit">Buscar</button>
+                    </div>
 					{!! Form::close() !!}
                 </div>
                 <div class="row">
@@ -98,7 +99,9 @@
                                 <th style="vertical-align:bottom" class="text-right">Importe</th>
                                 <th style="vertical-align:bottom">Cancelada</th>
                                 <th style="vertical-align:bottom"></th>
+                                <!--
 								<th style="vertical-align:bottom"></th>
+                                -->
                             </tr>
                         </thead>
                         <tbody>
@@ -110,23 +113,26 @@
 										<td>{{ $accountsreceivable->periodo }}</td>
 										<td>{{ $accountsreceivable->quota->cuota }}</td>
 										<td>{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
-										<td class="text-right">{{ $accountsreceivable->importe_por_cobrar }}</td>
+										<td class="text-right" style="padding-right: 30px;">{{ $accountsreceivable->importe_por_cobrar }}</td>
 										<td>
 											<i class="fa fa-lg fa-check-square text-primary"></i>
 										</td>
 										<td style="vertical-align:middle; text-align:right;">
-											<div class="btn-group" style="width: 69px;">
+											<div class="btn-group" style="width: 50px;">
 												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
 													<i class="fa fa-eye"></i>
 												</a>
-												<a class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
+                                                <!--
+												<a class="btn btn-default btn-xs disabled" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
 													<i class="fa fa-files-o"></i>
 												</a>
-												<a href="{{ route('transaction.accountsreceivable.edit', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                                -->
+												<a class="btn btn-default btn-xs disabled" data-toggle="tooltip" data-placement="bottom" title="Editar">
 													<i class="fa fa-pencil"></i>
 												</a>
 											</div>
 									   </td>
+                                       <!--
                                         <td style="vertical-align:middle; text-align:right;">
                                             <div class="btn-group" style="width: 21px;">
                                             <a class="btn btn-default btn-xs disabled">
@@ -134,6 +140,7 @@
                                             </a>
                                             </div>
                                        </td>
+                                       -->
 									</tr>
 								@else
 									<tr>
@@ -142,36 +149,40 @@
 										<td>{{ $accountsreceivable->periodo }}</td>
 										<td>{{ $accountsreceivable->quota->cuota }}</td>
 										<td>{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
-										<td class="text-right">{{ $accountsreceivable->importe_por_cobrar }}</td>
+										<td class="text-right" style="padding-right: 30px;">{{ $accountsreceivable->importe_por_cobrar }}</td>
 										<td>
 											<i class="fa fa-lg fa-square-o text-muted"></i>
 										</td>
 										<td style="vertical-align:middle; text-align:right;">
-											<div class="btn-group" style="width: 69px;">
+											<div class="btn-group" style="width: 50px;">
 												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
 													<i class="fa fa-eye"></i>
 												</a>
-												<a href="{{ route('transaction.accountsreceivable.copy', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
+                                                <!--
+												<a href="{{ route('transaction.accountsreceivable.copy', $accountsreceivable->id) }}" class="btn btn-default btn-xs disabled" data-toggle="tooltip" data-placement="bottom" title="Copiar...">
 													<i class="fa fa-files-o"></i>
 												</a>
+                                                -->
 												<a href="{{ route('transaction.accountsreceivable.edit', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
 													<i class="fa fa-pencil"></i>
 												</a>
 											</div>
 									   </td>
+                                       <!--
 									   <td style="vertical-align:middle; text-align:right;">
                                             <div class="btn-group" style="width: 21px;">
     										   {!! Form::open(['route' => ['transaction.accountsreceivable.destroy', $accountsreceivable->id], 'method' => 'delete']) !!}
+
     					{!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('¿Está seguro de eliminar esta cuota por pagar?')"]) !!}
     					{!! Form::close() !!}
+
                                             </div>
 									   </td>
+                                       -->
 									</tr>
 								@endif
 
                             @endforeach
-                            
-                            
 
 
                         </tbody>
@@ -184,7 +195,6 @@
     </div>
 
 </div>
-
 
 
 @endsection
@@ -222,12 +232,14 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "paging":   false,
+                "bFilter": false,
+                "pageLength": 50,
+                "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
+                "paging":   true,
+                "bLengthChange" : false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
+                "columnDefs": [ { "orderable": false, "targets": 6 }, { "orderable": false, "targets": 7 } ]
             });
         } );
     </script>
 @endsection
-
-

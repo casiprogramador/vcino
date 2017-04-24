@@ -9,6 +9,9 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
+                Configuración
+            </li>
+            <li>
                 <a href="{{ route('config.category.index') }}">Categorías</a>
             </li>
             <li class="active">
@@ -87,7 +90,7 @@
                                         <div class="form-group{{ $errors->has('icono') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Icono</label>
                                             <div class="col-sm-8">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
 
 													<div class="fileinput input-group fileinput-new" data-provides="fileinput">
 														<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
@@ -122,7 +125,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Guardar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear categoría</button>
                                     <a href="{{ route('config.category.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>

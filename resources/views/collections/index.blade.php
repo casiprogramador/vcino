@@ -45,7 +45,7 @@
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Lista de cobranzas</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <a href="{{ route('transaction.collection.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px;"> Nueva cobranza </a>
+                        <a href="{{ route('transaction.collection.create') }}" type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nueva cobranza" data-original-title="Nueva cobranza" style="margin-right: 5px; color: white;"> Nueva cobranza </a>
 
                     </div>
                 </div>
@@ -56,13 +56,13 @@
                         <thead>
                             <tr>
                                 <th style="vertical-align:bottom">Fecha</th>
-                                <th style="vertical-align:bottom">Nro. Documento</th>
+                                <th style="vertical-align:bottom">Nro.<br/>Documento</th>
                                 <th style="vertical-align:bottom">Propiedad</th>
                                 <th style="vertical-align:bottom">Contacto</th>
                                 <th style="vertical-align:bottom">Concepto</th>
                                 <th style="vertical-align:bottom">Cuenta</th>
                                 <th style="vertical-align:bottom; text-align: right;">Importe</th>
-                                <th style="vertical-align:bottom" width="120"></th>
+                                <th style="vertical-align:bottom" width="70"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -153,9 +153,11 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "paging":   false,
+                "pageLength": 25,
+                "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
+                "bLengthChange" : false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 4 } ]
+                "columnDefs": [ { "orderable": false, "targets": 4 }, {"orderable": false, "targets": 7 } ]
             });
         } );
     </script>

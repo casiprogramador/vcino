@@ -9,7 +9,7 @@
 				<a href="{{ route('admin.home') }}">Inicio</a>
 			</li>
 			<li>
-				<a href="{{ route('properties.property.index') }}">Lista de propiedades</a>
+				<a href="{{ route('properties.property.index') }}">Propiedades</a>
 			</li>
 			<li class="active">
 				<strong>Ver propiedad</strong>
@@ -46,6 +46,18 @@
 													<strong>{{ $errors->first('nro') }}</strong>
 												</span>
 											@endif
+										</div>
+                                    </div>
+                                    <div class="form-group{{ $errors->has('orden') ? ' has-error' : '' }}">
+										<label class="col-sm-3 control-label">Orden</label>
+                                        <div class="col-sm-3">
+											<input type="text" class="form-control input-sm" name="orden" value="{{ $property->orden }}" readonly>
+											@if ($errors->has('orden'))
+												<span class="help-block">
+													<strong>{{ $errors->first('orden') }}</strong>
+												</span>
+											@endif
+											<span class="help-block m-b-none" style="color: #d1d1d1">Orden para listar propiedades.</span>
 										</div>
                                     </div>
                                     <div class="form-group{{ $errors->has('type_property') ? ' has-error' : '' }}">
@@ -285,6 +297,7 @@
 										</div>
                                     </div>
                                     <div class="hr-line-dashed"></div>
+                                    <!--
                                     <div class="form-group{{ $errors->has('plano') ? ' has-error' : '' }}">
 										<label class="col-sm-3 control-label">Plano de distribución</label>
                                         <div class="col-sm-8">
@@ -296,6 +309,7 @@
 											@endif
 										</div>
                                     </div>
+                                    -->
                                     <div class="form-group{{ $errors->has('caracteristicas') ? ' has-error' : '' }}">
 										<label class="col-sm-3 control-label">Características</label>
                                         <div class="col-sm-8">

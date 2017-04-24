@@ -9,11 +9,8 @@
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
-            <li>
-                Propiedades
-            </li>
             <li class="active">
-                <strong>Lista de propiedades</strong>
+                <strong>Propiedades</strong>
             </li>
         </ol>
     </div>
@@ -44,7 +41,6 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                
 								<th style="vertical-align:bottom">Orden</th>
 								<th style="vertical-align:bottom">Número</th>
                                 <th style="vertical-align:bottom">Tipo propiedad</th>
@@ -78,7 +74,7 @@
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="{{ route('properties.property.show', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver detalle propiedad">
+                                        <a href="{{ route('properties.property.show', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver propiedad">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a href="{{ route('properties.property.edit', $property->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar propiedad">

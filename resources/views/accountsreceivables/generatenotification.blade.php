@@ -4,7 +4,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Avisos de cobranza</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -16,7 +16,7 @@
                 <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
             </li>
             <li class="active">
-                <strong>Generar avisos de cobranza</strong>
+                <strong>Nuevo aviso de cobranza</strong>
             </li>
         </ol>
     </div>
@@ -29,7 +29,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Generar avisos de cobranza</h5>
+                    <h5 style="padding-top: 2px;">Nuevo aviso de cobranza</h5>
                 </div>
 
                 <div class="ibox-content">
@@ -62,24 +62,37 @@
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Vencimiento a</label>
-                        <div class="col-sm-2 m-b-xs">
-                            {{ Form::select('gestion',$gestiones, old('gestion'), ['class' => 'form-control input-sm']) }}
-                        </div>
                         <div class="col-sm-3 m-b-xs">
-                            <select class="form-control input-sm" name="periodo">
-                                <option value="1">Enero</option>
-                                <option value="2">Febrero</option>
-                                <option value="3">Marzo</option>
-                                <option value="4">Abril</option>
-                                <option value="5">Mayo</option>
-                                <option value="6">Junio</option>
-                                <option value="7">Julio</option>
-                                <option value="8">Agosto</option>
-                                <option value="9">Septiembre</option>
-                                <option value="10">Octubre</option>
-                                <option value="11">Noviembre</option>
-                                <option value="12">Diciembre</option>
-                            </select>
+                            {{ Form::select('periodo',
+                            array(
+                            '1' => 'Enero',
+                            '2' => 'Febrero',
+                            '3' => 'Marzo',
+                            '4' => 'Abril',
+                            '5' => 'Mayo',
+                            '6' => 'Junio',
+                            '7' => 'Julio',
+                            '8' => 'Agosto',
+                            '9' => 'Septiembre',
+                            '10' => 'Octubre',
+                            '11' => 'Noviembre',
+                            '12' => 'Diciembre',
+                            ), date("m"),
+                            ['class' => 'form-control input-sm']) }}
+                            @if ($errors->has('periodo'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('periodo') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+
+                        <div class="col-sm-2 m-b-xs">
+                            {{ Form::select('gestion',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
+                            @if ($errors->has('gestion'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('gestion') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
 
@@ -94,21 +107,17 @@
 
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <button class="btn btn-success" type="submit" style="margin-right: 10px;">Generar avisos de cobranza</button>
+                            <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear avisos</button>
 							<a href="{{ route('transaction.accountsreceivable.send') }}" class="btn btn-white" >Cancelar</a>
                         </div>
                     </div>
 				{!! Form::close() !!}
-
-                    
-
 
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 @endsection

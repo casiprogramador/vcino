@@ -33,9 +33,9 @@
                 @endif
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5 style="padding-top: 7px;">Lista de comunicados</h5>
+                        <h5 style="padding-top: 7px;">Comunicados</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
-                            <a href="{{ route('communication.communication.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo comunicado" style="margin-right: 10px;"> Nuevo comunicado </a>
+                            <a href="{{ route('communication.communication.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo comunicado" style="margin-right: 10px; color: white;"> Nuevo comunicado </a>
 
                             <a href="{{ route('communication.register.send') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de comunicados" data-original-title="Ver registro de envíos de comunicados" style="margin-right: 5px;"> Registro de envíos </a>
                         </div>
@@ -55,7 +55,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-									@foreach ($communications as $communication)
+								@foreach ($communications as $communication)
                                 <tr>
 									<td>{{ $communication->fecha }}</td>
                                     <td>{{ date_format(date_create($communication->fecha),'d/m/Y') }}</td>
@@ -80,11 +80,9 @@
 										@else
 											Borrador
 										@endif
-										
 									</td>
                                     <td style="vertical-align:middle; text-align:right;">
-                                        <div class="btn-group">
-											
+                                        <div class="btn-group">			
                                             <a href="{{ route('communication.communication.show', $communication->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
                                                 <i class="fa fa-eye"></i>
                                             </a>
@@ -146,7 +144,7 @@
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
                     "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sEmptyTable":     "No se encontraron Comunicados.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -166,9 +164,10 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
+                "order": [[ 0, "desc" ]],
                 "paging":   false,
                 "info":     false,
-                "columnDefs": [ { "targets": [0],"visible": false,"searchable": false },{ "orderable": false, "targets": 4 } ]
+                "columnDefs": [ { "targets": [0],"visible": false,"searchable": false },{ "orderable": false, "targets": 5 } ]
             });
         } );
     </script>

@@ -3,7 +3,7 @@
 @section('admin-content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Teléfonos y sitios</h2>
+            <h2>Teléfonos y sitios útiles</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
@@ -95,7 +95,7 @@
                                         <div class="form-group{{ $errors->has('sitio_web') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Sitio web</label>
                                             <div class="col-sm-5">
-                                                <input type="text" class="form-control input-sm" placeholder="http://www.empresa.com" name="sitio_web" value="{{$phonesite->sitio_web}}" readonly>
+                                                <input type="text" class="form-control input-sm" placeholder="" name="sitio_web" value="{{$phonesite->sitio_web}}" readonly>
                                                 @if ($errors->has('sitio_web'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('sitio_web') }}</strong>

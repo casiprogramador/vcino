@@ -4,7 +4,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Ver aviso de cobranza</h2>
+        <h2>Avisos de cobranza</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -31,19 +31,21 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content p-xl" id="printableArea">
+            <div class="ibox float-e-margins" style="border-width: 1px;">
+                <div class="ibox-content p-xl" >
+                <div id="printableArea" class="p-xl" style="padding-top: 0; padding-left: 10px; padding-right: 10px;">
                     <div class="row">
                         <div class="table-responsive">
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <td style="border: 0;">
-                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="200"></div>
+                                    <td style="border: 0; padding-right: 10px;">
+                                        <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="{{Auth::user()->company->width_logo}}"></div>
                                     </td>
                                     <td style="border: 0; vertical-align:bottom">
                                         <div class="p-h-xl text-right">
-                                            <h2 style="line-height: 0;">AVISO DE COBRANZA</h2>
+                                            <h2 style="line-height: 18px;">AVISO DE COBRANZA</h2>
+                                            <h3 style="line-height: 0; padding-top: 20px;">&nbsp;</h3>
                                         </div>
                                     </td>
                                 </tr>
@@ -52,27 +54,24 @@
                         </div>
                     </div>
 
-                    <div class="row" style="padding: 0 0 10px 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                    </div>
+                    <div class="row" style="padding: 0 0 0 0;">
+						<div class="col-sm-3">
+						</div>
+						<div class="col-sm-6" style="width: 50%; margin: auto;">
+							<div class="hr-line-solid"></div>
+						</div>
+						<div class="col-sm-3">
+						</div>
+					</div>
 
                     <div class="row">
-                        <table style="margin: 10px auto; text-align: left; width: 80%; font-size: 14px;">
+                        <table style="margin: 10px auto; text-align: left; width: 90%; font-size: 14px;">
                             <tr>
-                                <td>
-                                    <div class="row" style="padding: 0 0 30px 0;">
-                                        <div class="col-sm-6">
-                                            Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span>
-                                        </div>
-                                        <div class="col-sm-6 text-right">
-                                            Al periodo:&nbsp;&nbsp;<span><strong>
-
+								<td style="padding: 0 0 20px 0; line-height: 20px;">
+									<table cellpadding="0" cellspacing="0" style="width: 100%;">
+										<tr>
+											<td>Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span></td>
+											<td class="text-right">Al periodo:&nbsp;&nbsp;<span><strong>
 												 @if($sendalertpayment->limite_periodo == 1)
 													{{ 'Enero' }}
 												 @elseif($sendalertpayment->limite_periodo == 2)
@@ -99,9 +98,10 @@
 													{{ 'Diciembre' }}
 												 @endif
 													{{ $sendalertpayment->limite_gestion }}</strong></span>
-                                        </div>
-                                    </div>                                    
-                                </td>
+											</td>
+										</tr>
+									</table>
+								</td>
                             </tr>
                             <tr>
                                 <td>
@@ -112,10 +112,42 @@
 									@var $importes = explode(',',$sendalertpayment->importes)
 									
                                     <table cellpadding="0" cellspacing="0" style="width: 100%;">
+
+                                        <tr>
+                                            <td style="border-top: 0px solid #333; border-bottom: 2px solid #333; font-weight: 500;" class="alignright" width="80%; padding: 5px 0;">Cuota(s)</td>
+                                            <td style="border-top: 0px solid #333; border-bottom: 2px solid #333; font-weight: 500; text-align: right; padding: 3px 0;">Importe</td>
+                                        </tr>
+
 										@for ($i = 0; $i < count($categorias); $i++)
                                         <tr>
-                                            <td style="border-top: #999 1px solid; padding: 5px 0;">{{ $categorias[$i] }}: {{ $nombrecuotas[$i] }} - {{ $periodos[$i] }}/{{ $gestiones[$i] }}</td>
-                                            <td style="border-top: #999 1px solid; text-align: right; padding: 5px 0;">{{money_format('%i', $importes[$i] ) }}</td>
+                                            <td style="border-top: #D6D6D6 1px solid; padding: 5px 0;">{{ $nombrecuotas[$i] }} -
+												@if($periodos[$i] == 1)
+													{{ ' Enero' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 2)
+													{{ ' Febrero' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 3)
+													{{ ' Marzo' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 4)
+													{{ ' Abril' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 5)
+													{{ ' Mayo' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 6)
+													{{ ' Junio' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 7)
+													{{ ' Julio' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 8)
+													{{ ' Agosto' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 9)
+													{{ ' Septiembre' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 10)
+													{{ ' Octubre' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 11)
+													{{ ' Noviembre' }}/{{ $gestiones[$i] }}
+												@elseif($periodos[$i] == 12)
+													{{ ' Diciembre' }}/{{ $gestiones[$i] }}
+												@endif
+											</td>
+                                            <td style="border-top: #D6D6D6 1px solid; text-align: right; padding: 5px 0;">{{money_format('%i', $importes[$i] ) }}</td>
                                         </tr>
 										@endfor
 
@@ -132,14 +164,14 @@
                     <div class="row" style="padding: 10px 0;">
                         <div class="col-sm-3">
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" style="width: 50%; margin: auto;">
                             <div class="hr-line-solid"></div>
                         </div>
                         <div class="col-sm-3">
                         </div>
                     </div>
 
-                    <table style="margin: auto; text-align: left; width: 80%; font-size: 11px;">
+                    <table style="margin: auto; text-align: left; width: 90%; font-size: 11px;">
                         <tr>
                             <td>
                                 <address style="color: #9ba3a9;">
@@ -149,69 +181,54 @@
                         </tr>
                     </table>
 
-                    <?php
-                        if ($sendalertpayment->nota <> '') { ?>
-
+                    @if($sendalertpayment->nota<>'')
                             <div class="row" style="padding: 0;">
                                 <div class="col-sm-3">
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" style="width: 50%; margin: auto;">
                                     <div class="hr-line-solid"></div>
                                 </div>
                                 <div class="col-sm-3">
                                 </div>
                             </div>
-                    <?php
-                          }
-                    ?>
+					@endif
 
-                    <table style="margin: auto; text-align: left; width: 80%; font-size: 11px;">
+                    <table style="margin: auto; text-align: left; width: 90%; font-size: 11px;">
                         <tr>
                             <td>
-                                <?php
-                                if ($sendalertpayment->nota <> '') { ?>
-                                
-                                <div class="col-lg-12">
-                                    <div class="widget style1" style="background-color: #f2f2f2;">
-                                        <div class="row vertical-align">
-                                            <div class="col-xs-1">
-                                                <i class="fa fa-bell fa-3x"></i>
-                                            </div>
-                                            <div class="col-xs-11">
-                                                <h5 class="no-margins">
-                                                    Nota: 
-                                                </h5>
-                                                <p>{{ $sendalertpayment->nota }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <?php
-                                    }
-                                ?>
+                                @if($sendalertpayment->nota<>'')
+	                                <div class="col-lg-12">
+	                                    <div class="widget style1" style="background-color: #f2f2f2;">
+	                                        <div class="row vertical-align">
+	                                            <div class="col-xs-1">
+	                                                <i class="fa fa-bell fa-3x"></i>
+	                                            </div>
+	                                            <div class="col-xs-11">
+	                                                <h5 class="no-margins">
+	                                                    Nota: 
+	                                                </h5>
+	                                                <p>{{ $sendalertpayment->nota }}</p>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+								@endif
 
                             </td>
                         </tr>
                     </table>
 
-                    <div class="row" style="padding: 10px 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                    </div>
-
+					<!--
                     <table width="100%">
                         <tr>
-                            <td style="text-align: center;">Consultas o comentarios: <a href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a>
+                            <td style="text-align: center;">Consultas o comentarios: <a>{{ Auth::user()->email }}</a>
                             </td>
                         </tr>
                     </table>
+					-->
 
+                </div>
                 </div>
             </div>
 

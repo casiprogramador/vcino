@@ -32,14 +32,10 @@
                 @endif
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5 style="padding-top: 7px;">Lista de cuentas</h5>
+                        <h5 style="padding-top: 7px;">Cuentas</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <div class="btn-group">
                                 <a href="{{ route('config.account.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
                             </div>
                         </div>
                     </div>
@@ -48,8 +44,8 @@
                             <thead>
                             <tr>
                                 <th style="vertical-align:bottom">Nombre cuenta</th>
-                                <th style="vertical-align:bottom">Número</th>
                                 <th style="vertical-align:bottom">Tipo de cuenta</th>
+                                <th style="vertical-align:bottom">Número</th>
                                 <th style="vertical-align:bottom">Estado</th>
                                 <th style="vertical-align:bottom" width="70"></th>
                             </tr>
@@ -59,8 +55,8 @@
                                 @if($account->activa == 1)
                                     <tr>
                                         <td>{{ $account->nombre }}</td>
-                                        <td>{{ $account->nro_cuenta }}</td>
                                         <td>{{ $account->tipo_cuenta }}</td>
+                                        <td>{{ $account->nro_cuenta }}</td>
                                         <td>
                                             <span>Activa</span>
                                         </td>
@@ -79,8 +75,8 @@
                                 @else
                                     <tr>
                                         <td><span class="text-muted">{{ $account->nombre }}</span></td>
-                                        <td><span class="text-muted">{{ $account->nro_cuenta }}</span></td>
                                         <td><span class="text-muted">{{ $account->tipo_cuenta }}</span></td>
+                                        <td><span class="text-muted">{{ $account->nro_cuenta }}</span></td>
                                         <td>
                                             <span class="text-muted">Inactiva</span>
                                         </td>
@@ -102,6 +98,7 @@
                     </div>
                 </div>
             </div>
+            <!--
             <div class="col-lg-12">
                 <div class="ibox collapsed">
                     <div class="ibox-title">
@@ -123,6 +120,7 @@
                     </div>
                 </div>
             </div>
+            -->
 
         </div>
 
@@ -142,7 +140,7 @@
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
                     "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sEmptyTable":     "No se encontraron Cuentas.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",

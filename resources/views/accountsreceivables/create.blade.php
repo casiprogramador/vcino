@@ -3,10 +3,10 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Cuotas por cobrar</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Transacciones
@@ -48,7 +48,7 @@
 					<div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
 						<label class="col-sm-3 control-label">Gestión</label>
 						<div class="col-sm-2">
-							{{ Form::select('gestion',$gestiones, old('gestion'), ['class' => 'form-control input-sm']) }}
+							{{ Form::select('gestion',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
 							@if ($errors->has('gestion'))
 							<span class="help-block">
 								<strong>{{ $errors->first('gestion') }}</strong>
@@ -74,7 +74,7 @@
 							'10' => 'Octubre',
 							'11' => 'Noviembre',
 							'12' => 'Diciembre',
-							),old('periodo'),
+							),date("m"),
 							['class' => 'form-control input-sm']) }}
 							@if ($errors->has('periodo'))
 							<span class="help-block">
@@ -109,9 +109,7 @@
 						<div class="col-sm-3 input-group date" style="padding-left:15px;">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
-							<input type="text" name="fecha_vencimiento" class="form-control input-sm date-picker">
-
-
+							<input type="text" name="fecha_vencimiento" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}">
 						</div>
 						@if ($errors->has('fecha_vencimiento'))
 						<div class="col-sm-3 col-sm-offset-3">
@@ -134,8 +132,8 @@
 							</span>
 							@endif
 						</div>
-						<label class="col-sm-3 control-label">Importe abonado</label>
-						<div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}">
+						<label class="col-sm-3 control-label" style="display: none;">Importe abonado</label>
+						<div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}" style="display: none;">
 							<input name="importe_abonado" type="text" value="0" class="form-control input-sm">
 							@if ($errors->has('importe_abonado'))
 							<span class="help-block">
@@ -164,10 +162,9 @@
 
 					<div class="hr-line-dashed"></div>
 
-					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button class="btn btn-success" type="submit">Guardar</button>
+							<button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear cuota</button>
 							<a href="{{ route('transaction.accountsreceivable.index') }}" class="btn btn-white" >Cancelar</a>
 						</div>
 					</div>
