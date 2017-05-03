@@ -27,7 +27,7 @@ Route::group(['prefix' => 'config'], function () {
     Route::resource('quota', 'QuotaController');
     Route::resource('installation', 'InstallationController');
     Route::resource('receiptnumber', 'ReceiptNumberController');
-    Route::resource('phonesite', 'PhonesiteController');
+    
 });
 Route::group(['prefix' => 'properties'], function () {
     Route::resource('property', 'PropertyController');
@@ -44,9 +44,7 @@ Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');
 });
 Route::group(['prefix' => 'communication'], function () {
-    Route::get('/phonesite', [
-        'as' => 'communication.phonesite.index', 'uses' => 'CommunicationController@phonesite'
-    ]);
+    Route::resource('phonesite', 'PhonesiteController');
     Route::resource('communication', 'CommunicationController');
     Route::get('/send/{id}', [
         'as' => 'communication.communication.send', 'uses' => 'CommunicationController@send'
@@ -159,6 +157,14 @@ Route::get('admin', [
     'as' => 'admin.home', 'uses' => 'AdminController@index'
 ]);
 
+Route::group(['prefix' => 'report'], function () {
+	Route::get('disponibilidad', [
+		'as' => 'report.disponibilidad', 'uses' => 'ReportController@disponibilidad'
+	]);
+	Route::post('disponibilidad/show', [
+		'as' => 'report.disponibilidad.show', 'uses' => 'ReportController@disponibilidad_show'
+	]);
+});
 /*
 |--------------------------------------------------------------------------
 | API routes

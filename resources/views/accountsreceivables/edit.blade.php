@@ -49,13 +49,7 @@
                         <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Gestión</label>
                             <div class="col-sm-2">
-                                {{ Form::select('gestion',
-								array(
-								'2016' => '2016',
-								'2017' => '2017',
-								'2018' => '2018'
-								),$accountsreceivable->gestion,
-								['class' => 'form-control input-sm']) }}
+                                {{ Form::select('gestion',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
 								@if ($errors->has('gestion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('gestion') }}</strong>

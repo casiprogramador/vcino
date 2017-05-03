@@ -70,7 +70,7 @@ class PhonesiteController extends Controller
 
         $phonesite->save();
         Session::flash('message', 'Nuevo télefono o sitio de interés registrado correctamente.');
-        return redirect()->route('config.phonesite.index');
+        return redirect()->route('communication.phonesite.index');
     }
 
     /**
@@ -131,7 +131,7 @@ class PhonesiteController extends Controller
 
         $phonesite->save();
         Session::flash('message', 'Teléfono o sitio de interés actualizado correctamente.');
-        return redirect()->route('config.phonesite.index');
+        return redirect()->route('communication.phonesite.index');
     }
 
     /**

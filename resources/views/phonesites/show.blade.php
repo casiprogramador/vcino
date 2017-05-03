@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a>
+                    <a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a>
                 </li>
                 <li class="active">
                     <strong>Ver</strong>
@@ -135,7 +135,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <a href="{{ route('config.phonesite.index') }}" class="btn btn-success" >Volver</a>
+                                    <a href="{{ route('communication.phonesite.index') }}" class="btn btn-success" >Volver</a>
                                 </div>
                             </div>
 

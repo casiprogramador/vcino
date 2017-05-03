@@ -103,10 +103,12 @@ class AccountsReceivableController extends Controller
 		$company = Auth::user()->company;
 		$quotas = Quota::where('company_id',$company->id )->lists('cuota','id');
 		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+		$gestiones = Gestion::lists('nombre','nombre')->all();
         $accountsreceivable = Accountsreceivable::find($id);
         return view('accountsreceivables.edit')
             ->with('accountsreceivable',$accountsreceivable)
 			->with('properties',$properties)
+			->with('gestiones',$gestiones)
 			->with('quotas',$quotas);
     }
 	
