@@ -57,7 +57,7 @@
                                 <td><s>{{$expense->supplier->razon_social}}</s></td>
                                 <td><s>{{$expense->category->nombre}}</s></td>
                                 <td><s>{{$expense->transaction->concepto}}</s></td>
-                                <td><s>{{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}</s></td>
+                                <td><s>{{$expense->account->nombre}} {{$expense->account->nro_cuenta}}</s></td>
                                 <td><s>{{strtoupper($expense->transaction->forma_pago)}}</s></td>
                                 <td><s>{{$expense->transaction->numero_forma_pago}}</s></td>
                                 <td style="text-align: right;"><s>{{$expense->transaction->importe_debito}}</s></td>
@@ -72,7 +72,7 @@
                                 <td>{{$expense->supplier->razon_social}}</td>
                                 <td>{{$expense->category->nombre}}</td>
                                 <td>{{$expense->transaction->concepto}}</td>
-                                <td>{{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}</td>
+                                <td>{{$expense->account->nombre}} {{$expense->account->nro_cuenta}}</td>
                                 <td>{{strtoupper($expense->transaction->forma_pago)}}</td>
                                 <td>{{$expense->transaction->numero_forma_pago}}</td>
                                 <td style="text-align: right;">{{$expense->transaction->importe_debito}}</td>

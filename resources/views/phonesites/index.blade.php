@@ -9,7 +9,7 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong><a href="{{ route('config.phonesite.index') }}">Teléfonos y sitios útiles</a></strong>
+                    <strong><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></strong>
                 </li>
             </ol>
         </div>
@@ -32,7 +32,7 @@
                         <h5 style="padding-top: 7px;">Teléfonos y sitios útiles</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <div class="btn-group">
-                                <a href="{{route('config.phonesite.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo teléfono o sitio web de utilidad" data-original-title="Nuevo teléfono o sitio web de utilidad" style="margin-right: 5px;"> Nuevo </a>
+                                <a href="{{route('communication.phonesite.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo teléfono o sitio web de utilidad" data-original-title="Nuevo teléfono o sitio web de utilidad" style="margin-right: 5px;"> Nuevo </a>
                             </div>
                         </div>
                     </div>
@@ -60,10 +60,10 @@
                                         <td><a href="{{$phonesite->sitio_web}}" target="_blank">{{$phonesite->sitio_web}}</a></td>
                                         <td style="vertical-align:middle; text-align:right;">
                                             <div class="btn-group">
-                                                <a href="{{ route('config.phonesite.show', $phonesite->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver detalle">
+                                                <a href="{{ route('communication.phonesite.show', $phonesite->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver detalle">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('config.phonesite.edit', $phonesite->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                                <a href="{{ route('communication.phonesite.edit', $phonesite->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
                                             </div>
