@@ -83,7 +83,7 @@
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group text-left">
-                                <button class="btn btn-success" type="submit">Volver</button>
+                                <a href="{{ route('report.disponibilidad') }}" class="btn btn-success" type="submit">Volver</a>
                             </div>
                         </div>
                     </div>
