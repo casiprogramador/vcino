@@ -158,12 +158,16 @@ Route::get('admin', [
 ]);
 
 Route::group(['prefix' => 'report'], function () {
+	//Reportes Disonibilidad
 	Route::get('disponibilidad', [
 		'as' => 'report.disponibilidad', 'uses' => 'ReportController@disponibilidad'
 	]);
 	Route::post('disponibilidad/show', [
 		'as' => 'report.disponibilidad.show', 'uses' => 'ReportController@disponibilidad_show'
 	]);
+	Route::get('disponibilidad/{fecha}/pdf', [
+        'as' => 'report.disponibilidad.pdf', 'uses' => 'ReportController@disponibilidadPdf'
+    ]);
 });
 /*
 |--------------------------------------------------------------------------
