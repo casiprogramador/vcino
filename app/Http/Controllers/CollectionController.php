@@ -65,12 +65,7 @@ class CollectionController extends Controller
         ]);
 		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Ingreso')->max('nro_documento');
 		//dd($numero_documento);
-		$cuotas = $request->cuotas;
-		foreach ($cuotas as $cuota_id){
-			$cuota = Accountsreceivable::find($cuota_id);
-			$cuota->cancelada = 1;
-			$cuota->save();
-		}
+		
 
 		$company = Auth::user()->company;
 		
@@ -95,6 +90,14 @@ class CollectionController extends Controller
 		$collection->company_id = $company->id;
 		//$collection->transaction_id = $request->concepto;
 		$transaction->collection()->save($collection);
+		
+		$cuotas = $request->cuotas;
+		foreach ($cuotas as $cuota_id){
+			$cuota = Accountsreceivable::find($cuota_id);
+			$cuota->cancelada = 1;
+			$cuota->id_collection = $collection->id;
+			$cuota->save();
+		}
 		
 		//$collection->id;
 		Session::flash('message', 'Transacción registrada correctamente.');
@@ -173,8 +176,11 @@ class CollectionController extends Controller
 			
 		}else{
 			$quotes = Accountsreceivable::whereIn('id',  explode(',', $request->cuotas_originales))->update(['cancelada' => '0']);
+			$quotes = Accountsreceivable::whereIn('id',  explode(',', $request->cuotas_originales))->update(['id_collection' => '0']);
 			$quotes = Accountsreceivable::whereIn('id',  $request->cuotas)->update(['cancelada' => '1']);
+			$quotes = Accountsreceivable::whereIn('id',  $request->cuotas)->update(['id_collection' => $id]);
 			$cuotas_guardar = implode(',', $request->cuotas);
+			
 		}
 		
 		$collection = Collection::find($id);
