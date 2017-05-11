@@ -154,6 +154,7 @@ class ReportController extends Controller
 	}
 	
 	function estadoresultados_show(Request $request){
+		//Ingresos
 		$mes = date('m');
 		$anio = date('Y');
 		$company = Auth::user()->company;
@@ -184,9 +185,52 @@ class ReportController extends Controller
 			$importe_total_ingresos = $importe_total_ingresos+$importe_categoria;
 			array_push($categorias_ingreso, $datos_categoria);
 		}
-		//dd($categorias);
+		//Egresos Ordinarios/Fijos
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('clase','Ordinaria')->get();
+		$categorias_egreso_ordinario = array();
+		$importe_total_egreso_ordinario = 0;
+		foreach($categories as $category){
+			$expense = DB::table('expenses')
+					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+					//->join('categories', 'categories.id', '=', 'expenses.category_id')
+					->where('category_id',$category->id)
+					->whereMonth('fecha_pago', '=', $mes)
+					->whereYear('fecha_pago', '=', $anio)
+					->where('anulada',0)
+					->where('excluir_reportes',0)
+					->sum('importe_debito');
+			$importe_categoria = (is_null($expense)) ? 0 : $expense;
+			$datos_categoria = array('nombre'=>$category->nombre,'monto'=>$importe_categoria);
+			$importe_total_egreso_ordinario = $importe_total_egreso_ordinario+$importe_categoria;
+			array_push($categorias_egreso_ordinario, $datos_categoria);
+		}
+		//Egresos Ordinarios/Fijos
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('clase','Extraordinaria')->get();
+		$categorias_egreso_extraordinario = array();
+		$importe_total_egreso_extraordinario = 0;
+		foreach($categories as $category){
+			$expense = DB::table('expenses')
+					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+					//->join('categories', 'categories.id', '=', 'expenses.category_id')
+					->where('category_id',$category->id)
+					->whereMonth('fecha_pago', '=', $mes)
+					->whereYear('fecha_pago', '=', $anio)
+					->where('anulada',0)
+					->where('excluir_reportes',0)
+					->sum('importe_debito');
+			$importe_categoria = (is_null($expense)) ? 0 : $expense;
+			$datos_categoria = array('nombre'=>$category->nombre,'monto'=>$importe_categoria);
+			$importe_total_egreso_extraordinario = $importe_total_egreso_extraordinario+$importe_categoria;
+			array_push($categorias_egreso_extraordinario, $datos_categoria);
+		}
+		//dd($categorias_egreso_ordinario);
 		return view('reports.estadoresultados_show')
 			->with('categorias_ingreso',$categorias_ingreso)
-			->with('importe_total_ingreso',$importe_total_ingresos);
+			->with('importe_total_ingreso',$importe_total_ingresos)
+			->with('categorias_egreso_ordinario',$categorias_egreso_ordinario)
+			->with('importe_total_egreso_ordinario',$importe_total_egreso_ordinario)
+			->with('categorias_egreso_extraordinario',$categorias_egreso_extraordinario)
+			->with('importe_total_egreso_extraordinario',$importe_total_egreso_extraordinario)
+			->with('importe_total_egreso',$importe_total_egreso_extraordinario+$importe_total_egreso_ordinario);
 	}
 }

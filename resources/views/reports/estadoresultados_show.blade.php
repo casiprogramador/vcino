@@ -90,74 +90,28 @@
                                     <tr>
                                         <td colspan="3"><strong>Fijos</strong></td>
                                     </tr>
+                                    @for ($i = 0; $i < count($categorias_egreso_ordinario); $i++)
                                     <tr>
-                                        <td style="padding-left: 30px;">Administración</td>
-                                        <td style="text-align:right;">10,07%</td>
-                                        <td style="text-align:right;">7.000,00</td>
+                                        <td>{{$categorias_egreso_ordinario[$i]['nombre']}}</td>
+                                        <td style="text-align:right;">{{number_format($categorias_egreso_ordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $categorias_egreso_ordinario[$i]['monto'])}}</td>
                                     </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Mantenimiento de jardín y áreas verdes</td>
-                                        <td style="text-align:right;">24,46%</td>
-                                        <td style="text-align:right;">17.000,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Mantenimiento piscina</td>
-                                        <td style="text-align:right;">3,81%</td>
-                                        <td style="text-align:right;">2.650,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Material de escritorio</td>
-                                        <td style="text-align:right;">0,18%</td>
-                                        <td style="text-align:right;">123,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Refrigerios</td>
-                                        <td style="text-align:right;">0,08%</td>
-                                        <td style="text-align:right;">55,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Servicio de agua potable</td>
-                                        <td style="text-align:right;">2,71%</td>
-                                        <td style="text-align:right;">1.882,92</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Servicio de energia eléctrica</td>
-                                        <td style="text-align:right;">2,48%</td>
-                                        <td style="text-align:right;">1.726,20</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Servicio de recojo de basura y reciclaje</td>
-                                        <td style="text-align:right;">6,55%</td>
-                                        <td style="text-align:right;">4.550,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Servicio de teléfono fijo/ móvil</td>
-                                        <td style="text-align:right;">0,20%</td>
-                                        <td style="text-align:right;">140,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Servicio de vigilancia y seguridad</td>
-                                        <td style="text-align:right;">43,74%</td>
-                                        <td style="text-align:right;">30.400,00</td>
-                                    </tr>
+									@endfor
                                     <tr>
                                         <td colspan="3" style="background-color: #E7E7E7;"><b>Variables</b></td>
                                     </tr>
+                                    @for ($i = 0; $i < count($categorias_egreso_extraordinario); $i++)
                                     <tr>
-                                        <td style="padding-left: 30px;">Mantenimiento y reparación</td>
-                                        <td style="text-align:right;">5,11%</td>
-                                        <td style="text-align:right;">3.550,00</td>
+                                        <td>{{$categorias_egreso_extraordinario[$i]['nombre']}}</td>
+                                        <td style="text-align:right;">{{number_format($categorias_egreso_extraordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $categorias_egreso_extraordinario[$i]['monto'])}}</td>
                                     </tr>
-                                    <tr>
-                                        <td style="padding-left: 30px;">Obras varias</td>
-                                        <td style="text-align:right;">0,62%</td>
-                                        <td style="text-align:right;">430,00</td>
-                                    </tr>
+									@endfor
                                 </tbody>
                                 <tfoot>
                                     <th>Total</th>
-                                    <th style="text-align:right;">100,00%</th>
-                                    <th style="text-align:right;">69.507,12</th>
+                                    <th style="text-align:right;">100.00%</th>
+                                    <th style="text-align:right;">{{$importe_total_egreso}}</th>
                                 </tfoot>
                             </table>
                         </div>
@@ -177,24 +131,24 @@
                                     <tr>
                                         <td>Ingresos</td>
                                         <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">70.856,23</td>
+                                        <td style="text-align:right;">{{money_format('%i', $importe_total_ingreso)}}</td>
                                     </tr>
                                     <tr>
                                         <td>Gastos fijos</td>
                                         <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">65.527,12</td>
+                                        <td style="text-align:right;">{{money_format('%i', $importe_total_egreso_ordinario)}}</td>
                                     </tr>
                                     <tr>
                                         <td>Gastos variables</td>
                                         <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">3.980,00</td>
+                                        <td style="text-align:right;">{{money_format('%i', $importe_total_egreso_extraordinario)}}</td>
                                     </tr>
                                     <tr>
                                         <td>Diferencia del periodo</td>
                                         <td style="text-align:right;"></td>
                                         
                                         <!-- Valor mayor o igual a cero (0) -->
-                                        <td style="text-align:right; color: #0E9AEF">670,00</td>
+                                        <td style="text-align:right; color: #0E9AEF">{{money_format('%i', $importe_total_ingreso-$importe_total_egreso)}}</td>
                                         
                                         <!-- Valor mayor o igual a cero (0) 
                                         <td style="text-align:right; color: red">670,00</td>
