@@ -27,7 +27,7 @@ Route::group(['prefix' => 'config'], function () {
     Route::resource('quota', 'QuotaController');
     Route::resource('installation', 'InstallationController');
     Route::resource('receiptnumber', 'ReceiptNumberController');
-    
+
 });
 Route::group(['prefix' => 'properties'], function () {
     Route::resource('property', 'PropertyController');
@@ -38,7 +38,7 @@ Route::group(['prefix' => 'properties'], function () {
 	Route::get('/contact/list/{option?}', [
         'as' => 'properties.contact.list', 'uses' => 'ContactController@listar'
     ]);
-	
+
 });
 Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');
@@ -74,27 +74,27 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::get('/accountsreceivable/generate', [
         'as' => 'transaction.accountsreceivable.generate', 'uses' => 'AccountsReceivableController@generate'
     ]);
-	
+
 	Route::post('/accountsreceivable/generate', [
         'as' => 'transaction.accountsreceivable.searchgenerate', 'uses' => 'AccountsReceivableController@searchgenerate'
     ]);
-	
+
 	Route::post('/accountsreceivable/storegenerate', [
         'as' => 'transaction.accountsreceivable.storegenerate', 'uses' => 'AccountsReceivableController@storegenerate'
     ]);
-	
+
 	Route::get('/accountsreceivable/send', [
         'as' => 'transaction.accountsreceivable.send', 'uses' => 'AccountsReceivableController@send'
     ]);
-	
+
 	Route::get('/accountsreceivable/generatenotification', [
         'as' => 'transaction.accountsreceivable.generatenotification', 'uses' => 'AccountsReceivableController@generatenotification'
     ]);
-	
+
 	Route::post('/accountsreceivable/sendnotification', [
         'as' => 'transaction.accountsreceivable.sendnotification', 'uses' => 'AccountsReceivableController@sendnotification'
     ]);
-	
+
 	Route::post('/accountsreceivable/storealertpayment', [
         'as' => 'transaction.accountsreceivable.storealertpayment', 'uses' => 'AccountsReceivableController@storealertpayment'
     ]);
@@ -102,33 +102,33 @@ Route::group(['prefix' => 'transaction'], function () {
         'as' => 'transaction.accountsreceivable.registernotification', 'uses' => 'AccountsReceivableController@registernotification'
     ]);
 	//Buscar en index
-	
+
 	Route::post('/accountsreceivable/storealertpayment/search', [
         'as' => 'transaction.accountsreceivable.search', 'uses' => 'AccountsReceivableController@search'
     ]);
 	Route::get('/copy/{id}', [
         'as' => 'transaction.accountsreceivable.copy', 'uses' => 'AccountsReceivableController@copy'
     ]);
-	
+
 	Route::get('/accountsreceivable/print/{id}', [
         'as' => 'transaction.accountsreceivable.print', 'uses' => 'AccountsReceivableController@printing'
     ]);
-	
+
 	Route::resource('accountsreceivable', 'AccountsReceivableController');
 	//cobranzas Routes
 	Route::resource('collection', 'CollectionController');
-	
+
 	Route::get('collection/{id}/pdf', [
         'as' => 'transaction.collection.pdf', 'uses' => 'CollectionController@pdf'
     ]);
-	
+
 	Route::post('collection/send', [
         'as' => 'transaction.collection.send', 'uses' => 'CollectionController@sendemail'
     ]);
 	Route::post('cancel', [
         'as' => 'transaction.cancel', 'uses' => 'TransactionController@anular'
     ]);
-	
+
 	//Gastos Rutas
 
 	Route::get('expense/{expense}/copy', [
@@ -138,7 +138,7 @@ Route::group(['prefix' => 'transaction'], function () {
         'as' => 'transaction.expense.pdf', 'uses' => 'ExpensesController@pdf'
     ]);
 	Route::resource('expense', 'ExpensesController');
-	
+
 	//Traspasos
 	Route::resource('transfer', 'TransferController');
 	Route::get('transfer/{id}/pdf', [
@@ -150,7 +150,7 @@ Route::group(['prefix' => 'transaction'], function () {
 	Route::post('search', [
         'as' => 'transaction.transfer.search', 'uses' => 'TransferController@search'
     ]);
-	
+
 
 });
 Route::get('admin', [
@@ -160,20 +160,20 @@ Route::get('admin', [
 Route::group(['prefix' => 'report'], function () {
 	//Reportes Disonibilidad
 	Route::get('disponibilidad', [
-		'as' => 'report.disponibilidad', 'uses' => 'ReportController@disponibilidad'
+		'as' => 'report.disponibilidad', 'uses' => 'ReportDisponibilidadController@disponibilidad'
 	]);
 	Route::post('disponibilidad/show', [
-		'as' => 'report.disponibilidad.show', 'uses' => 'ReportController@disponibilidad_show'
+		'as' => 'report.disponibilidad.show', 'uses' => 'ReportDisponibilidadController@disponibilidad_show'
 	]);
 	Route::get('disponibilidad/{fecha}/pdf', [
-        'as' => 'report.disponibilidad.pdf', 'uses' => 'ReportController@disponibilidadPdf'
+        'as' => 'report.disponibilidad.pdf', 'uses' => 'ReportDisponibilidadController@disponibilidadPdf'
     ]);
 	//Reporte Estado de Resultados
 	Route::get('estadoresultados', [
-		'as' => 'report.estadoresultados', 'uses' => 'ReportController@estadoresultados'
+		'as' => 'report.estadoresultados', 'uses' => 'ReportEstadoActualController@estadoresultados'
 	]);
 	Route::post('estadoresultados/show', [
-		'as' => 'report.estadoresultados.show', 'uses' => 'ReportController@estadoresultados_show'
+		'as' => 'report.estadoresultados.show', 'uses' => 'ReportEstadoActualController@estadoresultados_show'
 	]);
 });
 /*

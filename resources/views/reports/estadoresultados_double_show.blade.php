@@ -61,19 +61,15 @@
 									@for ($i = 0; $i < count($categorias_ingreso); $i++)
                                     <tr>
                                         <td>{{$categorias_ingreso[$i]['nombre']}}</td>
-                                        @if($importe_total_ingreso != 0)
                                         <td style="text-align:right;">{{number_format($categorias_ingreso[$i]['monto']/$importe_total_ingreso*100,2)."%"}}</td>
-                                        @else
-                                        <td style="text-align:right;">{{"0%"}}</td>
-                                        @endif
-                                        <td style="text-align:right;">{{$categorias_ingreso[$i]['monto']}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $categorias_ingreso[$i]['monto'])}}</td>
                                     </tr>
 									@endfor
                                 </tbody>
                                 <tfoot>
                                     <th>Total</th>
                                     <th style="text-align:right;">100%</th>
-                                    <th style="text-align:right;">{{$importe_total_ingreso}}</th>
+                                    <th style="text-align:right;">{{money_format('%i', $importe_total_ingreso)}}</th>
                                 </tfoot>
                             </table>
                         </div>
@@ -97,29 +93,20 @@
                                     @for ($i = 0; $i < count($categorias_egreso_ordinario); $i++)
                                     <tr>
                                         <td>{{$categorias_egreso_ordinario[$i]['nombre']}}</td>
-                                        @if($importe_total_egreso != 0)
                                         <td style="text-align:right;">{{number_format($categorias_egreso_ordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
-                                        @else
-                                        <td style="text-align:right;">{{"0%"}}</td>
-                                        @endif
-                                        <td style="text-align:right;">{{$categorias_egreso_ordinario[$i]['monto']}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $categorias_egreso_ordinario[$i]['monto'])}}</td>
                                     </tr>
-									                  @endfor
+									@endfor
                                     <tr>
                                         <td colspan="3" style="background-color: #E7E7E7;"><b>Variables</b></td>
                                     </tr>
                                     @for ($i = 0; $i < count($categorias_egreso_extraordinario); $i++)
                                     <tr>
                                         <td>{{$categorias_egreso_extraordinario[$i]['nombre']}}</td>
-                                        @if($importe_total_egreso != 0)
                                         <td style="text-align:right;">{{number_format($categorias_egreso_extraordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
-                                        @else
-                                        <td style="text-align:right;">{{"0%"}}</td>
-                                        @endif
-
-                                        <td style="text-align:right;">{{$categorias_egreso_extraordinario[$i]['monto']}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $categorias_egreso_extraordinario[$i]['monto'])}}</td>
                                     </tr>
-									                  @endfor
+									@endfor
                                 </tbody>
                                 <tfoot>
                                     <th>Total</th>
@@ -144,24 +131,24 @@
                                     <tr>
                                         <td>Ingresos</td>
                                         <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">{{$importe_total_ingreso}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $importe_total_ingreso)}}</td>
                                     </tr>
                                     <tr>
                                         <td>Gastos fijos</td>
                                         <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">{{$importe_total_egreso_ordinario}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $importe_total_egreso_ordinario)}}</td>
                                     </tr>
                                     <tr>
                                         <td>Gastos variables</td>
                                         <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">{{$importe_total_egreso_extraordinario}}</td>
+                                        <td style="text-align:right;">{{money_format('%i', $importe_total_egreso_extraordinario)}}</td>
                                     </tr>
                                     <tr>
                                         <td>Diferencia del periodo</td>
                                         <td style="text-align:right;"></td>
 
                                         <!-- Valor mayor o igual a cero (0) -->
-                                        <td style="text-align:right; color: #0E9AEF">{{$importe_total_ingreso-$importe_total_egreso}}</td>
+                                        <td style="text-align:right; color: #0E9AEF">{{money_format('%i', $importe_total_ingreso-$importe_total_egreso)}}</td>
 
                                         <!-- Valor mayor o igual a cero (0)
                                         <td style="text-align:right; color: red">670,00</td>
