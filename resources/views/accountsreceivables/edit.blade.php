@@ -49,7 +49,7 @@
                         <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Gestión</label>
                             <div class="col-sm-2">
-                                {{ Form::select('gestion',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
+                                {{ Form::select('gestion',$gestiones, $accountsreceivable->gestion, ['class' => 'form-control input-sm']) }}
 								@if ($errors->has('gestion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('gestion') }}</strong>
@@ -126,17 +126,14 @@
 								</span>
 								@endif
                             </div>
-                            <!--
-                            <label class="col-sm-3 control-label">Importe abonado</label>
-                            <div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}">
-                                <input name="importe_abonado" type="text" value="0" class="form-control input-sm" value="{{ $accountsreceivable->importe_abonado }}">
-								@if ($errors->has('importe_abonado'))
-								<span class="help-block">
-									<strong>{{ $errors->first('importe_abonado') }}</strong>
-								</span>
-								@endif
-                            </div>
-                            -->
+                            <div class="col-sm-2{{ $errors->has('importe_abonado') ? ' has-error' : '' }}" style="display: none;">
+							<input name="importe_abonado" type="text" value="0" class="form-control input-sm">
+							@if ($errors->has('importe_abonado'))
+							<span class="help-block">
+								<strong>{{ $errors->first('importe_abonado') }}</strong>
+							</span>
+							@endif
+						</div>
                         </div>
 
                         <div class="hr-line-dashed"></div>

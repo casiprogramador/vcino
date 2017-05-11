@@ -168,6 +168,13 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('disponibilidad/{fecha}/pdf', [
         'as' => 'report.disponibilidad.pdf', 'uses' => 'ReportController@disponibilidadPdf'
     ]);
+	//Reporte Estado de Resultados
+	Route::get('estadoresultados', [
+		'as' => 'report.estadoresultados', 'uses' => 'ReportController@estadoresultados'
+	]);
+	Route::post('estadoresultados/show', [
+		'as' => 'report.estadoresultados.show', 'uses' => 'ReportController@estadoresultados_show'
+	]);
 });
 /*
 |--------------------------------------------------------------------------

@@ -34,6 +34,7 @@ class CreateAccountsreceivablesTable extends Migration
 			
 			$table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
+			$table->integer('id_collection')->default(0);
             $table->timestamps();
         });
     }
