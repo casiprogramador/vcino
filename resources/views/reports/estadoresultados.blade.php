@@ -51,7 +51,7 @@
                                 <div class="form-group" id="meses">
                                     <label class="col-sm-4 control-label">Mes</label>
                                     <div class="col-sm-4">
-                                        {{ Form::select('pormes',
+                                        {{ Form::select('mes',
 										array(
 										'1' => 'Enero',
 										'2' => 'Febrero',
@@ -74,7 +74,7 @@
                                     <label class="col-sm-4 control-label">Gestión</label>
                                     <div class="col-sm-4">
 
-                                        {{ Form::select('porgestion',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
+                                        {{ Form::select('anio',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
                                     </div>
                                 </div>
 
@@ -131,7 +131,7 @@
             //$('#mesanterior').hide();
 			$('#gestionanterior').hide();
             $('#periodo').change(function(){
-				
+
                     if ( $(this).val() == "actual" ) {
                         $('#meses').hide();
 						$('#gestiones').hide();
@@ -167,4 +167,3 @@
         });
     </script>
 @endsection
-
