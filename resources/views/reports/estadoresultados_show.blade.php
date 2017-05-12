@@ -28,7 +28,7 @@
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
+                            <button type="button" class="btn btn-sm btn-default" id="printButton" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
                             <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
@@ -40,12 +40,17 @@
 
                 <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
                     <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Estado de Resultados</h3>
-                    <small style="padding-left:36px;">Periodo: Marzo/2017 - Moneda: Bolivianos</small>
+                    @if($mes != 0)
+                    <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
+                    @else
+                    <small style="padding-left:36px;">Gestion: {{$anio}} - Moneda: Bolivianos</small>
+                    @endif
                 </div>
 
                 <div class="ibox-content">
                     <div class="col-sm-1">
                     </div>
+                    <div id="printableArea">
                     <div class="col-sm-10">
                         <div class="table-responsive" style="margin-top: 20px;">
                             <table class="table table-hover table-striped">
@@ -174,6 +179,7 @@
 
 
                     </div>
+                  </div>
                     <div class="col-sm-1">
                     </div>
 
@@ -199,9 +205,16 @@
 
 @endsection
 @section('javascript')
+<script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>
-	$('.date-picker').datetimepicker({
-		format: 'DD/MM/YYYY'
+	$(document).ready(function () {
+
+		$("#printButton").click(function () {
+			var mode = 'iframe'; //popup
+			var close = mode == "popup";
+			var options = {mode: mode, popClose: close};
+			$("#printableArea").printArea(options);
+		});
 	});
 </script>
 @endsection
