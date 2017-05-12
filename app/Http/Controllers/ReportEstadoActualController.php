@@ -32,6 +32,8 @@ class ReportEstadoActualController extends Controller
   			$estadoresultados_mesactual = $this->estadoresultados_mes($mes,$anio);
         if(empty($request->checkmesanterior)){
           return view('reports.estadoresultados_show')
+						->with('mes',$mes)
+						->with('anio',$anio)
             ->with('categorias_ingreso',$estadoresultados_mesactual["categorias_ingreso"])
             ->with('importe_total_ingreso',$estadoresultados_mesactual["importe_total_ingreso"])
             ->with('categorias_egreso_ordinario',$estadoresultados_mesactual["categorias_egreso_ordinario"])
@@ -45,6 +47,8 @@ class ReportEstadoActualController extends Controller
           $estadoresultados_mesanterior = $this->estadoresultados_mes($mes,$anio);
 		  //dd($estadoresultados_mesanterior["importe_total_egreso_extraordinario"]);
           return view('reports.estadoresultados_double_show')
+						->with('mes',$mes)
+						->with('anio',$anio)
             ->with('categorias_ingreso',$estadoresultados_mesactual["categorias_ingreso"])
             ->with('importe_total_ingreso',$estadoresultados_mesactual["importe_total_ingreso"])
             ->with('categorias_egreso_ordinario',$estadoresultados_mesactual["categorias_egreso_ordinario"])
@@ -70,6 +74,8 @@ class ReportEstadoActualController extends Controller
 
         $estadoresultados_mesanterior = $this->estadoresultados_mes($mes,$anio);
         return view('reports.estadoresultados_show')
+					->with('mes',$mes)
+					->with('anio',$anio)
           ->with('categorias_ingreso',$estadoresultados_mesanterior["categorias_ingreso"])
           ->with('importe_total_ingreso',$estadoresultados_mesanterior["importe_total_ingreso"])
           ->with('categorias_egreso_ordinario',$estadoresultados_mesanterior["categorias_egreso_ordinario"])
@@ -82,7 +88,9 @@ class ReportEstadoActualController extends Controller
     		$anio = date('Y');
   			$estadoresultados_gestionactual = $this->estadoresultados_mes($mes,$anio);
         if(empty($request->checkgestionanterior)){
-          return view('reports.estadoresultados_double_show')
+          return view('reports.estadoresultados_show')
+						->with('mes',$mes)
+						->with('anio',$anio)
             ->with('categorias_ingreso',$estadoresultados_gestionactual["categorias_ingreso"])
             ->with('importe_total_ingreso',$estadoresultados_gestionactual["importe_total_ingreso"])
             ->with('categorias_egreso_ordinario',$estadoresultados_gestionactual["categorias_egreso_ordinario"])
@@ -96,6 +104,8 @@ class ReportEstadoActualController extends Controller
           $estadoresultados_gestionanterior = $this->estadoresultados_mes($mes,$anio);
 		  //dd();
           return view('reports.estadoresultados_double_show')
+						->with('mes',$mes)
+						->with('anio',$anio)
             ->with('categorias_ingreso',$estadoresultados_gestionactual["categorias_ingreso"])
             ->with('importe_total_ingreso',$estadoresultados_gestionactual["importe_total_ingreso"])
             ->with('categorias_egreso_ordinario',$estadoresultados_gestionactual["categorias_egreso_ordinario"])
@@ -118,6 +128,8 @@ class ReportEstadoActualController extends Controller
           $anio = date('Y')-1;
           $estadoresultados_gestionanterior = $this->estadoresultados_mes($mes,$anio);
           return view('reports.estadoresultados_show')
+						->with('mes',$mes)
+						->with('anio',$anio)
             ->with('categorias_ingreso',$estadoresultados_gestionanterior["categorias_ingreso"])
             ->with('importe_total_ingreso',$estadoresultados_gestionanterior["importe_total_ingreso"])
             ->with('categorias_egreso_ordinario',$estadoresultados_gestionanterior["categorias_egreso_ordinario"])
@@ -131,6 +143,8 @@ class ReportEstadoActualController extends Controller
           $anio = $request->anio;
           $estadoresultados_mesanterior = $this->estadoresultados_mes($mes,$anio);
           return view('reports.estadoresultados_show')
+						->with('mes',$mes)
+						->with('anio',$anio)
             ->with('categorias_ingreso',$estadoresultados_mesanterior["categorias_ingreso"])
             ->with('importe_total_ingreso',$estadoresultados_mesanterior["importe_total_ingreso"])
             ->with('categorias_egreso_ordinario',$estadoresultados_mesanterior["categorias_egreso_ordinario"])
@@ -144,6 +158,8 @@ class ReportEstadoActualController extends Controller
           $anio = $request->anio;
           $estadoresultados_gestion = $this->estadoresultados_mes($mes,$anio);
           return view('reports.estadoresultados_show')
+						->with('mes',$mes)
+						->with('anio',$anio)
             ->with('categorias_ingreso',$estadoresultados_gestion["categorias_ingreso"])
             ->with('importe_total_ingreso',$estadoresultados_gestion["importe_total_ingreso"])
             ->with('categorias_egreso_ordinario',$estadoresultados_gestion["categorias_egreso_ordinario"])

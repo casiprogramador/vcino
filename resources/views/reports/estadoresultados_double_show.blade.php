@@ -40,7 +40,11 @@
 
                 <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
                     <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Estado de Resultados</h3>
-                    <small style="padding-left:36px;">Periodo: Marzo/2017 - Moneda: Bolivianos</small>
+                    @if($mes != 0)
+                    <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} y {{nombremes(($mes == 12) ? 1 : $mes+1)}}/{{($mes == 12) ? $anio+1 : $anio}} Moneda: Bolivianos</small>
+                    @else
+                    <small style="padding-left:36px;">Gestion: {{$anio}} y {{$anio+1}} - Moneda: Bolivianos</small>
+                    @endif
                 </div>
 
                 <div class="ibox-content">
@@ -75,15 +79,15 @@
                                         <td style="text-align:right;">{{"0%"}}</td>
                                         @endif
 
-                                        <td style="text-align:right;">{{money_format('%i', $anterior_categorias_ingreso[$i]['monto'])}}</td>
-										
+                                        <td style="text-align:right;">{{ $anterior_categorias_ingreso[$i]['monto'] }}</td>
+
 										@if($importe_total_ingreso != 0)
                                         <td style="text-align:right;">{{number_format($categorias_ingreso[$i]['monto']/$importe_total_ingreso*100,2)."%"}}</td>
                                         @else
                                         <td style="text-align:right;">{{"0%"}}</td>
                                         @endif
-										
-                                        <td style="text-align:right;">{{money_format('%i', $categorias_ingreso[$i]['monto'])}}</td>
+
+                                        <td style="text-align:right;">{{ $categorias_ingreso[$i]['monto'] }}</td>
                                     </tr>
 									@endfor
                                 </tbody>
@@ -124,7 +128,7 @@
                                         <td style="text-align:right;">{{"0%"}}</td>
                                         @endif
                                         <td style="text-align:right;">{{$anterior_categorias_egreso_ordinario[$i]['monto']}}</td>
-										
+
                                         @if($importe_total_egreso != 0)
                                         <td style="text-align:right;">{{number_format($categorias_egreso_ordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
                                         @else
@@ -145,7 +149,7 @@
                                         <td style="text-align:right;">{{"0%"}}</td>
                                         @endif
                                         <td style="text-align:right;">{{$anterior_categorias_egreso_extraordinario[$i]['monto']}}</td>
-										
+
                                         @if($importe_total_egreso != 0)
                                         <td style="text-align:right;">{{number_format($categorias_egreso_extraordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
                                         @else
