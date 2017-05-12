@@ -104,7 +104,7 @@
                                         @endif
                                         <td style="text-align:right;">{{$categorias_egreso_ordinario[$i]['monto']}}</td>
                                     </tr>
-									                  @endfor
+									@endfor
                                     <tr>
                                         <td colspan="3" style="background-color: #E7E7E7;"><b>Variables</b></td>
                                     </tr>
@@ -119,7 +119,7 @@
 
                                         <td style="text-align:right;">{{$categorias_egreso_extraordinario[$i]['monto']}}</td>
                                     </tr>
-									                  @endfor
+									 @endfor
                                 </tbody>
                                 <tfoot>
                                     <th>Total</th>
@@ -182,7 +182,7 @@
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group text-left">
-                                <button class="btn btn-success" type="submit">Volver</button>
+                                <a href="{{ route('report.estadoresultados') }}" class="btn btn-success" type="submit">Volver</a>
                             </div>
                         </div>
                     </div>
