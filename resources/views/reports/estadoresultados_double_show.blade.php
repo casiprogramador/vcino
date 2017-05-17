@@ -31,9 +31,9 @@
                             <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
+                            <a href="{{ route('report.estadoresultados.excel', $opcion) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
                                 <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar...
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -93,9 +93,17 @@
                                 </tbody>
                                 <tfoot>
                                     <th>Total</th>
-									<th style="text-align:right;">100%</th>
-                                    <th style="text-align:right;">{{$anterior_importe_total_ingreso}}</th>
+									@if($anterior_importe_total_ingreso != 0)
                                     <th style="text-align:right;">100%</th>
+									@else
+									<th style="text-align:right;">0%</th>
+									@endif
+                                    <th style="text-align:right;">{{$anterior_importe_total_ingreso}}</th>
+                                    @if($importe_total_ingreso != 0)
+                                    <th style="text-align:right;">100%</th>
+									@else
+									<th style="text-align:right;">0%</th>
+									@endif
                                     <th style="text-align:right;">{{$importe_total_ingreso}}</th>
                                 </tfoot>
                             </table>
@@ -161,9 +169,17 @@
                                 </tbody>
                                 <tfoot>
                                     <th>Total</th>
-									<th style="text-align:right;">100.00%</th>
+									@if($anterior_importe_total_egreso != 0)
+                                    <th style="text-align:right;">100%</th>
+									@else
+									<th style="text-align:right;">0%</th>
+									@endif
                                     <th style="text-align:right;">{{$anterior_importe_total_egreso}}</th>
-                                    <th style="text-align:right;">100.00%</th>
+                                    @if($importe_total_egreso != 0)
+                                    <th style="text-align:right;">100%</th>
+									@else
+									<th style="text-align:right;">0%</th>
+									@endif
                                     <th style="text-align:right;">{{$importe_total_egreso}}</th>
                                 </tfoot>
                             </table>
@@ -207,11 +223,19 @@
                                     <tr>
                                         <td>Diferencia del periodo</td>
 										<td style="text-align:right;"></td>
-
+@if(($anterior_importe_total_ingreso-$anterior_importe_total_egreso)>= 0)
                                         <td style="text-align:right; color: #0E9AEF">{{$anterior_importe_total_ingreso-$anterior_importe_total_egreso}}</td>
+										@else
+										<td style="text-align:right; color: red">{{$importe_total_ingreso-$importe_total_egreso}}</td>
+										@endif
+
                                         <td style="text-align:right;"></td>
 
+                                        @if(($importe_total_ingreso-$importe_total_egreso)>= 0)
                                         <td style="text-align:right; color: #0E9AEF">{{$importe_total_ingreso-$importe_total_egreso}}</td>
+										@else
+										<td style="text-align:right; color: red">{{$importe_total_ingreso-$importe_total_egreso}}</td>
+										@endif
 
                                     </tr>
                                 </tbody>
