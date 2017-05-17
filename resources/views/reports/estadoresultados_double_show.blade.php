@@ -226,7 +226,7 @@
 @if(($anterior_importe_total_ingreso-$anterior_importe_total_egreso)>= 0)
                                         <td style="text-align:right; color: #0E9AEF">{{$anterior_importe_total_ingreso-$anterior_importe_total_egreso}}</td>
 										@else
-										<td style="text-align:right; color: red">{{$importe_total_ingreso-$importe_total_egreso}}</td>
+										<td style="text-align:right; color: red">{{$anterior_importe_total_ingreso-$anterior_importe_total_egreso}}</td>
 										@endif
 
                                         <td style="text-align:right;"></td>
