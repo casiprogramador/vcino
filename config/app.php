@@ -163,6 +163,9 @@ return [
 		\InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
 		\InfyOm\CoreTemplates\CoreTemplatesServiceProvider::class, 
 		Barryvdh\DomPDF\ServiceProvider::class,
+		'Maatwebsite\Excel\ExcelServiceProvider',
+
+		
 
     ],
 
@@ -216,6 +219,7 @@ return [
 		'Html'      => Collective\Html\HtmlFacade::class,
 		'Flash'     => Laracasts\Flash\Flash::class,
 		'PDF' => Barryvdh\DomPDF\Facade::class,
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
     ],
 

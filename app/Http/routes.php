@@ -168,12 +168,22 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('disponibilidad/{fecha}/pdf', [
         'as' => 'report.disponibilidad.pdf', 'uses' => 'ReportDisponibilidadController@disponibilidadPdf'
     ]);
+	Route::get('disponibilidad/{fecha}/excel', [
+        'as' => 'report.disponibilidad.excel', 'uses' => 'ReportDisponibilidadController@disponibilidadExcel'
+    ]);
 	//Reporte Estado de Resultados
 	Route::get('estadoresultados', [
 		'as' => 'report.estadoresultados', 'uses' => 'ReportEstadoActualController@estadoresultados'
 	]);
 	Route::post('estadoresultados/show', [
 		'as' => 'report.estadoresultados.show', 'uses' => 'ReportEstadoActualController@estadoresultados_show'
+	]);
+	Route::get('estadoresultados/{opcion}/excel', [
+        'as' => 'report.estadoresultados.excel', 'uses' => 'ReportEstadoActualController@estadoresultadosExcel'
+    ]);
+	//Reporte Categoria por periodo y gestion
+	Route::get('categoriaperiodogestion', [
+		'as' => 'report.reportcategoriaperiodogestion', 'uses' => 'ReportCategoriaPeriodoGestionController@categoriaperiodogestion'
 	]);
 });
 /*
