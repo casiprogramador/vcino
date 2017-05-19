@@ -79,7 +79,7 @@
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('report/disponibilidad') }}"><a href="{{ route('report.disponibilidad') }}">Disponibilidad</a></li>
                         <li class="{{ MenuRoute::active('report/estadoresultados') }}"><a href="{{ route('report.estadoresultados') }}">Estado de Resultados</a></li>
-                        <li class=""><a href="">Categorías por periodo y gestión</a></li>
+                        <li class="{{ MenuRoute::active('report/categoriaperiodogestion') }}"><a href="{{ route('report.reportcategoriaperiodogestion') }}">Categorías por periodo y gestión</a></li>
                         <li class=""><a href="">Cuentas por cobrar</a></li>
                         <li class=""><a href="">Histórico de transacciones</a></li>
                     </ul>
