@@ -4,3 +4,20 @@
 	padding-left: 10px;
 	padding-right: 10px;
 }
+@media print {
+	.ibox-title{
+		display: none !important; 
+	}
+	.migaspan{
+		display: none !important; 
+	}
+	.table{
+		font-size: 8px !important; 
+	}
+	.footer{
+		display: none !important; 
+	}
+	.sec-volver{
+		display: none !important; 
+	}
+}
