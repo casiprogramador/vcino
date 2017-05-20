@@ -188,6 +188,9 @@ Route::group(['prefix' => 'report'], function () {
 	Route::post('categoriaperiodogestion/show', [
 		'as' => 'report.categoriaperiodogestion.show', 'uses' => 'ReportCategoriaPeriodoGestionController@categoriaperiodogestion_show'
 	]);
+	Route::get('categoriaperiodogestion/{gestion}/excel', [
+        'as' => 'report.categoriaperiodogestion.excel', 'uses' => 'ReportCategoriaPeriodoGestionController@categoriaperiodogestion_excel'
+    ]);
 });
 /*
 |--------------------------------------------------------------------------

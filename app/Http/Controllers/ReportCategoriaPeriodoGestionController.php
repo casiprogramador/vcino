@@ -25,10 +25,46 @@ class ReportCategoriaPeriodoGestionController extends Controller
 		//dd($request);
 		$anio = $request->anio;
 		$categorias_resultado = $this->categoriaperiodogestion_array($anio);
+		
 
 		return view('reports.categoriaperiodogestion_show')
 				->with('categorias',$categorias_resultado)
 				->with('gestion',$anio);
+	}
+	
+	function categoriaperiodogestion_excel($gestion){
+		//dd($request);
+		$anio = $gestion;
+		$categorias_resultado = $this->categoriaperiodogestion_array($anio);
+		//dd($categorias_resultado);
+		$resultado_array = array(array("Categoria","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC","TOTAL"));
+		foreach($categorias_resultado as $category){
+			$element_array=array();
+			foreach ($category as $element) {
+
+				$element_new = ($element === 0)?"0":$element;
+
+				
+				array_push($element_array, $element_new);
+			}
+			array_push($resultado_array, $element_array);
+		}
+		
+		Excel::create('Reporte_Categoira_por_PeriodoGestion', function($excel) use($resultado_array){
+ 
+            $excel->sheet('Productos', function($sheet) use($resultado_array){
+ 
+ 
+                $sheet->fromArray($resultado_array, null, 'A1', false, false);
+				$sheet->row(1, function($row) {
+
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
 	}
 	
 	//FUNCIONES AUXILIARES
@@ -94,9 +130,10 @@ class ReportCategoriaPeriodoGestionController extends Controller
 	}
 	
 	function montoTotalCategoriaMesyGestion($mes,$anio){
-
+		$company = Auth::user()->company;
         $gasto = DB::table('expenses')
   					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+					->where('company_id',$company->id)
   					->where('anulada',0)
   					->where('excluir_reportes',0)
 					->whereMonth('fecha_pago', '=', $mes)

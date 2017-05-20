@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="row wrapper border-bottom white-bg page-heading">
+<div class="row wrapper border-bottom white-bg page-heading migaspan">
     <div class="col-lg-10">
         <h2>Categorías por periodo y gestión</h2>
         <ol class="breadcrumb">
@@ -29,12 +29,12 @@
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
-                            <button type="button" id="printButton" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
+                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte" onClick="window.print()">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
+                            <a href="{{ route('report.categoriaperiodogestion.excel',$gestion) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
                                 <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar...
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="ibox-content">
                                     <div>
-                                        <canvas id="barChart" height="140"></canvas>
+                                        <canvas id="barChart" height="140">No Soportado</canvas>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                     </div>
 					</div>
 
-                    <div class="row">
+                    <div class="row sec-volver">
                         <div class="col-sm-12">
                             <div class="hr-line-dashed"></div>
 
@@ -157,7 +157,9 @@
 @endsection
 
 
-
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
+@endsection
 @section('javascript')
 <script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script src="{{ URL::asset('js/Chart.min.js') }}"></script>
