@@ -191,6 +191,23 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('categoriaperiodogestion/{gestion}/excel', [
         'as' => 'report.categoriaperiodogestion.excel', 'uses' => 'ReportCategoriaPeriodoGestionController@categoriaperiodogestion_excel'
     ]);
+	//Reporte Cuentas por Cobrar
+	Route::get('cuentascobrar', [
+		'as' => 'report.cuentascobrar', 'uses' => 'ReportCuentasCobrarController@cuentascobrar'
+	]);
+	
+	Route::post('cuentascobrar/show', [
+		'as' => 'report.cuentascobrar.show', 'uses' => 'ReportCuentasCobrarController@cuentascobrar_show'
+	]);
+	Route::get('cuentascobrar/detallado/{opcion}/excel', [
+        'as' => 'report.detallado.categoriaperiodogestion.excel', 'uses' => 'ReportCuentasCobrarController@categoriaperiodogestion_detallado_excel'
+    ]);
+	
+	//Reporte Historico transacciones
+	Route::get('historicotransacciones', [
+		'as' => 'report.historicotransacciones', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones'
+	]);
+	
 });
 /*
 |--------------------------------------------------------------------------
