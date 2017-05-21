@@ -80,8 +80,8 @@
                         <li class="{{ MenuRoute::active('report/disponibilidad') }}"><a href="{{ route('report.disponibilidad') }}">Disponibilidad</a></li>
                         <li class="{{ MenuRoute::active('report/estadoresultados') }}"><a href="{{ route('report.estadoresultados') }}">Estado de Resultados</a></li>
                         <li class="{{ MenuRoute::active('report/categoriaperiodogestion') }}"><a href="{{ route('report.reportcategoriaperiodogestion') }}">Categorías por periodo y gestión</a></li>
-                        <li class=""><a href="">Cuentas por cobrar</a></li>
-                        <li class=""><a href="">Histórico de transacciones</a></li>
+                        <li class="{{ MenuRoute::active('report/cuentascobrar') }}"><a href="{{ route('report.cuentascobrar') }}">Cuentas por cobrar</a></li>
+                        <li class="{{ MenuRoute::active('report/historicotransacciones') }}"><a href="{{ route('report.historicotransacciones') }}">Histórico de transacciones</a></li>
                     </ul>
                 </li>
 
