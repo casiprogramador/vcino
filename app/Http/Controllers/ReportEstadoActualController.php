@@ -229,11 +229,11 @@ class ReportEstadoActualController extends Controller
 
 		Excel::create('Reporte_Estado_Actual', function($excel) use($resultado){
  
-            $excel->sheet('Productos', function($sheet) use($resultado){
+            $excel->sheet('Estado Resultados', function($sheet) use($resultado){
  
                 //$cuentas = $this->cuentasporfechaExcel($fecha);
  
-                $sheet->fromArray($resultado, null, 'A1', false, false);
+                $sheet->fromArray($resultado, null, 'A1', true, false);
  
             });
         })->export('xls');
@@ -247,7 +247,7 @@ class ReportEstadoActualController extends Controller
 		$estadoResultado = array(array('Ingreso','','','','Porcentaje','Importe'));
 		$estadoResultado = $this->llenadoArrayEstadoActual($estadoresultados_mesactual["categorias_ingreso"],$estadoresultados_mesactual["importe_total_ingreso"],$estadoResultado,null,null);
 		$porcentajeTotal = ($estadoresultados_mesactual["importe_total_ingreso"] == 0)?0:100;
-		$monto_total_ingreso =($estadoresultados_mesactual["importe_total_ingreso"]==0)?"0":$estadoresultados_mesactual["importe_total_ingreso"];
+		$monto_total_ingreso =($estadoresultados_mesactual["importe_total_ingreso"]==0)?0:$estadoresultados_mesactual["importe_total_ingreso"];
 		array_push($estadoResultado,array('Total','','','',$porcentajeTotal.'%',$monto_total_ingreso));
 		array_push($estadoResultado,array('Gasto','','','','Porcentaje','Importe'));
 		array_push($estadoResultado,array('Fijos','','','','',''));
@@ -256,17 +256,17 @@ class ReportEstadoActualController extends Controller
 		$estadoResultado = $this->llenadoArrayEstadoActual($estadoresultados_mesactual["categorias_egreso_extraordinario"],$estadoresultados_mesactual["importe_total_egreso_ordinario"]+$estadoresultados_mesactual["importe_total_egreso_extraordinario"],$estadoResultado,null,null);
 		$porcentajeTotal = (($estadoresultados_mesactual["importe_total_egreso_ordinario"]+$estadoresultados_mesactual["importe_total_egreso_extraordinario"]) == 0)?0:100;
 		$monto_total_egreso = $estadoresultados_mesactual["importe_total_egreso_ordinario"]+$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
-		$monto_total_egreso = ($monto_total_egreso == 0)?"0":$monto_total_egreso;
+		$monto_total_egreso = ($monto_total_egreso == 0)?0:$monto_total_egreso;
 		array_push($estadoResultado,array('Total','','','',$porcentajeTotal.'%',$monto_total_egreso));
 		array_push($estadoResultado,array('Resultado','','','','','Importe'));
-		$monto_total_ingreso = ($estadoresultados_mesactual["importe_total_ingreso"] == 0)?"0":$estadoresultados_mesactual["importe_total_ingreso"];
+		$monto_total_ingreso = ($estadoresultados_mesactual["importe_total_ingreso"] == 0)?0:$estadoresultados_mesactual["importe_total_ingreso"];
 		array_push($estadoResultado,array('Ingresos','','','','',$monto_total_ingreso));
-		$monto_total_gastofijo = ($estadoresultados_mesactual["importe_total_egreso_ordinario"] == 0)?"0":$estadoresultados_mesactual["importe_total_egreso_ordinario"];
+		$monto_total_gastofijo = ($estadoresultados_mesactual["importe_total_egreso_ordinario"] == 0)?0:$estadoresultados_mesactual["importe_total_egreso_ordinario"];
 		array_push($estadoResultado,array('Gastos fijos','','','','',$monto_total_gastofijo));
-		$monto_total_gastovariable= ($estadoresultados_mesactual["importe_total_egreso_extraordinario"] == 0)?"0":$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
+		$monto_total_gastovariable= ($estadoresultados_mesactual["importe_total_egreso_extraordinario"] == 0)?0:$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
 		array_push($estadoResultado,array('Gastos variables','','','','',$monto_total_gastovariable));
 		$diferencia_total = $estadoresultados_mesactual["importe_total_ingreso"]-$estadoresultados_mesactual["importe_total_egreso_ordinario"]-$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
-		$diferencia_total = ($diferencia_total==0)?"0":$diferencia_total;
+		$diferencia_total = ($diferencia_total==0)?0:$diferencia_total;
 		array_push($estadoResultado,array('Diferencia de periodo','','','','',$diferencia_total));
 		}else{
 			$estadoresultados_mesactual = $this->estadoresultados_mes($mes,$anio);
@@ -275,9 +275,9 @@ class ReportEstadoActualController extends Controller
 			$estadoResultado = $this->llenadoArrayEstadoActual($estadoresultados_mesactual["categorias_ingreso"],$estadoresultados_mesactual["importe_total_ingreso"],$estadoResultado,$estadoresultados_anterior["categorias_ingreso"],$estadoresultados_anterior["importe_total_ingreso"]);
 			//dd($estadoResultado);
 			$porcentajeTotal = ($estadoresultados_mesactual["importe_total_ingreso"] == 0)?0:100;
-			$monto_total_ingreso =($estadoresultados_mesactual["importe_total_ingreso"]==0)?"0":$estadoresultados_mesactual["importe_total_ingreso"];
+			$monto_total_ingreso =($estadoresultados_mesactual["importe_total_ingreso"]==0)?0:$estadoresultados_mesactual["importe_total_ingreso"];
 			$porcentajeTotal_anterior = ($estadoresultados_anterior["importe_total_ingreso"] == 0)?0:100;
-			$monto_total_ingreso_anterior =($estadoresultados_anterior["importe_total_ingreso"]==0)?"0":$estadoresultados_anterior["importe_total_ingreso"];
+			$monto_total_ingreso_anterior =($estadoresultados_anterior["importe_total_ingreso"]==0)?0:$estadoresultados_anterior["importe_total_ingreso"];
 
 			array_push($estadoResultado,array('Total','',$porcentajeTotal_anterior.'%',$monto_total_ingreso_anterior ,$porcentajeTotal.'%',$monto_total_ingreso));
 			//EGRESOS
@@ -291,28 +291,28 @@ class ReportEstadoActualController extends Controller
 			
 			$porcentajeTotal = (($estadoresultados_mesactual["importe_total_egreso_ordinario"]+$estadoresultados_mesactual["importe_total_egreso_extraordinario"]) == 0)?0:100;
 			$monto_total_egreso = $estadoresultados_mesactual["importe_total_egreso_ordinario"]+$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
-			$monto_total_egreso = ($monto_total_egreso==0)?"0":$monto_total_egreso;
+			$monto_total_egreso = ($monto_total_egreso==0)?0:$monto_total_egreso;
 			
 			$porcentajeTotal_anterior = (($estadoresultados_anterior["importe_total_egreso_ordinario"]+$estadoresultados_anterior["importe_total_egreso_extraordinario"]) == 0)?0:100;
 			$monto_total_egreso_anterior = $estadoresultados_anterior["importe_total_egreso_ordinario"]+$estadoresultados_anterior["importe_total_egreso_extraordinario"];
-			$monto_total_egreso_anterior = ($monto_total_egreso_anterior==0)?"0":$monto_total_egreso_anterior;
+			$monto_total_egreso_anterior = ($monto_total_egreso_anterior==0)?0:$monto_total_egreso_anterior;
 			
 			array_push($estadoResultado,array('Total','',$porcentajeTotal_anterior.'%',$monto_total_egreso_anterior,$porcentajeTotal.'%',$monto_total_egreso));
 			array_push($estadoResultado,array('Resultado','','','Importe','','Importe'));
-			$monto_total_ingreso = ($estadoresultados_mesactual["importe_total_ingreso"] == 0)?"0":$estadoresultados_mesactual["importe_total_ingreso"];
-			$monto_total_ingreso_anterior = ($estadoresultados_anterior["importe_total_ingreso"] == 0)?"0":$estadoresultados_anterior["importe_total_ingreso"];
+			$monto_total_ingreso = ($estadoresultados_mesactual["importe_total_ingreso"] == 0)?0:$estadoresultados_mesactual["importe_total_ingreso"];
+			$monto_total_ingreso_anterior = ($estadoresultados_anterior["importe_total_ingreso"] == 0)?0:$estadoresultados_anterior["importe_total_ingreso"];
 			array_push($estadoResultado,array('Ingresos','','',$monto_total_ingreso_anterior,'',$monto_total_ingreso));
-			$monto_total_gastofijo = ($estadoresultados_mesactual["importe_total_egreso_ordinario"] == 0)?"0":$estadoresultados_mesactual["importe_total_egreso_ordinario"];
-			$monto_total_gastofijo_anterior = ($estadoresultados_anterior["importe_total_egreso_ordinario"] == 0)?"0":$estadoresultados_anterior["importe_total_egreso_ordinario"];
+			$monto_total_gastofijo = ($estadoresultados_mesactual["importe_total_egreso_ordinario"] == 0)?0:$estadoresultados_mesactual["importe_total_egreso_ordinario"];
+			$monto_total_gastofijo_anterior = ($estadoresultados_anterior["importe_total_egreso_ordinario"] == 0)?0:$estadoresultados_anterior["importe_total_egreso_ordinario"];
 			array_push($estadoResultado,array('Gastos fijos','','',$monto_total_gastofijo_anterior,'',$monto_total_gastofijo));
-			$monto_total_gastovariable= ($estadoresultados_mesactual["importe_total_egreso_extraordinario"] == 0)?"0":$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
-			$monto_total_gastovariable_anterior= ($estadoresultados_anterior["importe_total_egreso_extraordinario"] == 0)?"0":$estadoresultados_anterior["importe_total_egreso_extraordinario"];
+			$monto_total_gastovariable= ($estadoresultados_mesactual["importe_total_egreso_extraordinario"] == 0)?0:$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
+			$monto_total_gastovariable_anterior= ($estadoresultados_anterior["importe_total_egreso_extraordinario"] == 0)?0:$estadoresultados_anterior["importe_total_egreso_extraordinario"];
 			array_push($estadoResultado,array('Gastos variables','','',$monto_total_gastovariable_anterior,'',$monto_total_gastovariable));
 			$diferencia_total = $estadoresultados_mesactual["importe_total_ingreso"]-$estadoresultados_mesactual["importe_total_egreso_ordinario"]-$estadoresultados_mesactual["importe_total_egreso_extraordinario"];
-			$diferencia_total = ($diferencia_total==0)?"0":$diferencia_total;
+			$diferencia_total = ($diferencia_total==0)?0:$diferencia_total;
 			
 			$diferencia_total_anterior = $estadoresultados_anterior["importe_total_ingreso"]-$estadoresultados_anterior["importe_total_egreso_ordinario"]-$estadoresultados_anterior["importe_total_egreso_extraordinario"];
-			$diferencia_total_anterior = ($diferencia_total_anterior==0)?"0":$diferencia_total_anterior;
+			$diferencia_total_anterior = ($diferencia_total_anterior==0)?0:$diferencia_total_anterior;
 		
 		
 			array_push($estadoResultado,array('Diferencia de periodo','','',$diferencia_total_anterior,'',$diferencia_total));
@@ -427,7 +427,7 @@ class ReportEstadoActualController extends Controller
 					$porcentaje = 0;
 					$porcentajeTotal = 0;
 				}
-				$monto_actual = ($estadoactual_ingreso[$i]['monto'] == 0) ? "0" : $estadoactual_ingreso[$i]['monto'];
+				$monto_actual = ($estadoactual_ingreso[$i]['monto'] == 0) ? 0 : $estadoactual_ingreso[$i]['monto'];
 				array_push($estadoResultado, array($estadoactual_ingreso[$i]['nombre'],'','','',$porcentaje.'%',$monto_actual));
 			}
 		}else{
@@ -448,8 +448,8 @@ class ReportEstadoActualController extends Controller
 					$porcentaje_anterior=0;
 
 				}
-				$monto_actual = ($estadoactual_ingreso[$i]['monto'] == 0) ? "0" : $estadoactual_ingreso[$i]['monto'];
-				$monto_anterior = ($estadoactual_ingreso_anterior[$i]['monto'] == 0) ? "0" : $estadoactual_ingreso_anterior[$i]['monto'];
+				$monto_actual = ($estadoactual_ingreso[$i]['monto'] == 0) ? 0 : $estadoactual_ingreso[$i]['monto'];
+				$monto_anterior = ($estadoactual_ingreso_anterior[$i]['monto'] == 0) ? 0 : $estadoactual_ingreso_anterior[$i]['monto'];
 				array_push($estadoResultado, array($estadoactual_ingreso[$i]['nombre'],'',$porcentaje_anterior.'%',$monto_anterior,$porcentaje.'%',$monto_actual));
 			}
 		}

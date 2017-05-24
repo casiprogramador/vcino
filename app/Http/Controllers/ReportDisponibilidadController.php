@@ -106,7 +106,7 @@ class ReportDisponibilidadController extends Controller
  
                 $cuentas = $this->cuentasporfechaExcel($fecha);
  
-                $sheet->fromArray($cuentas['disponibilidad'], null, 'A1', false, false);
+                $sheet->fromArray($cuentas['disponibilidad'], null, 'A1', true, false);
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods

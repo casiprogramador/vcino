@@ -202,6 +202,12 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('cuentascobrar/detallado/{opcion}/excel', [
         'as' => 'report.detallado.categoriaperiodogestion.excel', 'uses' => 'ReportCuentasCobrarController@categoriaperiodogestion_detallado_excel'
     ]);
+	Route::get('cuentascobrar/consolidado/{opcion}/excel', [
+        'as' => 'report.consolidado.categoriaperiodogestion.excel', 'uses' => 'ReportCuentasCobrarController@categoriaperiodogestion_consolidado_excel'
+    ]);
+	Route::get('cuentascobrar/porpropiedad/{opcion}/excel', [
+        'as' => 'report.porpropiedad.categoriaperiodogestion.excel', 'uses' => 'ReportCuentasCobrarController@categoriaperiodogestion_porpropiedad_excel'
+    ]);
 	
 	//Reporte Historico transacciones
 	Route::get('historicotransacciones', [

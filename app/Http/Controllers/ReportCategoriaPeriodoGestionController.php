@@ -24,7 +24,8 @@ class ReportCategoriaPeriodoGestionController extends Controller
 	function categoriaperiodogestion_show(Request $request){
 		//dd($request);
 		$anio = $request->anio;
-		$categorias_resultado = $this->categoriaperiodogestion_array($anio);
+		$categorias_resultado = array();
+		$categorias_resultado = $this->categoriaperiodogestion_array($anio,$categorias_resultado);
 		
 
 		return view('reports.categoriaperiodogestion_show')
@@ -35,27 +36,17 @@ class ReportCategoriaPeriodoGestionController extends Controller
 	function categoriaperiodogestion_excel($gestion){
 		//dd($request);
 		$anio = $gestion;
-		$categorias_resultado = $this->categoriaperiodogestion_array($anio);
+		
 		//dd($categorias_resultado);
 		$resultado_array = array(array("Categoria","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC","TOTAL"));
-		foreach($categorias_resultado as $category){
-			$element_array=array();
-			foreach ($category as $element) {
-
-				$element_new = ($element === 0)?"0":$element;
-
-				
-				array_push($element_array, $element_new);
-			}
-			array_push($resultado_array, $element_array);
-		}
+		$categorias_resultado = $this->categoriaperiodogestion_array($anio,$resultado_array);
 		
-		Excel::create('Reporte_Categoira_por_PeriodoGestion', function($excel) use($resultado_array){
+		Excel::create('Reporte_Categoira_por_PeriodoGestion', function($excel) use($categorias_resultado){
  
-            $excel->sheet('Productos', function($sheet) use($resultado_array){
+            $excel->sheet('Reporte', function($sheet) use($categorias_resultado){
  
  
-                $sheet->fromArray($resultado_array, null, 'A1', false, false);
+                $sheet->fromArray($categorias_resultado, null, 'A1', true, false);
 				$sheet->row(1, function($row) {
 
 					$row->setBackground('#feff01');
@@ -68,12 +59,12 @@ class ReportCategoriaPeriodoGestionController extends Controller
 	}
 	
 	//FUNCIONES AUXILIARES
-	function categoriaperiodogestion_array($anio){
+	function categoriaperiodogestion_array($anio,$resultado_ini){
 		$company = Auth::user()->company;
 		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->get();
 		
 		
-		$resultado = array();
+		$resultado = $resultado_ini;
 		foreach($categories as $category){
 			$ene = $this->montoPorCategoriaMesyGestion($category->id,1,$anio);
 			$feb = $this->montoPorCategoriaMesyGestion($category->id,2,$anio);
