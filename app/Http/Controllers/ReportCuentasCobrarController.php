@@ -167,13 +167,13 @@ class ReportCuentasCobrarController extends Controller
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->get();
 		$total = 0;
+		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
 		foreach ($properties as $property) {
 			$importe_total = 0;
 			$accountsreceivables = Accountsreceivable::where('company_id',$company->id )
 					->where('cancelada',0)
 					->where('property_id',$property->id)
-					->where('periodo', '<=', $mes)
-					->where('gestion', '<=', $anio)
+					->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
 					->get();
 			foreach ($accountsreceivables as $cuotapagar) {
 				$cuota = array($property->nro,$cuotapagar->quota->cuota,$cuotapagar->gestion,$cuotapagar->periodo,$cuotapagar->importe_por_cobrar);
@@ -195,13 +195,13 @@ class ReportCuentasCobrarController extends Controller
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->get();
 		$total = 0;
+		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
 		foreach ($properties as $property) {
 			$importe_total = 0;
 			$accountsreceivables = Accountsreceivable::where('company_id',$company->id )
 					->where('cancelada',0)
 					->where('property_id',$property->id)
-					->where('periodo', '<=', $mes)
-					->where('gestion', '<=', $anio)
+					->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
 					->get();
 			//Obtenemos el importe total
 			foreach ($accountsreceivables as $cuotapagar) {
@@ -231,12 +231,11 @@ class ReportCuentasCobrarController extends Controller
 		$company = Auth::user()->company;
 
 		$properties = Property::find($propiedad);
-		//dd($properties->nro);
+		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
 		$accountsreceivables = Accountsreceivable::where('company_id',$company->id )
 					->where('cancelada',0)
 					->where('property_id',$propiedad)
-					->where('periodo', '<=', $mes)
-					->where('gestion', '<=', $anio)
+					->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
 					->get();
 		$importe_total = 0;
 		foreach ($accountsreceivables as $cuotapagar) {
