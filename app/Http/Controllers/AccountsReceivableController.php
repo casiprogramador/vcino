@@ -385,9 +385,8 @@ class AccountsReceivableController extends Controller
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
 				->join('categories', 'categories.id', '=', 'quotas.category_id')	
 				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
-				//->where('gestion','<=',$request->gestion)
-				//->where('periodo','<=',$request->periodo)
 				->where('cancelada','0')
+				->where('properties.company_id',$company->id)
 				->select(
 						array('properties.id as id','accountsreceivables.id as accountsreceivable_id', 'nro as propiedad', 'gestion','periodo','fecha_vencimiento','importe_por_cobrar','accountsreceivables.property_id','quota_id','user_id','cuota','frecuencia_pago','tipo_importe',
 							DB::raw("GROUP_CONCAT(accountsreceivables.id SEPARATOR ',') as id_cuenta_pagar,
