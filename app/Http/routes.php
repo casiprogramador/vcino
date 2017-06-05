@@ -213,7 +213,12 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('historicotransacciones', [
 		'as' => 'report.historicotransacciones', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones'
 	]);
-	
+	Route::post('historicotransacciones/show', [
+		'as' => 'report.historicotransacciones.show', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_show'
+	]);
+	Route::get('historicotransacciones/cuentas/{opcion}/excel', [
+        'as' => 'report.historicotransacciones.cuentas.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_cuentas_excel'
+    ]);
 });
 /*
 |--------------------------------------------------------------------------
