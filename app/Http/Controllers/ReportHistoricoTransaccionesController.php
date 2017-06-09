@@ -29,7 +29,7 @@ class ReportHistoricoTransaccionesController extends Controller
 		$company = Auth::user()->company;
 		$gestiones = Gestion::lists('nombre','nombre')->all();
 		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
-		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->lists('nombre','id')->all();
+		$categories = Category::where('company_id',$company->id )->lists('nombre','id')->all();
 		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->lists('razon_social','id')->all();
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
 		return view('reports.historico.historico')
@@ -79,7 +79,15 @@ class ReportHistoricoTransaccionesController extends Controller
 					->with('ingreso_total',$resultado['ingreso_total'])
 					->with('egreso_total',$resultado['egreso_total']);
 		}else{
-			return view('reports.historico.categoria');
+			$resultado = $this->historicoCategoriasArray($request->categoria,$mes,$anio);
+			//dd($resultado['resultado']);
+			$categoria = Category::find($request->categoria);
+			return view('reports.historico.categoria')
+			->with('categoria',$categoria)
+			->with('mes',$mes)
+			->with('anio',$anio)
+			->with('datos',$resultado['resultado'])
+			->with('monto',$resultado['monto_total']);
 		}
 		
 	}
@@ -115,7 +123,7 @@ class ReportHistoricoTransaccionesController extends Controller
         })->export('xls');
 
 	}
-	
+	//Array base
 	function historicoCuentasArray($id_cuenta,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
 		$id_transactions = array();
@@ -159,20 +167,79 @@ class ReportHistoricoTransaccionesController extends Controller
 				$total_ingreso = $total_ingreso + $transaction->importe_credito;
 			}else if($transaction->tipo_transaccion == "Egreso"){
 				$array_transaction = array($fecha_pago,$nro_documento,$transaction->concepto,$transaction->forma_pago,$transaction->numero_forma_pago,0,$transaction->importe_debito);
-				$total_egreso = $total_ingreso + $transaction->importe_debito;
+				$total_egreso = $total_egreso + $transaction->importe_debito;
 			}else if($transaction->tipo_transaccion == "Traspaso-Ingreso"){
 				$array_transaction = array($fecha_pago,$nro_documento,$transaction->concepto,$transaction->forma_pago,$transaction->numero_forma_pago,$transaction->importe_credito,0);
 				$total_ingreso = $total_ingreso + $transaction->importe_credito;
 			}else if($transaction->tipo_transaccion == "Traspaso-Egreso"){
 				$array_transaction = array($fecha_pago,$nro_documento,$transaction->concepto,$transaction->forma_pago,$transaction->numero_forma_pago,0,$transaction->importe_debito);
-				$total_egreso = $total_ingreso + $transaction->importe_debito;
+				$total_egreso = $total_egreso + $transaction->importe_debito;
 			}
 			array_push($array_resultado, $array_transaction);
 		}
-		//$array_total = array('','','','','',$total_ingreso,$total_egreso);
-		
-		//array_push($array_resultado, $array_total);
-		//dd($array_resultado);
+
 		return array('resultado'=>$array_resultado,'ingreso_total'=>$total_ingreso,'egreso_total'=>$total_egreso);
+	}
+	
+	function historicoCategoriasArray($id_categoria,$mes,$anio,$array_inicio = array()){
+		$company = Auth::user()->company;
+		$categoria = Category::find($id_categoria);
+
+		if($categoria->tipo_categoria == 'Ingreso'){
+			$ingresos =DB::table('accountsreceivables')
+			->join('collections', 'collections.id', '=', 'accountsreceivables.id_collection')
+			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
+			->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
+			->join('categories', 'categories.id', '=', 'quotas.category_id')
+			->where('category_id', '=', $id_categoria)
+			->where('cancelada',1)
+			->where('anulada',0)
+			->where('accountsreceivables.company_id',$company->id)
+			->where('excluir_reportes',0);
+
+			if($mes != 0) $ingresos->whereMonth('fecha_pago', '=', $mes);
+			if($anio != 0) $ingresos->whereYear('fecha_pago', '=', $anio);
+			$resultado = $ingresos->get();
+			$array_categorias = array();
+			$importe_total = 0;
+			foreach ($resultado as $ingreso) {
+			   $fecha = date_format(date_create($ingreso->fecha_pago),'d/m/Y');
+			   $nro_documento = str_pad($ingreso->nro_documento, 6, "0", STR_PAD_LEFT);
+			   $collection = Collection::find($ingreso->id_collection);
+			   $array_ingreso = array($fecha, $nro_documento,'',$ingreso->concepto,$collection->account->nombre,$ingreso->forma_pago,$ingreso->importe_credito);
+			   array_push($array_categorias, $array_ingreso);
+			   $importe_total = $importe_total+$ingreso->importe_credito;
+			}
+
+		}else{
+			$gastos =  DB::table('expenses')
+  					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+					->join('accounts', 'accounts.id', '=', 'expenses.account_id')
+					->join('suppliers', 'suppliers.id', '=', 'expenses.supplier_id')
+  					->where('category_id',$id_categoria)
+					->where('expenses.company_id',$company->id)
+  					->where('anulada',0)
+  					->where('excluir_reportes',0);
+
+
+			if($mes != 0) $gastos->whereMonth('fecha_pago', '=', $mes);
+			if($anio != 0) $gastos->whereYear('fecha_pago', '=', $anio);
+
+			$resultado = $gastos->get();
+			//dd($resultado);
+			$array_categorias = array();
+			$importe_total = 0;
+			foreach ($resultado as $egreso) {
+			   $fecha = date_format(date_create($egreso->fecha_pago),'d/m/Y');
+			   $nro_documento = str_pad($egreso->nro_documento, 6, "0", STR_PAD_LEFT);
+			   $array_egreso = array($fecha,$nro_documento,$egreso->razon_social,$egreso->concepto,$egreso->nombre,$egreso->forma_pago,$egreso->importe_debito);
+			   array_push($array_categorias, $array_egreso);
+			   $importe_total=$importe_total+$egreso->importe_debito;
+			}
+		}
+
+		
+		return array('resultado'=>$array_categorias,'monto_total'=>$importe_total);
+
 	}
 }
