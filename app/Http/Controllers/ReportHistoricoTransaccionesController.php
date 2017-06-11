@@ -78,7 +78,7 @@ class ReportHistoricoTransaccionesController extends Controller
 					->with('transactions',$resultado['resultado'])
 					->with('ingreso_total',$resultado['ingreso_total'])
 					->with('egreso_total',$resultado['egreso_total']);
-		}else{
+		}elseif($request->tipo == 'categorias'){
 			$resultado = $this->historicoCategoriasArray($request->categoria,$mes,$anio);
 			//dd($resultado['resultado']);
 			$categoria = Category::find($request->categoria);
@@ -88,6 +88,18 @@ class ReportHistoricoTransaccionesController extends Controller
 			->with('anio',$anio)
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
+		}elseif($request->tipo == 'proveedores'){
+			$resultado = $this->historicoProveedoresArray($request->proveedor,$mes,$anio);
+			//dd($resultado['resultado']);
+			$proveedor = Supplier::find($request->proveedor);
+			return view('reports.historico.proveedor')
+			->with('proveedor',$proveedor)
+			->with('mes',$mes)
+			->with('anio',$anio)
+			->with('datos',$resultado['resultado'])
+			->with('monto',$resultado['monto_total']);
+		}elseif($request->tipo == 'pagos'){
+			return view('reports.historico.pagospropiedad');
 		}
 		
 	}
@@ -106,9 +118,71 @@ class ReportHistoricoTransaccionesController extends Controller
 		$resultado_datos = $resultado['resultado'];
 		$array_total = array('Total','','','','',$resultado['ingreso_total'],$resultado['egreso_total']);
 		array_push($resultado_datos,$array_total);
-		Excel::create('Reporte_Estado_Actual', function($excel) use($resultado_datos){
+		Excel::create('Reporte_Historico_Cuentas', function($excel) use($resultado_datos){
  
             $excel->sheet('Historico Cuentas', function($sheet) use($resultado_datos){
+ 
+ 
+                $sheet->fromArray($resultado_datos, null, 'A1', true, false);
+				$sheet->row(1, function($row) {
+
+					// call cell manipulation methods
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
+	}
+	
+	function historicotransacciones_categorias_excel($opcion){
+		$opcion_mes_anio = explode('_', $opcion);
+		$mes = $opcion_mes_anio[0];
+		$anio = $opcion_mes_anio[1];
+		$categoria = $opcion_mes_anio[2];
+
+		$array_titulo = array(array('FECHA','DOCUMENTO','PROVEEDOR','CONCEPTO','FORMA PAGO','IMPORTE')); 
+		$resultado = $this->historicoCategoriasArray($categoria,$mes,$anio,$array_titulo);
+		
+		
+		$resultado_datos = $resultado['resultado'];
+		$array_total = array('Total','','','','','',$resultado['monto_total']);
+		array_push($resultado_datos,$array_total);
+		Excel::create('Reporte_Histoirico_Categorias', function($excel) use($resultado_datos){
+ 
+            $excel->sheet('Historico Categorias', function($sheet) use($resultado_datos){
+ 
+ 
+                $sheet->fromArray($resultado_datos, null, 'A1', true, false);
+				$sheet->row(1, function($row) {
+
+					// call cell manipulation methods
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
+	}
+	
+	function historicotransacciones_proveedores_excel($opcion){
+		$opcion_mes_anio = explode('_', $opcion);
+		$mes = $opcion_mes_anio[0];
+		$anio = $opcion_mes_anio[1];
+		$proveedor = $opcion_mes_anio[2];
+
+		$array_titulo = array(array('FECHA','DOCUMENTO','CATEGORIA','CONCEPTO','CUENTA','FORMA PAGO','IMPORTE')); 
+		$resultado = $this->historicoProveedoresArray($proveedor,$mes,$anio,$array_titulo);
+		
+		
+		$resultado_datos = $resultado['resultado'];
+		$array_total = array('Total','','','','','',$resultado['monto_total']);
+		array_push($resultado_datos,$array_total);
+		Excel::create('Reporte_Histoirico_Proveedores', function($excel) use($resultado_datos){
+ 
+            $excel->sheet('Historico Proveedores', function($sheet) use($resultado_datos){
  
  
                 $sheet->fromArray($resultado_datos, null, 'A1', true, false);
@@ -200,7 +274,7 @@ class ReportHistoricoTransaccionesController extends Controller
 			if($mes != 0) $ingresos->whereMonth('fecha_pago', '=', $mes);
 			if($anio != 0) $ingresos->whereYear('fecha_pago', '=', $anio);
 			$resultado = $ingresos->get();
-			$array_categorias = array();
+			$array_categorias = $array_inicio;
 			$importe_total = 0;
 			foreach ($resultado as $ingreso) {
 			   $fecha = date_format(date_create($ingreso->fecha_pago),'d/m/Y');
@@ -226,8 +300,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			if($anio != 0) $gastos->whereYear('fecha_pago', '=', $anio);
 
 			$resultado = $gastos->get();
-			//dd($resultado);
-			$array_categorias = array();
+			dd($resultado);
+			$array_categorias = $array_inicio;
 			$importe_total = 0;
 			foreach ($resultado as $egreso) {
 			   $fecha = date_format(date_create($egreso->fecha_pago),'d/m/Y');
@@ -240,6 +314,42 @@ class ReportHistoricoTransaccionesController extends Controller
 
 		
 		return array('resultado'=>$array_categorias,'monto_total'=>$importe_total);
+
+	}
+	
+	function historicoProveedoresArray($id_proveedor,$mes,$anio,$array_inicio = array()){
+		$company = Auth::user()->company;
+		//$categoria = Category::find($id_categoria);
+
+		$proveedores =DB::table('expenses')
+			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','categories.nombre as categoria','transactions.concepto','accounts.nombre as cuenta','transactions.forma_pago as forma_pago','transactions.importe_debito as importe')
+			->join('suppliers', 'suppliers.id', '=', 'expenses.supplier_id')
+			->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+			->join('accounts', 'accounts.id', '=', 'expenses.account_id')
+			->join('categories', 'categories.id', '=', 'expenses.category_id')
+			->where('expenses.supplier_id', '=', $id_proveedor)
+			->where('transactions.anulada',0)
+			->where('expenses.company_id',$company->id)
+			->where('transactions.excluir_reportes',0);
+
+			if($mes != 0) $proveedores->whereMonth('transactions.fecha_pago', '=', $mes);
+			if($anio != 0) $proveedores->whereYear('transactions.fecha_pago', '=', $anio);
+			$resultado = $proveedores->get();
+			//dd($resultado);
+			$array_proveedores = $array_inicio;
+			$importe_total = 0;
+			foreach ($resultado as $egreso) {
+			   $fecha = date_format(date_create($egreso->fecha_pago),'d/m/Y');
+			   $nro_documento = str_pad($egreso->nro_documento, 6, "0", STR_PAD_LEFT);
+
+			   $array_egreso = array($fecha, $nro_documento,$egreso->categoria,$egreso->concepto,$egreso->cuenta,$egreso->forma_pago,$egreso->importe);
+			   array_push($array_proveedores, $array_egreso);
+			   $importe_total = $importe_total+$egreso->importe;
+			}
+			//dd($array_proveedores);
+
+		
+		return array('resultado'=>$array_proveedores,'monto_total'=>$importe_total);
 
 	}
 }
