@@ -196,7 +196,7 @@
                         $('#cuentas').hide();
 						$('#categorias').hide();
 						$('#proveedores').hide();
-						$('#propiedades').hide();
+						$('#propiedades').show();
                     }else if($(this).val() == "ingresos"){
                         $('#cuentas').hide();
 						$('#categorias').hide();
