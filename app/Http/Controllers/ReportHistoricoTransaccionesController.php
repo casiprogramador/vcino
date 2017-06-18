@@ -99,7 +99,18 @@ class ReportHistoricoTransaccionesController extends Controller
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'pagos'){
-			return view('reports.historico.pagospropiedad');
+			$resultado = $this->historicoPropiedadesArray($request->propiedad,$mes,$anio);
+			$propiedad = Property::find($request->propiedad);
+			return view('reports.historico.pagospropiedad')
+			->with('propiedad',$propiedad)
+			->with('mes',$mes)
+			->with('anio',$anio)
+			->with('datos',$resultado['resultado'])
+			->with('monto',$resultado['monto_total']);
+		}elseif($request->tipo == 'ingresos'){
+			//$resultado = $this->historicoPropiedadesArray($request->propiedad,$mes,$anio);
+			//$propiedad = Property::find($request->propiedad);
+			return view('reports.historico.ingresos');
 		}
 		
 	}
@@ -183,6 +194,36 @@ class ReportHistoricoTransaccionesController extends Controller
 		Excel::create('Reporte_Histoirico_Proveedores', function($excel) use($resultado_datos){
  
             $excel->sheet('Historico Proveedores', function($sheet) use($resultado_datos){
+ 
+ 
+                $sheet->fromArray($resultado_datos, null, 'A1', true, false);
+				$sheet->row(1, function($row) {
+
+					// call cell manipulation methods
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
+	}
+	function historicotransacciones_propiedades_excel($opcion){
+		$opcion_mes_anio = explode('_', $opcion);
+		$mes = $opcion_mes_anio[0];
+		$anio = $opcion_mes_anio[1];
+		$proveedor = $opcion_mes_anio[2];
+
+		$array_titulo = array(array('FECHA','CUOTA','CONCEPTO','IMPORTE')); 
+		$resultado = $this->historicoPropiedadesArray($proveedor,$mes,$anio,$array_titulo);
+		
+		
+		$resultado_datos = $resultado['resultado'];
+		$array_total = array('Total','','',$resultado['monto_total']);
+		array_push($resultado_datos,$array_total);
+		Excel::create('Reporte_Histoirico_Pagos_por_propiedad', function($excel) use($resultado_datos){
+ 
+            $excel->sheet('Historico Pagos por Propiedad', function($sheet) use($resultado_datos){
  
  
                 $sheet->fromArray($resultado_datos, null, 'A1', true, false);
@@ -350,6 +391,43 @@ class ReportHistoricoTransaccionesController extends Controller
 
 		
 		return array('resultado'=>$array_proveedores,'monto_total'=>$importe_total);
+
+	}
+	
+	function historicoPropiedadesArray($id_propiedad,$mes,$anio,$array_inicio = array()){
+		$company = Auth::user()->company;
+		//$categoria = Category::find($id_categoria);
+
+		$propiedades =DB::table('collections')
+			->select('transactions.fecha_pago as fecha_pago','transactions.concepto','collections.id')
+			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
+			->where('collections.property_id', '=', $id_propiedad)
+			->where('transactions.anulada',0)
+			->where('collections.company_id',$company->id)
+			->where('transactions.excluir_reportes',0);
+
+			if($mes != 0) $propiedades->whereMonth('transactions.fecha_pago', '=', $mes);
+			if($anio != 0) $propiedades->whereYear('transactions.fecha_pago', '=', $anio);
+			$resultado = $propiedades->get();
+			//dd($resultado);
+			$array_propiedades = $array_inicio;
+			$importe_total = 0;
+			foreach ($resultado as $pago) {
+			   $fecha = date_format(date_create($pago->fecha_pago),'d/m/Y');
+			   
+			   $cuota_pagadas = Accountsreceivable::where('id_collection',$pago->id)->get();
+			  
+			   foreach ($cuota_pagadas as $cuota_pagada) {
+				    $concepto = ($pago->concepto).' - Periodo '.(nombremes($cuota_pagada->periodo)).' / '.($cuota_pagada->gestion);
+				   $array_pago = array($fecha, $cuota_pagada->quota->cuota,$concepto,$cuota_pagada->importe_por_cobrar);
+				   array_push($array_propiedades, $array_pago);
+				   $importe_total = $importe_total+$cuota_pagada->importe_por_cobrar;
+			   }
+			   
+			}
+
+		
+		return array('resultado'=>$array_propiedades,'monto_total'=>$importe_total);
 
 	}
 }
