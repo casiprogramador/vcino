@@ -227,6 +227,14 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('historicotransacciones/proveedores/{opcion}/excel', [
         'as' => 'report.historicotransacciones.proveedores.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_proveedores_excel'
     ]);
+	
+	Route::get('historicotransacciones/propiedades/{opcion}/excel', [
+        'as' => 'report.historicotransacciones.propiedades.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_propiedades_excel'
+    ]);
+
+	Route::get('historicotransacciones/ingresos/{opcion}/excel', [
+        'as' => 'report.historicotransacciones.ingresos.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_ingresos_excel'
+    ]);
 });
 /*
 |--------------------------------------------------------------------------

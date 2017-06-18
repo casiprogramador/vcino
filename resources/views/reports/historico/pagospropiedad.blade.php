@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="row wrapper border-bottom white-bg page-heading">
+<div class="row wrapper border-bottom white-bg page-heading migaspan">
     <div class="col-lg-10">
         <h2>Histórico de transacciones</h2>
         <ol class="breadcrumb">
@@ -30,19 +30,23 @@
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
+                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte" onClick="window.print()">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
+                           <a href="{{ route('report.historicotransacciones.propiedades.excel', $mes.'_'.$anio.'_'.$propiedad->id) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
                                 <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar...
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
                     <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Histórico de transacciones - Pagos por propiedad</h3>
-                    <small style="padding-left:36px;">Periodo: Marzo/2017 - Moneda: Bolivianos</small>
+                     @if($mes != 0)
+                    <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
+                    @else
+                    <small style="padding-left:36px;">Gestion: {{$anio}} - Moneda: Bolivianos</small>
+                    @endif
                 </div>
 
                 <div class="ibox-content">
@@ -52,10 +56,10 @@
 
                     	<div class="row">
 	                    	<div class="col-sm-9">
-	                    		<h3>Propiedad: 3 - A</h3>
+	                    		<h3>Propiedad: {{ $propiedad->nro }}</h3>
 	                    	</div>
 	                    	<div class="col-sm-3">
-	                    		<h3 class="text-right"><small>Fecha reporte: 31/03/2017</small></h3>
+	                    		<h3 class="text-right"><small>Fecha reporte: {{ date('d/m/Y') }}</small></h3>
 	                    	</div>
 	                    </div>
 
@@ -71,51 +75,18 @@
                                 </thead>
 
                                 <tbody>
+									
+									@for ($i = 0; $i < count($datos); $i++)
                                 	<tr>
-										<td>14/01/2017</td>
-										<td>Servicios: consumo de agua potable</td>
-										<td>Consumo mensual de agua potable (m3) - Periodo: Diciembre 2016</td>
-										<td style="text-align:right;">423.00</td>
+										<td>{{$datos[$i][0]}}</td>
+										<td>{{$datos[$i][1]}}</td>
+										<td>{{$datos[$i][2]}}</td>
+										<td style="text-align:right;">{{$datos[$i][3]}}</td>
 									</tr>
-                                	<tr>
-										<td>14/01/2017</td>
-										<td>Mantenimiento: cuota mensual</td>
-										<td>Cuota mensual de mantenimiento - Periodo: Diciembre 2016</td>
-										<td style="text-align:right;">1,100.00</td>
-									</tr>
-                                	<tr>
-										<td>03/02/2017</td>
-										<td>Alquiler: áreas comunes</td>
-										<td>Uso de salón de eventos - Periodo: Febrero 2017</td>
-										<td style="text-align:right;">342.50</td>
-									</tr>
-                                	<tr>
-										<td>06/02/2017</td>
-										<td>Mantenimiento: cuota mensual</td>
-										<td>Cuota mensual de mantenimiento - Periodo: Enero 2017</td>
-										<td style="text-align:right;">1,100.00</td>
-									</tr>
-                                	<tr>
-										<td>06/02/2017</td>
-										<td>Servicios: consumo de agua potable</td>
-										<td>Consumo mensual de agua potable (m3) - Periodo: Enero 2017</td>
-										<td style="text-align:right;">367.00</td>
-									</tr>
-                                	<tr>
-										<td>06/03/2017</td>
-										<td>Mantenimiento: cuota mensual</td>
-										<td>Cuota mensual de mantenimiento - Periodo: Febrero 2017</td>
-										<td style="text-align:right;">1,100.00</td>
-									</tr>
-                                	<tr>
-										<td>06/03/2017</td>
-										<td>Servicios: consumo de agua potable</td>
-										<td>Consumo mensual de agua potable (m3) - Periodo: Febrero 2017</td>
-										<td style="text-align:right;">358.00</td>
-									</tr>
+									@endfor
                                 <tfoot>
 									<th colspan="3">Total</th>
-									<th style="text-align:right;">4.790,50</th>
+									<th style="text-align:right;">{{$monto}}</th>
                                 </tfoot>
                             </table>
                         </div>
@@ -125,12 +96,12 @@
                     <div class="col-sm-1">
                     </div>
 
-                    <div class="row">
+                    <div class="row sec-volver">
                         <div class="col-sm-12">
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group text-left">
-                                <button class="btn btn-success" type="submit">Volver</button>
+                           <div class="form-group text-left">
+                                   <a href="{{ route('report.historicotransacciones') }}" class="btn btn-success" type="submit">Volver</a>
                             </div>
                         </div>
                     </div>
@@ -143,17 +114,10 @@
 
 
 </div>
-
-
-
-
-
 @endsection
-@section('javascript')
-<script>
-	$('.date-picker').datetimepicker({
-		format: 'DD/MM/YYYY'
-	});
-</script>
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
 @endsection
+
+
 
