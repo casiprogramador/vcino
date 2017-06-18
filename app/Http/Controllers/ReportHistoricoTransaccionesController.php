@@ -108,9 +108,12 @@ class ReportHistoricoTransaccionesController extends Controller
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'ingresos'){
-			//$resultado = $this->historicoPropiedadesArray($request->propiedad,$mes,$anio);
-			//$propiedad = Property::find($request->propiedad);
-			return view('reports.historico.ingresos');
+			$resultado = $this->historicoIngresosArray($mes,$anio);
+			return view('reports.historico.ingresos')
+			->with('mes',$mes)
+			->with('anio',$anio)
+			->with('datos',$resultado['resultado'])
+			->with('monto',$resultado['monto_total']);
 		}
 		
 	}
@@ -224,6 +227,36 @@ class ReportHistoricoTransaccionesController extends Controller
 		Excel::create('Reporte_Histoirico_Pagos_por_propiedad', function($excel) use($resultado_datos){
  
             $excel->sheet('Historico Pagos por Propiedad', function($sheet) use($resultado_datos){
+ 
+ 
+                $sheet->fromArray($resultado_datos, null, 'A1', true, false);
+				$sheet->row(1, function($row) {
+
+					// call cell manipulation methods
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
+	}
+	
+	function historicotransacciones_ingresos_excel($opcion){
+		$opcion_mes_anio = explode('_', $opcion);
+		$mes = $opcion_mes_anio[0];
+		$anio = $opcion_mes_anio[1];
+
+		$array_titulo = array(array('FECHA','DOCUMENTO','BENEFICIARIO','CONCEPTO','CUENTA','IMPORTE')); 
+		$resultado = $this->historicoIngresosArray($mes,$anio,$array_titulo);
+		
+		
+		$resultado_datos = $resultado['resultado'];
+		$array_total = array('Total','','','','',$resultado['monto_total']);
+		array_push($resultado_datos,$array_total);
+		Excel::create('Reporte_Histoirico_Ingresos', function($excel) use($resultado_datos){
+ 
+            $excel->sheet('Historico Ingresos', function($sheet) use($resultado_datos){
  
  
                 $sheet->fromArray($resultado_datos, null, 'A1', true, false);
@@ -428,6 +461,38 @@ class ReportHistoricoTransaccionesController extends Controller
 
 		
 		return array('resultado'=>$array_propiedades,'monto_total'=>$importe_total);
+		//$collections = Collection::where('company_id',$company->id );
+	}
+	
+	function historicoIngresosArray($mes,$anio,$array_inicio = array()){
+		$company = Auth::user()->company;
+		$ingresos =DB::table('collections')
+			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','properties.nro as propiedad','contacts.nombre','contacts.apellido','transactions.concepto','accounts.nombre as cuenta','transactions.importe_credito as importe')
+			->join('properties', 'properties.id', '=', 'collections.property_id')
+			->join('contacts', 'contacts.id', '=', 'collections.contact_id')
+			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
+			->join('accounts', 'accounts.id', '=', 'collections.account_id')
+			->where('transactions.anulada',0)
+			->where('collections.company_id',$company->id)
+			->where('transactions.excluir_reportes',0);
+			if($mes != 0) $ingresos->whereMonth('transactions.fecha_pago', '=', $mes);
+			if($anio != 0) $ingresos->whereYear('transactions.fecha_pago', '=', $anio);
+			$resultado = $ingresos->get();
+		//dd($resultado);
+			$array_ingresos = $array_inicio;
+			$importe_total = 0;
+			foreach ($resultado as $ingreso) {
+			   $fecha = date_format(date_create($ingreso->fecha_pago),'d/m/Y');
+			   $nro_documento = str_pad($ingreso->nro_documento, 6, "0", STR_PAD_LEFT);
+			   $beneficiario = ($ingreso->propiedad).' - '.($ingreso->nombre).' '.($ingreso->apellido);
 
+			   $array_ingreso = array($fecha, $nro_documento,$beneficiario,$ingreso->concepto,$ingreso->cuenta,$ingreso->importe);
+			   array_push($array_ingresos, $array_ingreso);
+			   $importe_total = $importe_total+$ingreso->importe;
+			}
+			//dd($array_ingresos);
+		
+		return array('resultado'=>$array_ingresos,'monto_total'=>$importe_total);
+		
 	}
 }
