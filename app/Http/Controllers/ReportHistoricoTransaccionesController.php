@@ -114,6 +114,23 @@ class ReportHistoricoTransaccionesController extends Controller
 			->with('anio',$anio)
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
+		}elseif($request->tipo == 'egresos'){
+			$resultado = $this->historicoEgresosArray($mes,$anio);
+			return view('reports.historico.egresos')
+			->with('mes',$mes)
+			->with('anio',$anio)
+			->with('datos',$resultado['resultado'])
+			->with('monto',$resultado['monto_total']);
+		}elseif($request->tipo == 'traspasos'){
+			$resultado = $this->historicoTraspasosArray($mes,$anio);
+			return view('reports.historico.traspasos')
+			->with('mes',$mes)
+			->with('anio',$anio)
+			->with('datos',$resultado['resultado'])
+			->with('monto',$resultado['monto_total']);
+		}elseif($request->tipo == 'todas'){
+			//$resultado = $this->historicoTraspasosArray($mes,$anio);
+			return view('reports.historico.transacciones');
 		}
 		
 	}
@@ -257,6 +274,66 @@ class ReportHistoricoTransaccionesController extends Controller
 		Excel::create('Reporte_Histoirico_Ingresos', function($excel) use($resultado_datos){
  
             $excel->sheet('Historico Ingresos', function($sheet) use($resultado_datos){
+ 
+ 
+                $sheet->fromArray($resultado_datos, null, 'A1', true, false);
+				$sheet->row(1, function($row) {
+
+					// call cell manipulation methods
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
+	}
+	
+	function historicotransacciones_egresos_excel($opcion){
+		$opcion_mes_anio = explode('_', $opcion);
+		$mes = $opcion_mes_anio[0];
+		$anio = $opcion_mes_anio[1];
+
+		$array_titulo = array(array('FECHA','DOCUMENTO','PROVEEDOR','CATEGORIA','CONCEPTO','CUENTA','IMPORTE')); 
+		$resultado = $this->historicoEgresosArray($mes,$anio,$array_titulo);
+		
+		
+		$resultado_datos = $resultado['resultado'];
+		$array_total = array('Total','','','','','',$resultado['monto_total']);
+		array_push($resultado_datos,$array_total);
+		Excel::create('Reporte_Histoirico_Egresos', function($excel) use($resultado_datos){
+ 
+            $excel->sheet('Historico Egresos', function($sheet) use($resultado_datos){
+ 
+ 
+                $sheet->fromArray($resultado_datos, null, 'A1', true, false);
+				$sheet->row(1, function($row) {
+
+					// call cell manipulation methods
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
+	}
+	
+	function historicotransacciones_traspasos_excel($opcion){
+		$opcion_mes_anio = explode('_', $opcion);
+		$mes = $opcion_mes_anio[0];
+		$anio = $opcion_mes_anio[1];
+
+		$array_titulo = array(array('FECHA','DOCUMENTO','CONCEPTO','CUENTA ORIGEN','CUENTA DESTINO','FORMA PAGO','IMPORTE')); 
+		$resultado = $this->historicoTraspasosArray($mes,$anio,$array_titulo);
+		
+		
+		$resultado_datos = $resultado['resultado'];
+		$array_total = array('Total','','','','','',$resultado['monto_total']);
+		array_push($resultado_datos,$array_total);
+		Excel::create('Reporte_Histoirico_Traspasos', function($excel) use($resultado_datos){
+ 
+            $excel->sheet('Historico Traspasos', function($sheet) use($resultado_datos){
  
  
                 $sheet->fromArray($resultado_datos, null, 'A1', true, false);
@@ -493,6 +570,66 @@ class ReportHistoricoTransaccionesController extends Controller
 			//dd($array_ingresos);
 		
 		return array('resultado'=>$array_ingresos,'monto_total'=>$importe_total);
+		
+	}
+	
+	function historicoEgresosArray($mes,$anio,$array_inicio = array()){
+		$company = Auth::user()->company;
+		$egresos = DB::table('expenses')
+			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','suppliers.razon_social as proveedor','categories.nombre as categoria','transactions.concepto','accounts.nombre as cuenta','transactions.importe_debito as importe')
+			->join('suppliers', 'suppliers.id', '=', 'expenses.supplier_id')
+			->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+			->join('accounts', 'accounts.id', '=', 'expenses.account_id')
+			->join('categories', 'categories.id', '=', 'expenses.category_id')
+			->where('transactions.anulada',0)
+			->where('expenses.company_id',$company->id)
+			->where('transactions.excluir_reportes',0);
+
+			if($mes != 0) $egresos->whereMonth('transactions.fecha_pago', '=', $mes);
+			if($anio != 0) $egresos->whereYear('transactions.fecha_pago', '=', $anio);
+			$resultado = $egresos->get();
+			$array_egresos = $array_inicio;
+			$importe_total = 0;
+			foreach ($resultado as $egreso) {
+			   $fecha = date_format(date_create($egreso->fecha_pago),'d/m/Y');
+			   $nro_documento = str_pad($egreso->nro_documento, 6, "0", STR_PAD_LEFT);
+
+			   $array_egreso = array($fecha, $nro_documento,$egreso->proveedor,$egreso->categoria,$egreso->concepto,$egreso->cuenta,$egreso->importe);
+			   array_push($array_egresos, $array_egreso);
+			   $importe_total = $importe_total+$egreso->importe;
+			}
+		
+		return array('resultado'=>$array_egresos,'monto_total'=>$importe_total);
+		
+	}
+	
+	function historicoTraspasosArray($mes,$anio,$array_inicio = array()){
+		$company = Auth::user()->company;
+		$traspaso = DB::table('transfers')
+			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','transactions.concepto','cuenta_ori.nombre as cuenta_origen','cuenta_des.nombre as cuenta_destino','transactions.forma_pago as forma_pago','transactions.importe_debito as importe')
+			->join('transactions', 'transactions.id', '=', 'transfers.ori_transaction_id')
+			->join('accounts as cuenta_ori', 'cuenta_ori.id', '=', 'transfers.ori_account_id')
+			->join('accounts as cuenta_des', 'cuenta_des.id', '=', 'transfers.des_account_id')
+			->where('transactions.anulada',0)
+			->where('transfers.company_id',$company->id)
+			->where('transactions.excluir_reportes',0);
+
+			if($mes != 0) $traspaso->whereMonth('transactions.fecha_pago', '=', $mes);
+			if($anio != 0) $traspaso->whereYear('transactions.fecha_pago', '=', $anio);
+			$resultado = $traspaso->get();
+
+			$array_traspasos = $array_inicio;
+			$importe_total = 0;
+			foreach ($resultado as $traspaso) {
+			   $fecha = date_format(date_create($traspaso->fecha_pago),'d/m/Y');
+			   $nro_documento = str_pad($traspaso->nro_documento, 6, "0", STR_PAD_LEFT);
+
+			    $array_traspaso = array($fecha, $nro_documento, $traspaso->concepto,$traspaso->cuenta_origen,$traspaso->cuenta_destino ,$traspaso->forma_pago,$traspaso->importe);
+			   array_push($array_traspasos, $array_traspaso);
+			   $importe_total = $importe_total+$traspaso->importe;
+			}
+
+		return array('resultado'=>$array_traspasos,'monto_total'=>$importe_total);
 		
 	}
 }
