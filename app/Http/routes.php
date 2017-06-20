@@ -243,6 +243,10 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('historicotransacciones/traspasos/{opcion}/excel', [
         'as' => 'report.historicotransacciones.traspasos.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_traspasos_excel'
     ]);
+	
+	Route::get('historicotransacciones/transacciones/{opcion}/excel', [
+        'as' => 'report.historicotransacciones.transacciones.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_transacciones_excel'
+    ]);
 });
 /*
 |--------------------------------------------------------------------------

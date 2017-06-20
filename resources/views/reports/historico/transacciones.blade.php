@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="row wrapper border-bottom white-bg page-heading">
+<div class="row wrapper border-bottom white-bg page-heading migaspan">
     <div class="col-lg-10">
         <h2>Histórico de transacciones</h2>
         <ol class="breadcrumb">
@@ -19,90 +19,6 @@
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-
-    <!--            *******************************         -->
-    <!--                        TRASPASOS                   -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Histórico de transacciones</h5>
-
-                    <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
-                                <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
-                            </button>
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
-                                <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar...
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
-                    <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Histórico de transacciones - Traspasos</h3>
-                    <small style="padding-left:36px;">Periodo: Marzo/2017 - Moneda: Bolivianos</small>
-                </div>
-
-                <div class="ibox-content">
-                    <div class="col-sm-1">
-                    </div>
-                    <div class="col-sm-10">
-
-                        <div class="table-responsive" style="margin-top: 20px;">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr bgcolor="#D6D6D6">
-                                        <th style="vertical-align:bottom">Fecha</th>
-                                        <th style="vertical-align:bottom">Documento</th>
-                                        <th style="vertical-align:bottom">Concepto</th>
-                                        <th style="vertical-align:bottom">Cuenta origen</th>
-                                        <th style="vertical-align:bottom">Cuenta destino</th>
-                                        <th style="vertical-align:bottom">Forma de pago</th>
-                                        <th style="text-align:right; vertical-align:bottom">Importe</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        <td>11/03/2017</td>
-                                        <td>T-000008</td>
-                                        <td>Taspaso de fondos para caja chica</td>
-                                        <td>BCP CC en Bolivianos</td>
-                                        <td>Caja Chica</td>
-                                        <td>Cheque</td>
-                                        <td style="text-align:right;">450.00</td>
-                                    </tr>
-                                <tfoot>
-                                    <th colspan="6">Total</th>
-                                    <th style="text-align:right;">450,00</th>
-                                </tfoot>
-                            </table>
-                        </div>
-
-
-                    </div>
-                    <div class="col-sm-1">
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="hr-line-dashed"></div>
-
-                            <div class="form-group text-left">
-                                <button class="btn btn-success" type="submit">Volver</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--            FIN TRASPASOS                               -->
-
-
     <!--            *******************************             -->
     <!--                 TODAS LAS TRANSACCIONES                -->
     <div class="row">
@@ -113,19 +29,23 @@
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
+                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte" onClick="window.print()">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
+                            <a href="{{ route('report.historicotransacciones.transacciones.excel', $mes.'_'.$anio) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
                                 <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar...
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
                     <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Histórico de transacciones - Todas las transacciones</h3>
-                    <small style="padding-left:36px;">Periodo: Marzo/2017 - Moneda: Bolivianos</small>
+                    @if($mes != 0)
+                    <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
+                    @else
+                    <small style="padding-left:36px;">Gestion: {{$anio}} - Moneda: Bolivianos</small>
+                    @endif
                 </div>
 
                 <div class="ibox-content">
@@ -149,40 +69,22 @@
                                 </thead>
 
                                 <tbody>
+									@for ($i = 0; $i < count($datos); $i++)
                                     <tr>
-                                        <td>11/03/2017</td>
-                                        <td>I-000008</td>
-                                        <td>Caoba 01 - Carlos Marcos</td>
-                                        <td>Expensas mensuales</td>
-                                        <td>Pago de expensas enero 2017</td>
-                                        <td>BCP CC en Bolivianos</td>
-                                        <td style="text-align:right;">500.00</td>
-                                        <td style="text-align:right;"></td>
+                                        <td>{{$datos[$i][0]}}</td>
+                                        <td>{{$datos[$i][1]}}</td>
+                                        <td>{{$datos[$i][2]}}</td>
+                                        <td>{{$datos[$i][3]}}</td>
+                                        <td>{{$datos[$i][4]}}</td>
+                                        <td>{{$datos[$i][2]}}</td>
+                                        <td style="text-align:right;">{{$datos[$i][6]}}</td>
+                                        <td style="text-align:right;">{{$datos[$i][7]}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>12/03/2017</td>
-                                        <td>E-000008</td>
-                                        <td>OTIS</td>
-                                        <td>Mantenimiento ascensores</td>
-                                        <td>Pago servicio febrero 2017</td>
-                                        <td>BCP CC en Bolivianos</td>
-                                        <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">1.750.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>13/03/2017</td>
-                                        <td>T-000008</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Taspaso de fondos para caja chica</td>
-                                        <td>BCP CC en Bolivianos - Caja chica</td>
-                                        <td style="text-align:right;">450.00</td>
-                                        <td style="text-align:right;">450.00</td>
-                                    </tr>
+									@endfor
                                 <tfoot>
                                     <th colspan="6">Totales</th>
-                                    <th style="text-align:right;">950,00</th>
-                                    <th style="text-align:right;">1.200,00</th>
+                                    <th style="text-align:right;">{{$monto_credito}}</th>
+                                    <th style="text-align:right;">{{$monto_debito}}</th>
                                 </tfoot>
                             </table>
                         </div>
@@ -190,12 +92,12 @@
                     <div class="col-sm-1">
                     </div>
 
-                    <div class="row">
+                    <div class="row sec-volver">
                         <div class="col-sm-12">
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group text-left">
-                                <button class="btn btn-success" type="submit">Volver</button>
+                                   <a href="{{ route('report.historicotransacciones') }}" class="btn btn-success" type="submit">Volver</a>
                             </div>
                         </div>
                     </div>
@@ -209,17 +111,11 @@
 
 </div>
 
-
-
-
-
 @endsection
-@section('javascript')
-<script>
-	$('.date-picker').datetimepicker({
-		format: 'DD/MM/YYYY'
-	});
-</script>
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
 @endsection
+
+
 
 

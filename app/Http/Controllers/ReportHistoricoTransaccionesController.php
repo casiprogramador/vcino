@@ -129,10 +129,15 @@ class ReportHistoricoTransaccionesController extends Controller
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'todas'){
-			//$resultado = $this->historicoTraspasosArray($mes,$anio);
-			return view('reports.historico.transacciones');
+			$resultado = $this->historicoTransaccionesArray($mes,$anio);
+			return view('reports.historico.transacciones')
+			->with('mes',$mes)
+			->with('anio',$anio)
+			->with('datos',$resultado['resultado'])
+			->with('monto_credito',$resultado['monto_total_credito'])
+			->with('monto_debito',$resultado['monto_total_debito']);
 		}
-		
+
 	}
 	
 	//Excel
@@ -334,6 +339,36 @@ class ReportHistoricoTransaccionesController extends Controller
 		Excel::create('Reporte_Histoirico_Traspasos', function($excel) use($resultado_datos){
  
             $excel->sheet('Historico Traspasos', function($sheet) use($resultado_datos){
+ 
+ 
+                $sheet->fromArray($resultado_datos, null, 'A1', true, false);
+				$sheet->row(1, function($row) {
+
+					// call cell manipulation methods
+					$row->setBackground('#feff01');
+
+				});
+ 
+            });
+        })->export('xls');
+
+	}
+	
+	function historicotransacciones_transacciones_excel($opcion){
+		$opcion_mes_anio = explode('_', $opcion);
+		$mes = $opcion_mes_anio[0];
+		$anio = $opcion_mes_anio[1];
+
+		$array_titulo = array(array('FECHA','DOCUMENTO','BENEFICIARIO','CATEGORIA','CONCEPTO','CUENTA','CREDITO','DEBITO')); 
+		$resultado = $this->historicoTransaccionesArray($mes,$anio,$array_titulo);
+		
+		
+		$resultado_datos = $resultado['resultado'];
+		$array_total = array('Total','','','','','',$resultado['monto_total_credito'],$resultado['monto_total_debito']);
+		array_push($resultado_datos,$array_total);
+		Excel::create('Reporte_Histoirico_Transacciones', function($excel) use($resultado_datos){
+ 
+            $excel->sheet('Historico Transacciones', function($sheet) use($resultado_datos){
  
  
                 $sheet->fromArray($resultado_datos, null, 'A1', true, false);
@@ -630,6 +665,43 @@ class ReportHistoricoTransaccionesController extends Controller
 			}
 
 		return array('resultado'=>$array_traspasos,'monto_total'=>$importe_total);
+		
+	}
+	
+	function historicoTransaccionesArray($mes,$anio,$array_inicio = array()){
+		$ingresos = $this->historicoIngresosArray($mes,$anio);
+		$egresos = $this->historicoEgresosArray($mes,$anio);
+		$traspasos = $this->historicoTraspasosArray($mes,$anio);
+
+		$array_transacciones = $array_inicio;
+		$importe_total_credito = 0;
+		$importe_total_debito = 0;
+		
+		foreach ($ingresos['resultado'] as $ingreso) {
+
+			$array_transaccion = array($ingreso[0], $ingreso[1], $ingreso[2],'',$ingreso[3],$ingreso[4],$ingreso[5],'');
+			   array_push($array_transacciones, $array_transaccion);
+			   $importe_total_credito = $importe_total_credito+$ingreso[5];
+		}
+		
+		foreach ($egresos['resultado'] as $egreso) {
+
+			$array_transaccion = array($egreso[0], $egreso[1], $egreso[2],$egreso[3],$egreso[4],$egreso[5],'',$egreso[6]);
+			   array_push($array_transacciones, $array_transaccion);
+			   $importe_total_debito = $importe_total_debito+$egreso[6];
+		}
+		
+		foreach ($traspasos['resultado'] as $traspaso) {
+
+			$array_transaccion = array($traspaso[0], $traspaso[1],'','', $traspaso[2],$traspaso[3].' - '.$traspaso[4],$traspaso[6],$traspaso[6]);
+			   array_push($array_transacciones, $array_transaccion);
+			   $importe_total_credito = $importe_total_credito+$traspaso[6];
+			   $importe_total_debito = $importe_total_debito+$traspaso[6];
+		}
+		
+		//dd($array_transacciones);
+
+		return array('resultado'=>$array_transacciones,'monto_total_credito'=>$importe_total_credito,'monto_total_debito'=>$importe_total_debito);
 		
 	}
 }
