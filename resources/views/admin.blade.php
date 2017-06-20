@@ -7,11 +7,15 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Cobranzas: Noviembre <small>(Comparativo mes anterior)</small></h5>
+                    <h5>Cobranzas: {{nombremes($mes_actual)}} <small>(Comparativo mes anterior)</small></h5>
                 </div>
                 <div class="ibox-content">
                     <div>
                         <canvas id="barChart" height="60"></canvas>
+						<input  id ="cobranzas-mes-actual" type="hidden" value="{{$cobranzas_mes_actual}}"> 
+						<input  id ="cobranzas-mes-anterior" type="hidden" value="{{$cobranza_mes_anterior}}">
+						<input  id ="nombre-mes-actual" type="hidden" value="{{nombremes($mes_actual)}}"> 
+						<input  id ="nombre-mes-anterior" type="hidden" value="{{nombremes($mes_anterior)}}"> 
                     </div>
                 </div>
             </div>
@@ -313,20 +317,28 @@
 $(function () {
 
     // Cobranzas
+	//cobranzas-mes-actual
+	nombre_mes_actual = $('#nombre-mes-actual').val();
+	nombre_mes_anterior = $('#nombre-mes-anterior').val();
+	mes_cobranza_actual = $('#cobranzas-mes-actual').val();
+	mes_cobranza_actual = JSON.parse(mes_cobranza_actual);
+	mes_cobranza_anterior = $('#cobranzas-mes-anterior').val();
+	mes_cobranza_anterior = JSON.parse(mes_cobranza_anterior);
+	//console.log(mes_cobranza_anterior);
     var barData = {
         labels: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
         datasets: [
             {
-                label: "Octubre",
+                label: nombre_mes_anterior,
                 backgroundColor: 'rgba(74, 181 , 255, 0.5)',
                 borderColor: 'rgba(74, 181 , 255, 0)',
-                data: [65, 59, 80, 81, 56, 55, 40, 59, 80, 81, 56, 55, 40, 59, 40, 19, 86, 27, 75, 80, 81, 56, 55, 40, 59, 80, 81, 56, 55, 21, 22]
+                data: mes_cobranza_anterior
             },
             {
-                label: "Noviembre",
+                label: nombre_mes_actual,
                 backgroundColor: 'rgba(63, 73, 94, 0.4)',
                 borderColor: "rgba(63, 73, 94, 0)",
-                data: [31, 35, 33, 19, 86, 86, 27, 88, 59, 80, 81, 56, 55, 40, 0]
+                data: mes_cobranza_actual
             }
         ]
     };
