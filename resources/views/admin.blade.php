@@ -51,7 +51,7 @@
                                 <li>
                                     <h2 class="no-margins">{{$importe_pagado_actual}}</h2>
                                     <small>Total cobranzas mes actual</small>
-									@if($importe_pagado_total == 0)
+									@if($importe_pagado_total != 0)
                                     <div class="stat-percent">{{number_format ($importe_pagado_actual/$importe_pagado_total*100,2)}}%</div>
                                     <div class="progress progress-mini">
                                         <div style="width: {{$importe_pagado_actual/$importe_pagado_total}}%;" class="progress-bar"></div>
@@ -66,7 +66,7 @@
                                 <li>
                                     <h2 class="no-margins ">{{$importe_pagado_anterior}}</h2>
                                     <small>Total cobranzas mes anterior</small>
-									@if($importe_pagado_total_anterior == 0)
+									@if($importe_pagado_total_anterior != 0)
                                     <div class="stat-percent">
 										{{number_format ( $importe_pagado_anterior/$importe_pagado_total_anterior*100,2)}}%
 									</div>
@@ -85,7 +85,7 @@
                                 <li>
                                     <h2 class="no-margins ">{{number_format ($importe_pagado_promedio,2)}}</h2>
                                     <small>Promedio cobranzas mensuales</small>
-									@if($importe_pagado_promedio_total == 0)
+									@if($importe_pagado_promedio_total != 0)
                                     <div class="stat-percent">{{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),2)}}%</div>
 									
                                     <div class="progress progress-mini">
