@@ -27,11 +27,15 @@
                 <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Gastos: Noviembre</h5>
+                            <h5>Gastos: {{nombremes($mes_actual)}}</h5>
                         </div>
                         <div class="ibox-content">
                             <div>
                                 <canvas id="doughnutChart" height="250"></canvas>
+								<input  id ="nombres-gastos-torta" type="hidden" value="{{$gastos_torta_nombre}}"> 
+								<input  id ="importes-gastos-torta" type="hidden" value="{{$gastos_torta_importe}}">
+								<input  id ="colores-gastos-torta" type="hidden" value="{{$gastos_torta_color}}"> 
+	
                             </div>
                         </div>
                     </div>
@@ -39,33 +43,34 @@
                 <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Ingresos: Noviembre</h5>
+                            <h5>Ingresos: {{nombremes($mes_actual)}} </h5>
                         </div>
                         <div class="ibox-content">
                             <p><br></p>
                             <ul class="stat-list">
                                 <li>
-                                    <h2 class="no-margins">14.450</h2>
+                                    <h2 class="no-margins">{{$importe_pagado_actual}}</h2>
                                     <small>Total cobranzas mes actual</small>
-                                    <div class="stat-percent">48%</div>
+                                    <div class="stat-percent">{{number_format ($importe_pagado_actual/$importe_pagado_total*100,2)}}%</div>
                                     <div class="progress progress-mini">
-                                        <div style="width: 48%;" class="progress-bar"></div>
+                                        <div style="width: {{$importe_pagado_actual/$importe_pagado_total}}%;" class="progress-bar"></div>
                                     </div>
                                 </li>
                                 <li>
-                                    <h2 class="no-margins ">21.550</h2>
+                                    <h2 class="no-margins ">{{$importe_pagado_anterior}}</h2>
                                     <small>Total cobranzas mes anterior</small>
-                                    <div class="stat-percent">89%</div>
+                                    <div class="stat-percent">{{number_format ( $importe_pagado_anterior/$importe_pagado_total_anterior*100,2)}}%</div>
                                     <div class="progress progress-mini">
-                                        <div style="width: 89%;" class="progress-bar progress-bar-2"></div>
+                                        <div style="width: {{number_format ( $importe_pagado_anterior/$importe_pagado_total_anterior*100,0)}}%;" class="progress-bar progress-bar-2"></div>
                                     </div>
                                 </li>
                                 <li>
-                                    <h2 class="no-margins ">20.780</h2>
+                                    <h2 class="no-margins ">{{number_format ($importe_pagado_promedio,2)}}</h2>
                                     <small>Promedio cobranzas mensuales</small>
-                                    <div class="stat-percent">85%</div>
+                                    <div class="stat-percent">{{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),2)}}%</div>
+									
                                     <div class="progress progress-mini">
-                                        <div style="width: 85%;" class="progress-bar progress-bar-2"></div>
+                                        <div style="width: {{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),0)}}%;" class="progress-bar progress-bar-2"></div>
                                     </div>
                                 </li>
                             </ul>
@@ -158,50 +163,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+										@for ($i = 0; $i < count($transacciones); $i++)
                                         <tr>
-                                            <td>20/10/2016</td>
-                                            <td>321</td>
-                                            <td>Ingreso</td>
-                                            <td>Caoba 13</td>
-                                            <td>Pago de expensas</td>
-                                            <td class="text-right">700,00</td>
+                                            <td>{{$transacciones[$i][0]}}</td>
+                                            <td>{{$transacciones[$i][1]}}</td>
+                                            <td>{{$transacciones[$i][2]}}</td>
+                                            <td>{{$transacciones[$i][3]}}</td>
+                                            <td>{{$transacciones[$i][4]}}</td>
+                                            <td class="text-right">{{$transacciones[$i][5]}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>19/10/2016</td>
-                                            <td>124</td>
-                                            <td>Egreso</td>
-                                            <td>Caoba 13</td>
-                                            <td>Pago de expensas</td>
-                                            <td class="text-right">700,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>18/10/2016</td>
-                                            <td>320</td>
-                                            <td>Ingreso</td>
-                                            <td>MZ 8 LT 12</td>
-                                            <td>Pago de expensas</td>
-                                            <td class="text-right">651,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>20/10/2016</td>
-                                            <td>123</td>
-                                            <td>Egreso</td>
-                                            <td>OTAN SECURITY</td>
-                                            <td>Pago servicios mes de septiembre</td>
-                                            <td class="text-right">8.000,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>20/10/2016</td>
-                                            <td>12</td>
-                                            <td>Traspaso</td>
-                                            <td></td>
-                                            <td>Traspaso de fondos a caja chica en Bs.</td>
-                                            <td class="text-right">3.000,00</td>
-                                        </tr>
+										@endfor
                                     </tbody>
                                 </table>
                             </div>
-                            <button class="btn btn-default btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas las transacciones</button>
+                            <a href="{{ route('transaction.transfer.index') }}" class="btn btn-default btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas las transacciones</a>
                         </div>
                     </div>
                 </div>
@@ -365,17 +340,21 @@ $(function () {
     new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
 
 
-    // Gastos mensuales
+    // Gastos mensuales 
+	nombres_gastos_torta = JSON.parse($('#nombres-gastos-torta').val());
+	importes_gastos_torta = JSON.parse($('#importes-gastos-torta').val());
+	colores_gastos_torta = JSON.parse($('#colores-gastos-torta').val());
+	//console.log(nombres_gastos_torta);
     var doughnutData = {
-        labels: ["Administración","Mantenimiento ascensor","Mantenimiento general", "Mantenimiento piscina", "Materiales e insumos varios", "Servicio de agua potable y alcantarillado común", "Servicio de energia eléctrica", "Servicio de limpieza", "Servicio de mantenimiento jardín y áreas verdes", "Servicio de TV Cable", "Servicio de vigilancia y seguridad", "Obras y reparaciones" ],
+        labels: nombres_gastos_torta,
         datasets: [{
-            data: [3500,1600,1300,700,920,310.43,1809.50,3600,950,198,8000,1312.53],
+            data: importes_gastos_torta,
             //backgroundColor: ["#B8BBC2","#8C8E92","#3C507E","#D8DAE1","#DADCE1"]
             //backgroundColor: ["#ACDBFE","#B1B16F","#6691B1","#FEC7C6","#CACB75"]
             //backgroundColor: ["#3287C8","#C88C32","#134E7B","#59B7FF","#7B4D06"]
             //backgroundColor: ["#ACDBFE","#FEDDAC","#6691B1","#C6E7FF","#B18C55"]
             //backgroundColor: ["#ACDBFE","#ACDBFE","#81A4BE","#566D7E","#2A363F"]
-            backgroundColor: ["#ACDAFE", "#90AABF", "#3876A5", "#C1E4FF", "#D1EBFF", "#FFE9A7", "#BFB38E", "#A68A36", "#FFEEBD", "#FFF3CF", "#FFC0A7", "#BF9C8E", "#A65636", "#FFD0BD", "#FFDCCF"]
+            backgroundColor: colores_gastos_torta
 
         }]
     } ;
