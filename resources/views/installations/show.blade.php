@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
+                    Configuración
+                </li>
+                <li class="active">
                     <a href="{{ route('config.installation.index') }}">Instalaciones comunes</a>
                 </li>
                 <li class="active">
@@ -28,7 +31,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle instalación: {{$installation->instalacion}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Ver instalación: {{$installation->instalacion}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -145,17 +148,19 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <p style="font-size: 11px; color: #B0B0B0;">Ingrese el horario máximo permitido de permanencia para los fines de semana y feriados.</p>
+                                                <p style="font-size: 11px; color: #B0B0B0;">Ingrese el horario máximo permitido de permanencia para los fines de semana.</p>
                                             </div>
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
 
+                                        @if ($installation->normas <> '')
                                         <div class="form-group{{ $errors->has('normas') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Principales normas</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8" style="background-color: #EBEBEB; margin-left: 15px;">
                                                 <div class="no-padding">
                                                     <div name="normas">
+                                                        <br>
                                                         <?php echo $installation->normas ?>
                                                     </div>
                                                 </div>
@@ -163,7 +168,9 @@
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
+                                        @endif
 
+                                        @if ($installation->reglamento <> '/img/system/imagedefault.png')
                                         <div class="form-group{{ $errors->has('reglamento') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Normas o Reglamento</label>
                                             <div class="col-sm-9">
@@ -172,44 +179,57 @@
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
+                                        @endif
 
+                                        @if ($installation->fotografia_principal <> '/img/system/imagedefault.png')
                                         <div class="form-group{{ $errors->has('fotografia_principal') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía principal</label>
                                             <div class="col-sm-9">
-												<a href="{{ URL::asset($installation->fotografia_principal)}}" target="_blank">
+												<a href="{{ URL::asset($installation->fotografia_principal) }}" target="_blank">
                                                 <img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="100">
 												</a>
                                             </div>
                                         </div>
+                                        @endif
 
+                                        @if ($installation->fotografia_1 <> '/img/system/imagedefault.png')
                                         <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #1</label>
                                             <div class="col-sm-9">
-												<a href="{{ URL::asset($installation->fotografia_1)}}" target="_blank">
+												<a href="{{ URL::asset($installation->fotografia_1) }}" target="_blank">
                                                 <img src="{{ $installation->fotografia_1 }}" class="img-responsive" width="100">
 												</a>
                                             </div>
                                         </div>
+                                        @endif
 
+                                        @if ($installation->fotografia_2 <> '/img/system/imagedefault.png')
                                         <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #2</label>
                                             <div class="col-sm-9">
-												<a href="{{ URL::asset($installation->fotografia_2)}}" target="_blank">
+												<a href="{{ URL::asset($installation->fotografia_2) }}" target="_blank">
                                                 <img src="{{ $installation->fotografia_2 }}" class="img-responsive" width="100">
 												</a>
                                             </div>
                                         </div>
+                                        @endif
 
+                                        @if ($installation->fotografia_3 <> '/img/system/imagedefault.png')
                                         <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #3</label>
                                             <div class="col-sm-9">
-												<a href="{{ URL::asset($installation->fotografia_3)}}" target="_blank">
+												<a href="{{ URL::asset($installation->fotografia_3) }}" target="_blank">
                                                 <img src="{{ $installation->fotografia_3 }}" class="img-responsive" width="100">
 												</a>
                                             </div>
                                         </div>
+                                        @endif
+
+                                        @if ($installation->fotografia_principal <> '/img/system/imagedefault.png' || $installation->fotografia_1 <> '/img/system/imagedefault.png' || $installation->fotografia_2 <> '/img/system/imagedefault.png' || $installation->fotografia_3 <> '/img/system/imagedefault.png')
 
                                         <div class="hr-line-dashed"></div>
+
+                                        @endif
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Activa</label>

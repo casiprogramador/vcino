@@ -109,7 +109,13 @@
 						<div class="col-sm-3 input-group date" style="padding-left:15px;">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
-							<input type="text" name="fecha_vencimiento" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}">
+							<?php
+							//	$fecha_vencimiento = date('d/m/Y', strtotime(date("Y").'-'.date("m").'-'.$dias_mora));
+							?>
+
+							<input type="text" name="fecha_vencimiento" class="form-control input-sm date-picker" 
+								value="{{ date('d/m/Y', strtotime(date("Y").'-'.date("m").'-'.$dias_mora)) }}">
+
 						</div>
 						@if ($errors->has('fecha_vencimiento'))
 						<div class="col-sm-3 col-sm-offset-3">

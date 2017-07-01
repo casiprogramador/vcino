@@ -43,152 +43,174 @@
                     @if($mes != 0)
                     <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
                     @else
-                    <small style="padding-left:36px;">Gestion: {{$anio}} - Moneda: Bolivianos</small>
+                    <small style="padding-left:36px;">Gestión: {{$anio}} - Moneda: Bolivianos</small>
                     @endif
                 </div>
 
                 <div class="ibox-content">
-                    <div class="col-sm-1">
-                    </div>
                     <div id="printableArea">
-                    <div class="col-sm-10">
-                        <div class="table-responsive" style="margin-top: 20px;">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr bgcolor="#D6D6D6">
-                                        <th>Ingresos</th>
-                                        <th style="text-align:right;">Porcentaje</th>
-                                        <th style="text-align:right;">Importe</th>
-                                    </tr>
-                                </thead>
 
+                        <!-- Título del Reportes    -->
+                        <div class="titreporte" style="display: none;">
+                            <div class="table-responsive">
+                            <table class="table">
                                 <tbody>
-									@for ($i = 0; $i < count($categorias_ingreso); $i++)
                                     <tr>
-                                        <td>{{$categorias_ingreso[$i]['nombre']}}</td>
-                                        @if($importe_total_ingreso != 0)
-                                        <td style="text-align:right;">{{number_format($categorias_ingreso[$i]['monto']/$importe_total_ingreso*100,2)."%"}}</td>
-                                        @else
-                                        <td style="text-align:right;">{{"0%"}}</td>
-                                        @endif
-                                        <td style="text-align:right;">{{$categorias_ingreso[$i]['monto']}}</td>
+                                        <td style="border: 0;">
+                                            <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="{{Auth::user()->company->width_logo}}"></div>
+                                        </td>
+                                        <td style="border: 0; vertical-align:bottom">
+                                            <div class="p-h-xl text-right">
+                                                <h2 style="line-height: 18px; font-size: 19px;">Estado de Resultados</h2>
+                                                @if($mes != 0)
+                                                <p style="font-size: 10px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</p>
+                                                @else
+                                                <p style="font-size: 10px;">Gestión: {{$anio}} - Moneda: Bolivianos</p>
+                                                @endif
+                                            </div>
+                                        </td>
                                     </tr>
-									@endfor
                                 </tbody>
-                                <tfoot>
-                                    <th>Total</th>
-									@if($importe_total_ingreso != 0)
-                                    <th style="text-align:right;">100%</th>
-									@else
-									<th style="text-align:right;">0%</th>
-									@endif
-                                    <th style="text-align:right;">{{$importe_total_ingreso}}</th>
-                                </tfoot>
                             </table>
+                            </div>
                         </div>
 
 
-                        <!--    EGRESOS                 -->
-                        <div class="table-responsive" style="margin-top: 20px;">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr bgcolor="#D6D6D6">
-                                        <th>Gastos</th>
-                                        <th style="text-align:right;">Porcentaje</th>
-                                        <th style="text-align:right;">Importe</th>
-                                    </tr>
-                                </thead>
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="table-responsive" style="margin-top: 20px;">
+                                <table class="table table-hover table-striped texto-impresion">
+                                    <thead>
+                                        <tr bgcolor="#D6D6D6">
+                                            <th>Ingresos</th>
+                                            <th style="text-align:right;" width="15%">Porcentaje</th>
+                                            <th style="text-align:right;" width="15%">Importe</th>
+                                        </tr>
+                                    </thead>
 
-                                <tbody>
-                                    <tr>
-                                        <td colspan="3"><strong>Fijos</strong></td>
-                                    </tr>
-                                    @for ($i = 0; $i < count($categorias_egreso_ordinario); $i++)
-                                    <tr>
-                                        <td>{{$categorias_egreso_ordinario[$i]['nombre']}}</td>
+                                    <tbody>
+    									@for ($i = 0; $i < count($categorias_ingreso); $i++)
+                                        <tr>
+                                            <td>{{$categorias_ingreso[$i]['nombre']}}</td>
+                                            @if($importe_total_ingreso != 0)
+                                            <td style="text-align:right;">{{ number_format($categorias_ingreso[$i]['monto']/$importe_total_ingreso*100,2)."%" }}</td>
+                                            @else
+                                            <td style="text-align:right;">{{"0.00%"}}</td>
+                                            @endif
+                                            <td style="text-align:right;">{{ number_format($categorias_ingreso[$i]['monto'], 2, '.', '.') }}</td>
+                                        </tr>
+    									@endfor
+                                    </tbody>
+                                    <tfoot>
+                                        <th>Total</th>
+    									@if($importe_total_ingreso != 0)
+                                        <th style="text-align:right;">100.00%</th>
+    									@else
+    									<th style="text-align:right;">0.00%</th>
+    									@endif
+                                        <th style="text-align:right;">{{ number_format($importe_total_ingreso, 2, '.', '.') }}</th>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+
+                            <!--    EGRESOS                 -->
+                            <div class="table-responsive" style="margin-top: 20px;">
+                                <table class="table table-hover table-striped texto-impresion">
+                                    <thead>
+                                        <tr bgcolor="#D6D6D6">
+                                            <th>Gastos</th>
+                                            <th style="text-align:right;" width="15%">Porcentaje</th>
+                                            <th style="text-align:right;" width="15%">Importe</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="3" style="background-color: #E7E7E7;"><strong>Ordinarios</strong></td>
+                                        </tr>
+                                        @for ($i = 0; $i < count($categorias_egreso_ordinario); $i++)
+                                        <tr>
+                                            <td>{{$categorias_egreso_ordinario[$i]['nombre']}}</td>
+                                            @if($importe_total_egreso != 0)
+                                                <td style="text-align:right;">{{number_format($categorias_egreso_ordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
+                                            @else
+                                                <td style="text-align:right;">{{"0.00%"}}</td>
+                                            @endif
+                                            <td style="text-align:right;">{{ number_format($categorias_egreso_ordinario[$i]['monto'], 2, '.', '.') }}</td>
+                                        </tr>
+    									@endfor
+                                        <tr>
+                                            <td colspan="3" style="background-color: #E7E7E7;"><strong>Extraordinarios</strong></td>
+                                        </tr>
+                                        @for ($i = 0; $i < count($categorias_egreso_extraordinario); $i++)
+                                        <tr>
+                                            <td>{{$categorias_egreso_extraordinario[$i]['nombre']}}</td>
+                                            @if($importe_total_egreso != 0)
+                                            <td style="text-align:right;">{{number_format($categorias_egreso_extraordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
+                                            @else
+                                            <td style="text-align:right;">{{"0.00%"}}</td>
+                                            @endif
+
+                                            <td style="text-align:right;">{{ number_format($categorias_egreso_extraordinario[$i]['monto'], 2, '.', '.') }}</td>
+                                        </tr>
+    									 @endfor
+                                    </tbody>
+                                    <tfoot>
+                                        <th>Total</th>
                                         @if($importe_total_egreso != 0)
-                                        <td style="text-align:right;">{{number_format($categorias_egreso_ordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
-                                        @else
-                                        <td style="text-align:right;">{{"0%"}}</td>
-                                        @endif
-                                        <td style="text-align:right;">{{$categorias_egreso_ordinario[$i]['monto']}}</td>
-                                    </tr>
-									@endfor
-                                    <tr>
-                                        <td colspan="3" style="background-color: #E7E7E7;"><b>Variables</b></td>
-                                    </tr>
-                                    @for ($i = 0; $i < count($categorias_egreso_extraordinario); $i++)
-                                    <tr>
-                                        <td>{{$categorias_egreso_extraordinario[$i]['nombre']}}</td>
-                                        @if($importe_total_egreso != 0)
-                                        <td style="text-align:right;">{{number_format($categorias_egreso_extraordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
-                                        @else
-                                        <td style="text-align:right;">{{"0%"}}</td>
-                                        @endif
+                                        <th style="text-align:right;">100.00%</th>
+    									@else
+    									<th style="text-align:right;">0.00%</th>
+    									@endif
+                                        <th style="text-align:right;">{{ number_format($importe_total_egreso, 2, '.', '.') }}</th>
+                                    </tfoot>
+                                </table>
+                            </div>
 
-                                        <td style="text-align:right;">{{$categorias_egreso_extraordinario[$i]['monto']}}</td>
-                                    </tr>
-									 @endfor
-                                </tbody>
-                                <tfoot>
-                                    <th>Total</th>
-                                    @if($importe_total_egreso != 0)
-                                    <th style="text-align:right;">100%</th>
-									@else
-									<th style="text-align:right;">0%</th>
-									@endif
-                                    <th style="text-align:right;">{{$importe_total_egreso}}</th>
-                                </tfoot>
-                            </table>
-                        </div>
+                            <!--    RESULTADO DEL PERIODO           -->
+                            <div class="table-responsive" style="margin-top: 20px;">
+                                <table class="table table-hover table-striped texto-impresion">
+                                    <thead>
+                                        <tr bgcolor="#D6D6D6">
+                                            <th>Resultado</th>
+                                            <th style="text-align:right;" width="15%"></th>
+                                            <th style="text-align:right;" width="15%">Importe</th>
+                                        </tr>
+                                    </thead>
 
-                        <!--    RESULTADO DEL PERIODO           -->
-                        <div class="table-responsive" style="margin-top: 20px;">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr bgcolor="#D6D6D6">
-                                        <th>Resultado</th>
-                                        <th style="text-align:right;"></th>
-                                        <th style="text-align:right;">Importe</th>
-                                    </tr>
-                                </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ingresos</td>
+                                            <td style="text-align:right;"></td>
+                                            <td style="text-align:right;">{{ number_format($importe_total_ingreso, 2, '.', '.') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gastos ordinarios</td>
+                                            <td style="text-align:right;"></td>
+                                            <td style="text-align:right;">{{ number_format($importe_total_egreso_ordinario, 2, '.', '.') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gastos extraordinarios</td>
+                                            <td style="text-align:right;"></td>
+                                            <td style="text-align:right;">{{ number_format($importe_total_egreso_extraordinario, 2, '.', '.') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Diferencia del periodo</td>
+                                            <td style="text-align:right;"></td>
 
-                                <tbody>
-                                    <tr>
-                                        <td>Ingresos</td>
-                                        <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">{{$importe_total_ingreso}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gastos fijos</td>
-                                        <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">{{$importe_total_egreso_ordinario}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gastos variables</td>
-                                        <td style="text-align:right;"></td>
-                                        <td style="text-align:right;">{{$importe_total_egreso_extraordinario}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Diferencia del periodo</td>
-                                        <td style="text-align:right;"></td>
+                                            <!-- Valor mayor o igual a cero (0) -->
+    										@if(($importe_total_ingreso-$importe_total_egreso)>= 0)
+                                            <td style="text-align:right; color: #0E9AEF">{{ number_format($importe_total_ingreso-$importe_total_egreso, 2, '.', '.') }}</td>
+    										@else
+    										<td style="text-align:right; color: red">{{ number_format($importe_total_ingreso-$importe_total_egreso, 2, '.', '.') }}</td>
+    										@endif
 
-                                        <!-- Valor mayor o igual a cero (0) -->
-										@if(($importe_total_ingreso-$importe_total_egreso)>= 0)
-                                        <td style="text-align:right; color: #0E9AEF">{{$importe_total_ingreso-$importe_total_egreso}}</td>
-										@else
-										<td style="text-align:right; color: red">{{$importe_total_ingreso-$importe_total_egreso}}</td>
-										@endif
-
-                                        <!-- Valor mayor o igual a cero (0)
-                                        <td style="text-align:right; color: red">670,00</td>
-                                        -->
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
                     </div>
                   </div>
@@ -212,10 +234,14 @@
 
 </div>
 
-
-
-
 @endsection
+
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
+@endsection
+
+
 @section('javascript')
 <script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>

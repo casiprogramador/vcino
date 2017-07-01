@@ -80,7 +80,7 @@
                         <li class="{{ MenuRoute::active('report/disponibilidad') }}"><a href="{{ route('report.disponibilidad') }}">Disponibilidad</a></li>
                         <li class="{{ MenuRoute::active('report/estadoresultados') }}"><a href="{{ route('report.estadoresultados') }}">Estado de Resultados</a></li>
                         <li class="{{ MenuRoute::active('report/categoriaperiodogestion') }}"><a href="{{ route('report.reportcategoriaperiodogestion') }}">Categorías por periodo y gestión</a></li>
-                        <li class="{{ MenuRoute::active('report/cuentascobrar') }}"><a href="{{ route('report.cuentascobrar') }}">Cuentas por cobrar</a></li>
+                        <li class="{{ MenuRoute::active('report/cuentascobrar') }}"><a href="{{ route('report.cuentascobrar') }}">Cuotas por cobrar</a></li>
                         <li class="{{ MenuRoute::active('report/historicotransacciones') }}"><a href="{{ route('report.historicotransacciones') }}">Histórico de transacciones</a></li>
                     </ul>
                 </li>
@@ -124,7 +124,7 @@
         @yield('admin-content')
         <div class="footer">
             <div class="pull-right">
-                <span style="color: #ccc">v1.12</span>
+                <span style="color: #ccc">v1.2</span>
             </div>
             <div>
                 <strong></strong><span style="color: #ccc">&copy; 2017 ESFERA SAAS</span>

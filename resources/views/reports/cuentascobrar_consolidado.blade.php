@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading migaspan">
     <div class="col-lg-10">
-        <h2>Cuentas por cobrar</h2>
+        <h2>Cuotas por cobrar</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Reportes
             </li>
             <li class="active">
-                <strong>Cuentas por cobrar</strong>
+                <strong>Cuotas por cobrar</strong>
             </li>
         </ol>
     </div>
@@ -29,7 +29,7 @@
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte" onClick="window.print()">
+                            <button type="button" class="btn btn-sm btn-default" id="printButton" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
                             <a href="{{ route('report.consolidado.categoriaperiodogestion.excel',$anio.'_'.$mes) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
@@ -40,45 +40,66 @@
                 </div>
 
                 <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
-                    <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Cuentas por cobrar - Consolidado</h3>
+                    <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Cuotas por cobrar - Consolidado</h3>
                     <small style="padding-left:36px;">Fecha: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
                 </div>
 
                 <div class="ibox-content">
-                    <div class="col-sm-1">
-                    </div>
-                    <div class="col-sm-10">
-                        <div class="table-responsive" style="margin-top: 20px;">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr bgcolor="#D6D6D6">
-                                        <th>Propiedad</th>
-                                        <th>Propietario</th>
-                                        <th style="text-align:right;">Importe</th>
-                                    </tr>
-                                </thead>
+                    <div id="printableArea">
 
+                        <!-- Título del Reportes    -->
+                        <div class="titreporte" style="display: none;">
+                            <div class="table-responsive">
+                            <table class="table">
                                 <tbody>
-									@for ($i = 0; $i < count($cuotas); $i++)
                                     <tr>
-                                        <td>{{$cuotas[$i][0]}}</td>
-                                        <td>{{$cuotas[$i][1]}}</td>
-                                        <td style="text-align:right;">{{$cuotas[$i][2]}}</td>
+                                        <td style="border: 0;">
+                                            <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="{{Auth::user()->company->width_logo}}"></div>
+                                        </td>
+                                        <td style="border: 0; vertical-align:bottom">
+                                            <div class="p-h-xl text-right">
+                                                <h2 style="line-height: 18px; font-size: 19px;">Cuotas por cobrar - Consolidado</h2>
+                                                <p style="font-size: 10px;">Fecha: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</p>
+                                            </div>
+                                        </td>
                                     </tr>
-									@endfor
-
-
                                 </tbody>
-                                <tfoot>
-                                    <th colspan="2">Total</th>
-                                    <th style="text-align:right;">{{$monto_total}}</th>
-                                </tfoot>
                             </table>
+                            </div>
                         </div>
 
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="table-responsive" style="margin-top: 20px;">
+                                <table class="table table-hover table-striped texto-impresion tabla-compress">
+                                    <thead>
+                                        <tr bgcolor="#D6D6D6">
+                                            <th>Propiedad</th>
+                                            <th>Propietario</th>
+                                            <th style="text-align:right;">Importe</th>
+                                        </tr>
+                                    </thead>
 
-                    </div>
-                    <div class="col-sm-1">
+                                    <tbody>
+    									@for ($i = 0; $i < count($cuotas); $i++)
+                                        <tr>
+                                            <td>{{$cuotas[$i][0]}}</td>
+                                            <td>{{$cuotas[$i][1]}}</td>
+                                            <td style="text-align:right;">{{ number_format($cuotas[$i][2], 2, '.', '.') }}</td>
+                                        </tr>
+    									@endfor
+
+                                    </tbody>
+                                    <tfoot>
+                                        <th colspan="2">Total</th>
+                                        <th style="text-align:right;">{{ number_format($monto_total, 2, '.', '.') }}</th>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                        </div>
                     </div>
 
                     <div class="row sec-volver">
@@ -97,17 +118,24 @@
     </div>
 
 </div>
+@endsection
 
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
 @endsection
 
-@endsection
 @section('javascript')
+<script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>
-	$('.date-picker').datetimepicker({
-		format: 'DD/MM/YYYY'
-	});
+    $(document).ready(function () {
+
+        $("#printButton").click(function () {
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {mode: mode, popClose: close};
+            $("#printableArea").printArea(options);
+        });
+    });
 </script>
 @endsection
 

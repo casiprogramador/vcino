@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
+                    Configuración
+                </li>
+                <li class="active">
                     <a href="{{ route('config.supplier.index') }}">Proveedores</a>
                 </li>
                 <li class="active">
@@ -28,7 +31,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle proveedor: {{$supplier->razon_social}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Ver proveedor: {{$supplier->razon_social}}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -60,7 +63,7 @@
                                             <label class="col-sm-3 control-label">Cheque a nombre de</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control input-sm" style="text-transform: uppercase;" name="nombre_cheque" value="{{ $supplier->nombre_cheque }}" readonly>
-                                                <span class="help-block m-b-none">Nombre o razón social para emitir el cheque.</span>
+                                                <span class="help-block m-b-none" style="color: #BDBDBD">Nombre o razón social para emitir el cheque.</span>
                                             </div>
                                         </div>
 
@@ -77,7 +80,7 @@
                                                         <input type="text" placeholder="Móvil" class="form-control" name="telefono_movil" value="{{ $supplier->telefono_movil }}" readonly>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input type="text" placeholder="Emergencias" class="form-control" style="background-color: #ffffe6" name="telefono_emergencia" value="{{ $supplier->telefono_emergencia }}" readonly>
+                                                        <input type="text" placeholder="Emergencias" class="form-control" style="background-color: #ECF7FE" name="telefono_emergencia" value="{{ $supplier->telefono_emergencia }}" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,7 +119,7 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Activa</label>
+                                            <label class="col-sm-3 control-label">Activo</label>
                                             <div class="col-sm-4">
 
                                                 <input type="checkbox" class="i-checks" name="activa" value="1" {{ ($supplier->activa == 1) ? 'checked' : '' }} disabled="disabled">

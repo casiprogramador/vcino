@@ -8,8 +8,11 @@
                 <li>
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
+                <li>
+                    Configuración
+                </li>
                 <li class="active">
-                    <strong><a href="{{ route('config.installation.index') }}">Instalaciones comunes</a></strong>
+                    <strong>Instalaciones comunes</strong>
                 </li>
             </ol>
         </div>
@@ -29,14 +32,10 @@
                 @endif
                 <div class="ibox">
 					<div class="ibox-title">
-                        <h5 style="padding-top: 7px;">Lista de instalaciones</h5>
+                        <h5 style="padding-top: 7px;">Instalaciones comunes</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <div class="btn-group">
-                                <a href="{{ route('config.installation.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
+                                <a href="{{ route('config.installation.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva instalación común" data-original-title="Nueva instalación común" style="margin-right: 5px;"> Nueva </a>
                             </div>
                         </div>
                     </div>
@@ -57,11 +56,11 @@
                                 @foreach ($installations as $installation)
                                     @if($installation->activa == 1)
                                         <tr>
-                                            <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="100"></td>
+                                            <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="80"></td>
                                             <td>{{ $installation->instalacion }}</td>
                                             <td>{{ $installation->costo }}</td>
                                             <td>{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</td>
-                                            <td><span>Activo</span></td>
+                                            <td><span>Activa</span></td>
                                             <td style="vertical-align:middle; text-align:right;">
                                                 <div class="btn-group">
                                                     <a href="{{ route('config.installation.show', $installation->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver instalación común">
@@ -75,7 +74,7 @@
                                         </tr>
                                     @else
                                         <tr>
-                                            <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="100"></td>
+                                            <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="80"></td>
                                             <td style="vertical-align:middle"><span class="text-muted">{{ $installation->instalacion }}</span></td>
                                             <td style="vertical-align:middle"><span class="text-muted">{{ $installation->costo }}</span></td>
                                             <td style="vertical-align:middle"><span class="text-muted">{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</span></td>
@@ -119,8 +118,8 @@
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sZeroRecords":    "No se encontraron resultados.",
+                    "sEmptyTable":     "No se encontraron instalaciones comunes.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",

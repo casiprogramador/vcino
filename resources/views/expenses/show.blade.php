@@ -4,7 +4,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Gastos</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -13,189 +13,208 @@
                 Transacciones
             </li>
             <li>
-                <a id="direccion-lista" href="{{ route('transaction.expense.index') }}">Lista de gastos</a>
+                <a id="direccion-lista" href="{{ route('transaction.expense.index') }}">Gastos</a>
             </li>
             <li class="active">
-                <strong>Ver detalle gasto</strong>
+                <strong>Ver gasto</strong>
             </li>
         </ol>
     </div>
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
+
+	@if (Session::has('message'))
+	<div class="alert alert-success alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		Transacción registrada correctamente.
+	</div>
+	@endif
+
     <div class="row">
         <div class="col-lg-12">
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Ver detalle gasto</h5>
+                    <h5 style="padding-top: 2px;">Ver gasto</h5>
 
                 </div>
                 <div class="ibox-content">
+                	<div id="form" class="wizard-big" style="margin-top: 20px;">
+                		<fieldset>
+							<div id="printableArea">
+								<div class="row">
+									<div class="table-responsive">
+										<table class="table" style="width: 90%; margin: auto; margin-bottom: 10px;">
+											<tbody>
+												<tr>
+													<td style="border: 0; padding-left: 0;">
+														<div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="{{Auth::user()->company->width_logo}}"></div>
+													</td>
+													<td style="border: 0; vertical-align:bottom; padding-right: 0;">
+														<div class="p-h-xl text-right">
+															<h2 style="line-height: 0;">RECIBO DE EGRESO</h2>
+															<h3 style="line-height: 0; padding-top: 20px;">N&#186;&nbsp;<span>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</span></h3>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 
-					@if (Session::has('message'))
-					<div class="alert alert-success alert-dismissable">
-						<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-						Transacción registrada correctamente.
-					</div>
-					@endif
-					<div id="printableArea">
-						<div class="row">
-							<div class="table-responsive">
-								<table class="table" style="width: 80%; margin: auto; margin-bottom: 10px;">
-									<tbody>
+								<div class="row">
+									<div class="col-sm-3">
+									</div>
+									<div class="col-sm-6" style="width: 50%; margin: auto;">
+										<div class="hr-line-solid"></div>
+									</div>
+									<div class="col-sm-3">
+									</div>
+								</div>
+
+								<div class="row">
+									<table style="margin: 10px auto; text-align: left; width: 90%; font-size: 13px;">
 										<tr>
-											<td style="border: 0;">
-												<div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="{{Auth::user()->company->width_logo}}"></div>
-											</td>
-											<td style="border: 0; vertical-align:bottom">
-												<div class="p-h-xl text-right">
-													<h2 style="line-height: 0;">RECIBO DE EGRESO</h2>
-													<h3 style="line-height: 0; padding-top: 20px;">N&#186;&nbsp;<span>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</span></h3>
-												</div>
+											<td style="padding: 0 0 20px 0; line-height: 20px;">
+												<table cellpadding="0" cellspacing="0" style="width: 100%;">
+													<tr>
+														<td style="width: 90px;">Fecha:</td>
+														<td>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
+													</tr>
+													<tr>
+														<td>Proveedor:</td>
+														<td><span style="text-transform: uppercase;"><strong>{{$expense->supplier->razon_social}}</strong></span></td>
+													</tr>
+												</table>
 											</td>
 										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
 
-						<div class="row">
-							<div class="col-sm-3">
-							</div>
-							<div class="col-sm-6">
-								<div class="hr-line-solid"></div>
-							</div>
-							<div class="col-sm-3">
-							</div>
-						</div>
+										<tr>
+											<td>
+												<table cellpadding="0" cellspacing="0" style="width: 100%;">
+													
+													<tr>
+														<td style="border-top: 0px solid #333; border-bottom: 2px solid #333; font-weight: 500;" class="alignright" width="80%; padding: 5px 0;">Detalles</td>
+														<td style="border-top: 0px solid #333; border-bottom: 2px solid #333; font-weight: 500; text-align: right; padding: 3px 0;">Total</td>
+													</tr>
 
-						<div class="row">
-							<table style="margin: 10px auto; text-align: left; width: 80%; font-size: 13px;">
-								<tr>
-									<td>
-										<div class="row" style="padding: 0 0 30px 0; line-height: 20px;">
-											<div class="col-sm-1" style="width: 80px;">
-												<span>Fecha:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</span>
-												<br/>
-												<span>Proveedor:</span>&nbsp;<span style="text-transform: uppercase;"><strong>{{$expense->supplier->razon_social}}</strong></span>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<table cellpadding="0" cellspacing="0" style="width: 100%;">
-											<tr>
-												<td style="border-top: #333 1px solid; padding: 3px 0;" colspan="2">
-													{{$expense->category->nombre}}: {{$expense->transaction->concepto}}
-												</td>
-											</tr>
-											<tr>
-												<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
-													{{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}
-												</td>
-											</tr>
-											<tr>
-												<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
-													Forma de pago: {{strtoupper($expense->transaction->forma_pago)}} No. {{$expense->transaction->numero_forma_pago}}
-												</td>
-											</tr>
+													<tr>
+														<td style="border-top: #333 1px solid; padding: 3px 0;" colspan="2">
+															Categoría: {{$expense->category->nombre}}
+														</td>
+													</tr>
+													<tr>
+														<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
+															Concepto: {{$expense->transaction->concepto}}
+														</td>
+													</tr>
+													<tr>
+														<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
+															Cuenta: {{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}
+														</td>
+													</tr>
+													<tr>
+														<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
+															Forma de pago: {{ucfirst($expense->transaction->forma_pago)}} 
+															@if ( $expense->transaction->numero_forma_pago <> '')
+																No. {{$expense->transaction->numero_forma_pago}}
+															@endif
+														</td>
+													</tr>
 
-											<tr style="font-size: 14px;">
-												<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
-												<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{$expense->transaction->importe_debito}}</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-								<tr>
-									<td style="padding-top: 8px;">
-										<h4>SON: {{ numeroaliteral($expense->transaction->importe_debito) }}</h4>
-									</td>
-								</tr>
-							</table>
-						</div>
+													<tr style="font-size: 14px;">
+														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
+														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($expense->transaction->importe_debito, 2, '.', '.') }}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td style="padding-top: 8px;">
+												<h4>SON: {{ numeroaliteral($expense->transaction->importe_debito) }}</h4>
+											</td>
+										</tr>
+									</table>
+								</div>
 
-						<div class="row">
-							<div class="table-responsive">
-								<table style="margin: auto; text-align: left; width: 80%; font-size: 14px; margin-top: 10px;">
-									<tr>
-										<td>
-											<div class="col-sm-3" style="width: 190px; padding-left: 0;">
+								<div class="row">
+									<table width="100%">
+										<tr>
+											<td width="10%"></td>
+											<td width="20%">
 												<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
-												<span style="font-size: 10px;">Recibí conforme</span><br/>
-												<span style="color: #F2F2F2; font-size: 16px;">_ _ _ _ _ _ _ _ _ _ _ _ _ _</span>
-											</div>
-											<div class="col-sm-1">
-											</div>
-										</td>
-										<td>
-											<div class="col-sm-3" style="width: 190px; padding-left: 0;">
+                                        		<span style="font-size: 10px;">Recibí conforme<br/>&nbsp;</span>
+											</td>
+											<td width="10%"></td>
+											<td width="20%">
 												<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
-												<span style="font-size: 10px;">Vo. Bo. Tesorero</span><br/>
-												<span style="color: #F2F2F2; font-size: 16px;">_ _ _ _ _ _ _ _ _ _ _ _ _ _</span>
-											</div>
-										</td>
-										<td>
-											<div class="col-sm-1">
-											</div>
-											<div class="col-sm-3" style="width: 190px;">
-												<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
-												<span style="font-size: 10px;">Entregue conforme<br>
-													Administración</span>
-											</div>
-										</td>
-									</tr>
-								</table>
+                                        		<span style="font-size: 10px;">Vo. Bo. Tesorero<br/>&nbsp;</span>
+											</td>
+											<td width="10%"></td>
+											<td width="20%">
+												 <div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
+                                        <span style="font-size: 10px;">Entregue conforme<br>Administración</span>
+											</td>
+											<td width="10%"></td>
+										</tr>
+									</table>
+								</div>
 							</div>
-						</div>
-					</div>
 
-					<div class="hr-line-dashed"></div>
+							<div class="hr-line-dashed"></div>
 
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-6">
-								<button class="btn btn-success" id="printButton">
-									<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
-								<a href="{{ route('transaction.expense.pdf', $expense->id) }}" class="btn btn-default">
-									<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>
-								<span class="text-muted" style="margin: 0 10px;">|</span>
-								<a href="{{ route('transaction.expense.create') }}" class="btn btn-default">
-									<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo gasto</a>
-							</div>
-							@if(!empty($expense->adjunto))
-							<div class="col-md-6">
-									<a href="{{ URL::asset($expense->adjunto)}}" target="_blank">
-										<img src="{{ URL::asset($expense->adjunto)}}" width="300px">
-									</a>
-							</div>
-							@endif
-						</div>
-					</div>
-
-					<div class="hr-line-dashed"></div>
-
-					{!! Form::open(array('route' => 'transaction.cancel', 'class' => '', 'id' => 'form-anular')) !!}
-							<input type="hidden" name="id_transaction" value="{{$expense->transaction->id}}">
 							<div class="form-group">
 								<div class="row">
-									<div class="col-sm-12">
-										<input type="hidden" name="id_expense" value="{{$expense->id}}">
-										<button class="btn btn-danger" type="submit" onclick="return confirm('¿Esta usted seguro de anular el registro?')">
-											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
+									<div class="col-md-12">
+										<button class="btn btn-success" id="printButton" style="margin-right: 10px;">
+											<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+										<!--
+										<a href="{{ route('transaction.expense.pdf', $expense->id) }}" class="btn btn-default" style="margin-right: 10px">
+											<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>
+										-->
+										<span class="text-muted" style="margin-right: 10px;">|</span>
+										<a href="{{ route('transaction.expense.create') }}" class="btn btn-default">
+											<i class="fa fa-file-o"></i>&nbsp;&nbsp;Nuevo gasto</a>
 									</div>
 								</div>
 							</div>
-					{!! Form::close() !!}
+
+							@if(!empty($expense->adjunto))
+								<div class="hr-line-dashed"></div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-12">
+											<a href="{{ URL::asset($expense->adjunto)}}" target="_blank">
+												<img src="{{ URL::asset($expense->adjunto)}}" width="300px">
+											</a>							
+										</div>
+									</div>
+								</div>
+							@endif
+
+							<div class="hr-line-dashed"></div>
+
+							{!! Form::open(array('route' => 'transaction.cancel', 'class' => '', 'id' => 'form-anular')) !!}
+								<input type="hidden" name="id_transaction" value="{{$expense->transaction->id}}">
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-12">
+											<input type="hidden" name="id_expense" value="{{$expense->id}}">
+											<button class="btn btn-danger" type="submit" onclick="return confirm('¿Está seguro de anular el registro?')">
+												<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
+										</div>
+									</div>
+								</div>
+							{!! Form::close() !!}
+		                </div>
+		            </fieldset>
                 </div>
 				
             </div>
         </div>
     </div>
 </div>
-
 
 
 @endsection

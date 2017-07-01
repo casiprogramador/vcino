@@ -39,9 +39,9 @@ class ExpensesController extends Controller
     {
         
 		$company = Auth::user()->company;
-		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->lists('nombre','id')->all();
-		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->lists('razon_social','id')->all();
-		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->orderBy('nombre', 'asc')->lists('nombre','id')->all();
+		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('razon_social', 'asc')->lists('razon_social','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();
         return view('expenses.create')
 		->with('categories',$categories)
 		->with('suppliers',$suppliers)
@@ -136,9 +136,9 @@ class ExpensesController extends Controller
     public function edit($id)
     {
         $company = Auth::user()->company;
-		$categories = Category::where('company_id',$company->id )->where('activa',1)->where('tipo_categoria','Egreso')->lists('nombre','id')->all();
-		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->lists('razon_social','id')->all();
-		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+		$categories = Category::where('company_id',$company->id )->where('activa',1)->where('tipo_categoria','Egreso')->orderBy('nombre', 'asc')->lists('nombre','id')->all();
+		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('razon_social', 'asc')->lists('razon_social','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();
 		$expense = Expenses::find($id);
         return view('expenses.edit')
 		->with('categories',$categories)
@@ -214,9 +214,9 @@ class ExpensesController extends Controller
 	public function copy($id)
     {
          $company = Auth::user()->company;
-		$categories = Category::where('company_id',$company->id )->lists('nombre','id')->all();
-		$suppliers = Supplier::where('company_id',$company->id )->lists('razon_social','id')->all();
-		$accounts = Account::where('company_id',$company->id )->lists('nombre','id')->all();
+		$categories = Category::where('company_id',$company->id )->orderBy('nombre', 'asc')->lists('nombre','id')->all();
+		$suppliers = Supplier::where('company_id',$company->id )->orderBy('razon_social', 'asc')->lists('razon_social','id')->all();
+		$accounts = Account::where('company_id',$company->id )->orderBy('nombre', 'asc')->lists('nombre','id')->all();
 		$expense = Expenses::find($id);
         return view('expenses.copy')
 		->with('categories',$categories)

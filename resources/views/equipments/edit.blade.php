@@ -9,10 +9,13 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Equipamiento
+                </li>
+                <li>
                     <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinarias</a>
                 </li>
                 <li class="active">
-                    <strong>Editar</strong>
+                    <strong>Editar equipo</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +31,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar: {{$equipment->equipo}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar equipo</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -155,7 +158,7 @@
                                         <div class="form-group{{ $errors->has('documento') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Documento</label>
                                             <div class="col-sm-5">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
                                                     {{Form::file('documento', array('class'=>'') )}}
                                                 </label>
                                                 @if ($errors->has('documento'))
@@ -174,7 +177,7 @@
                                         <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #1</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
                                                     {{Form::file('fotografia_1', array('class'=>'') )}}
                                                 </label>
                                                 @if ($errors->has('fotografia_1'))
@@ -188,7 +191,7 @@
                                         <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #2</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
                                                     {{Form::file('fotografia_2', array('class'=>'') )}}
                                                 </label>
                                                 @if ($errors->has('fotografia_2'))
@@ -202,7 +205,7 @@
                                         <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #3</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
                                                     {{Form::file('fotografia_3', array('class'=>'') )}}
                                                 </label>
                                                 @if ($errors->has('fotografia_3'))
@@ -216,7 +219,7 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Activa</label>
+                                            <label class="col-sm-3 control-label">Activo</label>
                                             <div class="col-sm-4">
                                                 <label><input type="checkbox" class="i-checks" name="activa" value="1" {{ ($equipment->activa == 1) ? 'checked' : '' }}></label>
                                             </div>
@@ -228,7 +231,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Guardar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                                     <a href="{{ route('equipment.machinery.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>

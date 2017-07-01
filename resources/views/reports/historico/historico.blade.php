@@ -26,10 +26,11 @@
                 <div class="ibox-title">
                     <h5>Histórico de transacciones</h5>
                 </div>
-				{!! Form::open(array('route' => 'report.historicotransacciones.show', 'class' => 'form-horizontal')) !!}
+				{!! Form::open(array('route' => 'report.historicotransacciones.show')) !!}
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
+                            <div role="form" class="form-horizontal">
                                 <div class="form-group" style="padding-top: 10px;">
                                     <label class="col-sm-4 control-label">Tipo</label>
                                     <div class="col-sm-5">
@@ -66,7 +67,7 @@
 
                                 <div class="form-group"  id="meses">
                                     <label class="col-sm-4 control-label">Mes</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
                                         <select class="form-control input-sm" name="mes">
                                             <option value="1">Enero</option>
                                             <option value="2">Febrero</option>
@@ -86,26 +87,26 @@
 
                                 <div class="form-group" id="gestiones">
                                     <label class="col-sm-4 control-label">Gestión</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
 										{{ Form::select('anio',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
                                     </div>
                                 </div>
 
-                                <div class="form-group" style="padding-top: 10px;" id="cuentas">
+                                <div class="form-group" id="cuentas">
                                     <label class="col-sm-4 control-label">Cuentas</label>
                                     <div class="col-sm-5">
                                         {{ Form::select('cuenta',$cuentas, old('cuenta'), ['class' => 'form-control input-sm']) }}
                                     </div>
                                 </div>
 
-                                <div class="form-group" style="padding-top: 10px;" id="categorias">
+                                <div class="form-group" id="categorias">
                                     <label class="col-sm-4 control-label">Categorías</label>
                                     <div class="col-sm-5">
                                         {{ Form::select('categoria',$categorias, old('categoria'), ['class' => 'form-control input-sm']) }}
                                     </div>
                                 </div>
 
-                                <div class="form-group" style="padding-top: 10px;" id="proveedores">
+                                <div class="form-group" id="proveedores">
                                     <label class="col-sm-4 control-label">Proveedor</label>
                                     <div class="col-sm-5">
 										{{ Form::select('proveedor',$proveedores, old('proveedor'), ['class' => 'form-control input-sm']) }}
@@ -113,28 +114,27 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" style="padding-top: 10px;" id="propiedades">
+                                <div class="form-group" id="propiedades">
                                     <label class="col-sm-4 control-label">Propiedad</label>
                                     <div class="col-sm-5">
                                         {{ Form::select('propiedad',$propiedades, old('propiedad'), ['class' => 'form-control input-sm']) }}
                                     </div>
                                 </div>
-
-
+                            </div>
                         </div>
-                        <div class="col-sm-6"><h4 class="text-muted">Histórico de transacciones</h4>
-                            <p class="text-muted">Este reporte...</p>
+                        <div class="col-sm-4"><h4 class="text-muted"> </h4>
+                            <p class="text-muted"> </p>
                         </div>
                     </div>
 
                     <div class="row">
-                    <div class="col-sm-12">
-                        <div class="hr-line-dashed"></div>
+                        <div class="col-sm-12">
+                            <div class="hr-line-dashed"></div>
 
-                        <div class="form-group text-right">
-                            <button class="btn btn-success" type="submit">Siguiente</button>
+                            <div class="form-group text-right">
+                                <button class="btn btn-success" type="submit">Siguiente</button>
+                            </div>
                         </div>
-                    </div>
                     </div>
 
                 </div>

@@ -26,10 +26,11 @@
                 <div class="ibox-title">
                     <h5>Estado de Resultados</h5>
                 </div>
-				{!! Form::open(array('route' => 'report.estadoresultados.show', 'class' => 'form-horizontal')) !!}
+				{!! Form::open(array('route' => 'report.estadoresultados.show')) !!}
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
+                        <div role="form" class="form-horizontal">
                                 <div class="form-group" style="padding-top: 10px;">
                                     <label class="col-sm-4 control-label">Periodo</label>
                                     <div class="col-sm-5">
@@ -92,7 +93,8 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="col-sm-4"><h4 class="text-muted">Estado de Resultados</h4>
+                        </div>
+                        <div class="col-sm-5"><h4 class="text-muted">Estado de Resultados</h4>
                             <p class="text-muted">Este reporte refleja el resultado de todo el ingreso y egreso de dinero en un periodo de tiempo.</p>
                         </div>
                     </div>
@@ -114,10 +116,8 @@
     </div>
 </div>
 
-
-
-
 @endsection
+
 @section('javascript')
     <script>
         $(document).ready(function () {

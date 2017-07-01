@@ -31,7 +31,7 @@
 
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-1">Detalle cuota: {{ $quota->cuota }}</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#tab-1">Ver cuota: {{ $quota->cuota }}</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">

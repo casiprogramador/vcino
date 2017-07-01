@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
+                <a href="{{ route('transaction.collection.index') }}">Cobranzas</a>
             </li>
             <li class="active">
                 <strong>Ver cobranza</strong>
@@ -103,7 +103,7 @@
 														<td style="border-top: #eee 1px solid; padding: 3px 0;">
 															{{ $cuota->quota->category->nombre }}: {{ $cuota->quota->cuota }} {{nombremes($cuota->periodo) }}/{{$cuota->gestion}}
 														</td>
-														<td style="border-top: #eee 1px solid; text-align: right; padding: 3px 0;">{{ $cuota->importe_por_cobrar }}</td>
+														<td style="border-top: #eee 1px solid; text-align: right; padding: 3px 0;">{{ number_format($cuota->importe_por_cobrar, 2, '.', '.') }}</td>
 													</tr>
 													@endforeach
 													<tr>
@@ -115,7 +115,7 @@
 
 													<tr style="font-size: 14px;">
 														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
-														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{$collection->transaction->importe_credito}}</td>
+														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($collection->transaction->importe_credito, 2, '.', '.') }}</td>
 													</tr>
 												</table>
 											</td>
@@ -156,8 +156,10 @@
 									<div class="col-md-12">
 										<button class="btn btn-success" id="printButton" style="margin: 0 10px 0 0;">
 											<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+										<!--
 										<a href="{{ route('transaction.collection.pdf', $collection->id) }}" class="btn btn-default" style="margin: 0 10px 0 0;">
 											<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>
+										-->
 										<button id="button-enviar" class="btn btn-default">
 											<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar</button>
 										<span class="text-muted" style="margin: 0 10px;">|</span>
@@ -190,8 +192,8 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
-										<button class="btn btn-danger" type="submit" onclick="return confirm('¿Esta usted seguro de anular el registro?')">
-											<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
+										<button class="btn btn-danger" type="submit" onclick="return confirm('¿Está seguro de anular el registro?')">
+										<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
 									</div>
 								</div>
 							</div>

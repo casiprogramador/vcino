@@ -29,8 +29,6 @@ class AdminController extends Controller
 
 		$mes_actual = date('m');
 		
-		$mes_actual = 6;
-		
 		$mes_anterior = ($mes_actual == 1) ? 12 : $mes_actual-1;
 		
 		$mes_anterior_anterior = ($mes_anterior == 1) ? 12 : $mes_anterior -1;
@@ -120,8 +118,8 @@ class AdminController extends Controller
 		//$mes = 5;
     	//$anio = 2017;
 		
-		$array_colores = ["#ACDAFE", "#90AABF", "#3876A5", "#C1E4FF", "#D1EBFF", "#FFE9A7", "#BFB38E", "#A68A36", "#FFEEBD", "#FFF3CF", "#FFC0A7", "#BF9C8E", "#A65636", "#FFD0BD", "#FFDCCF"];
-		
+		$array_colores = ["#ACDBFE","#ACDBFE","#2A363F","#ACDBFE","#B1B16F","#6691B1","#FEC7C6","#CACB75"];
+
 		$egresos = DB::table('expenses')
 			->select('categories.nombre as categoria','transactions.importe_debito as importe')
 			->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
@@ -147,7 +145,7 @@ class AdminController extends Controller
 			array_push($array_color_gastos, $array_colores[$color]);		
 		}
 		
-		return array('nombres'=>$array_nombre_gastos,'importes'=>$array_importe_gastos,'colores'=>$array_color_gastos);
+		return array('nombres'=>$array_nombre_gastos,'importes'=>$array_importe_gastos,'colores'=>$array_colores);
 	}
 	
 	function cuotas_pagadas($mes,$anio){

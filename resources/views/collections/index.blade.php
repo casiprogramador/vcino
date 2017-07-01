@@ -4,7 +4,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Cobranzas</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -13,7 +13,7 @@
                 Transacciones
             </li>
             <li class="active">
-                <strong>Lista de cobranzas</strong>
+                <strong>Cobranzas</strong>
             </li>
         </ol>
     </div>
@@ -43,7 +43,7 @@
 			@endif
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Lista de cobranzas</h5>
+                    <h5 style="padding-top: 7px;">Cobranzas</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <a href="{{ route('transaction.collection.create') }}" type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nueva cobranza" data-original-title="Nueva cobranza" style="margin-right: 5px; color: white;"> Nueva cobranza </a>
 
@@ -69,14 +69,14 @@
 							@foreach($collections as $collection)
 							@if($collection->transaction->anulada == 1)
 							
-							<tr>
-                                <td><s>{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</s></td>
-                                <td><s>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
-                                <td><s>{{ $collection->property->nro }}</s></td>
-                                <td><s>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</s></td>
-                                <td><s>{{$collection->transaction->concepto }}</s></td>
-                                <td><s>{{ $collection->account->nombre }}</s></td>
-                                <td style="text-align: right;"><s>{{$collection->transaction->importe_credito}}</s></td>
+							<tr style="color: #bbb">
+                                <td data-order="{{ $collection->transaction->fecha_pago }}">{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</td>
+                                <td>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
+                                <td data-order="{{ $collection->property->orden }}">{{ $collection->property->nro }}</td>
+                                <td>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</td>
+                                <td>{{ $collection->transaction->concepto }}</td>
+                                <td>{{ $collection->account->nombre }}</td>
+                                <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, '.', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <span class="label label-warning">ANULADA</span>
                                </td>
@@ -85,13 +85,13 @@
 							@else
 							
                             <tr>
-                                <td>{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</td>
+                                <td data-order="{{ $collection->transaction->fecha_pago }}">{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}</td>
                                 <td>{{ str_pad($collection->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
-                                <td>{{ $collection->property->nro }}</td>
+                                <td data-order="{{ $collection->property->orden }}">{{ $collection->property->nro }}</td>
                                 <td>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</td>
-                                <td>{{$collection->transaction->concepto }}</td>
+                                <td>{{ $collection->transaction->concepto }}</td>
                                 <td>{{ $collection->account->nombre }}</td>
-                                <td style="text-align: right;">{{$collection->transaction->importe_credito}}</td>
+                                <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, '.', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="{{ route('transaction.collection.show', $collection->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
@@ -153,7 +153,8 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "pageLength": 25,
+                "order": [[ 0, "desc" ], [ 1, "desc" ]],
+                "pageLength": 100,
                 "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
                 "bLengthChange" : false,
                 "info":     false,

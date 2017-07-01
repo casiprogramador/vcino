@@ -36,7 +36,7 @@ class EquipmentController extends Controller
     public function create()
     {
         $company = Auth::user()->company;
-        $suppliers = Supplier::where('company_id',$company->id )->lists('razon_social','id')->all();
+        $suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('suppliers.razon_social', 'asc')->lists('razon_social','id')->all();
         return view('equipments.create')->with('suppliers',$suppliers);
     }
 
@@ -53,10 +53,10 @@ class EquipmentController extends Controller
             'tipo_equipo' => 'required|not_in:0',
             'proveedor' => 'required|not_in:0',
             'fecha_instalacion' => 'required',
-            'documento' => 'required',
-            'fotografia_1' => 'required',
-            'fotografia_2' => 'required',
-            'fotografia_3' => 'required',
+            //'documento' => 'required',
+            //'fotografia_1' => 'required',
+            //'fotografia_2' => 'required',
+            //'fotografia_3' => 'required',
         ]);
 
         $id = Auth::user()->id;
@@ -66,30 +66,39 @@ class EquipmentController extends Controller
         $activa = (empty($request->activa) ? '0' : $request->activa);
 
         //Documento
-        $fileDoc = $request->file('documento');
-        $tmpFilePathDoc = '/img/upload/';
-        $tmpFileNameDoc = time() .'-'. 'doc-eq'.'-'.$id. '-' . $fileDoc->getClientOriginalName();
-        $fileDoc->move(public_path() . $tmpFilePathDoc, $tmpFileNameDoc);
-        $pathDoc = $tmpFilePathDoc . $tmpFileNameDoc;
-
+        if(!empty($request->documento)){
+            $fileDoc = $request->file('documento');
+            $tmpFilePathDoc = '/img/upload/';
+            $tmpFileNameDoc = time() .'-'. 'doc-eq'.'-'.$id. '-' . $fileDoc->getClientOriginalName();
+            $fileDoc->move(public_path() . $tmpFilePathDoc, $tmpFileNameDoc);
+            $pathDoc = $tmpFilePathDoc . $tmpFileNameDoc;
+        }
         //Foto 1
-        $fileF1 = $request->file('fotografia_1');
-        $tmpFilePathF1 = '/img/upload/';
-        $tmpFileNameF1 = time() .'-'. 'f1-eq'.'-'.$id. '-' . $fileF1->getClientOriginalName();
-        $fileF1->move(public_path() . $tmpFilePathF1, $tmpFileNameF1);
-        $pathF1 = $tmpFilePathF1 . $tmpFileNameF1;
+        if(!empty($request->fotografia_1)){
+            $fileF1 = $request->file('fotografia_1');
+            $tmpFilePathF1 = '/img/upload/';
+            $tmpFileNameF1 = time() .'-'. 'f1-eq'.'-'.$id. '-' . $fileF1->getClientOriginalName();
+            $fileF1->move(public_path() . $tmpFilePathF1, $tmpFileNameF1);
+            $pathF1 = $tmpFilePathF1 . $tmpFileNameF1;
+        } else {
+            $pathF1 = '/img/system/equipo-generico.png';
+        }
         //Foto 2
-        $fileF2 = $request->file('fotografia_2');
-        $tmpFilePathF2 = '/img/upload/';
-        $tmpFileNameF2 = time() .'-'. 'f2-eq'.'-'.$id. '-' . $fileF1->getClientOriginalName();
-        $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
-        $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
+        if(!empty($request->fotografia_2)){
+            $fileF2 = $request->file('fotografia_2');
+            $tmpFilePathF2 = '/img/upload/';
+            $tmpFileNameF2 = time() .'-'. 'f2-eq'.'-'.$id. '-' . $fileF2->getClientOriginalName();
+            $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
+            $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
+        }
         //Foto 3
-        $fileF3 = $request->file('fotografia_3');
-        $tmpFilePathF3 = '/img/upload/';
-        $tmpFileNameF3 = time() .'-'. 'f3-eq'.'-'.$id. '-' . $fileF3->getClientOriginalName();
-        $fileF3->move(public_path() . $tmpFilePathF3, $tmpFileNameF3);
-        $pathF3 = $tmpFilePathF3 . $tmpFileNameF3;
+        if(!empty($request->fotografia_1)){
+            $fileF3 = $request->file('fotografia_3');
+            $tmpFilePathF3 = '/img/upload/';
+            $tmpFileNameF3 = time() .'-'. 'f3-eq'.'-'.$id. '-' . $fileF3->getClientOriginalName();
+            $fileF3->move(public_path() . $tmpFilePathF3, $tmpFileNameF3);
+            $pathF3 = $tmpFilePathF3 . $tmpFileNameF3;
+        }
 
         $equipment = new Equipment();
         $equipment->equipo = $request->equipo;
@@ -103,16 +112,24 @@ class EquipmentController extends Controller
 
         $equipment->notas = $request->notas;
 
-        $equipment->documento = $pathDoc;
+        if(!empty($request->documento)){
+            $equipment->documento = $pathDoc;
+        }
+        
         $equipment->fotografia_1 = $pathF1;
-        $equipment->fotografia_2 = $pathF2;
-        $equipment->fotografia_3 = $pathF3;
+        
+        if(!empty($request->fotografia_2)){
+            $equipment->fotografia_2 = $pathF2;
+        }
+        if(!empty($request->fotografia_3)){
+            $equipment->fotografia_3 = $pathF3;
+        }
 
         $equipment->activa = $activa;
         $equipment->company_id = $company->id;
         $equipment->save();
 
-        Session::flash('message', 'Nuevo equipo o maquinaria registrado correctamente.');
+        Session::flash('message', 'Nuevo equipo registrado correctamente.');
         return redirect()->route('equipment.machinery.index');
     }
 
@@ -142,7 +159,7 @@ class EquipmentController extends Controller
     {
         $company = Auth::user()->company;
         $equipment = Equipment::find($id);
-        $suppliers = Supplier::where('company_id',$company->id )->lists('razon_social','id')->all();
+        $suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('suppliers.razon_social', 'asc')->lists('razon_social','id')->all();
         return view('equipments.edit')
             ->with('equipment',$equipment)
             ->with('suppliers',$suppliers);
@@ -193,7 +210,7 @@ class EquipmentController extends Controller
         if(!empty($request->fotografia_2)){
             $fileF2 = $request->file('fotografia_2');
             $tmpFilePathF2 = '/img/upload/';
-            $tmpFileNameF2 = time() .'-'. 'f2-eq'.'-'.$id. '-' . $fileF1->getClientOriginalName();
+            $tmpFileNameF2 = time() .'-'. 'f2-eq'.'-'.$id. '-' . $fileF2->getClientOriginalName();
             $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
             $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
 

@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Comunicación & Información
+                </li>
+                <li>
                     <a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a>
                 </li>
                 <li class="active">
@@ -71,7 +74,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="Tel. Emergencias" class="form-control input-sm" style="background-color: #ffffe6" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
+                                                            <input type="text" placeholder="Tel. Emergencias" class="form-control input-sm" style= "background-color: #ECF7FE" name="telefono_emergencia" value="{{old('telefono_emergencia')}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -122,7 +125,7 @@
                                             <div class="hr-line-dashed"></div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label">Activa</label>
+                                                <label class="col-sm-3 control-label">Activo</label>
                                                 <div class="col-sm-4">
 
                                                     <label><input type="checkbox" class="i-checks" name="activa" value="1" checked></label>
@@ -136,7 +139,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
+                                        <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear</button>
                                         <a href="{{ route('communication.phonesite.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>

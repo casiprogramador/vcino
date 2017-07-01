@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Cobranzas</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li>
-                <a id="direccion-lista" href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
+                <a id="direccion-lista" href="{{ route('transaction.collection.index') }}">Cobranzas</a>
             </li>
             <li class="active">
                 <strong>Editar cobranza</strong>
@@ -30,157 +30,154 @@
                     <h5 style="padding-top: 2px;">Editar cobranza</h5>
                 </div>
                 <div class="ibox-content">
-                    <h2>
-                        Cobranza de cuotas
-                    </h2>
-
 					{!! Form::open(array('route' => array('transaction.collection.update', $collection->id),'method' => 'patch' ,'class' => 'wizard-big form-horizontal', 'id' => 'form')) !!}
 					<input type="hidden" class="form-control input-sm" id="cuotas" name="cuotas_originales" value="{{$collection->cuotas}}">
 						<h1>Propiedad y contacto</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-6 col-lg-offset-3">
-                                    <div class="form-group">
-                                        <label>Propiedad</label>
-										{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $collection->property_id, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
-										<input type="hidden" class="form-control input-sm" id="propiedad" name="propiedad" value="{{$collection->property_id}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Contacto (A nombre de)</label>
-										{{ Form::select('contacto',['0'=>'Selecciona contacto']+$contacts, $collection->contact_id, ['class' => 'form-control input-sm','id'=>'contactos']) }}
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <label>Propiedad</label>
+									{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $collection->property_id, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
+									<input type="hidden" class="form-control input-sm" id="propiedad" name="propiedad" value="{{$collection->property_id}}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Contacto (A nombre de)</label>
+									{{ Form::select('contacto',['0'=>'Selecciona contacto']+$contacts, $collection->contact_id, ['class' => 'form-control input-sm','id'=>'contactos']) }}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="text-center">
+                                    <div style="margin-top: 0px">
+                                        <i class="fa fa-sign-in" style="font-size: 160px;color: #e5e5e5 "></i>
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
 						<h1>Cuotas por cobrar</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-10 col-lg-offset-1">
-                                    <div class="form-group">
-										<div class="table-responsive">
-											<table class="table table-striped" id="cuentas-cobrar">
-												<thead>
-													<tr>
-														<th></th>
-														<th>Gestión</th>
-														<th>Periodo</th>
-														<th>Cuota</th>
-														<th class="text-right">Monto</th>
-													</tr>
-												</thead>
-												<tbody>
-													@foreach($cuotas_cobradas as $cuota)
-													<tr>
-													
-														<td>
-															<input type="checkbox" importe="{{ $cuota->importe_por_cobrar }}" value="{{ $cuota->id }}" checked class="i-checks check-cuotas" name="cuotas[]">
-														</td>
-														<td>{{$cuota->gestion}}</td>
-														<td>{{nombremes($cuota->periodo) }}</td>
-														<td>{{ $cuota->quota->category->nombre }} : {{ $cuota->quota->cuota }}</td>
-														<td class="text-right">{{ $cuota->importe_por_cobrar }}</td>
-													</tr>
-													@endforeach
-													@foreach($cuotas as $cuota)
-													<tr>
-													
-														<td>
-															<input type="checkbox" importe="{{ $cuota->importe_por_cobrar }}" value="{{ $cuota->id }}" class="i-checks check-cuotas" name="cuotas[]">
-														</td>
-														<td>{{$cuota->gestion}}</td>
-														<td>{{nombremes($cuota->periodo) }}</td>
-														<td>{{ $cuota->quota->category->nombre }} : {{ $cuota->quota->cuota }}</td>
-														<td class="text-right">{{ $cuota->importe_por_cobrar }}</td>
-													</tr>
-													@endforeach
-													
-													
-												</tbody>
-												<tfoot>
-													<tr>
-														<th>Total Bs.</th>
-														<th></th>
-														<th></th>
-														<th></th>
-														<th class="text-right" id="importe-total">{{$collection->transaction->importe_credito}}</th>
-													</tr>
-												</tfoot>
-											</table>
-										</div>
-                                    </div>
+                    		<h4 style="font-weight: normal;">Seleccione la(s) cuota(s) por cobrar que serán canceladas, luego presione el botón siguiente.</h4>
+                            <div class="col-lg-10">
+                                <div class="form-group">
+									<div class="table-responsive">
+									<div style="height:270px; overflow: auto;">
+										<table class="table table-striped" id="cuentas-cobrar">
+											<thead>
+												<tr>
+													<th width="50" style="background-color: #a4a5a6;"></th>
+													<th style="background-color: #a4a5a6">Gestión</th>
+													<th style="background-color: #a4a5a6">Periodo</th>
+													<th style="background-color: #a4a5a6">Cuota</th>
+													<th class="text-right" style="background-color: #a4a5a6">Importe</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($cuotas_cobradas as $cuota)
+												<tr>
+													<td>
+														<input type="checkbox" importe="{{ $cuota->importe_por_cobrar }}" value="{{ $cuota->id }}" checked class="i-checks check-cuotas" name="cuotas[]">
+													</td>
+													<td>{{$cuota->gestion}}</td>
+													<td>{{nombremes($cuota->periodo) }}</td>
+													<td>{{ $cuota->quota->category->nombre }} : {{ $cuota->quota->cuota }}</td>
+													<td class="text-right">{{ $cuota->importe_por_cobrar }}</td>
+												</tr>
+												@endforeach
+												@foreach($cuotas as $cuota)
+												<tr>
+													<td>
+														<input type="checkbox" importe="{{ $cuota->importe_por_cobrar }}" value="{{ $cuota->id }}" class="i-checks check-cuotas" name="cuotas[]">
+													</td>
+													<td>{{$cuota->gestion}}</td>
+													<td>{{nombremes($cuota->periodo) }}</td>
+													<td>{{ $cuota->quota->category->nombre }} : {{ $cuota->quota->cuota }}</td>
+													<td class="text-right">{{ $cuota->importe_por_cobrar }}</td>
+												</tr>
+												@endforeach
+												
+											</tbody>
+											<tfoot>
+												<tr>
+													<th colspan="4">Total Bs.</th>
+													<th class="text-right" id="importe-total">{{$collection->transaction->importe_credito}}</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									</div>
                                 </div>
                             </div>
+							<div class="col-lg-2">
+                            </div>
+
                         </fieldset>
 
-						<h1>Datos transacción</h1>
+						<h1>Fecha, cuenta y concepto</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-8 col-lg-offset-2">
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Fecha</label>
-                                        <div class="col-sm-4 input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}" required>
-                                        </div>
+                            <div class="col-lg-10">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Fecha</label>
+                                    <div class="col-sm-4 input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date_format(date_create($collection->transaction->fecha_pago),'d/m/Y') }}" required>
                                     </div>
-									<div class="form-group">
-                                        <label class="col-sm-4 control-label">Propiedad y contacto</label>
-										<div class="col-sm-6 input-group">
-                                        <input type="text" class="form-control input-sm" id="propiedad-contacto" value="{{ $collection->property->nro }} - {{ $collection->contact->nombre }} {{ $collection->contact->apellido }}" disabled="">
-										</div>
+                                </div>
+								<div class="form-group">
+                                    <label class="col-sm-4 control-label">Propiedad y contacto</label>
+									<div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control input-sm" id="propiedad-contacto" value="{{ $collection->property->nro }} - {{ $collection->contact->nombre }} {{ $collection->contact->apellido }}" disabled="">
+									</div>
+                                </div>
+								<div class="form-group">
+                                    <label class="col-sm-4 control-label">Cuenta</label>
+                                    <div class="col-sm-8 input-group">
+									{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, $collection->account_id , ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
                                     </div>
-									<div class="form-group">
-                                        <label class="col-sm-4 control-label">Cuenta</label>
-                                        <div class="col-sm-8 input-group">
-										{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, $collection->account_id , ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                         <label class="col-sm-4 control-label">Concepto</label>
-										<div class="col-sm-8 input-group">
-                                        <textarea rows="2" id="concepto" class="form-control input-sm" name="concepto" required>{{$collection->transaction->concepto }}</textarea>
-										</div>
-                                    </div>
-									
+                                </div>
+                                <div class="form-group">
+                                     <label class="col-sm-4 control-label">Concepto</label>
+									<div class="col-sm-8 input-group">
+                                    <textarea rows="2" id="concepto" class="form-control input-sm" name="concepto" required>{{$collection->transaction->concepto }}</textarea>
+									</div>
                                 </div>
                             </div>
+							<div class="col-lg-2">
+                            </div>
+
                         </fieldset>
 
-						<h1>Detalle transacción</h1>
+						<h1>Forma de pago y notas</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-8 col-lg-offset-2">
-
-		
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Forma de pago</label>
-                                        <div class="col-sm-8 input-group">
-
-											{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), $collection->transaction->forma_pago , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
-                                        </div>
+                            <div class="col-lg-10">		
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Forma de pago</label>
+                                    <div class="col-sm-6 input-group">
+										{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), $collection->transaction->forma_pago , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
                                     </div>
-
-                                    <div class="form-group" id="cont-forma-pago">
-<!--                                        <label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>-->
-										<label class="col-sm-4 control-label" id="label-transaccion">Nro Transaccion</label>
-                                        <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" name="nro_forma_pago" value="{{$collection->transaction->numero_forma_pago}}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Importe</label>
-                                        <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total" value="{{$collection->transaction->importe_credito}}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Notas</label>
-										<div class="col-sm-8 input-group">
-											<textarea rows="2" class="form-control input-sm" name="notas">{{$collection->transaction->notas}}</textarea>
-										</div>
-                                    </div>
-
                                 </div>
+
+                                <div class="form-group" id="cont-forma-pago">
+									<!--
+									<label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>
+									-->
+									<label class="col-sm-4 control-label" id="label-transaccion">Nro. Transaccion</label>
+                                    <div class="col-sm-6 input-group">
+										<input type="text" class="form-control input-sm" name="nro_forma_pago" value="{{$collection->transaction->numero_forma_pago}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Importe</label>
+                                    <div class="col-sm-4 input-group">
+										<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total" value="{{$collection->transaction->importe_credito}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Notas</label>
+									<div class="col-sm-8 input-group">
+										<textarea rows="3" class="form-control input-sm" name="notas">{{$collection->transaction->notas}}</textarea>
+									</div>
+                                </div>
+                            </div>
+							<div class="col-lg-2">
                             </div>
                         </fieldset>
 						
@@ -306,7 +303,11 @@
 			}
 	})
 	$('.date-picker').datetimepicker({
-            format: 'DD/MM/YYYY'
+            format: 'DD/MM/YYYY',
+			widgetPositioning: {
+			horizontal: 'left',
+					vertical: 'bottom'
+			}
     });
 
 	
@@ -408,7 +409,6 @@
 			}
 		}, 'json');
 		
-		
     });
 	
 	//Cabio de cuota check
@@ -450,10 +450,8 @@
 	});
 
 	});
-	
-	
-	
-	
+
+
 </script>
 @endsection
 
