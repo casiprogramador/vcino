@@ -328,7 +328,7 @@ class ReportEstadoActualController extends Controller
   		//$mes = date('m');
   		//$anio = date('Y');
   		$company = Auth::user()->company;
-  		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Ingreso')->get();
+  		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Ingreso')->orderBy('nombre', 'asc')->get();
   		$categorias_ingreso = array();
   		$importe_total_ingresos = 0;
   		foreach($categories as $category){
@@ -355,7 +355,7 @@ class ReportEstadoActualController extends Controller
   			array_push($categorias_ingreso, $datos_categoria);
   		}
   		//Egresos Ordinarios/Fijos
-  		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('clase','Ordinaria')->get();
+  		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('clase','Ordinaria')->orderBy('nombre', 'asc')->get();
   		$categorias_egreso_ordinario = array();
   		$importe_total_egreso_ordinario = 0;
   		foreach($categories as $category){
@@ -375,7 +375,7 @@ class ReportEstadoActualController extends Controller
   			array_push($categorias_egreso_ordinario, $datos_categoria);
   		}
   		//Egresos Ordinarios/Fijos
-  		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('clase','Extraordinaria')->get();
+  		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('clase','Extraordinaria')->orderBy('nombre', 'asc')->get();
   		$categorias_egreso_extraordinario = array();
   		$importe_total_egreso_extraordinario = 0;
   		foreach($categories as $category){

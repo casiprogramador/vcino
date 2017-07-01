@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
+                    Configuración
+                </li>
+                <li class="active">
                     <a href="{{ route('config.installation.index') }}">Instalaciones comunes</a>
                 </li>
                 <li class="active">
@@ -28,7 +31,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar Instalación: {{$installation->instalacion}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar Instalación</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -184,12 +187,12 @@
                                             <label class="col-sm-3 control-label">Principales normas</label>
                                             <div class="col-sm-9">
                                                 <div class="no-padding">
-                                                    <textarea id="summernote" name="normas">{{$installation->normas}}</textarea>
+                                                    <textarea id="summernote" name="normas">{{ $installation->normas }}</textarea>
                                                 </div>
                                                 @if ($errors->has('normas'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('normas') }}</strong>
-                                                        </span>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -199,7 +202,7 @@
                                         <div class="form-group{{ $errors->has('reglamento') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Normas o Reglamento</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
 
                                                     {{Form::file('reglamento', array('class'=>'') )}}
                                                 </label>
@@ -216,7 +219,7 @@
                                         <div class="form-group{{ $errors->has('fotografia_principal') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía principal</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
 
                                                     {{Form::file('fotografia_principal', array('class'=>'') )}}
                                                 </label>
@@ -231,7 +234,7 @@
                                         <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #1</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
 
                                                     {{Form::file('fotografia_1', array('class'=>'') )}}
                                                 </label>
@@ -246,7 +249,7 @@
                                         <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #2</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
 
                                                     {{Form::file('fotografia_2', array('class'=>'') )}}
                                                 </label>
@@ -261,7 +264,7 @@
                                         <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #3</label>
                                             <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-white">
+                                                <label title="Upload image file" for="inputImage">
 
                                                     {{Form::file('fotografia_3', array('class'=>'') )}}
                                                 </label>
@@ -288,7 +291,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Guardar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                                     <a href="{{ route('config.installation.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>

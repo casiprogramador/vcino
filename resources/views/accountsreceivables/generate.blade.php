@@ -15,7 +15,7 @@
                 <a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
             </li>
             <li class="active">
-                <strong>Nueva cuota por cobrar</strong>
+                <strong>Nuevas cuotas por cobrar</strong>
             </li>
         </ol>
     </div>
@@ -28,7 +28,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Nueva cuota: Todas las propiedades</h5>
+                    <h5 style="padding-top: 2px;">Nuevas cuotas: Todas las propiedades</h5>
                 </div>
 
                  <div class="ibox-content">

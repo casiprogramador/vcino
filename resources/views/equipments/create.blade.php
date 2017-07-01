@@ -9,10 +9,13 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Equipamiento
+                </li>
+                <li>
                     <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinarias</a>
                 </li>
                 <li class="active">
-                    <strong>Nuevo equipamiento</strong>
+                    <strong>Nuevo equipo</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +31,7 @@
 
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-1">Nuevo equipamiento</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#tab-1">Nuevo equipo</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
@@ -49,7 +52,7 @@
                                             <div class="form-group{{ $errors->has('tipo_equipo') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Tipo de equipo</label>
                                                 <div class="col-sm-3">
-                                                    {{ Form::select('tipo_equipo',array('0' => 'Seleccione','Equipo' => 'Equipo', 'Mobiliario' => 'Mobiliario', 'Instalaciones' => 'Instalaciones', 'Otro' => 'Otro'),old('tipo_equipo'),['class' => 'form-control input-sm']) }}
+                                                    {{ Form::select('tipo_equipo',array('0' => 'Seleccione','Equipo' => 'Equipo', 'Instalaciones' => 'Instalaciones', 'Mobiliario' => 'Mobiliario', 'Otro' => 'Otro'),old('tipo_equipo'),['class' => 'form-control input-sm']) }}
                                                     @if ($errors->has('tipo_equipo'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('tipo_equipo') }}</strong>
@@ -89,7 +92,8 @@
                                                 <div class="col-sm-4">
                                                     <div class="input-group date">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <input type="text" class="form-control date-picker" name="fecha_instalacion" value="{{old('fecha_instalacion')}}">
+                                                        <input type="text" class="form-control date-picker" name="fecha_instalacion" 
+                                                        value="{{ old('fecha_instalacion', date('d/m/Y')) }}">
                                                         @if ($errors->has('fecha_instalacion'))
                                                             <span class="help-block">
                                                                 <strong>{{ $errors->first('fecha_instalacion') }}</strong>
@@ -153,9 +157,14 @@
 
                                             <div class="form-group{{ $errors->has('documento') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Documento</label>
+
                                                 <div class="col-sm-5">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-                                                        {{Form::file('documento', array('class'=>'') )}}
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="documento"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('documento'))
                                                         <span class="help-block">
@@ -172,9 +181,13 @@
 
                                             <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Fotografía #1</label>
-                                                <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-                                                        {{Form::file('fotografia_1', array('class'=>'') )}}
+                                                <div class="col-sm-7">
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="fotografia_1"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('fotografia_1'))
                                                         <span class="help-block">
@@ -186,9 +199,13 @@
 
                                             <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Fotografía #2</label>
-                                                <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-                                                        {{Form::file('fotografia_2', array('class'=>'') )}}
+                                                <div class="col-sm-7">
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="fotografia_2"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('fotografia_2'))
                                                         <span class="help-block">
@@ -200,9 +217,13 @@
 
                                             <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Fotografía #3</label>
-                                                <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-                                                        {{Form::file('fotografia_3', array('class'=>'') )}}
+                                                <div class="col-sm-7">
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="fotografia_3"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('fotografia_3'))
                                                         <span class="help-block">
@@ -215,7 +236,7 @@
                                             <div class="hr-line-dashed"></div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label">Activa</label>
+                                                <label class="col-sm-3 control-label">Activo</label>
                                                 <div class="col-sm-4">
                                                     <label><input type="checkbox" class="i-checks" name="activa" value="1" checked></label>
                                                 </div>
@@ -227,8 +248,8 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success" type="submit">Guardar</button>
-                                        <a href="{{ route('config.installation.index') }}" class="btn btn-white" >Cancelar</a>
+                                        <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear equipo</button>
+                                        <a href="{{ route('equipment.machinery.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>
 

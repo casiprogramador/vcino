@@ -32,14 +32,10 @@
                 @endif
                 <div class="ibox">
 					<div class="ibox-title">
-                        <h5 style="padding-top: 7px;">Lista de proveedores</h5>
+                        <h5 style="padding-top: 7px;">Proveedores</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <div class="btn-group">
-                                <a href="{{ route('config.supplier.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
+                                <a href="{{ route('config.supplier.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo proveedor" data-original-title="Nuevo proveedor" style="margin-right: 5px;"> Nuevo </a>
                             </div>
                         </div>
                     </div>
@@ -78,7 +74,7 @@
                                         <td><span class="text-muted">{{ $supplier->razon_social }} {{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }}</span></td>
                                         <td><span class="text-muted">{{ $supplier->email }}</span></td>
                                         <td><span class="text-muted">{{ $supplier->telefono_emergencia }}</span></td>
-                                        <td><span class="text-muted">Inactiva</span></td>
+                                        <td><span class="text-muted">Inactivo</span></td>
                                         <td style="vertical-align:middle; text-align:right;">
                                             <div class="btn-group">
                                                 <a href="{{ route('config.supplier.show', $supplier->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver proveedor">
@@ -104,8 +100,6 @@
     </div>
 
 
-
-
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
@@ -119,8 +113,8 @@
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sZeroRecords":    "No se encontraron resultados.",
+                    "sEmptyTable":     "No se encontraron proveedores.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",

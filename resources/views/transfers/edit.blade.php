@@ -9,10 +9,7 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                Transacciones
-            </li>
-            <li>
-                <a id="direccion-lista" href="{{ route('transaction.transfer.index') }}">Lista de transacciones</a>
+                <a id="direccion-lista" href="{{ route('transaction.transfer.index') }}">Transacciones</a>
             </li>
             <li class="active">
                 <strong>Editar traspaso</strong>
@@ -30,110 +27,97 @@
                     <h5 style="padding-top: 2px;">Editar traspaso</h5>
                 </div>
                 <div class="ibox-content">
-                    <h2>
-                        Registro de traspaso
-                    </h2>
-
 					{!! Form::open(array('route' => array('transaction.transfer.update', $transfer->id), 'method' => 'patch' ,'class' => 'wizard-big form-horizontal', 'id' => 'form', 'files' => true)) !!}
 					<input type="hidden" id="transaction-ori" name="transaction_ori" value="{{ $transfer->ori_transaction_id }}">
 					<input type="hidden" id="transaction-des" name="transaction_des" value="{{ $transfer->des_transaction_id }}">
 					<h1>Cuentas{{$transfer->transaction}}</h1>
 					<fieldset>
-						<div class="row">
-							<div class="col-lg-6 col-lg-offset-1">
-								<div class="form-group">
-									<label>Cuenta origen</label>
-									{{ Form::select('cuenta_origen',['0'=>'Selecciona una cuenta']+$accounts,$transfer->ori_account_id, ['class' => 'form-control input-sm','id'=>'select-cuenta-origen']) }}
-								</div>
-								<div class="form-group">
-									<label>Modo de traspaso</label>
-									<div class="col-sm-6 input-group">
-										{{ Form::select('modo_traspaso', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'),$transfer->transactionOrigin->forma_pago, ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
-									</div>
-								</div>
-								<div class="form-group" id="cont-forma-pago">
-									<label class="control-label" id="label-transaccion">Nro Transaccion</label>
-
-									<input type="text" class="form-control input-sm" name="nro_transanccion" id="nro-pago-input" value="{{$transfer->transactionOrigin->numero_forma_pago}}">
-
-								</div>
-								<div class="form-group">
-									<label>Cuenta destino</label>
-									{{ Form::select('cuenta_destino',['0'=>'Selecciona una cuenta']+$accounts, $transfer->des_account_id, ['class' => 'form-control input-sm','id'=>'select-cuenta-destino']) }}
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label>Cuenta origen</label>
+								{{ Form::select('cuenta_origen',['0'=>'Seleccione una cuenta']+$accounts,$transfer->ori_account_id, ['class' => 'form-control input-sm','id'=>'select-cuenta-origen']) }}
+							</div>
+							<div class="form-group">
+								<label>Modo de traspaso</label>
+								<div class="col-sm-6 input-group">
+									{{ Form::select('modo_traspaso', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'),$transfer->transactionOrigin->forma_pago, ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
 								</div>
 							</div>
-							<div class="col-lg-6">
-								<div class="text-center">
-									<div style="margin-top: 0px">
-										<i class="fa fa-sign-in" style="font-size: 160px;color: #e5e5e5 "></i>
-									</div>
+							<div class="form-group" id="cont-forma-pago">
+								<label id="label-transaccion">Nro Transaccion</label>
+								<input type="text" class="form-control input-sm" name="nro_transanccion" id="nro-pago-input" value="{{$transfer->transactionOrigin->numero_forma_pago}}">
+							</div>
+							<div class="form-group">
+								<label>Cuenta destino</label>
+								{{ Form::select('cuenta_destino',['0'=>'Seleccione una cuenta']+$accounts, $transfer->des_account_id, ['class' => 'form-control input-sm','id'=>'select-cuenta-destino']) }}
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="text-center">
+								<div style="margin-top: 0px">
+									<i class="fa fa-sign-in" style="font-size: 160px;color: #e5e5e5 "></i>
 								</div>
 							</div>
 						</div>
 					</fieldset>
 
-					<h1>Detalles</h1>
+					<h1>Fecha y concepto</h1>
 					<fieldset>
-						<div class="row">
-							<div class="col-lg-8 col-lg-offset-1">
-								<div class="form-group">
-									<label class="control-label">Fecha</label>
-									<div class="input-group date">
-										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-										<input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date_format(date_create($transfer->transactionOrigin->fecha_pago),'d/m/Y') }}" required>
-									</div>
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label>Fecha</label>
+								<div class="col-sm-6 input-group date">
+									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									<input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date_format(date_create($transfer->transactionOrigin->fecha_pago),'d/m/Y') }}" required>
 								</div>
-								<div class="form-group">
-									<label>Cuenta origen</label>
-									<div class="col-sm-6 input-group">
-										<input type="text" class="form-control input-sm" id="input-cuenta-origen" value="" disabled="">
-									</div>
-								</div>
-								<div class="form-group">
-									<label>Cuenta destino</label>
-									<div class="col-sm-6 input-group">
-										<input type="text" class="form-control input-sm" id="input-cuenta-destino" value="" disabled="">
-									</div>
-								</div>
-								<div class="form-group">
-									<label>Concepto</label>
-									<input type="text" name="concepto" id="concepto-input" class="form-control input-sm" value="{{$transfer->transactionOrigin->concepto}}">
-								</div>
-
 							</div>
+							<div class="form-group">
+								<label>Cuenta origen</label>
+								<div class="col-sm-6 input-group">
+									<input type="text" class="form-control input-sm" id="input-cuenta-origen" value="" disabled="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Cuenta destino</label>
+								<div class="col-sm-6 input-group">
+									<input type="text" class="form-control input-sm" id="input-cuenta-destino" value="" disabled="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Concepto</label>
+								<input type="text" name="concepto" id="concepto-input" class="form-control input-sm" value="{{$transfer->transactionOrigin->concepto}}">
+							</div>
+						</div>
+						<div class="col-lg-4">
 						</div>
 					</fieldset>
 
-
-					<h1>Datos Adicionales</h1>
+					<h1>Importe y nota</h1>
 					<fieldset>
-						<div class="row">
-							<div class="col-lg-8 col-lg-offset-1">
-								<div class="form-group">
-									<label>Importe</label>
-									<div class="col-sm-4 input-group">
-										<input type="text" id="importe-input" class="form-control input-sm" name="importe" value="{{$transfer->transactionOrigin->importe_debito}}">
-									</div>
-								</div>
-								<div class="form-group">
-									<label>Nota</label>
-									<textarea rows="2" class="form-control input-sm" name="nota">{{$transfer->transactionOrigin->notas}}</textarea>
-								</div>
-
-								<div class="form-group">
-									<label>Adjunto</label>
-
-									<div class="fileinput input-group {{!empty($transfer->adjunto) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
-										<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($transfer->adjunto) ) ? MenuRoute::filename($transfer->adjunto) : "" }}</span></div>
-										<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
-											<input type="file" name="adjunto">
-											<input type="hidden" id="adjunto-ori" name="adjunto_ori" value="{{ (isset($transfer->adjunto) ) ? $transfer->adjunto : '' }}">
-										</span>
-										<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>									
-										
-									</div>
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label>Importe</label>
+								<div class="col-sm-6 input-group">
+									<input type="text" id="importe-input" class="form-control input-sm" name="importe" value="{{$transfer->transactionOrigin->importe_debito}}">
 								</div>
 							</div>
+							<div class="form-group">
+								<label>Nota</label>
+								<textarea rows="3" class="form-control input-sm" name="nota">{{$transfer->transactionOrigin->notas}}</textarea>
+							</div>
+							<div class="form-group">
+								<label>Adjunto</label>
+								<div class="fileinput input-group {{!empty($transfer->adjunto) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+									<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($transfer->adjunto) ) ? MenuRoute::filename($transfer->adjunto) : "" }}</span></div>
+									<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+										<input type="file" name="adjunto">
+										<input type="hidden" id="adjunto-ori" name="adjunto_ori" value="{{ (isset($transfer->adjunto) ) ? $transfer->adjunto : '' }}">
+									</span>
+									<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
 						</div>
 					</fieldset>
                     {!! Form::close() !!}
@@ -180,10 +164,10 @@
 			
 			if (newIndex === 1 && Number($("#select-cuenta-origen option:selected").val()) == Number($("#select-cuenta-destino option:selected").val()))
 			{
-				alert("Las cuentas de origen y destino no deben ser iguales");
+				alert("La cuenta de origen y la cuenta de destino no pueden ser iguales.");
 			return false;
 			}
-
+			
 			//paso 2 importe mayor a 0
 			if (newIndex === 2 && $("#concepto-input").val() == "")
 			{
@@ -191,10 +175,12 @@
 			return false;
 			}
 
-			//paso 3 validar campos
-			if (newIndex === 3 && $("#importe-input").val() == "")
+			if (newIndex === 3)
 			{
-			return false;
+				if (Number($("#importe-input").val()) == 0 || $("#importe-input").val() == "" || isNaN($("#importe-input").val()))
+				{
+			  		return false;
+			  	}
 			}
 
 

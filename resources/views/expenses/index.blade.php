@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Gastos</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li class="active">
-                <strong>Lista de gastos</strong>
+                <strong>Gastos</strong>
             </li>
         </ol>
     </div>
@@ -24,7 +24,7 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Lista de gastos</h5>
+                    <h5 style="padding-top: 7px;">Gastos</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <a type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo comunicado" data-original-title="Nuevo cuota por cobrar" style="margin-right: 5px; color: white;" href="{{ route('transaction.expense.create') }}"> Nuevo gasto </a>
 
@@ -43,7 +43,6 @@
                                 <th style="vertical-align:bottom">Concepto</th>
                                 <th style="vertical-align:bottom">Cuenta</th>
                                 <th style="vertical-align:bottom">Forma<br/> de pago</th>
-                                <th style="vertical-align:bottom">Ref. pago</th>
                                 <th style="vertical-align:bottom; text-align: right;">Importe</th>
                                 <th style="vertical-align:bottom" width="100"></th>
                             </tr>
@@ -51,31 +50,29 @@
                         <tbody>
 							@foreach($expenses as $expense)
 							@if($expense->transaction->anulada == 1)
-                            <tr>
-                                <td><s>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</s></td>
-                                <td><s>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</s></td>
-                                <td><s>{{$expense->supplier->razon_social}}</s></td>
-                                <td><s>{{$expense->category->nombre}}</s></td>
-                                <td><s>{{$expense->transaction->concepto}}</s></td>
-                                <td><s>{{$expense->account->nombre}} {{$expense->account->nro_cuenta}}</s></td>
-                                <td><s>{{strtoupper($expense->transaction->forma_pago)}}</s></td>
-                                <td><s>{{$expense->transaction->numero_forma_pago}}</s></td>
-                                <td style="text-align: right;"><s>{{$expense->transaction->importe_debito}}</s></td>
+                            <tr style="color: #bbb">
+                                <td data-order="{{ $expense->transaction->fecha_pago }}">{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
+                                <td>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
+                                <td>{{$expense->supplier->razon_social}}</td>
+                                <td>{{$expense->category->nombre}}</td>
+                                <td>{{$expense->transaction->concepto}}</td>
+                                <td>{{$expense->account->nombre}} {{$expense->account->nro_cuenta}}</td>
+                                <td>{{ucfirst($expense->transaction->forma_pago)}} {{$expense->transaction->numero_forma_pago}}</td>
+                                <td style="text-align: right;">{{ number_format($expense->transaction->importe_debito, 2, '.', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                      <span class="label label-warning">ANULADA</span>
                                </td>
                             </tr>
 							@else
 							<tr>
-                                <td>{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
+                                <td data-order="{{ $expense->transaction->fecha_pago }}">{{ date_format(date_create($expense->transaction->fecha_pago),'d/m/Y') }}</td>
                                 <td>{{ str_pad($expense->transaction->nro_documento, 6, "0", STR_PAD_LEFT)}}</td>
                                 <td>{{$expense->supplier->razon_social}}</td>
                                 <td>{{$expense->category->nombre}}</td>
                                 <td>{{$expense->transaction->concepto}}</td>
                                 <td>{{$expense->account->nombre}} {{$expense->account->nro_cuenta}}</td>
-                                <td>{{strtoupper($expense->transaction->forma_pago)}}</td>
-                                <td>{{$expense->transaction->numero_forma_pago}}</td>
-                                <td style="text-align: right;">{{$expense->transaction->importe_debito}}</td>
+                                <td>{{ucfirst($expense->transaction->forma_pago)}} {{$expense->transaction->numero_forma_pago}}</td>
+                                <td style="text-align: right;">{{ number_format($expense->transaction->importe_debito, 2, '.', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="{{ route('transaction.expense.show', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
@@ -93,7 +90,6 @@
 							
 							@endif
 							@endforeach
-                           
 
                         </tbody>
                     </table>
@@ -140,12 +136,13 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "pageLength": 25,
-                "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
+                "order": [[ 0, "desc" ], [ 1, "desc" ]],
+                "pageLength": 100,
+                "lengthMenu": [ [50, 100, 200, -1], [50, 100, 200, "Todos"] ],
                 "paging":   true,
                 "bLengthChange" : false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 4 }, {"orderable": false, "targets": 6 }, {"orderable": false, "targets": 9 } ]
+                "columnDefs": [ { "orderable": false, "targets": 4 }, {"orderable": false, "targets": 6 }, {"orderable": false, "targets": 8 } ]
             });
         } );
     </script>

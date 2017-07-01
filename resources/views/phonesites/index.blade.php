@@ -9,7 +9,10 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li class="active">
-                    <strong><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></strong>
+                    Comunicación & Información
+                </li>
+                <li class="active">
+                    <strong>Teléfonos y sitios útiles</strong>
                 </li>
             </ol>
         </div>
@@ -96,7 +99,7 @@
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
+                    "sZeroRecords":    "No se encontraron resultados.",
                     "sEmptyTable":     "No se encontraron teléfonos o sitios web de utilidad.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",

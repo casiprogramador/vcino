@@ -70,7 +70,7 @@
                                             <td style="vertical-align:middle; text-align: center;">
 												<input type="checkbox" class="i-checks check-submit" name="sendalertpayment[]" value="{{$sendalertpayment->id}}" checked>
                                             </td>
-                                            <td style="vertical-align:middle;">{{ $sendalertpayment->property->nro }}</td>
+                                            <td data-order="{{ $sendalertpayment->property->orden }}" style="vertical-align:middle;">{{ $sendalertpayment->property->nro }}</td>
                                             <td style="vertical-align:middle;">
 												@for ($i = 0; $i < count($periodos); $i++)
 												 @if($periodos[$i] == 1)

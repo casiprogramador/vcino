@@ -70,7 +70,7 @@
                         <tbody>
                             @foreach ($contacts as $contact)	
                             <tr>
-                                <td>{{ $contact->property->nro }}</td>
+                                <td data-order="{{ $contact->property->orden }}">{{ $contact->property->nro }}</td>
                                 <td>{{ $contact->nombre }} {{ $contact->apellido }}</td>
                                 <td>{{ $contact->typecontact->nombre }}:&nbsp;{{ $contact->relationcontact->nombre }}</td>
                                 <td><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>

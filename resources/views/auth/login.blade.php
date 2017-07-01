@@ -5,12 +5,12 @@
         <div class="col-md-6 col-md-offset-3">
             <div>
 
-                <h1 class="logo-name" style="font-size: 140px;">V-CINO</h1>
+                <h1 class="logo-name" style="font-size: 140px;">XPENSA</h1>
 
             </div>
             <div class="col-md-6 col-md-offset-3">
-                    <h3>Bienvenido a V-CINO</h3>
-                    <p>Diseñado para la administración de propiedades.</p>
+                    <h3>Bienvenido a XPENSA</h3>
+                    <p>Diseñado para la administración de condominios.</p>
                     
                             <form class="m-t" role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
@@ -41,8 +41,25 @@
                                 <a href="{{ url('/register') }}">Registrarse</a></small>.</p>
                             </form>
                     <p class="m-t"> <small>Constantemente actualizado y mejorado por el equipo de Esfera SAAS.</small> </p>
-                    <p class="m-t"> <small>Esfera SAAS &copy; 2016</small> </p>
+                    <p class="m-t"> <small>Esfera SAAS &copy; 2017</small> </p>
                 </div>
         </div>
     </div>
 @endsection
+
+@section('javascript')
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-2954971-37', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+@endsection
+
+

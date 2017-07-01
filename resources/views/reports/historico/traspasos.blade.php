@@ -30,7 +30,7 @@
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte" onClick="window.print()">
+                            <button type="button" class="btn btn-sm btn-default" id="printButton" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
                             <a href="{{ route('report.historicotransacciones.traspasos.excel', $mes.'_'.$anio) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
@@ -45,51 +45,75 @@
                      @if($mes != 0)
                     <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
                     @else
-                    <small style="padding-left:36px;">Gestion: {{$anio}} - Moneda: Bolivianos</small>
+                    <small style="padding-left:36px;">Gestión: {{$anio}} - Moneda: Bolivianos</small>
                     @endif
                 </div>
 
                 <div class="ibox-content">
-                    <div class="col-sm-1">
-                    </div>
-                    <div class="col-sm-10">
+                    <div id="printableArea">
 
-                        <div class="table-responsive" style="margin-top: 20px;">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr bgcolor="#D6D6D6">
-                                        <th style="vertical-align:bottom">Fecha</th>
-                                        <th style="vertical-align:bottom">Documento</th>
-                                        <th style="vertical-align:bottom">Concepto</th>
-                                        <th style="vertical-align:bottom">Cuenta origen</th>
-                                        <th style="vertical-align:bottom">Cuenta destino</th>
-                                        <th style="vertical-align:bottom">Forma de pago</th>
-                                        <th style="text-align:right; vertical-align:bottom">Importe</th>
-                                    </tr>
-                                </thead>
-
+                        <!-- Título del Reportes    -->
+                        <div class="titreporte" style="display: none;">
+                            <div class="table-responsive">
+                            <table class="table">
                                 <tbody>
-									@for ($i = 0; $i < count($datos); $i++)
                                     <tr>
-                                        <td>{{$datos[$i][0]}}</td>
-                                        <td>{{$datos[$i][1]}}</td>
-                                        <td>{{$datos[$i][2]}}</td>
-                                        <td>{{$datos[$i][3]}}</td>
-                                        <td>{{$datos[$i][4]}}</td>
-                                        <td>{{$datos[$i][5]}}</td>
-                                        <td style="text-align:right;">{{$datos[$i][6]}}</td>
+                                        <td style="border: 0;">
+                                            <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo) }}" width="{{Auth::user()->company->width_logo}}"></div>
+                                        </td>
+                                        <td style="border: 0; vertical-align:bottom">
+                                            <div class="p-h-xl text-right">
+                                                <h2 style="line-height: 18px; font-size: 19px;">Histórico de transacciones - Traspasos</h2>
+                                                @if($mes != 0)
+                                                <p style="font-size: 10px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</p>
+                                                @else
+                                                <p style="font-size: 10px;">Gestión: {{$anio}} - Moneda: Bolivianos</p>
+                                                @endif
+                                            </div>
+                                        </td>
                                     </tr>
-									@endfor
-                                <tfoot>
-                                    <th colspan="6">Total</th>
-                                    <th style="text-align:right;">{{$monto}}</th>
-                                </tfoot>
+                                </tbody>
                             </table>
+                            </div>
                         </div>
 
+                        <div class="col-sm-12">
 
-                    </div>
-                    <div class="col-sm-1">
+                            <div class="table-responsive" style="margin-top: 20px;">
+                                <table class="table table-hover table-striped texto-impresion tabla-compress">
+                                    <thead>
+                                        <tr bgcolor="#D6D6D6">
+                                            <th style="vertical-align:bottom">Fecha</th>
+                                            <th style="vertical-align:bottom">Documento</th>
+                                            <th style="vertical-align:bottom">Concepto</th>
+                                            <th style="vertical-align:bottom">Cuenta origen</th>
+                                            <th style="vertical-align:bottom">Cuenta destino</th>
+                                            <th style="vertical-align:bottom">Forma de pago</th>
+                                            <th style="text-align:right; vertical-align:bottom">Importe</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+    									@for ($i = 0; $i < count($datos); $i++)
+                                        <tr>
+                                            <td>{{$datos[$i][0]}}</td>
+                                            <td>{{$datos[$i][1]}}</td>
+                                            <td>{{$datos[$i][2]}}</td>
+                                            <td>{{$datos[$i][3]}}</td>
+                                            <td>{{$datos[$i][4]}}</td>
+                                            <td>{{ucfirst($datos[$i][5])}}</td>
+                                            <td style="text-align:right;">{{ number_format($datos[$i][6], 2, '.', '.') }}</td>
+                                        </tr>
+    									@endfor
+                                    </tbody>
+                                    <tfoot>
+                                        <th colspan="6">Total</th>
+                                        <th style="text-align:right;">{{ number_format($monto, 2, '.', '.') }}</th>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
                     </div>
 
                     <div class="row sec-volver">
@@ -110,8 +134,25 @@
 
 </div>
 @endsection
+
+
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
 @endsection
 
+
+@section('javascript')
+<script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#printButton").click(function () {
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {mode: mode, popClose: close};
+            $("#printableArea").printArea(options);
+        });
+    });
+</script>
+@endsection
 

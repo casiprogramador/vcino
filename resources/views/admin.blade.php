@@ -370,7 +370,7 @@ $(function () {
 	nombres_gastos_torta = JSON.parse($('#nombres-gastos-torta').val());
 	importes_gastos_torta = JSON.parse($('#importes-gastos-torta').val());
 	colores_gastos_torta = JSON.parse($('#colores-gastos-torta').val());
-	//console.log(nombres_gastos_torta);
+	console.log(nombres_gastos_torta);
     var doughnutData = {
         labels: nombres_gastos_torta,
         datasets: [{

@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Comunicación & Información
+                </li>
+                <li>
                     <a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a>
                 </li>
                 <li class="active">
@@ -29,7 +32,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar: {{$phonesite->razon_social}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -72,7 +75,7 @@
                                                         @endif
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input type="text" placeholder="Tel. Emergencias" class="form-control input-sm" style="background-color: #ffffe6" name="telefono_emergencia" value="{{$phonesite->telefono_emergencia}}">
+                                                        <input type="text" placeholder="Tel. Emergencias" class="form-control input-sm" style="background-color: #ECF7FE" name="telefono_emergencia" value="{{$phonesite->telefono_emergencia}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,7 +126,7 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Activa</label>
+                                            <label class="col-sm-3 control-label">Activo</label>
                                             <div class="col-sm-4">
                                                 <label><input type="checkbox" class="i-checks" name="activa" value="1" {{ ($phonesite->activa == 1) ? 'checked' : '' }}></label>
                                             </div>

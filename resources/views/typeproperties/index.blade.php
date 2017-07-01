@@ -32,14 +32,10 @@
                 @endif
                 <div class="ibox">
 					<div class="ibox-title">
-                        <h5 style="padding-top: 7px;">Lista de tipos de propiedad</h5>
+                        <h5 style="padding-top: 7px;">Tipos de propiedad</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <div class="btn-group">
-                                <a href="{{ route('config.typeproperty.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir lista de cuentas" data-original-title="Imprimir"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</a>
-                                <a href="#" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar lista de cuentas" data-original-title="Imprimir" style="margin-right: 5px;"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar...</a>
+                                <a href="{{ route('config.typeproperty.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo tipo de propiedad" data-original-title="Nuevo tipo de propiedad" style="margin-right: 5px;"> Nuevo </a>
                             </div>
                         </div>
                     </div>
@@ -69,8 +65,8 @@
                             </tr>
                                 @else
                             <tr>
-                                <td>{{ $typeproperty->tipo_propiedad }}</td>
-                                <td style="vertical-align:middle"><span class="text-muted">Inactiva</span></td>
+                                <td colspan="text-muted">{{ $typeproperty->tipo_propiedad }}</td>
+                                <td style="vertical-align:middle"><span class="text-muted">Inactivo</span></td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="{{ route('config.typeproperty.edit', $typeproperty->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar tipo de propiedad">

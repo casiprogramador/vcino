@@ -49,7 +49,7 @@ class ReportCategoriaPeriodoGestionController extends Controller
                 $sheet->fromArray($categorias_resultado, null, 'A1', true, false);
 				$sheet->row(1, function($row) {
 
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -61,7 +61,7 @@ class ReportCategoriaPeriodoGestionController extends Controller
 	//FUNCIONES AUXILIARES
 	function categoriaperiodogestion_array($anio,$resultado_ini){
 		$company = Auth::user()->company;
-		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->get();
+		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->orderBy('nombre', 'asc')->get();
 		
 		
 		$resultado = $resultado_ini;

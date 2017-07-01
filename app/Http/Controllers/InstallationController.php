@@ -52,7 +52,7 @@ class InstallationController extends Controller
             'dias_permitidos' => 'required',
             'hora_dia_semana_hasta' => 'required',
             'hora_fin_de_semana_hasta' => 'required',
-            'normas' => 'required',
+//            'normas' => 'required',
 
         ]);
 
@@ -106,7 +106,7 @@ class InstallationController extends Controller
 		if(!empty($request->fotografia_2)){
         $fileF2 = $request->file('fotografia_2');
         $tmpFilePathF2 = '/img/upload/';
-        $tmpFileNameF2 = time() .'-'. 'f2-in'.'-'.$id. '-' . $fileF1->getClientOriginalName();
+        $tmpFileNameF2 = time() .'-'. 'f2-in'.'-'.$id. '-' . $fileF2->getClientOriginalName();
         $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
         $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
 		}else{
@@ -189,7 +189,7 @@ class InstallationController extends Controller
             'dias_permitidos' => 'required',
             'hora_dia_semana_hasta' => 'required',
             'hora_fin_de_semana_hasta' => 'required',
-            'normas' => 'required'
+//            'normas' => 'required'
         ]);
 
 
@@ -235,7 +235,7 @@ class InstallationController extends Controller
         if(!empty($request->fotografia_2)){
             $fileF2 = $request->file('fotografia_2');
             $tmpFilePathF2 = '/img/upload/';
-            $tmpFileNameF2 = time() .'-'. 'f2'.'-'.$id_user. '-' . $fileF1->getClientOriginalName();
+            $tmpFileNameF2 = time() .'-'. 'f2'.'-'.$id_user. '-' . $fileF2->getClientOriginalName();
             $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
             $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
         }

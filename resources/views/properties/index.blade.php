@@ -56,7 +56,7 @@
                             <tr>
                                 
 								<td>{{ $property->orden }}</td>
-								<td>{{ $property->nro }}</td>
+								<td data-order="{{ $property->orden }}">{{ $property->nro }}</td>
                                 <td>{{ $property->typeProperty->tipo_propiedad }}</td>
                                 <td>{{ $property->etiquetas }}</td>
                                 <td>{{ $property->situacionHabitacionals->nombre }}</td>

@@ -217,7 +217,7 @@ class CommunicationController extends Controller
 	public function send($id)
     {
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
 		$communications = Communication::where('company_id',$company->id )->get();
         $communications = $communications->lists('FechaAsunto','id');
 		$contacts = Contact::where('company_id',$company->id )->where('email','<>','')->get();
@@ -232,7 +232,7 @@ class CommunicationController extends Controller
 	public function resend($id)
     {
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
 		$communications = Communication::where('company_id',$company->id )->get();
         $communications = $communications->lists('FechaAsunto','id');
 		$contacts = Contact::where('company_id',$company->id )->get();

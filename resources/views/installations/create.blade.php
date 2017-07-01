@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Configuración
+                </li>
+                <li>
                     <a href="{{ route('config.installation.index') }}">Instalaciones comunes</a>
                 </li>
                 <li class="active">
@@ -174,7 +177,7 @@
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <p style="font-size: 11px; color: #B0B0B0;">Ingrese el horario máximo permitido de permanencia para los fines de semana y feriados.</p>
+                                                    <p style="font-size: 11px; color: #B0B0B0;">Ingrese el horario máximo permitido de permanencia para los fines de semana.</p>
                                                 </div>
                                             </div>
 
@@ -198,10 +201,14 @@
 
                                             <div class="form-group{{ $errors->has('reglamento') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Normas o Reglamento</label>
+                                                
                                                 <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-
-                                                        {{Form::file('reglamento', array('class'=>'') )}}
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="reglamento"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('reglamento'))
                                                         <span class="help-block">
@@ -216,9 +223,12 @@
                                             <div class="form-group{{ $errors->has('fotografia_principal') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Fotografía principal</label>
                                                 <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-
-                                                        {{Form::file('fotografia_principal', array('class'=>'') )}}
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="fotografia_principal"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('fotografia_principal'))
                                                         <span class="help-block">
@@ -231,9 +241,12 @@
                                             <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Fotografía #1</label>
                                                 <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-
-                                                        {{Form::file('fotografia_1', array('class'=>'') )}}
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="fotografia_1"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('fotografia_1'))
                                                         <span class="help-block">
@@ -246,9 +259,12 @@
                                             <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Fotografía #2</label>
                                                 <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-
-                                                        {{Form::file('fotografia_2', array('class'=>'') )}}
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="fotografia_2"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('fotografia_2'))
                                                         <span class="help-block">
@@ -261,9 +277,12 @@
                                             <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Fotografía #3</label>
                                                 <div class="col-sm-9">
-                                                    <label title="Upload image file" for="inputImage" class="btn btn-white">
-
-                                                        {{Form::file('fotografia_3', array('class'=>'') )}}
+                                                    <label title="Upload image file" for="inputImage">
+                                                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="fotografia_3"></span>
+                                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                        </div>
                                                     </label>
                                                     @if ($errors->has('fotografia_3'))
                                                         <span class="help-block">
@@ -288,7 +307,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success" type="submit">Guardar</button>
+                                        <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear instalación</button>
                                         <a href="{{ route('config.installation.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>

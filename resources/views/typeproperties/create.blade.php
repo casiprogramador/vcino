@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Configuración
+                </li>
+                <li>
                     <a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a>
                 </li>
                 <li class="active">
@@ -49,11 +52,9 @@
                                             <div class="hr-line-dashed"></div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label">Activa</label>
+                                                <label class="col-sm-3 control-label">Activo</label>
                                                 <div class="col-sm-4">
-
                                                     <input type="checkbox" class="i-checks" name="activa" value="1" checked>
-
                                                 </div>
                                             </div>
 
@@ -63,7 +64,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success" type="submit">Guardar</button>
+                                        <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear tipo de propiedad</button>
                                         <a href="{{ route('config.typeproperty.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>

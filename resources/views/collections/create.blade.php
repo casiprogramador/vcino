@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Transacciones</h2>
+        <h2>Cobranzas</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Transacciones
             </li>
             <li>
-                <a id="direccion-lista" href="{{ route('transaction.collection.index') }}">Lista de cobranzas</a>
+                <a id="direccion-lista" href="{{ route('transaction.collection.index') }}">Cobranzas</a>
             </li>
             <li class="active">
                 <strong>Nueva cobranza</strong>
@@ -30,144 +30,146 @@
                     <h5 style="padding-top: 2px;">Nueva cobranza</h5>
                 </div>
                 <div class="ibox-content">
-                    <h2>
-                        Cobranza de cuotas
-                    </h2>
-
 					{!! Form::open(array('route' => 'transaction.collection.store', 'class' => 'wizard-big form-horizontal', 'id' => 'form')) !!}
 						<h1>Propiedad y contacto</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-6 col-lg-offset-3">
-                                    <div class="form-group">
-                                        <label>Propiedad</label>
-										{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, old('propiedad'), ['class' => 'form-control input-sm','id'=>'propiedades']) }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Contacto (A nombre de)</label>
-                                        <select class="form-control input-sm" name="contacto" id="contactos">
-                                            <option value="0">Seleccione contacto</option>
-                                        </select>
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <label>Propiedad</label>
+									{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, old('propiedad'), ['class' => 'form-control input-sm','id'=>'propiedades']) }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Contacto (A nombre de)</label>
+                                    <select class="form-control input-sm" name="contacto" id="contactos">
+                                        <option value="0">Seleccione un contacto</option>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="col-lg-4">
+                                <div class="text-center">
+                                    <div style="margin-top: 0px">
+                                        <i class="fa fa-sign-in" style="font-size: 160px;color: #e5e5e5 "></i>
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
 						<h1>Cuotas por cobrar</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-10 col-lg-offset-1">
-                                    <div class="form-group">
-										<div class="table-responsive">
-											<table class="table table-striped" id="cuentas-cobrar">
-												<thead>
-													<tr>
-														<th></th>
-														<th>Gestión</th>
-														<th>Periodo</th>
-														<th>Cuota</th>
-														<th class="text-right">Monto</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
-														<td>2016</td>
-														<td>Junio</td>
-														<td>Expensas: cuota mensual</td>
-														<td class="text-right">700,00</td>
-													</tr>
-													
-												</tbody>
-												<tfoot>
-													<tr>
-														<th>Total Bs.</th>
-														<th></th>
-														<th></th>
-														<th></th>
-														<th class="text-right" id="importe-total">0</th>
-													</tr>
-												</tfoot>
-											</table>
-										</div>
-                                    </div>
+                    		<h4 style="font-weight: normal;">Seleccione la(s) cuota(s) por cobrar que serán canceladas, luego presione el botón siguiente.</h4>
+                            <div class="col-lg-10">
+                                <div class="form-group">
+									<div class="table-responsive">
+									<div style="height:270px; overflow: auto;">
+										<table class="table table-striped" id="cuentas-cobrar">
+											<thead>
+												<tr>
+													<th width="50" style="background-color: #a4a5a6;"></th>
+													<th style="background-color: #a4a5a6">Gestión</th>
+													<th style="background-color: #a4a5a6">Periodo</th>
+													<th style="background-color: #a4a5a6">Cuota</th>
+													<th class="text-right" style="background-color: #a4a5a6">Importe</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td class="text-right"></td>
+												</tr>
+												
+											</tbody>
+											<tfoot>
+												<tr>
+													<th colspan="4" style="border-top: 1px solid #a4a5a6;">Total Bs.</th>
+													<th class="text-right" style="border-top: 1px solid #a4a5a6;" id="importe-total">0</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									</div>
                                 </div>
                             </div>
+							<div class="col-lg-2">
+                            </div>
+
                         </fieldset>
 
-						<h1>Datos transacción</h1>
+						<h1>Fecha, cuenta y concepto</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-8 col-lg-offset-2">
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Fecha</label>
-                                        <div class="col-sm-4 input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}" required>
-                                        </div>
+                            <div class="col-lg-10">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Fecha</label>
+                                    <div class="col-sm-4 input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}" required>
                                     </div>
-									<div class="form-group">
-                                        <label class="col-sm-4 control-label">Propiedad y contacto</label>
-										<div class="col-sm-6 input-group">
-                                        <input type="text" class="form-control input-sm" id="propiedad-contacto" value="" disabled="">
-										</div>
+                                </div>
+								<div class="form-group">
+                                    <label class="col-sm-4 control-label">Propiedad y contacto</label>
+									<div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control input-sm" id="propiedad-contacto" value="" disabled="">
+									</div>
+                                </div>
+								<div class="form-group">
+                                    <label class="col-sm-4 control-label">Cuenta</label>
+                                    <div class="col-sm-8 input-group">
+									{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta'), ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
                                     </div>
-									<div class="form-group">
-                                        <label class="col-sm-4 control-label">Cuenta</label>
-                                        <div class="col-sm-8 input-group">
-										{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta'), ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                         <label class="col-sm-4 control-label">Concepto</label>
-										<div class="col-sm-8 input-group">
-                                        <textarea rows="2" id="concepto" class="form-control input-sm" name="concepto" required></textarea>
-										</div>
-                                    </div>
-									
+                                </div>
+                                <div class="form-group">
+                                     <label class="col-sm-4 control-label">Concepto</label>
+									<div class="col-sm-8 input-group">
+                                    <textarea rows="2" id="concepto" class="autocompletar form-control input-sm" name="concepto" required></textarea>
+									</div>
                                 </div>
                             </div>
+							<div class="col-lg-2">
+                            </div>
+
                         </fieldset>
 
-						<h1>Detalle transacción</h1>
+						<h1>Forma de pago y notas</h1>
                         <fieldset>
-                            <div class="row">
-                                <div class="col-lg-8 col-lg-offset-2">
-
-		
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Forma de pago</label>
-                                        <div class="col-sm-8 input-group">
-											<select class="form-control input-sm" name="forma_pago" id="forma-pago">
-												<option value="efectivo">Efectivo</option>
-												<option value="cheque">Cheque</option>
-												<option value="deposito">Depósito</option>
-												<option value="transferencia bancaria">Transferencia bancaria</option>
-												<option value="tarjeta debito/credito">Tarjeta Débito/Crédito</option>
-											</select>
-                                        </div>
+                            <div class="col-lg-10">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Forma de pago</label>
+                                    <div class="col-sm-6 input-group">
+										<select class="form-control input-sm" name="forma_pago" id="forma-pago">
+											<option value="efectivo">Efectivo</option>
+											<option value="cheque">Cheque</option>
+											<option value="deposito">Depósito</option>
+											<option value="transferencia bancaria">Transferencia bancaria</option>
+											<option value="tarjeta debito/credito">Tarjeta Débito/Crédito</option>
+										</select>
                                     </div>
-
-                                    <div class="form-group" id="cont-forma-pago">
-<!--                                        <label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>-->
-										<label class="col-sm-4 control-label" id="label-transaccion">Nro Transaccion</label>
-                                        <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" name="nro_forma_pago">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Importe</label>
-                                        <div class="col-sm-8 input-group">
-											<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Notas</label>
-										<div class="col-sm-8 input-group">
-                                        <textarea rows="2" class="form-control input-sm" name="notas"></textarea>
-										</div>
-                                    </div>
-
                                 </div>
+
+                                <div class="form-group" id="cont-forma-pago">
+									<!--
+										<label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>
+									-->
+									<label class="col-sm-4 control-label" id="label-transaccion">Nro. Transaccion</label>
+                                    <div class="col-sm-6 input-group">
+										<input type="text" class="form-control input-sm" name="nro_forma_pago">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Importe</label>
+                                    <div class="col-sm-4 input-group">
+										<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Notas</label>
+									<div class="col-sm-8 input-group">
+                                    <textarea rows="3" class="form-control input-sm" name="notas"></textarea>
+									</div>
+                                </div>
+
+                            </div>
+							<div class="col-lg-2">
                             </div>
                         </fieldset>
 					{!! Form::close() !!}
@@ -191,6 +193,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/wizard/pace.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ URL::asset('js/wizard/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/typeahead.js') }}"></script>
 <script>
 	$(document).ready(function(){
 
@@ -267,9 +270,12 @@
 			}
 	})
 	$('.date-picker').datetimepicker({
-            format: 'DD/MM/YYYY'
+        format: 'DD/MM/YYYY',
+			widgetPositioning: {
+			horizontal: 'left',
+					vertical: 'bottom'
+			}
     });
-
 	
 	//ajax contactos por propiedad
 	$.ajaxSetup({
@@ -298,6 +304,9 @@
 		}, 'json');
     });
 	
+	$('.autocompletar').typeahead({
+    	source: ["Cobranza de expensas","Pago de expensas","Pago correspondiente a: "]
+	}); 
 	
 	$('#contactos').change(function(){
 		//Cabio campo propiedades y contacto
@@ -380,6 +389,7 @@
 	
 	//Cambio tipo de forma de pago
 	$('#cont-forma-pago').hide();
+	
 	$('#forma-pago').change(function(){
 		
 		if($(this).val() == "cheque"){
@@ -406,9 +416,7 @@
 	});
 
 	});
-	
-	
-	
-	
+
+
 </script>
 @endsection

@@ -163,7 +163,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -194,7 +194,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -225,7 +225,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -255,7 +255,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -285,7 +285,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -315,7 +315,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -345,7 +345,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -359,7 +359,7 @@ class ReportHistoricoTransaccionesController extends Controller
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
 
-		$array_titulo = array(array('FECHA','DOCUMENTO','BENEFICIARIO','CATEGORIA','CONCEPTO','CUENTA','CREDITO','DEBITO')); 
+		$array_titulo = array(array('FECHA','DOCUMENTO','BENEFICIARIO','CATEGORIA','CONCEPTO','CUENTA','INGRESO','EGRESO')); 
 		$resultado = $this->historicoTransaccionesArray($mes,$anio,$array_titulo);
 		
 		
@@ -375,7 +375,7 @@ class ReportHistoricoTransaccionesController extends Controller
 				$sheet->row(1, function($row) {
 
 					// call cell manipulation methods
-					$row->setBackground('#feff01');
+					$row->setBackground('#D6D6D6');
 
 				});
  
@@ -407,7 +407,8 @@ class ReportHistoricoTransaccionesController extends Controller
 		$transactions = $transactions->where('user_id',Auth::user()->id )
 				->whereIn('id',$id_transactions)
 				->where('anulada',0)
-				->where('excluir_reportes',0);
+				->where('excluir_reportes',0)
+				->orderBy('fecha_pago', 'asc');
 		 if($mes != 0) $transactions->whereMonth('fecha_pago', '=', $mes);
          if($anio != 0) $transactions->whereYear('fecha_pago', '=', $anio);
 		 
@@ -455,7 +456,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('cancelada',1)
 			->where('anulada',0)
 			->where('accountsreceivables.company_id',$company->id)
-			->where('excluir_reportes',0);
+			->where('excluir_reportes',0)
+			->orderBy('fecha_pago', 'asc');
 
 			if($mes != 0) $ingresos->whereMonth('fecha_pago', '=', $mes);
 			if($anio != 0) $ingresos->whereYear('fecha_pago', '=', $anio);
@@ -479,14 +481,15 @@ class ReportHistoricoTransaccionesController extends Controller
   					->where('category_id',$id_categoria)
 					->where('expenses.company_id',$company->id)
   					->where('anulada',0)
-  					->where('excluir_reportes',0);
+  					->where('excluir_reportes',0)
+  					->orderBy('fecha_pago', 'asc');
 
 
 			if($mes != 0) $gastos->whereMonth('fecha_pago', '=', $mes);
 			if($anio != 0) $gastos->whereYear('fecha_pago', '=', $anio);
 
 			$resultado = $gastos->get();
-			dd($resultado);
+			//dd($resultado);
 			$array_categorias = $array_inicio;
 			$importe_total = 0;
 			foreach ($resultado as $egreso) {
@@ -516,7 +519,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('expenses.supplier_id', '=', $id_proveedor)
 			->where('transactions.anulada',0)
 			->where('expenses.company_id',$company->id)
-			->where('transactions.excluir_reportes',0);
+			->where('transactions.excluir_reportes',0)
+			->orderBy('fecha_pago', 'asc');
 
 			if($mes != 0) $proveedores->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $proveedores->whereYear('transactions.fecha_pago', '=', $anio);
@@ -549,7 +553,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('collections.property_id', '=', $id_propiedad)
 			->where('transactions.anulada',0)
 			->where('collections.company_id',$company->id)
-			->where('transactions.excluir_reportes',0);
+			->where('transactions.excluir_reportes',0)
+			->orderBy('fecha_pago', 'asc');
 
 			if($mes != 0) $propiedades->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $propiedades->whereYear('transactions.fecha_pago', '=', $anio);
@@ -586,19 +591,21 @@ class ReportHistoricoTransaccionesController extends Controller
 			->join('accounts', 'accounts.id', '=', 'collections.account_id')
 			->where('transactions.anulada',0)
 			->where('collections.company_id',$company->id)
-			->where('transactions.excluir_reportes',0);
+			->where('transactions.excluir_reportes',0)
+			->orderBy('fecha_pago', 'asc');
 			if($mes != 0) $ingresos->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $ingresos->whereYear('transactions.fecha_pago', '=', $anio);
 			$resultado = $ingresos->get();
-		//dd($resultado);
+			//dd($resultado);
 			$array_ingresos = $array_inicio;
 			$importe_total = 0;
 			foreach ($resultado as $ingreso) {
 			   $fecha = date_format(date_create($ingreso->fecha_pago),'d/m/Y');
 			   $nro_documento = str_pad($ingreso->nro_documento, 6, "0", STR_PAD_LEFT);
 			   $beneficiario = ($ingreso->propiedad).' - '.($ingreso->nombre).' '.($ingreso->apellido);
+			   $fecha_tsmp = strtotime($ingreso->fecha_pago);
 
-			   $array_ingreso = array($fecha, $nro_documento,$beneficiario,$ingreso->concepto,$ingreso->cuenta,$ingreso->importe);
+			   $array_ingreso = array($fecha, $nro_documento,$beneficiario,$ingreso->concepto,$ingreso->cuenta,$ingreso->importe,$fecha_tsmp);
 			   array_push($array_ingresos, $array_ingreso);
 			   $importe_total = $importe_total+$ingreso->importe;
 			}
@@ -618,7 +625,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->join('categories', 'categories.id', '=', 'expenses.category_id')
 			->where('transactions.anulada',0)
 			->where('expenses.company_id',$company->id)
-			->where('transactions.excluir_reportes',0);
+			->where('transactions.excluir_reportes',0)
+			->orderBy('fecha_pago', 'asc');
 
 			if($mes != 0) $egresos->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $egresos->whereYear('transactions.fecha_pago', '=', $anio);
@@ -628,8 +636,9 @@ class ReportHistoricoTransaccionesController extends Controller
 			foreach ($resultado as $egreso) {
 			   $fecha = date_format(date_create($egreso->fecha_pago),'d/m/Y');
 			   $nro_documento = str_pad($egreso->nro_documento, 6, "0", STR_PAD_LEFT);
+			   $fecha_tsmp = strtotime($egreso->fecha_pago);
 
-			   $array_egreso = array($fecha, $nro_documento,$egreso->proveedor,$egreso->categoria,$egreso->concepto,$egreso->cuenta,$egreso->importe);
+			   $array_egreso = array($fecha, $nro_documento,$egreso->proveedor,$egreso->categoria,$egreso->concepto,$egreso->cuenta,$egreso->importe, $fecha_tsmp);
 			   array_push($array_egresos, $array_egreso);
 			   $importe_total = $importe_total+$egreso->importe;
 			}
@@ -647,7 +656,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->join('accounts as cuenta_des', 'cuenta_des.id', '=', 'transfers.des_account_id')
 			->where('transactions.anulada',0)
 			->where('transfers.company_id',$company->id)
-			->where('transactions.excluir_reportes',0);
+			->where('transactions.excluir_reportes',0)
+			->orderBy('fecha_pago', 'asc');
 
 			if($mes != 0) $traspaso->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $traspaso->whereYear('transactions.fecha_pago', '=', $anio);
@@ -658,8 +668,9 @@ class ReportHistoricoTransaccionesController extends Controller
 			foreach ($resultado as $traspaso) {
 			   $fecha = date_format(date_create($traspaso->fecha_pago),'d/m/Y');
 			   $nro_documento = str_pad($traspaso->nro_documento, 6, "0", STR_PAD_LEFT);
+			   $fecha_tsmp = strtotime($traspaso->fecha_pago);
 
-			    $array_traspaso = array($fecha, $nro_documento, $traspaso->concepto,$traspaso->cuenta_origen,$traspaso->cuenta_destino ,$traspaso->forma_pago,$traspaso->importe);
+			    $array_traspaso = array($fecha, $nro_documento, $traspaso->concepto,$traspaso->cuenta_origen,$traspaso->cuenta_destino ,$traspaso->forma_pago,$traspaso->importe,$fecha_tsmp);
 			   array_push($array_traspasos, $array_traspaso);
 			   $importe_total = $importe_total+$traspaso->importe;
 			}
@@ -679,21 +690,21 @@ class ReportHistoricoTransaccionesController extends Controller
 		
 		foreach ($ingresos['resultado'] as $ingreso) {
 
-			$array_transaccion = array($ingreso[0], $ingreso[1], $ingreso[2],'',$ingreso[3],$ingreso[4],$ingreso[5],'');
+			$array_transaccion = array($ingreso[0], $ingreso[1], $ingreso[2],'',$ingreso[3],$ingreso[4],$ingreso[5],'', 'I', $ingreso[6]);
 			   array_push($array_transacciones, $array_transaccion);
 			   $importe_total_credito = $importe_total_credito+$ingreso[5];
 		}
 		
 		foreach ($egresos['resultado'] as $egreso) {
 
-			$array_transaccion = array($egreso[0], $egreso[1], $egreso[2],$egreso[3],$egreso[4],$egreso[5],'',$egreso[6]);
+			$array_transaccion = array($egreso[0], $egreso[1], $egreso[2],$egreso[3],$egreso[4],$egreso[5],'',$egreso[6], 'E', $egreso[7]);
 			   array_push($array_transacciones, $array_transaccion);
 			   $importe_total_debito = $importe_total_debito+$egreso[6];
 		}
 		
 		foreach ($traspasos['resultado'] as $traspaso) {
 
-			$array_transaccion = array($traspaso[0], $traspaso[1],'','', $traspaso[2],$traspaso[3].' - '.$traspaso[4],$traspaso[6],$traspaso[6]);
+			$array_transaccion = array($traspaso[0], $traspaso[1],'','', $traspaso[2],$traspaso[3].' - '.$traspaso[4],$traspaso[6],$traspaso[6], 'T', $traspaso[7]);
 			   array_push($array_transacciones, $array_transaccion);
 			   $importe_total_credito = $importe_total_credito+$traspaso[6];
 			   $importe_total_debito = $importe_total_debito+$traspaso[6];

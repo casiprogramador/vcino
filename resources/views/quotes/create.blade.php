@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Configuración
+                </li>
+                <li>
                     <a href="{{ route('config.quota.index') }}">Cuotas</a>
                 </li>
                 <li class="active">
@@ -139,7 +142,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success" type="submit">Guardar</button>
+                                        <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear cuota</button>
                                         <a href="{{ route('config.quota.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>

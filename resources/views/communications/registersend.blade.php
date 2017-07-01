@@ -58,7 +58,7 @@
 										<span class="badge">{{ ucwords($sendcommunication->dirigido) }}</span>
 									@endif											
 								</td>
-								<td>{{ date_format(date_create( $sendcommunication->created_at ),"Y-m-d H:i") }}</td>
+								<td data-order="{{ $sendcommunication->created_at }}">{{ date_format(date_create( $sendcommunication->created_at ),"Y-m-d H:i") }}</td>
 									<td style="vertical-align:middle; text-align:right;">
 										<div class="btn-group">
 											<a href="{{ route('communication.communication.show', $sendcommunication->communication_id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comunicado">

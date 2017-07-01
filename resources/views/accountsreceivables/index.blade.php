@@ -32,11 +32,11 @@
 			@endif
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Lista de cuotas por cobrar</h5>
+                    <h5 style="padding-top: 7px;">Cuotas por cobrar</h5>
 					
                     <div class="ibox-tools" style="padding-bottom: 7px;">
-                        <a href="{{ route('transaction.accountsreceivable.generate') }}" type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevas cuotas por cobrar para todas las propiedades" data-original-title="Nuevas cuotas por cobrar para todas las propiedades" style="margin-right: 10px; color: white;">Nueva cuota - Todas las propiedades</a>
-						<a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuota por cobrar" data-original-title="Nueva cuota por cobrar" style="margin-right: 5px;"> Nueva cuota - Por propiedad</a>
+                        <a href="{{ route('transaction.accountsreceivable.generate') }}" type="button" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevas cuotas por cobrar para todas las propiedades" data-original-title="Nuevas cuotas por cobrar para todas las propiedades" style="margin-right: 10px; color: white;">Nuevas cuotas (Todas)</a>
+						<a href="{{ route('transaction.accountsreceivable.create') }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuota por cobrar" data-original-title="Nueva cuota por cobrar" style="margin-right: 5px;"> Nueva cuota (Por propiedad)</a>
                     </div>
                 </div>
 
@@ -70,14 +70,15 @@
                             <option value="12">Diciembre</option>
                         </select>
                     </div>
-                    <div class="col-sm-3 m-b-xs">
+                    <div class="col-sm-2 m-b-xs">
                         {{ Form::select('propiedad',['todos'=>'Propiedad: Todas']+$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
                     </div>
                     <div class="col-sm-2 m-b-xs">
                         {{ Form::select('cuota',['todos'=>'Cuota: Todas']+$quotas, old('cutas'), ['class' => 'form-control input-sm']) }}
                     </div>
-                    <div class="col-sm-1 m-b-xs">
-                        <button class="btn btn-white btn-sm" type="submit">Buscar</button>
+
+                    <div class="col-sm-2 m-b-xs text-right">                    
+                        <button class="btn btn-white btn-sm" type="submit" style="width: 100%;">Buscar</button>
                     </div>
 					{!! Form::close() !!}
                 </div>
@@ -108,11 +109,11 @@
 							@foreach ($accountsreceivables as $accountsreceivable)
                                 @if($accountsreceivable->cancelada == 1)
 									<tr>
-										<td>{{ $accountsreceivable->property->nro }}</td>
+										<td data-order="{{ $accountsreceivable->property->orden }}">{{ $accountsreceivable->property->nro }}</td>
 										<td>{{ $accountsreceivable->gestion }}</td>
 										<td>{{ $accountsreceivable->periodo }}</td>
 										<td>{{ $accountsreceivable->quota->cuota }}</td>
-										<td>{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
+										<td data-order="{{ $accountsreceivable->fecha_vencimiento }}">{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
 										<td class="text-right" style="padding-right: 30px;">{{ $accountsreceivable->importe_por_cobrar }}</td>
 										<td>
 											<i class="fa fa-lg fa-check-square text-primary"></i>
@@ -144,11 +145,11 @@
 									</tr>
 								@else
 									<tr>
-										<td>{{ $accountsreceivable->property->nro }}</td>
+										<td data-order="{{ $accountsreceivable->property->orden }}">{{ $accountsreceivable->property->nro }}</td>
 										<td>{{ $accountsreceivable->gestion }}</td>
 										<td>{{ $accountsreceivable->periodo }}</td>
 										<td>{{ $accountsreceivable->quota->cuota }}</td>
-										<td>{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
+										<td data-order="{{ $accountsreceivable->fecha_vencimiento }}">{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
 										<td class="text-right" style="padding-right: 30px;">{{ $accountsreceivable->importe_por_cobrar }}</td>
 										<td>
 											<i class="fa fa-lg fa-square-o text-muted"></i>
@@ -207,12 +208,11 @@
     <script>
         $(document).ready(function() {
             $('.table').DataTable({
-                "order": [[ 1, "asc" ]],
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
                     "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sEmptyTable":     "No se encontraron cuotas por cobrar.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -232,8 +232,9 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
+                "order": [[ 1, "desc" ], [ 2, "desc" ], [ 0, "asc" ]],
                 "bFilter": false,
-                "pageLength": 50,
+                "pageLength": 100,
                 "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
                 "paging":   true,
                 "bLengthChange" : false,

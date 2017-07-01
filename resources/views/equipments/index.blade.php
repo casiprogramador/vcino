@@ -21,7 +21,7 @@
     <div class="wrapper wrapper-content animated fadeInRight">
 
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-12">
 				@if (Session::has('message'))
 					<div class="alert alert-success alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -31,6 +31,14 @@
 					</div>
 				@endif
                 <div class="ibox">
+                    <div class="ibox-title">
+                        <h5 style="padding-top: 7px;">Equipos y maquinarias</h5>
+                        <div class="ibox-tools" style="padding-bottom: 7px;">
+                            <div class="btn-group">
+                                <a href="{{ route('equipment.machinery.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nuevo quipo o maquinaria" data-original-title="Nuevo equipo o maquinaria" style="margin-right: 5px;"> Nuevo </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
                             <table class="table table-hover table-striped">
@@ -47,16 +55,16 @@
                                 @foreach ($equipments as $equipment)
                                     @if($equipment->activa == 1)
                                         <tr>
-                                            <td><img src="{{ $equipment->fotografia_1 }}" class="img-responsive" width="100"></td>
+                                            <td><img src="{{ $equipment->fotografia_1 }}" class="img-responsive" width="80"></td>
                                             <td>{{ $equipment->equipo }}</td>
                                             <td>{{ $equipment->tipo_equipo }}</td>
                                             <td><span>Activo</span></td>
                                             <td style="vertical-align:middle; text-align:right;">
                                                 <div class="btn-group">
-                                                    <a href="{{ route('equipment.machinery.show', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver equipamiento">
+                                                    <a href="{{ route('equipment.machinery.show', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver equipo">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('equipment.machinery.edit', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar equipamiento">
+                                                    <a href="{{ route('equipment.machinery.edit', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar equipo">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
                                                 </div>
@@ -64,16 +72,16 @@
                                         </tr>
                                     @else
                                         <tr>
-                                            <td><img src="{{ $equipment->fotografia_1 }}" class="img-responsive" width="100"></td>
+                                            <td><img src="{{ $equipment->fotografia_1 }}" class="img-responsive" width="80"></td>
                                             <td><span class="text-muted">{{ $equipment->equipo }}</span></td>
                                             <td><span class="text-muted">{{ $equipment->tipo_equipo }}</span></td>
                                             <td><span class="text-muted">Inactiva</span></td>
                                             <td style="vertical-align:middle; text-align:right;">
                                                 <div class="btn-group">
-                                                    <a href="{{ route('equipment.machinery.show', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver equipamiento">
+                                                    <a href="{{ route('equipment.machinery.show', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver equipo">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('equipment.machinery.edit', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar equipamiento">
+                                                    <a href="{{ route('equipment.machinery.edit', $equipment->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar equipo">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
                                                 </div>
@@ -85,24 +93,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title text-left" style="padding-left: 20px;">
-                        <a href="{{ route('equipment.machinery.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo equipo" data-original-title="Nuevo equipo" style="margin-right: 10px;"> Nuevo </a>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Imprimir..." data-original-title="Imprimir..." style="margin-right: 10px;"> <i class="fa fa-print fa-lg"></i> </button>
-                        <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar" data-original-title="Exportar"> <i class="fa fa-file-excel-o fa-lg"></i> </button>
-                    </div>
-                    <div class="ibox-content">
-                        <h5>
-                            Equipos y maquinarias
-                        </h5>
-                        <p>
-                            Se refieren a todo el equipamiento instalado en el lugar que cumple una función y requiere ser mantenido, ya sea preventivamente o de forma periódica. Son todos aquellos equipos necesarios que cumplen una función...
-                        </p>
                     </div>
                 </div>
             </div>
@@ -125,8 +115,8 @@
                 "language": {
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sZeroRecords":    "No se encontraron resultados.",
+                    "sEmptyTable":     "No se encontraron equipos o maquinarias.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",

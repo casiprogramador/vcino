@@ -55,7 +55,7 @@
     									@var $gestiones = explode(',',$sendalertpayment->gestiones)
     									@var $correos = explode(',',$sendalertpayment->correos)
                                         <tr>
-                                            <td>{{ $sendalertpayment->property->nro }}</td>
+                                            <td data-order="{{ $sendalertpayment->property->orden }}">{{ $sendalertpayment->property->nro }}</td>
                                             <td>{{ $sendalertpayment->destinatarios }}</td>
                                             <td>
     											@foreach($correos as $correo)
@@ -141,7 +141,7 @@
                     "sProcessing":     "Procesando...",
                     "sLengthMenu":     "Mostrar _MENU_ registros",
                     "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "No existen registros de envíos.",
+                    "sEmptyTable":     "No se encontraron registros de envío.",
                     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -161,7 +161,7 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "pageLength": 50,
+                "pageLength": 100,
                 "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
                 "paging":   true,
                 "bLengthChange" : false,

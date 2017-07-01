@@ -9,6 +9,9 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Configuración
+                </li>
+                <li>
                     <a href="{{ route('config.typeproperty.index') }}">Tipos de propiedad</a>
                 </li>
                 <li class="active">
@@ -27,7 +30,7 @@
                         {!! Form::open(array('route' => array('config.typeproperty.update', $typeproperty->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar tipo: {{$typeproperty->tipo_propiedad}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Editar tipo de propiedad</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -48,11 +51,9 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Activa</label>
+                                            <label class="col-sm-3 control-label">Activo</label>
                                             <div class="col-sm-4">
-
-                                                <input type="checkbox" class="i-checks" name="activa" value="1" checked>
-
+                                                <input type="checkbox" class="i-checks" name="activa" value="1" {{ ($typeproperty->activa == 1) ? 'checked' : '' }}>
                                             </div>
                                         </div>
 
@@ -62,7 +63,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success" type="submit">Guardar</button>
+                                    <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                                     <a href="{{ route('config.typeproperty.index') }}" class="btn btn-white" >Cancelar</a>
                                 </div>
                             </div>

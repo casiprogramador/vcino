@@ -26,25 +26,23 @@
                 <div class="ibox-title">
                     <h5>Categorías por periodo y gestión</h5>
                 </div>
-				{!! Form::open(array('route' => 'report.categoriaperiodogestion.show', 'class' => 'form-horizontal')) !!}
+				{!! Form::open(array('route' => 'report.categoriaperiodogestion.show')) !!}
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-8">
-                            <form role="form" class="form-horizontal">
+                        <div class="col-sm-6">
+                            <div role="form" class="form-horizontal">
 
-                                <div class="form-group">
+                                <div class="form-group" style="padding-top: 10px;">
                                     <label class="col-sm-4 control-label">Gestión</label>
                                     <div class="col-sm-4">
                                         {{ Form::select('anio',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
                                     </div>
                                 </div>
 
-                                
-
-                            </form>
+                            </div>
                         </div>
-                        <div class="col-sm-4"><h4 class="text-muted">Categorías por periodo y gestión</h4>
-                            <p class="text-muted">Este reporte refleja los gastos durante una gestión por categorías mes a mes.</p>
+                        <div class="col-sm-6"><h4 class="text-muted">Categorías por periodo y gestión</h4>
+                            <p class="text-muted">Este reporte refleja todos los gastos realizados durante una gestión por categorías mes a mes.</p>
                         </div>
                     </div>
 
@@ -64,19 +62,7 @@
         </div>
     </div>
 
-
 </div>
 
-@endsection
-@section('javascript')
-    <script>
-        $(document).ready(function () {
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-            
-        });
-    </script>
 @endsection
 

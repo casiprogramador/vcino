@@ -26,10 +26,10 @@ class AccountsReceivableController extends Controller
     {
         $company = Auth::user()->company;
 
-        $accountsreceivables = Accountsreceivable::where('company_id',$company->id );
-		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->lists('cuota','id')->all();
-		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
-		$gestiones = Gestion::lists('nombre','nombre')->all();
+        $accountsreceivables = Accountsreceivable::where('company_id',$company->id )->where('cancelada',0);
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->orderBy('cuota', 'asc')->lists('cuota','id')->all();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
+		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
 
         return view('accountsreceivables.index')
 		->with('properties',$properties)
@@ -41,13 +41,15 @@ class AccountsReceivableController extends Controller
     public function create()
     {
 		$company = Auth::user()->company;
-		$quotas = Quota::where('company_id',$company->id )->where('activa',1 );
-		$gestiones = Gestion::lists('nombre','nombre')->all();
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->orderBy('cuota', 'asc');
+		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
+
         return view('accountsreceivables.create')
 		->with('properties',$properties)
 		->with('gestiones',$gestiones)
-		->with('quotas',$quotas->get());
+		->with('quotas',$quotas->get())
+		->with('dias_mora',$company->dias_mora);
     }
 	
 	public function store(Request $request)
@@ -74,7 +76,7 @@ class AccountsReceivableController extends Controller
 					->where('property_id',$request->propiedad)
 					->where('quota_id',$request->cuota)->get();
 			if(count($accountsreceivable_validate)){
-				Session::flash('message', 'La cuota por pagar ya fue creada, No se ingreso registros nuevos.');
+				Session::flash('message', 'Ya existe una cuota por cobrar para el periodo seleccionado. No se registraron nuevos registros.');
 				return redirect()->route('transaction.accountsreceivable.index');
 			}else{
 				$accountsreceivable = new Accountsreceivable();
@@ -101,9 +103,9 @@ class AccountsReceivableController extends Controller
 	public function edit($id)
     {
 		$company = Auth::user()->company;
-		$quotas = Quota::where('company_id',$company->id )->lists('cuota','id');
-		$properties = Property::where('company_id',$company->id )->lists('nro','id');
-		$gestiones = Gestion::lists('nombre','nombre')->all();
+		$quotas = Quota::where('company_id',$company->id )->orderBy('cuota', 'asc')->lists('cuota','id');
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
+		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
         $accountsreceivable = Accountsreceivable::find($id);
         return view('accountsreceivables.edit')
             ->with('accountsreceivable',$accountsreceivable)
@@ -155,7 +157,7 @@ class AccountsReceivableController extends Controller
     {
         $company = Auth::user()->company;
 		$quotas = Quota::where('company_id',$company->id )->lists('cuota','id');
-		$properties = Property::where('company_id',$company->id )->lists('nro','id');
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
         $accountsreceivable = Accountsreceivable::find($id);
         return view('accountsreceivables.show')
             ->with('accountsreceivable',$accountsreceivable)
@@ -186,7 +188,7 @@ class AccountsReceivableController extends Controller
 	
 	public function generate()
     {
-		$gestiones = Gestion::lists('nombre','nombre')->all();
+		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
         return view('accountsreceivables.generate')->with('gestiones',$gestiones);
     }
 	
@@ -201,7 +203,7 @@ class AccountsReceivableController extends Controller
 		$date = new \DateTime($year.'-'.$month.'-'.'01');
 		
 		$quotas = Quota::where('company_id',$company->id )->where('frecuencia_pago','Mensual' )->where('activa',1 )->get();
-		$properties = Property::where('company_id',$company->id )->get();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->get();
 		$fecha_vencimiento = date('Y-m-d', strtotime($date->format('Y-m-d').'+ '.$company->dias_mora.' days'));
 		foreach($properties as $property){	
 			foreach($quotas as $quota){
@@ -270,9 +272,9 @@ class AccountsReceivableController extends Controller
 	
 	public function generatenotification(){
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
 		$subjects = Subject::where('company_id',$company->id )->lists('nombre','nombre')->all();
-		$gestiones = Gestion::lists('nombre','nombre')->all();
+		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
 
 		return view('accountsreceivables.generatenotification')
 				->with('properties',$properties)
@@ -328,7 +330,7 @@ class AccountsReceivableController extends Controller
 							}
 						}//end foreach contacts
 					}else{
-						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos');
+						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos.');
 						return redirect()->route('transaction.accountsreceivable.send');
 					}
 					$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
@@ -383,7 +385,7 @@ class AccountsReceivableController extends Controller
 		$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
-				->join('categories', 'categories.id', '=', 'quotas.category_id')	
+				->join('categories', 'categories.id', '=', 'quotas.category_id')
 				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
 				->where('cancelada','0')
 				->where('properties.company_id',$company->id)
@@ -497,7 +499,7 @@ class AccountsReceivableController extends Controller
 		
 		
 		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->lists('cuota','id')->all();
-		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
 		$gestiones = Gestion::lists('nombre','nombre')->all();
 
         return view('accountsreceivables.index')

@@ -9,10 +9,13 @@
                     <a href="{{ route('admin.home') }}">Inicio</a>
                 </li>
                 <li>
+                    Equipamiento
+                </li>
+                <li>
                     <a href="{{ route('equipment.machinery.index') }}">Equipos y maquinarias</a>
                 </li>
                 <li class="active">
-                    <strong>Ver</strong>
+                    <strong>Ver equipo</strong>
                 </li>
             </ol>
         </div>
@@ -28,7 +31,7 @@
 
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Detalle: {{$equipment->equipo}}</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Ver equipo: {{ $equipment->equipo }}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -101,53 +104,64 @@
 
                                         <div class="hr-line-dashed"></div>
 
+                                        @if ($equipment->notas <> '')
                                         <div class="form-group{{ $errors->has('notas') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Notas</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8" style="background-color: #EBEBEB; margin-left: 15px;">
+                                                <br>
                                                 <?php echo $equipment->notas ?>
                                             </div>
-
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
+                                        @endif
 
+                                        @if ($equipment->documento <> '')
                                         <div class="form-group{{ $errors->has('documento') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Documento</label>
                                             <div class="col-sm-3">
-                                                <a href="{{asset($equipment->documento)}}" target="_blank" class="btn btn-default" role="button">Ver Documento</a>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <p style="font-size: 11px; color: #B0B0B0;">Manual, ficha técnica. Documento que se adjunta al equipo.</p>
+                                                <a href="{{ asset($equipment->documento) }}" target="_blank" class="btn btn-default" role="button">Ver Documento</a>
                                             </div>
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
+                                        @endif
 
                                         <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #1</label>
                                             <div class="col-sm-9">
+                                                <a href="{{ URL::asset($equipment->fotografia_1) }}" target="_blank">
                                                 <img src="{{ $equipment->fotografia_1 }}" class="img-responsive" width="100">
+                                                </a>
                                             </div>
                                         </div>
 
+                                        @if ($equipment->fotografia_2 <> '')
                                         <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #2</label>
                                             <div class="col-sm-9">
+                                                <a href="{{ URL::asset($equipment->fotografia_2) }}" target="_blank">
                                                 <img src="{{ $equipment->fotografia_2 }}" class="img-responsive" width="100">
+                                                </a>
                                             </div>
                                         </div>
+                                        @endif
 
+                                        @if ($equipment->fotografia_3 <> '')
                                         <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Fotografía #3</label>
                                             <div class="col-sm-9">
+                                                <a href="{{ URL::asset($equipment->fotografia_3) }}" target="_blank">
                                                 <img src="{{ $equipment->fotografia_3 }}" class="img-responsive" width="100">
+                                                </a>
                                             </div>
                                         </div>
+                                        @endif
 
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Activa</label>
+                                            <label class="col-sm-3 control-label">Activo</label>
                                             <div class="col-sm-4">
                                                 <label><input type="checkbox" class="i-checks" name="activa" value="1" {{ ($equipment->activa == 1) ? 'checked' : '' }} disabled="disabled"></label>
                                             </div>

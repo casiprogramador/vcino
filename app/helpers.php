@@ -127,13 +127,13 @@ function numeroaliteral($xcifra)
 						break;
 					case 2:
 						if ($xcifra < 1) {
-							$xcadena = "CERO BOLIVIANOS $xdecimales/100 ";
+							$xcadena = "CERO $xdecimales/100 BOLIVIANOS ";
 						}
 						if ($xcifra >= 1 && $xcifra < 2) {
-							$xcadena = "UN BOLIVIANO $xdecimales/100 ";
+							$xcadena = "UN $xdecimales/100 BOLIVIANOS ";
 						}
 						if ($xcifra >= 2) {
-							$xcadena.= " BOLIVIANOS $xdecimales/100 "; //
+							$xcadena.= " $xdecimales/100 BOLIVIANOS "; //
 						}
 						break;
 				} // endswitch ($xz)
