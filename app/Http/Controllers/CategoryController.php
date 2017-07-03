@@ -57,7 +57,7 @@ class CategoryController extends Controller
         $id = Auth::user()->id;
         $file = $request->file('icono');
         $tmpFilePath = '/img/upload/';
-        $tmpFileName = time() . '-'.$id. '-' . $file->getClientOriginalName();
+        $tmpFileName = time() . '-'.$id. '-name-' . $file->getClientOriginalName();
         $file->move(public_path() . $tmpFilePath, $tmpFileName);
         $path = $tmpFilePath . $tmpFileName;
 
@@ -120,14 +120,22 @@ class CategoryController extends Controller
             'clase' => 'required|not_in:0',
             //'description' => 'required'
         ]);
-
-        if(!empty($request->icono)){
-            $user_id = Auth::user()->id;
+		
+		if(!empty($request->icono)){
+			$user_id = Auth::user()->id;
             $file = $request->file('icono');
             $tmpFilePath = '/img/upload/';
-            $tmpFileName = time() . '-'.$user_id. '-' . $file->getClientOriginalName();
+            $tmpFileName = time() . '-'.$user_id. '-name-' . $file->getClientOriginalName();
             $file->move(public_path() . $tmpFilePath, $tmpFileName);
             $path = $tmpFilePath . $tmpFileName;
+		}elseif(!empty($request->adjunto_ori)){
+			$path = $request->adjunto_ori;
+		}else{
+			$path="";
+		}
+
+        if(!empty($request->icono)){
+            
         }
 
 

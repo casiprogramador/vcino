@@ -92,9 +92,12 @@
                                             <div class="col-sm-8">
                                                 <label title="Upload image file" for="inputImage">
 
-													<div class="fileinput input-group fileinput-new" data-provides="fileinput">
-														<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-														<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span><input type="file" name="icono"></span>
+													<div  id="adjunto-file" class="fileinput input-group {{!empty($category->icono) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+														<div class="form-control" data-trigger="fileinput">
+															<i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($category->icono) ) ? MenuRoute::filename($category->icono) : "" }}</span></div>
+														<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+															<input type="file" name="icono"></span>
+															<input type="hidden" id="adjunto-ori" name="adjunto_ori" value="{{ (isset($category->icono) ) ? $category->icono : '' }}">
 														<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
 													</div>
                                                 </label>
@@ -145,6 +148,10 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
+			$('#adjunto-file').on('clear.bs.fileinput', function(event) {
+
+			$('#adjunto-ori').val('');
+		});
         });
     </script>
 @endsection

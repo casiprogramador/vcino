@@ -331,7 +331,7 @@ class AccountsReceivableController extends Controller
 						}//end foreach contacts
 					}else{
 						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos.');
-						return redirect()->route('transaction.accountsreceivable.send');
+						return redirect()->route('transaction.notification.send');
 					}
 					$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
 					$sendalertpaymentUp->correos = implode(',', $correos);
@@ -344,7 +344,7 @@ class AccountsReceivableController extends Controller
 
 
 			}
-			return redirect()->route('transaction.accountsreceivable.registernotification');
+			return redirect()->route('transaction.notification.registernotification');
 			
 		}elseif($request->submit == "borrar"){
 			foreach ($request->sendalertpayment as $sendalertpayment) {
@@ -352,7 +352,7 @@ class AccountsReceivableController extends Controller
 				$sendalertpayment->delete();
 			}
 			
-			return redirect()->route('transaction.accountsreceivable.send');
+			return redirect()->route('transaction.notification.send');
 		}else{
 			//dd("imprimir");
 			$company = Auth::user()->company;
@@ -464,7 +464,7 @@ class AccountsReceivableController extends Controller
 			$sendalertpayment->company_id = $company->id;
 			$sendalertpayment->save();
 		}
-		return redirect()->route('transaction.accountsreceivable.send');
+		return redirect()->route('transaction.notification.send');
 	}
 
 

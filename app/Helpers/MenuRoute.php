@@ -15,6 +15,7 @@ class MenuRoute {
 	
 	public static function filename($route) {
 		$filename_array = explode("-name-",$route);
-		return $filename_array[1];
+		$nombre_archivo = (isset($filename_array[1]))? $filename_array[1] : '';
+		return $nombre_archivo;
     }
 }

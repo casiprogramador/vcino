@@ -199,82 +199,86 @@
 
                                         <div class="hr-line-dashed"></div>
 
-                                        <div class="form-group{{ $errors->has('reglamento') ? ' has-error' : '' }}">
-                                            <label class="col-sm-3 control-label">Normas o Reglamento</label>
-                                            <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage">
-
-                                                    {{Form::file('reglamento', array('class'=>'') )}}
-                                                </label>
-                                                @if ($errors->has('reglamento'))
-                                                    <span class="help-block">
-                                                            <strong>{{ $errors->first('reglamento') }}</strong>
-                                                        </span>
-                                                @endif
-                                            </div>
-                                        </div>
+										
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Reglamento</label>
+											<div class="col-sm-6">
+											<div id="adjunto-file-reglamento" class="fileinput input-group {{!empty($installation->reglamento) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+												<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($installation->reglamento) ) ? MenuRoute::filename($installation->reglamento) : "" }}</span></div>
+												<span class="input-group-addon btn btn-default btn-file">
+													<span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+													<input type="file" name="reglamento">
+													<input type="hidden" id="adjunto-ori-reglamento" name="adjunto_ori_reglamento" value="{{ (isset($installation->reglamento) ) ? $installation->reglamento : '' }}">
+												</span>
+												<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+											</div>
+											</div>
+										</div>
 
                                         <div class="hr-line-dashed"></div>
 
-                                        <div class="form-group{{ $errors->has('fotografia_principal') ? ' has-error' : '' }}">
-                                            <label class="col-sm-3 control-label">Fotografía principal</label>
-                                            <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage">
+										
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Fotografía Principal</label>
+											<div class="col-sm-6">
+											<div id="adjunto-file-fotografia-principal" class="fileinput input-group {{!empty($installation->fotografia_principal) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+												<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($installation->fotografia_principal) ) ? MenuRoute::filename($installation->fotografia_principal) : "" }}</span></div>
+												<span class="input-group-addon btn btn-default btn-file">
+													<span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+													<input type="file" name="fotografia_principal">
+													<input type="hidden" id="adjunto-ori-fotografia-principal" name="adjunto_ori_fotografia_principal" value="{{ (isset($installation->fotografia_principal) ) ? $installation->fotografia_principal : '' }}">
+												</span>
+												<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+											</div>
+											</div>
+										</div>
 
-                                                    {{Form::file('fotografia_principal', array('class'=>'') )}}
-                                                </label>
-                                                @if ($errors->has('fotografia_principal'))
-                                                    <span class="help-block">
-                                                            <strong>{{ $errors->first('fotografia_principal') }}</strong>
-                                                        </span>
-                                                @endif
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group{{ $errors->has('fotografia_1') ? ' has-error' : '' }}">
-                                            <label class="col-sm-3 control-label">Fotografía #1</label>
-                                            <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage">
+										
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Fotografía #1</label>
+											<div class="col-sm-6">
+											<div id="adjunto-file-fotografia-1" class="fileinput input-group {{!empty($installation->fotografia_1) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+												<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($installation->fotografia_1) ) ? MenuRoute::filename($installation->fotografia_1) : "" }}</span></div>
+												<span class="input-group-addon btn btn-default btn-file">
+													<span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+													<input type="file" name="fotografia_1">
+													<input type="hidden" id="adjunto-ori-fotografia-1" name="adjunto_ori_fotografia_1" value="{{ (isset($installation->fotografia_1) ) ? $installation->fotografia_1 : '' }}">
+												</span>
+												<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+											</div>
+											</div>
+										</div>
 
-                                                    {{Form::file('fotografia_1', array('class'=>'') )}}
-                                                </label>
-                                                @if ($errors->has('fotografia_1'))
-                                                    <span class="help-block">
-                                                            <strong>{{ $errors->first('fotografia_1') }}</strong>
-                                                        </span>
-                                                @endif
-                                            </div>
-                                        </div>
+                                        <div class="form-group">
+											<label class="col-sm-3 control-label">Fotografía #2</label>
+											<div class="col-sm-6">
+											<div id="adjunto-file-fotografia-2" class="fileinput input-group {{!empty($installation->fotografia_2) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+												<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($installation->fotografia_2) ) ? MenuRoute::filename($installation->fotografia_2) : "" }}</span></div>
+												<span class="input-group-addon btn btn-default btn-file">
+													<span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+													<input type="file" name="fotografia_2">
+													<input type="hidden" id="adjunto-ori-fotografia-2" name="adjunto_ori_fotografia_2" value="{{ (isset($installation->fotografia_2) ) ? $installation->fotografia_2 : '' }}">
+												</span>
+												<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+											</div>
+											</div>
+										</div>
 
-                                        <div class="form-group{{ $errors->has('fotografia_2') ? ' has-error' : '' }}">
-                                            <label class="col-sm-3 control-label">Fotografía #2</label>
-                                            <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage">
-
-                                                    {{Form::file('fotografia_2', array('class'=>'') )}}
-                                                </label>
-                                                @if ($errors->has('fotografia_2'))
-                                                    <span class="help-block">
-                                                            <strong>{{ $errors->first('fotografia_2') }}</strong>
-                                                        </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('fotografia_3') ? ' has-error' : '' }}">
-                                            <label class="col-sm-3 control-label">Fotografía #3</label>
-                                            <div class="col-sm-9">
-                                                <label title="Upload image file" for="inputImage">
-
-                                                    {{Form::file('fotografia_3', array('class'=>'') )}}
-                                                </label>
-                                                @if ($errors->has('fotografia_3'))
-                                                    <span class="help-block">
-                                                            <strong>{{ $errors->first('fotografia_3') }}</strong>
-                                                        </span>
-                                                @endif
-                                            </div>
-                                        </div>
+                                        <div class="form-group">
+											<label class="col-sm-3 control-label">Fotografía #3</label>
+											<div class="col-sm-6">
+											<div id="adjunto-file-fotografia-2" class="fileinput input-group {{!empty($installation->fotografia_3) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+												<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename">{{ (!empty($installation->fotografia_3) ) ? MenuRoute::filename($installation->fotografia_3) : "" }}</span></div>
+												<span class="input-group-addon btn btn-default btn-file">
+													<span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+													<input type="file" name="fotografia_3">
+													<input type="hidden" id="adjunto-ori-fotografia-3" name="adjunto_ori_fotografia_3" value="{{ (isset($installation->fotografia_3) ) ? $installation->fotografia_3 : '' }}">
+												</span>
+												<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+											</div>
+											</div>
+										</div>
 
                                         <div class="hr-line-dashed"></div>
 
@@ -331,8 +335,31 @@
                 ['para', ['ul', 'ol', 'paragraph']]
                ]
             });
+			
+			$('#adjunto-file-reglamento').on('clear.bs.fileinput', function(event) {
+				$('#adjunto-ori-reglamento').val('');
+			});
+
+			$('#adjunto-file-fotografia-principal').on('clear.bs.fileinput', function(event) {
+				$('#adjunto-ori-fotografia-principal').val('');
+			});
+
+			$('#adjunto-file-fotografia-1').on('clear.bs.fileinput', function(event) {
+				$('#adjunto-ori-fotografia-1').val('');
+			});
+
+			$('#adjunto-file-fotografia-2').on('clear.bs.fileinput', function(event) {
+				$('#adjunto-ori-fotografia-2').val('');
+			});
+
+			$('#adjunto-file-fotografia-3').on('clear.bs.fileinput', function(event) {
+				$('#adjunto-ori-fotografia-3').val('');
+			});
         });
 
         $('.clockpicker').clockpicker();
+		
+
+		
     </script>
 @endsection

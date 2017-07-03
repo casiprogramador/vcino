@@ -208,45 +208,71 @@ class InstallationController extends Controller
         $dias_permitidos = implode(",", $request->dias_permitidos);
 
         //Reglamento
-        if(!empty($request->reglamento)){
-            $fileReglamento = $request->file('reglamento');
+
+		if(!empty($request->reglamento)){
+			$fileReglamento = $request->file('reglamento');
             $tmpFilePathReglamento = '/img/upload/';
-            $tmpFileNameReglamento = time() .'-'. 'rg'.'-'.$id_user. '-' . $fileReglamento->getClientOriginalName();
+            $tmpFileNameReglamento = time() .'-'. 'rg'.'-'.$id_user. '-name-' . $fileReglamento->getClientOriginalName();
             $fileReglamento->move(public_path() . $tmpFilePathReglamento, $tmpFileNameReglamento);
             $pathReglamento = $tmpFilePathReglamento . $tmpFileNameReglamento;
-        }
+		}elseif(!empty($request->adjunto_ori_reglamento)){
+			$pathReglamento = $request->adjunto_ori_reglamento;
+		}else{
+			$pathReglamento="";
+		}
         //Foto Principal
-        if(!empty($request->fotografia_principal)){
-            $fileFp = $request->file('fotografia_principal');
+		
+		if(!empty($request->fotografia_principal)){
+			$fileFp = $request->file('fotografia_principal');
             $tmpFilePathFp = '/img/upload/';
-            $tmpFileNameFp = time() .'-'. 'fp'.'-'.$id_user. '-' . $fileFp->getClientOriginalName();
+            $tmpFileNameFp = time() .'-'. 'fp'.'-'.$id_user. '-name-' . $fileFp->getClientOriginalName();
             $fileFp->move(public_path() . $tmpFilePathFp, $tmpFileNameFp);
             $pathFp = $tmpFilePathFp . $tmpFileNameFp;
-        }
+		}elseif(!empty($request->adjunto_ori_fotografia_principal)){
+			$pathFp = $request->adjunto_ori_fotografia_principal;
+		}else{
+			$pathFp="";
+		}
         //Foto 1
-        if(!empty($request->fotografia_1)){
-            $fileF1 = $request->file('fotografia_1');
+		
+		if(!empty($request->fotografia_1)){
+			$fileF1 = $request->file('fotografia_1');
             $tmpFilePathF1 = '/img/upload/';
-            $tmpFileNameF1 = time() .'-'. 'f1'.'-'.$id_user. '-' . $fileF1->getClientOriginalName();
+            $tmpFileNameF1 = time() .'-'. 'f1'.'-'.$id_user. '-name-' . $fileF1->getClientOriginalName();
             $fileF1->move(public_path() . $tmpFilePathF1, $tmpFileNameF1);
             $pathF1 = $tmpFilePathF1 . $tmpFileNameF1;
-        }
+		}elseif(!empty($request->adjunto_ori_fotografia_1)){
+			$pathF1 = $request->adjunto_ori_fotografia_1;
+		}else{
+			$pathF1="";
+		}
         //Foto 2
-        if(!empty($request->fotografia_2)){
+		
+		if(!empty($request->fotografia_2)){
             $fileF2 = $request->file('fotografia_2');
             $tmpFilePathF2 = '/img/upload/';
-            $tmpFileNameF2 = time() .'-'. 'f2'.'-'.$id_user. '-' . $fileF2->getClientOriginalName();
+            $tmpFileNameF2 = time() .'-'. 'f2'.'-'.$id_user. '-name-' . $fileF2->getClientOriginalName();
             $fileF2->move(public_path() . $tmpFilePathF2, $tmpFileNameF2);
             $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
-        }
+		}elseif(!empty($request->adjunto_ori_fotografia_2)){
+			$pathF2 = $request->adjunto_ori_fotografia_2;
+		}else{
+			$pathF2="";
+		}
+
         //Foto 3
-        if(!empty($request->fotografia_3)){
+		
+		if(!empty($request->fotografia_3)){
             $fileF3 = $request->file('fotografia_3');
             $tmpFilePathF3 = '/img/upload/';
-            $tmpFileNameF3 = time() .'-'. 'f3'.'-'.$id_user. '-' . $fileF3->getClientOriginalName();
+            $tmpFileNameF3 = time() .'-'. 'f3'.'-'.$id_user. '-name-' . $fileF3->getClientOriginalName();
             $fileF3->move(public_path() . $tmpFilePathF3, $tmpFileNameF3);
             $pathF3 = $tmpFilePathF3 . $tmpFileNameF3;
-        }
+		}elseif(!empty($request->adjunto_ori_fotografia_3)){
+			$pathF3 = $request->adjunto_ori_fotografia_3;
+		}else{
+			$pathF3="";
+		}
 
         $installation = Installation::find($id);
         $installation->instalacion = $request->instalacion;
@@ -258,25 +284,25 @@ class InstallationController extends Controller
         $installation->hora_dia_semana_hasta = $request->hora_dia_semana_hasta;
         $installation->hora_fin_de_semana_hasta = $request->hora_fin_de_semana_hasta;
         $installation->normas = $request->normas;
-        if(!empty($request->reglamento)){
+
             $installation->reglamento = $pathReglamento;
-        }
-        if(!empty($request->fotografia_principal)){
+
+
             $installation->fotografia_principal = $pathFp;
 
-        }
-        if(!empty($request->fotografia_1)){
+
+
             $installation->fotografia_1 = $pathF1;
 
-        }
-        if(!empty($request->fotografia_2)){
+        
+
             $installation->fotografia_2 = $pathF2;
 
-        }
-        if(!empty($request->fotografia_3)){
+        
+
             $installation->fotografia_3 = $pathF3;
 
-        }
+        
 
         $installation->activa = $activa;
         $installation->save();

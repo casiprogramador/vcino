@@ -13,7 +13,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
+                <a href="{{ route('transaction.notification.send') }}">Avisos de cobranza</a>
             </li>
             <li class="active">
                 <strong>Ver todos</strong>

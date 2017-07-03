@@ -159,20 +159,27 @@
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
+									
+									<div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
+										<label class="col-sm-3 control-label">Fotografía</label>
+										<div class="col-sm-8">
+											<label title="Upload image file" for="inputImage">
 
-                                    <div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
-                                        <label class="col-sm-3 control-label">Fotografía</label>
-                                        <div class="col-sm-8">
-                                            <label title="Upload image file" for="inputImage">
-                                                {{Form::file('fotografia', array('class'=>'') )}}
-												@if ($errors->has('fotografia'))
+												<div class="fileinput input-group fileinput-new" data-provides="fileinput">
+													<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+													<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+														<input type="file" name="fotografia"></span>
+													<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+												</div>
+											</label>
+											@if ($errors->has('fotografia'))
 												<span class="help-block">
-													<strong>{{ $errors->first('fotografia') }}</strong>
-												</span>
-												@endif
-                                            </label>
-                                        </div>
-                                    </div>
+														<strong>{{ $errors->first('fotografia') }}</strong>
+													</span>
+											@endif
+										</div>
+									</div>
+									
                                     <div class="hr-line-dashed"></div>
 
                                     <div class="form-group">

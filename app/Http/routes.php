@@ -83,23 +83,23 @@ Route::group(['prefix' => 'transaction'], function () {
         'as' => 'transaction.accountsreceivable.storegenerate', 'uses' => 'AccountsReceivableController@storegenerate'
     ]);
 
-	Route::get('/accountsreceivable/send', [
-        'as' => 'transaction.accountsreceivable.send', 'uses' => 'AccountsReceivableController@send'
+	Route::get('/notification/send', [
+        'as' => 'transaction.notification.send', 'uses' => 'AccountsReceivableController@send'
     ]);
 
-	Route::get('/accountsreceivable/generatenotification', [
-        'as' => 'transaction.accountsreceivable.generatenotification', 'uses' => 'AccountsReceivableController@generatenotification'
+	Route::get('/notification/generatenotification', [
+        'as' => 'transaction.notification.generatenotification', 'uses' => 'AccountsReceivableController@generatenotification'
     ]);
 
-	Route::post('/accountsreceivable/sendnotification', [
-        'as' => 'transaction.accountsreceivable.sendnotification', 'uses' => 'AccountsReceivableController@sendnotification'
+	Route::post('/notification/sendnotification', [
+        'as' => 'transaction.notification.sendnotification', 'uses' => 'AccountsReceivableController@sendnotification'
     ]);
 
 	Route::post('/accountsreceivable/storealertpayment', [
         'as' => 'transaction.accountsreceivable.storealertpayment', 'uses' => 'AccountsReceivableController@storealertpayment'
     ]);
-	Route::get('/accountsreceivable/registernotification', [
-        'as' => 'transaction.accountsreceivable.registernotification', 'uses' => 'AccountsReceivableController@registernotification'
+	Route::get('/notification/registernotification', [
+        'as' => 'transaction.notification.registernotification', 'uses' => 'AccountsReceivableController@registernotification'
     ]);
 	//Buscar en index
 
