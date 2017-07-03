@@ -13,7 +13,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
+                <a href="{{ route('transaction.notification.send') }}">Avisos de cobranza</a>
             </li>
             <li class="active">
                 <strong>Nuevo aviso de cobranza</strong>
@@ -108,7 +108,7 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear avisos</button>
-							<a href="{{ route('transaction.accountsreceivable.send') }}" class="btn btn-white" >Cancelar</a>
+							<a href="{{ route('transaction.notification.send') }}" class="btn btn-white" >Cancelar</a>
                         </div>
                     </div>
 				{!! Form::close() !!}

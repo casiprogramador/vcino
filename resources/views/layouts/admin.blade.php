@@ -31,8 +31,8 @@
                         <li class="{{ MenuRoute::active('transaction/accountsreceivable') }}">
                             <a href="{{ route('transaction.accountsreceivable.index') }}">Cuotas por cobrar</a>
                         </li>
-                        <li class="{{ MenuRoute::active('transaction/accountsreceivable/send') }}">
-                            <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
+                        <li class="{{ MenuRoute::active('transaction/notification') }}">
+                            <a href="{{ route('transaction.notification.send') }}">Avisos de cobranza</a>
                         </li>
                     </ul>
                 </li>

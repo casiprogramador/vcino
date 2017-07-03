@@ -13,7 +13,7 @@
                 Transacciones
             </li>
             <li>
-                <a href="{{ route('transaction.accountsreceivable.send') }}">Avisos de cobranza</a>
+                <a href="{{ route('transaction.notification.send') }}">Avisos de cobranza</a>
             </li>
             <li class="active">
                 <strong>Registro de envíos</strong>
@@ -114,7 +114,7 @@
                         <div class="col-sm-12">
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
-                                <a href="{{ route('transaction.accountsreceivable.send') }}" class="btn btn-success" >Volver</a>
+                                <a href="{{ route('transaction.notification.send') }}" class="btn btn-success" >Volver</a>
                             </div>
                         </div>
                     </div>

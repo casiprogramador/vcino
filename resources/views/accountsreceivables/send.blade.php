@@ -36,9 +36,9 @@
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Avisos de cobranza</h5>
 					<div class="ibox-tools" style="padding-bottom: 7px;">
-                            <a href="{{ route('transaction.accountsreceivable.generatenotification') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo aviso de cobranza para cada propiedad" data-original-title="Nuevo aviso de cobranza para cada propiedad" style="margin-right: 5px; color: white;">Nuevo aviso de cobranza</a>
+                            <a href="{{ route('transaction.notification.generatenotification') }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Nuevo aviso de cobranza para cada propiedad" data-original-title="Nuevo aviso de cobranza para cada propiedad" style="margin-right: 5px; color: white;">Nuevo aviso de cobranza</a>
 
-                            <a href="{{ route('transaction.accountsreceivable.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de avisos de cobranza" data-original-title="Ver registro de envíos de avisos de cobranza" style="margin-right: 5px;"> Registro de envíos </a>
+                            <a href="{{ route('transaction.notification.registernotification') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Ver registro de envíos de avisos de cobranza" data-original-title="Ver registro de envíos de avisos de cobranza" style="margin-right: 5px;"> Registro de envíos </a>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							
-                            {!! Form::open(array('route' => 'transaction.accountsreceivable.sendnotification','id'=>'form-send-alertpayment')) !!}
+                            {!! Form::open(array('route' => 'transaction.notification.sendnotification','id'=>'form-send-alertpayment')) !!}
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped">
                                     <thead>

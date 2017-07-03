@@ -215,13 +215,18 @@ class ContactController extends Controller
         ]);
 		
 		//Subir fotografia
+		
 		if(!empty($request->fotografia)){
 			$id_user = Auth::user()->id;
 			$file = $request->file('fotografia');
 			$tmpFilePath = '/img/upload/fotografia_contacto/';
-			$tmpFileName = time() . '-'.$id_user. '-' . $file->getClientOriginalName();
+			$tmpFileName = time() . '-'.$id_user. '-name-' . $file->getClientOriginalName();
 			$file->move(public_path() . $tmpFilePath, $tmpFileName);
 			$path = $tmpFilePath . $tmpFileName;
+		}elseif(!empty($request->adjunto_ori)){
+			$path = $request->adjunto_ori;
+		}else{
+			$path="";
 		}
 		
 		//correcpondencia vacia
