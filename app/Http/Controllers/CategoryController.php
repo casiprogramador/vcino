@@ -134,11 +134,6 @@ class CategoryController extends Controller
 			$path="";
 		}
 
-        if(!empty($request->icono)){
-            
-        }
-
-
         $activa = (empty($request->activa) ? '0' : $request->activa);
 
         $category = Category::find($id);

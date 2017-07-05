@@ -114,7 +114,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear cuenta</button>
+                                        <button class="btn btn-success ladda-button" type="submit" style="margin-right: 10px;" data-style="zoom-in">Crear cuenta</button>
                                         <a href="{{ route('config.account.index') }}" class="btn btn-white" >Cancelar</a>
                                     </div>
                                 </div>
@@ -127,7 +127,15 @@
         </div>
     </div>
 @endsection
+@section('style')
+<link rel="stylesheet" href="{{ URL::asset('css/ladda-themeless.min.css') }}" />
+@endsection
+
 @section('javascript')
+	
+	<script type="text/javascript" src="{{ URL::asset('js/spin.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('js/ladda.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('js/ladda.jquery.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.i-checks').iCheck({
@@ -149,6 +157,8 @@
                         $('#banco').hide("slow");
                     }
             });
+			//Loading Button
+			$( '.ladda-button' ).ladda( 'bind', { timeout: 2000 } );
         });
     </script>
 @endsection

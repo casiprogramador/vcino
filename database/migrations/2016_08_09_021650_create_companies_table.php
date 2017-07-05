@@ -21,6 +21,7 @@ class CreateCompaniesTable extends Migration
 			$table->text('forma_pago');
             $table->integer('dias_mora');
 			$table->string('email_prueba')->nullable();
+			$table->string('pago')->default('prepago');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 			
