@@ -45,6 +45,7 @@ class CompanyController extends Controller
             'direccion' => 'required',
             'telefono' => 'required',
             'dias_mora' => 'required',
+			'pago' => 'required',
 			'forma_pago'=> 'required',
         ]);
 		
@@ -69,6 +70,7 @@ class CompanyController extends Controller
         $company->dias_mora = $request->dias_mora;
 		$company->email_prueba = $request->email_prueba;
 		$company->forma_pago = $request->forma_pago;
+		$company->pago = $request->pago;
         $company->user_id = Auth::user()->id;
 
         $company->save();

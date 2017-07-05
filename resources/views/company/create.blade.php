@@ -77,6 +77,13 @@
                                     @endif
                                 </div>
                             </div>
+							<div class="form-group{{ $errors->has('dias_mora') ? ' has-error' : '' }}">
+                                <label for="name" class="col-md-3 control-label">Pago:</label>
+
+                                <div class="col-md-6">
+                                    {{ Form::select('pago',array('prepago' => 'Prepago', 'postpago' => 'Postpago'),old('prepago'),['class' => 'form-control input-sm']) }}
+                                </div>
+                            </div>
 							<div class="form-group{{ $errors->has('email_prueba') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-3 control-label">Email para pruebas:</label>
 
