@@ -202,6 +202,8 @@
 <script type="text/javascript" src="{{ URL::asset('js/wizard/pace.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ URL::asset('js/wizard/jquery.validate.min.js') }}"></script>
+<!--Lenguaje datepicker español-->
+<script type="text/javascript" src="{{ URL::asset('js/moment.es.js') }}"></script>
 <script>
 	$(document).ready(function(){
 
@@ -303,6 +305,7 @@
 			}
 	})
 	$('.date-picker').datetimepicker({
+			locale:'es',
             format: 'DD/MM/YYYY',
 			widgetPositioning: {
 			horizontal: 'left',

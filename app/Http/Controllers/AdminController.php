@@ -26,9 +26,13 @@ class AdminController extends Controller
 		//dd(date('d'));
 		$cobranzas = $this->cobranzas_barras();
 		$gastos_torta = $this->gastos_torta();
-
-		$mes_actual = date('m');
-		
+		if($company->pago == 'prepago' ){
+			$mes_actual = date('m');
+		}else{
+			$mes_actual = date('m');
+			$mes_actual = ($mes_actual == 1) ? 12 : $mes_actual-1;
+		}
+		//dd($mes_actual);
 		$mes_anterior = ($mes_actual == 1) ? 12 : $mes_actual-1;
 		
 		$mes_anterior_anterior = ($mes_anterior == 1) ? 12 : $mes_anterior -1;
