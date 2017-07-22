@@ -65,4 +65,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Collection');
     }
+	
+	public function tasks()
+    {
+        return $this->hasMany('App\Task');
+    }
 }

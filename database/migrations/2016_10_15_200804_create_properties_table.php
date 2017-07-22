@@ -28,7 +28,7 @@ class CreatePropertiesTable extends Migration
 			$table->decimal('fit', 10, 2);
 			$table->integer('nro_dormitorios');
 			$table->integer('nro_banos');
-			$table->string('plano');
+			$table->string('plano')->nullable();
 			$table->text('caracteristicas');
 			$table->integer('orden')->default(0);
 			

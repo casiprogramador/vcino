@@ -248,6 +248,11 @@ Route::group(['prefix' => 'report'], function () {
         'as' => 'report.historicotransacciones.transacciones.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_transacciones_excel'
     ]);
 });
+//Rutas de Tareas
+Route::group(['prefix' => 'taskrequest'], function () {
+    Route::resource('task', 'TaskController');
+
+});
 /*
 |--------------------------------------------------------------------------
 | API routes

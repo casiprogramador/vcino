@@ -37,10 +37,12 @@
                     </ul>
                 </li>
 
-                <li>
+                <li {!! (Request::is('taskrequest/*') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-check-square-o"></i> <span class="nav-label">Tareas & Solicitudes</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class=""><a href="">Tareas</a></li>
+                        <li class="{{ MenuRoute::active('taskrequest/task') }}">
+							<a href="{{ route('taskrequest.task.index') }}">Tareas</a>
+						</li>
                         <li class=""><a href="">Reserva de instalaciones</a></li>
                         <li class=""><a href="">Reclamos y sugerencias</a></li>
                     </ul>
