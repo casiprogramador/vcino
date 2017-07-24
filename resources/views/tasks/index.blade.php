@@ -143,10 +143,10 @@
                                         </a>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver tarea">
+                                        <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver tarea">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Copiar tarea...">
+                                        <a href="{{ route('taskrequest.task.copy', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Copiar tarea...">
 											<i class="fa fa-files-o"></i>
 										</a>                                        
                                         <a href="{{ route('taskrequest.task.edit', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar tarea">

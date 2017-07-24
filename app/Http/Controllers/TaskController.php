@@ -261,7 +261,35 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = \Crypt::decrypt($id);
+		$task = Task::find($id);
+		$company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
+		$installations = Installation::where('company_id',$company->id )->lists('instalacion','id')->all();
+		if($task->tipo_tarea =='solicitudes_recibidas' ||
+		$task->tipo_tarea =='solicitudes_recibidas' ||
+		$task->tipo_tarea =='reclamos' ||
+		$task->tipo_tarea =='sugerencias' ||
+		$task->tipo_tarea =='reclamos' ||
+		$task->tipo_tarea =='notificacion_mudanza' ||
+		$task->tipo_tarea =='notificacion_trabajos'){
+
+
+			$contacts = Contact::where('company_id',$company->id )->where('property_id', $task->taskrequest->property->id)->where('activa','1')->get();
+			$contacts = $contacts->lists('FullName','id')->all();
+			//dd($contacts);
+		}elseif ($task->tipo_tarea =='reserva_instalaciones') {
+			$contacts = Contact::where('company_id',$company->id )->where('property_id', $task->taskreservation->property->id)->where('activa','1')->get();
+			$contacts = $contacts->lists('FullName','id')->all();
+			//dd($contacts);
+		}else{
+			$contacts = '';
+		}
+        return view('tasks.show')
+		->with('task',$task)
+		->with('properties',$properties)
+		->with('installations',$installations)
+		->with('contacts',$contacts);
     }
 
     /**
@@ -522,6 +550,42 @@ class TaskController extends Controller
 		
 		return redirect()->route('taskrequest.task.index');
     }
+	
+	public function copy($id){
+		$id = \Crypt::decrypt($id);
+		$task = Task::find($id);
+		$company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
+		$installations = Installation::where('company_id',$company->id )->lists('instalacion','id')->all();
+		if($task->tipo_tarea =='solicitudes_recibidas' ||
+		$task->tipo_tarea =='solicitudes_recibidas' ||
+		$task->tipo_tarea =='reclamos' ||
+		$task->tipo_tarea =='sugerencias' ||
+		$task->tipo_tarea =='reclamos' ||
+		$task->tipo_tarea =='notificacion_mudanza' ||
+		$task->tipo_tarea =='notificacion_trabajos'){
+
+
+			$contacts = Contact::where('company_id',$company->id )->where('property_id', $task->taskrequest->property->id)->where('activa','1')->get();
+			$contacts = $contacts->lists('FullName','id')->all();
+			//dd($contacts);
+		}elseif ($task->tipo_tarea =='reserva_instalaciones') {
+			$contacts = Contact::where('company_id',$company->id )->where('property_id', $task->taskreservation->property->id)->where('activa','1')->get();
+			$contacts = $contacts->lists('FullName','id')->all();
+			//dd($contacts);
+		}else{
+			$contacts = '';
+		}
+        return view('tasks.copy')
+		->with('task',$task)
+		->with('properties',$properties)
+		->with('installations',$installations)
+		->with('contacts',$contacts);
+	}
+	
+	public function savecopy(){
+		
+	}
 
     /**
      * Remove the specified resource from storage.

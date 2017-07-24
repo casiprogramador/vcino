@@ -15,7 +15,7 @@
                 <a href="#">Tareas</a>
             </li>
             <li class="active">
-                <strong>Ver tarea</strong>
+                <strong>Duplicar tarea</strong>
             </li>
         </ol>
     </div>
@@ -32,8 +32,7 @@
                 </div>
 
                 <div class="ibox-content">
-					
-                    <form action="#" class="form-horizontal">
+                    {!! Form::open(array('route' => 'taskrequest.task.store', 'class' => 'form-horizontal', 'files' => true)) !!}
 					<input type="hidden" name="tipo_tarea" value="{{$task->tipo_tarea}}">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Tipo</label>
@@ -66,7 +65,7 @@
                         <div class="col-sm-3">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date_format(date_create($task->fecha),'d/m/Y') }}" disabled="disabled">
+                                <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date_format(date_create($task->fecha),'d/m/Y') }}">
                             </div>
                         </div>
                     </div>
@@ -74,7 +73,7 @@
                     <div class="form-group{{ $errors->has('titulo_tarea') ? ' has-error' : '' }}" id="titulo-tarea">
 						<label class="col-sm-2 control-label">Tarea</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-sm" name="titulo_tarea" value="{{$task->titulo_tarea}}" disabled="disabled">
+                            <input type="text" class="form-control input-sm" name="titulo_tarea" value="{{$task->titulo_tarea}}">
 							@if ($errors->has('titulo_tarea'))
 								<span class="help-block">
 										<strong>{{ $errors->first('titulo_tarea') }}</strong>
@@ -87,7 +86,7 @@
 						<label class="col-sm-2 control-label">Nota</label>
                         <div class="col-sm-10">
                             <div class="ibox-content no-padding">
-                                <?php echo $task->nota ?>
+                                <textarea id="summernote" name="nota">{{$task->nota}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -103,7 +102,7 @@
 							'alta' => 'Alta',
 							),
 							$task->prioridad,
-							['class' => 'form-control input-sm','disabled'=>'disabled']) }}
+							['class' => 'form-control input-sm']) }}
 							@if ($errors->has('prioridad'))
 								<span class="help-block">
 										<strong>{{ $errors->first('prioridad') }}</strong>
@@ -125,7 +124,7 @@
 							'anual' => 'Anual',
 							),
 							$task->frecuencia,
-							['class' => 'form-control input-sm','disabled'=>'disabled']) }}
+							['class' => 'form-control input-sm']) }}
 							@if ($errors->has('frecuencia'))
 								<span class="help-block">
 										<strong>{{ $errors->first('frecuencia') }}</strong>
@@ -147,7 +146,7 @@
 							'otro' => 'Otro',
 							),
 							$task->medio_solicitud,
-							['class' => 'form-control input-sm','disabled'=>'disabled']) }}
+							['class' => 'form-control input-sm']) }}
 							@if ($errors->has('medio_solicitud'))
 								<span class="help-block">
 									<strong>{{ $errors->first('medio_solicitud') }}</strong>
@@ -168,7 +167,7 @@
 					<div class="form-group{{ $errors->has('propiedad') ? ' has-error' : '' }}" id="propiedad">
                         <label class="col-sm-2 control-label">Propiedad</label>
                         <div class="col-sm-3">
-                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->taskrequest->property->id, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
+                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->taskrequest->property->id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
 							@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -180,7 +179,7 @@
                     <div class="form-group{{ $errors->has('contacto') ? ' has-error' : '' }}" id="contacto">
                         <label class="col-sm-2 control-label">Contacto</label>
                         <div class="col-sm-3">
-                            {{ Form::select('contacto',$contacts, $task->taskrequest->contact->id, ['class' => 'form-control input-sm','id'=>'contactos','disabled'=>'disabled']) }}
+                            {{ Form::select('contacto',$contacts, $task->taskrequest->contact->id, ['class' => 'form-control input-sm','id'=>'contactos']) }}
 							@if ($errors->has('contacto'))
 								<span class="help-block">
 									<strong>{{ $errors->first('contacto') }}</strong>
@@ -194,7 +193,7 @@
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',$installations,$task->instalacion, ['class' => 'form-control input-sm','id'=>'instalaciones','disabled'=>'disabled']) }}
+                           {{ Form::select('instalacion',$installations,$task->instalacion, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -207,7 +206,7 @@
 					<div class="form-group{{ $errors->has('propiedad') ? ' has-error' : '' }}" id="propiedad">
                         <label class="col-sm-2 control-label">Propiedad</label>
                         <div class="col-sm-3">
-                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->taskreservation->property->id, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
+                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->taskreservation->property->id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
 							@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -219,7 +218,7 @@
                     <div class="form-group{{ $errors->has('contacto') ? ' has-error' : '' }}" id="contacto">
                         <label class="col-sm-2 control-label">Contacto</label>
                         <div class="col-sm-3">
-                             {{ Form::select('contacto',$contacts, $task->taskreservation->contact->id, ['class' => 'form-control input-sm','id'=>'contactos','disabled'=>'disabled']) }}
+                             {{ Form::select('contacto',$contacts, $task->taskreservation->contact->id, ['class' => 'form-control input-sm','id'=>'contactos']) }}
 							@if ($errors->has('contacto'))
 								<span class="help-block">
 									<strong>{{ $errors->first('contacto') }}</strong>
@@ -233,7 +232,7 @@
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',['0'=>'Selecciona una instalacion']+$installations,$task->taskreservation->installation->id, ['class' => 'form-control input-sm','id'=>'instalaciones','disabled'=>'disabled']) }}
+                           {{ Form::select('instalacion',['0'=>'Selecciona una instalacion']+$installations,$task->taskreservation->installation->id, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -245,7 +244,7 @@
 					<div class="form-group{{ $errors->has('propiedad') ? ' has-error' : '' }}" id="propiedad">
                         <label class="col-sm-2 control-label">Propiedad</label>
                         <div class="col-sm-3">
-                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->propiedad, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
+                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->propiedad, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
 							@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -273,7 +272,7 @@
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',['0'=>'Selecciona una instalacion']+$installations,$task->instalacion, ['class' => 'form-control input-sm','id'=>'instalaciones','disabled'=>'disabled']) }}
+                           {{ Form::select('instalacion',['0'=>'Selecciona una instalacion']+$installations,$task->instalacion, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -290,7 +289,7 @@
 							
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control input-sm date-picker" name="fecha_requerida" value="{{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}" disabled="disabled">
+                                <input type="text" class="form-control input-sm date-picker" name="fecha_requerida" value="{{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}">
 							@if ($errors->has('fecha_requerida'))
 								<span class="help-block">
 									<strong>{{ $errors->first('fecha_requerida') }}</strong>
@@ -305,7 +304,7 @@
                         <label class="col-sm-2 control-label">Hora desde</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}" disabled="disabled">
+                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}">
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
@@ -323,7 +322,7 @@
                         <label class="col-sm-2 control-label">Hora hasta</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_final),'H:i') }}" disabled="disabled">
+                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_final),'H:i') }}">
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
@@ -340,7 +339,7 @@
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" name="costo" value="{{$task->costo}}" disabled="disabled">
+                            <input type="text" class="form-control input-sm" name="costo" value="{{$task->costo}}">
                         </div>
 						@if ($errors->has('costo'))
 						<span class="help-block">
@@ -360,8 +359,13 @@
                                     <i class="glyphicon glyphicon-file fileinput-exists"></i> 
                                     <span class="fileinput-filename">{{ (!empty($task->documento_1) ) ? MenuRoute::filename($task->documento_1) : "" }}</span>
                                 </div>
-                                
-                               
+                                <span class="input-group-addon btn btn-default btn-file">
+                                    <span class="fileinput-new">Seleccionar archivo...</span>
+                                    <span class="fileinput-exists">Cambiar</span>
+                                    <input type="hidden" id="adjunto-ori-1" name="adjunto_ori_1" value="{{ (isset($task->documento_1) ) ? $task->documento_1 : '' }}">
+									<input type="file" name="adjunto_1">
+                                </span>
+                                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                             </div>
 
 
@@ -371,8 +375,13 @@
                                     <i class="glyphicon glyphicon-file fileinput-exists"></i> 
                                     <span class="fileinput-filename">{{ (!empty($task->documento_2) ) ? MenuRoute::filename($task->documento_2) : "" }}</span>
                                 </div>
-                                
-                                
+                                <span class="input-group-addon btn btn-default btn-file">
+                                    <span class="fileinput-new">Seleccionar archivo...</span>
+                                    <span class="fileinput-exists">Cambiar</span>
+                                    <input type="hidden" id="adjunto-ori-2" name="adjunto_ori_2" value="{{ (isset($task->documento_2) ) ? $task->documento_2 : '' }}">
+									<input type="file" name="adjunto_2">
+                                </span>
+                                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                             </div>
                             <!--    Para el caso de mas de un attach        -->
                             <div id="adjunto-3" class="fileinput input-group {{!empty($task->documento_3) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
@@ -380,8 +389,13 @@
                                     <i class="glyphicon glyphicon-file fileinput-exists"></i> 
                                     <span class="fileinput-filename">{{ (!empty($task->documento_3) ) ? MenuRoute::filename($task->documento_3) : "" }}</span>
                                 </div>
-                                
-                              
+                                <span class="input-group-addon btn btn-default btn-file">
+                                    <span class="fileinput-new">Seleccionar archivo...</span>
+                                    <span class="fileinput-exists">Cambiar</span>
+                                    <input type="hidden" id="adjunto-ori-3" name="adjunto_ori_3" value="{{ (isset($task->documento_3) ) ? $task->documento_3 : '' }}">
+									<input type="file" name="adjunto_3">
+                                </span>
+                                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                             </div>
 
                         </div>
@@ -393,22 +407,21 @@
                         <div class="col-sm-8">
                             <div data-toggle="buttons" class="btn-group">
                                 <label class="btn btn-sm btn-white {{ $task->estado_solicitud == 'pendiente' ? 'active' : '' }}">
-                                    <input type="radio" id="option1" name="tarea_estado" disabled value="pendiente" {{ $task->estado_solicitud == 'pendiente' ? 'checked' : '' }}> <span style="color: #F7B77B;"> PENDIENTE</span> </label>
+                                    <input type="radio" id="option1" name="tarea_estado" value="pendiente" {{ $task->estado_solicitud == 'pendiente' ? 'checked' : '' }}> <span style="color: #F7B77B;"> PENDIENTE</span> </label>
                                 <label class="btn btn-sm btn-white {{ $task->estado_solicitud == 'en proceso' ? 'active' : '' }}"> 
-                                    <input type="radio" id="option2" name="tarea_estado" disabled value="en proceso" {{ $task->estado_solicitud == 'en proceso' ? 'checked' : '' }}> <span style="color: #5D96CC;">EN PROCESO</span> </label>
+                                    <input type="radio" id="option2" name="tarea_estado" value="en proceso" {{ $task->estado_solicitud == 'en proceso' ? 'checked' : '' }}> <span style="color: #5D96CC;">EN PROCESO</span> </label>
                                 <label class="btn btn-sm btn-white {{ $task->estado_solicitud == 'completada' ? 'active' : '' }}"> 
-                                    <input type="radio" id="option3" name="tarea_estado" disabled value="completada" {{ $task->estado_solicitud == 'completada' ? 'checked' : '' }}> <span style="color: #5CBD7E;">COMPLETADA</span> </label>
+                                    <input type="radio" id="option3" name="tarea_estado" value="completada" {{ $task->estado_solicitud == 'completada' ? 'checked' : '' }}> <span style="color: #5CBD7E;">COMPLETADA</span> </label>
                             </div>
                         </div>
                     </div>
-					<div class="form-group">
+                    <div class="form-group">
                         <div class="col-sm-12">
-                            <a href="{{ route('taskrequest.task.index') }}" class="btn btn-promary">Atras</a>
+                            <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
+                            <a href="{{ route('taskrequest.task.index') }}" class="btn btn-white">Cancelar</a>
                         </div>
                     </div>
-
-                    
-                    </form>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

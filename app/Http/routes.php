@@ -251,6 +251,14 @@ Route::group(['prefix' => 'report'], function () {
 //Rutas de Tareas
 Route::group(['prefix' => 'taskrequest'], function () {
     Route::resource('task', 'TaskController');
+	Route::get('/copy/{id}', [
+        'as' => 'taskrequest.task.copy', 'uses' => 'TaskController@copy'
+    ]);
+	Route::post('/copy', [
+        'as' => 'taskrequest.task.savecopy', 'uses' => 'TaskController@savecopy'
+    ]);
+	//seguimiento de tareas
+	Route::resource('tasktracking', 'TaskTrackingController');
 
 });
 /*
