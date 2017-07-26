@@ -66,6 +66,11 @@
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date('d/m/Y') }}">
+								@if ($errors->has('fecha'))
+								<span class="help-block">
+										<strong>{{ $errors->first('fecha') }}</strong>
+									</span>
+							@endif
                             </div>
                         </div>
                     </div>

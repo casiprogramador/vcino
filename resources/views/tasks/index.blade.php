@@ -31,7 +31,7 @@
                             <a href="{{ route('taskrequest.task.create') }}" class="btn btn-sm btn-success" style="color: white; margin-right: 10px;">Nueva tarea</a>
                         </div>
                         <div class="btn-group">
-                            <a href="" class="btn btn-sm btn-default" style="color: black; ">Seguimiento tareas</a>
+                            <a href="{{ route('taskrequest.tasktracking.index') }}" class="btn btn-sm btn-default" style="color: black; ">Seguimiento tareas</a>
                         </div>
                     </div>
                 </div>
@@ -137,11 +137,13 @@
 								@endif
                                 
                                 <td style="vertical-align:middle; text-align:right;">
+									@if($task->tipo_tarea == 'mis_tareas' || $task->tipo_tarea =='solicitudes_recibidas' || $task->tipo_tarea =='reserva_instalaciones' || $task->tipo_tarea =='reclamos')	
                                     <div class="btn-group" style="padding-right: 10px;">
-                                        <a style="width: 50px; text-align: left;" href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Seguimiento">
+                                        <a style="width: 50px; text-align: left;" href="{{ route('taskrequest.tasktracking.create', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Seguimiento">
                                             <i class="fa fa-exchange"></i> (29)
                                         </a>
                                     </div>
+									@endif
                                     <div class="btn-group">
                                         <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver tarea">
                                             <i class="fa fa-eye"></i>

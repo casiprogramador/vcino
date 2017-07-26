@@ -258,7 +258,15 @@ Route::group(['prefix' => 'taskrequest'], function () {
         'as' => 'taskrequest.task.savecopy', 'uses' => 'TaskController@savecopy'
     ]);
 	//seguimiento de tareas
-	Route::resource('tasktracking', 'TaskTrackingController');
+	Route::get('/tasktracking', [
+        'as' => 'taskrequest.tasktracking.index', 'uses' => 'TaskTrackingController@index'
+    ]);
+	Route::get('/tasktracking/create/{id_task}', [
+        'as' => 'taskrequest.tasktracking.create', 'uses' => 'TaskTrackingController@create'
+    ]);
+	Route::post('/tasktracking/store', [
+        'as' => 'taskrequest.tasktracking.store', 'uses' => 'TaskTrackingController@store'
+    ]);
 
 });
 /*

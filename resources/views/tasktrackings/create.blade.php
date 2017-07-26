@@ -31,28 +31,81 @@
                         <div class="form-group" style="margin-bottom: 0px;">
                             <label class="col-sm-2 control-label">Fecha:</label>
                             <div class="col-sm-4">
-                                <p class="form-control-static">12/05/2017</p>
+                                <p class="form-control-static">{{ date_format(date_create($task->fecha),'d/m/Y') }}</p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="form-control-static pull-right">
-                                    <span class="label label-success" style="background-color: #5D96CC">&nbsp;EN PROCESO&nbsp;</span>
+									@if($task->estado_solicitud == 'pendiente')
+                                    <span class="label label-warning" style="font-size: 10px; background-color: #F7B77B;">&nbsp;{{strtoupper($task->estado_solicitud)}}&nbsp;</span>
+									@elseif($task->estado_solicitud == 'en proceso')
+									<span class="label label-success" style="font-size: 9px; background-color: #5D96CC">&nbsp;EN PROCESO&nbsp;</span>
+									@else
+									<span class="label label-primary" style="font-size: 9px; background-color: #5CBD7E">COMPLETADA</span>
+									@endif
                                 </p>
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom: 0px;">
                             <label class="col-sm-2 control-label">Tipo:</label>
                             <div class="col-sm-4">
-                                <p class="form-control-static">Solicitudes recibidas</p>
+                                <p class="form-control-static">
+								
+								@if($task->tipo_tarea == 'mis_tareas')
+									MIS TAREAS
+
+								@elseif($task->tipo_tarea =='solicitudes_recibidas')
+									SOLICITUDES RECIBIDAS
+
+								@elseif($task->tipo_tarea =='reserva_instalaciones')
+									RESERVA DE INSTALACION
+
+								@elseif($task->tipo_tarea =='reclamos')
+									RECLAMOS
+
+								@elseif($task->tipo_tarea =='sugerencias')
+									SUGERENCIAS
+
+								@elseif($task->tipo_tarea =='notificacion_mudanza')
+									NOTIFICACION DE MUDANZA
+
+								@elseif($task->tipo_tarea =='notificacion_trabajos')
+									NOTIFICACION DE TRABAJO
+
+								@endif
+								</p>
                             </div>
                             <label class="col-sm-2 control-label">Solicitada por:</label>
                             <div class="col-sm-4">
-                                <p class="form-control-static">Caoba 01 - Jaime Perez</p>
+                                <p class="form-control-static">
+								@if($task->tipo_tarea == 'mis_tareas')
+
+									Administración
+								@elseif($task->tipo_tarea =='solicitudes_recibidas')
+
+									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+								@elseif($task->tipo_tarea =='reserva_instalaciones')
+
+									{{$task->taskreservation->contact->nombre}} {{$task->taskreservation->contact->apellido}} {{$task->taskreservation->property->nro}}
+								@elseif($task->tipo_tarea =='reclamos')
+						
+									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+								@elseif($task->tipo_tarea =='sugerencias')
+									
+									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+								@elseif($task->tipo_tarea =='notificacion_mudanza')
+								
+									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+								@elseif($task->tipo_tarea =='notificacion_trabajos')
+					
+									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+								@endif
+								</p>
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom: 0px;">
                             <label class="col-sm-2 control-label">Tarea:</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><strong>Nombre de la tarea nombre de la tarea</strong></p>
+                                <p class="form-control-static"><strong>{{$task->titulo_tarea}}</strong></p>
                             </div>
                         </div>
                     </form>
@@ -70,28 +123,25 @@
                 <div class="ibox-content">
                     <div class="row">    
                     <div class="col-sm-12">
-                        <form role="form">
-
-                            <div class="form-group">
+                        {!! Form::open(array('route' => 'taskrequest.tasktracking.store', 'class' => 'form-horizontal', 'files' => true)) !!}
+						<input type="hidden" name="task_id" value="{{$task->id}}">
+                            <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
                                 <label class="font-normal">Fecha</label>
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="03/05/2017">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="fecha" value="{{ date('d/m/Y') }}">
                                 </div>
+								@if ($errors->has('fecha'))
+								<span class="help-block">
+										<strong>{{ $errors->first('fecha') }}</strong>
+									</span>
+								@endif
                             </div>
 
                             <div class="form-group">
                                 <label class="font-normal">Descripción</label>
-                                <div style="border:1px solid #E1E2E4;">
-                                    <summernote config="summerNoteOptions" height="300"></summernote>
-                                    <div class="summernote" style="padding: 5px 10px;">
-                                        <p>Este cuerpo con Summernote</p>
-                                        <ul>
-                                            <li>Remaining essentially unchanged</li>
-                                            <li>Make a type specimen book</li>
-                                            <li>Unknown printer</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <div class="ibox-content no-padding">
+									<textarea id="summernote" name="descripcion"></textarea>
+								</div>
                             </div>
 
                             <div class="form-group">
@@ -104,7 +154,7 @@
                                     <span class="input-group-addon btn btn-default btn-file">
                                         <span class="fileinput-new">Seleccionar archivo...</span>
                                         <span class="fileinput-exists">Cambiar</span>
-                                        <input type="hidden" value=""><input type="file" name="adjunto[]">
+                                        <input type="file" name="adjunto">
                                     </span>
                                     <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                                 </div>
@@ -112,14 +162,14 @@
 
                             <div class="form-group" style="margin-top: 20px;">
                                 <label class="font-normal">Creado por:&nbsp;&nbsp;</label>
-                                    <span style="font-weight: normal;">Nombre Apellido</span>
+                                    <span style="font-weight: normal;">{{ Auth::user()->nombre }}</span>
                                 </label>
                             </div>
 
-                            <div class="form-group" style="margin-top: 20px;">
+                            <div class="form-group">
                                 <label class="font-normal">
                                 <div class="icheckbox_square-green" style="position: relative;">
-                                    <input type="checkbox" class="i-checks" name="activa" value="1" style="position: absolute; opacity: 0;" checked>
+                                    <input type="checkbox" class="i-checks" name="notificar" value="1" checked>
                                 </div>&nbsp;&nbsp;&nbsp;Notificar respuesta</label>
                             </div>
 
@@ -128,7 +178,7 @@
                             <div class="form-group">
                                 <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear seguimiento</button>
                             </div>
-                        </form>
+                        {!! Form::close() !!}
                     </div>
                     </div>
                 </div>
@@ -298,3 +348,33 @@
 
 @endsection
 
+@section('style')
+<link rel="stylesheet" href="{{ URL::asset('css/summernote.css') }}" />
+@endsection
+@section('javascript')
+<!--Lenguaje datepicker español-->
+<script type="text/javascript" src="{{ URL::asset('js/moment.es.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/summernote.min.js') }}"></script>
+
+<script>
+	$(document).ready(
+		function(){$('#summernote').summernote({
+			height: 300,
+			toolbar: [
+			    ['style', ['style']],
+			    ['font', ['bold', 'italic', 'underline']],
+			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['insert', ['hr']],
+			    ['view', ['codeview']],
+			    ['help', ['help']]
+			],
+		});
+		$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+		
+	});
+	</script>
+@endsection

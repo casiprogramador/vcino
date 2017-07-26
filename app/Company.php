@@ -70,4 +70,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Task');
     }
+	
+	public function tasktrackings()
+    {
+        return $this->hasMany('App\TaskTracking');
+    }
 }
