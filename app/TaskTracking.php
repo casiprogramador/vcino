@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Installation extends Model
+class TaskTracking extends Model
 {
     public function company()
     {
         return $this->belongsTo('App\Company');
     }
 	
-	public function taskreservation()
+	public function task()
     {
-        return $this->hasMany('App\TaskReservation');
+        return $this->belongsTo('App\Task');
     }
 }

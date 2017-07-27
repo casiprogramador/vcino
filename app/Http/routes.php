@@ -248,6 +248,34 @@ Route::group(['prefix' => 'report'], function () {
         'as' => 'report.historicotransacciones.transacciones.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_transacciones_excel'
     ]);
 });
+//Rutas de Tareas
+Route::group(['prefix' => 'taskrequest'], function () {
+    Route::resource('task', 'TaskController');
+	Route::get('/copy/{id}', [
+        'as' => 'taskrequest.task.copy', 'uses' => 'TaskController@copy'
+    ]);
+	Route::post('/copy', [
+        'as' => 'taskrequest.task.savecopy', 'uses' => 'TaskController@savecopy'
+    ]);
+	//seguimiento de tareas
+	Route::get('/tasktracking', [
+        'as' => 'taskrequest.tasktracking.index', 'uses' => 'TaskTrackingController@index'
+    ]);
+	Route::get('/tasktracking/create/{id_task}', [
+        'as' => 'taskrequest.tasktracking.create', 'uses' => 'TaskTrackingController@create'
+    ]);
+	Route::post('/tasktracking/store', [
+        'as' => 'taskrequest.tasktracking.store', 'uses' => 'TaskTrackingController@store'
+    ]);
+	//Reclamos y reservacion 
+	Route::get('/reservation', [
+        'as' => 'taskrequest.reservation.index', 'uses' => 'TaskController@reservation'
+    ]);
+	Route::get('/suggestion', [
+        'as' => 'taskrequest.suggestion.index', 'uses' => 'TaskController@suggestion'
+    ]);
+
+});
 /*
 |--------------------------------------------------------------------------
 | API routes

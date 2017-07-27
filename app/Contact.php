@@ -31,6 +31,16 @@ class Contact extends Model
         return $this->hasMany('App\Collection');
     }
 	
+	public function taskrequest()
+    {
+        return $this->hasMany('App\TaskRequest');
+    }
+	
+	public function taskreservation()
+    {
+        return $this->hasMany('App\TaskReservation');
+    }
+	
 	//Mutator
 	
 	public function getFullNameAttribute(){
