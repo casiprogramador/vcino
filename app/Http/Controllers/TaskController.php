@@ -587,6 +587,20 @@ class TaskController extends Controller
 		
 	}
 
+	public function reservation(){
+		$company = Auth::user()->company;
+		$tasks = Task::where('company_id',$company->id )->where('tipo_tarea','reserva_instalaciones');
+         return view('tasks.index')
+		->with('tasks',$tasks->get());
+	}
+	
+	public function suggestion(){
+		$company = Auth::user()->company;
+		$tasks = Task::where('company_id',$company->id )->where('tipo_tarea','sugerencias');
+         return view('tasks.index')
+		->with('tasks',$tasks->get());
+	}
+
     /**
      * Remove the specified resource from storage.
      *

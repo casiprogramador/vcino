@@ -17,7 +17,10 @@ class TaskTrackingController extends Controller
      */
     public function index()
     {
-        return view('tasktrackings.index');
+		$company = Auth::user()->company;
+		$tasktrackings = TaskTracking::where('company_id',$company->id );
+        return view('tasktrackings.index')
+		->with('tasktrackings',$tasktrackings->get());
     }
 
     /**
@@ -27,10 +30,13 @@ class TaskTrackingController extends Controller
      */
     public function create($id_task)
     {
+		$company = Auth::user()->company;
 		$id_task = \Crypt::decrypt($id_task);
 		$task = Task::find($id_task);
+		$tasktrackings = TaskTracking::where('company_id',$company->id )->where('task_id',$id_task);
         return view('tasktrackings.create')
-			->with('task',$task);
+			->with('task',$task)
+			->with('tasktrackings',$tasktrackings->get());
     }
 
     /**

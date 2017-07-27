@@ -140,8 +140,9 @@
 									@if($task->tipo_tarea == 'mis_tareas' || $task->tipo_tarea =='solicitudes_recibidas' || $task->tipo_tarea =='reserva_instalaciones' || $task->tipo_tarea =='reclamos')	
                                     <div class="btn-group" style="padding-right: 10px;">
                                         <a style="width: 50px; text-align: left;" href="{{ route('taskrequest.tasktracking.create', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Seguimiento">
-                                            <i class="fa fa-exchange"></i> (29)
+                                            <i class="fa fa-exchange"></i> ({{$task->tasktrackings->count()}})
                                         </a>
+										
                                     </div>
 									@endif
                                     <div class="btn-group">

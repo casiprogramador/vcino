@@ -6,9 +6,7 @@
         <h2>Tareas</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ route('admin.home') }}">Inicio</a
-                Ceo
-                  >
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 Tareas & Solicitudes
@@ -43,62 +41,68 @@
                             </tr>
                         </thead>
                         <tbody>
-
+							@foreach ($tasktrackings as $tasktracking)
                             <tr>
-                                <td>15/05/2017</td>
-                                <td>Cotizar pintado de área social piso 5 (30/04/2017)</td>
-                                <td>Solicitudes recibidas</td>
-                                <td>101 - Mario Fernandez</td>
+                                <td>{{ date_format(date_create($tasktracking->fecha),'d/m/Y') }}</td>
+                                <td>{{$tasktracking->task->titulo_tarea}} ({{date_format(date_create($tasktracking->task->fecha),'d/m/Y')}})</td>
+                                <td>
+								@if($tasktracking->task->tipo_tarea == 'mis_tareas')
+									MIS TAREAS
+
+								@elseif($tasktracking->task->tipo_tarea =='solicitudes_recibidas')
+									SOLICITUDES RECIBIDAS
+
+								@elseif($tasktracking->task->tipo_tarea =='reserva_instalaciones')
+									RESERVA DE INSTALACION
+
+								@elseif($tasktracking->task->tipo_tarea =='reclamos')
+									RECLAMOS
+
+								@elseif($tasktracking->task->tipo_tarea =='sugerencias')
+									SUGERENCIAS
+
+								@elseif($tasktracking->task->tipo_tarea =='notificacion_mudanza')
+									NOTIFICACION DE MUDANZA
+
+								@elseif($tasktracking->task->tipo_tarea =='notificacion_trabajos')
+									NOTIFICACION DE TRABAJO
+
+								@endif
+								</td>
+                                <td>
+								@if($tasktracking->task->tipo_tarea == 'mis_tareas')
+
+									Administración
+								@elseif($tasktracking->task->tipo_tarea =='solicitudes_recibidas')
+
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='reserva_instalaciones')
+
+									{{$tasktracking->task->taskreservation->contact->nombre}} {{$tasktracking->task->taskreservation->contact->apellido}} {{$tasktracking->task->taskreservation->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='reclamos')
+						
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='sugerencias')
+									
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='notificacion_mudanza')
+								
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='notificacion_trabajos')
+					
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@endif
+								</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver seguimiento tarea">
+                                        <a href="{{ route('taskrequest.tasktracking.create', Crypt::encrypt($tasktracking->task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver seguimiento tarea">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </div>
                                </td>
                             </tr>
-
-                            <tr>
-                                <td>10/05/2017</td>
-                                <td>Mantenimiento a porton de ingreso (02/05/2017)</td>
-                                <td>Mis tareas</td>
-                                <td>Administración</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver seguimiento tarea">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-
-                            <tr>
-                                <td>29/04/2017</td>
-                                <td>Filtración en baño depto 101 (28/04/2017)</td>
-                                <td>Reclamo</td>
-                                <td>Caoba 04 - Juan Perez</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver seguimiento tarea">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-
-                            <tr>
-                                <td>21/04/2017</td>
-                                <td>Exceso de velocidad de algunas visitas en horas de la noche (21/04/2017)</td>
-                                <td>Reclamo</td>
-                                <td>Administración</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver seguimiento tarea">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
+							@endforeach
+                            
 
                         </tbody>
                     </table>

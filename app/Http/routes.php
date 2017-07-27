@@ -267,6 +267,13 @@ Route::group(['prefix' => 'taskrequest'], function () {
 	Route::post('/tasktracking/store', [
         'as' => 'taskrequest.tasktracking.store', 'uses' => 'TaskTrackingController@store'
     ]);
+	//Reclamos y reservacion 
+	Route::get('/reservation', [
+        'as' => 'taskrequest.reservation.index', 'uses' => 'TaskController@reservation'
+    ]);
+	Route::get('/suggestion', [
+        'as' => 'taskrequest.suggestion.index', 'uses' => 'TaskController@suggestion'
+    ]);
 
 });
 /*

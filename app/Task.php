@@ -20,4 +20,9 @@ class Task extends Model
     {
         return $this->hasOne('App\TaskReservation');
     }
+	
+	public function tasktrackings()
+    {
+        return $this->hasMany('App\TaskTracking');
+    }
 }

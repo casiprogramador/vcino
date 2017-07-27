@@ -128,7 +128,8 @@
                             <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
                                 <label class="font-normal">Fecha</label>
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="fecha" value="{{ date('d/m/Y') }}">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									<input type="text" class="form-control date-picker" name="fecha" value="{{ date('d/m/Y') }}">
                                 </div>
 								@if ($errors->has('fecha'))
 								<span class="help-block">
@@ -187,14 +188,38 @@
 
         <div class="col-lg-6">
             <div class="row">
+				
+				@foreach($tasktrackings as $tasktracking)
 
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5 style="padding-top: 2px;">
-                            <span style="font-weight: normal">Creado por:</span> Administrador
+                            <span style="font-weight: normal">Creado por:</span> 
+							@if($tasktracking->task->tipo_tarea == 'mis_tareas')
+
+									Administración
+								@elseif($tasktracking->task->tipo_tarea =='solicitudes_recibidas')
+
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='reserva_instalaciones')
+
+									{{$tasktracking->task->taskreservation->contact->nombre}} {{$tasktracking->task->taskreservation->contact->apellido}} {{$tasktracking->task->taskreservation->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='reclamos')
+						
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='sugerencias')
+									
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='notificacion_mudanza')
+								
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@elseif($tasktracking->task->tipo_tarea =='notificacion_trabajos')
+					
+									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+								@endif
                             </h5>
-                            <h5 class="pull-right" style="margin-right: 10px;">12/05/2017</h5>
+                            <h5 class="pull-right" style="margin-right: 10px;">{{date_format(date_create($tasktracking->fecha),'d/m/Y')}}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="row">    
@@ -202,40 +227,31 @@
                                 <form role="form">
                                     <div class="form-group">
                                         <label class="font-normal">Descripción</label>
-                                        <div style="background-color: #f9f9f9;">
-                                            <div style="padding: 5px 10px;">
-                                                <p>Este cuerpo con Summernote</p>
-                                                <ul>
-                                                    <li>Remaining essentially unchanged</li>
-                                                    <li>Make a type specimen book</li>
-                                                    <li>Unknown printer</li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        <?php echo $tasktracking->descripcion ?>
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
-
+									@if(!empty($tasktracking->adjunto))
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="file-box">
                                                 <div class="file">
                                                     <a href="#">
                                                         <div class="image">
-                                                            <img alt="image" class="img-responsive" src="http://webapplayers.com/inspinia_admin-v2.7/img/p1.jpg">
+                                                            <img alt="image" class="img-responsive" src="{{ $tasktracking->adjunto }}">
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+									@endif
                                     <div class="hr-line-dashed"></div>
 
                                     <div class="form-group" style="margin-top: 20px;">
                                         <label class="font-normal">
                                         <div class="icheckbox_square-green" style="position: relative;">
-                                            <input type="checkbox" class="i-checks" name="activa" value="1" style="position: absolute; opacity: 0;" checked disabled="disabled">
+                                            <input type="checkbox" class="i-checks" name="activa" value="1" style="position: absolute; opacity: 0;" {{ ($tasktracking->notificar == 1) ? 'checked' : '' }} disabled="disabled">
                                         </div>&nbsp;&nbsp;&nbsp;Notificar respuesta</label>
                                     </div>
                                     
@@ -250,96 +266,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5 style="padding-top: 2px;">
-                            <span style="font-weight: normal">Creado por:</span> Caoba 01 - Jaime Perez
-                            </h5>
-                            <h5 class="pull-right" style="margin-right: 10px;">07/05/2017</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="row">    
-                            <div class="col-sm-12">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label class="font-normal">Descripción</label>
-                                        <div style="background-color: #f9f9f9;">
-                                            <div style="padding: 5px 10px;">
-                                                <p>Esd alksdjf alksdfj laksdfj laksdjf lkddsjf asdjf  
-                                                asdfj alsdkfj lkadsj flaksdjf lakdjf lakjd flakdsj flkjsd
-                                                 as dfdjkas flkadsj flkasjdflkasj dflkasjd</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="hr-line-dashed"></div>
-
-                                    <div class="form-group" style="margin-top: 20px;">
-                                        <label class="font-normal">
-                                        <div class="icheckbox_square-green" style="position: relative;">
-                                            <input type="checkbox" class="i-checks" name="activa" value="1" style="position: absolute; opacity: 0;" checked disabled="disabled">
-                                        </div>&nbsp;&nbsp;&nbsp;Notificar respuesta</label>
-                                    </div>
-                                    
-                                    <div class="hr-line-dashed"></div>
-
-                                    <div class="form-group">
-                                        <button class="btn btn-default" type="submit" style="margin-right: 10px;">Editar</button>
-                                    </div>
-                                </form>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5 style="padding-top: 2px;">
-                            <span style="font-weight: normal">Creado por:</span> Administrador
-                            </h5>
-                            <h5 class="pull-right" style="margin-right: 10px;">21/04/2017</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="row">    
-                            <div class="col-sm-12">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label class="font-normal">Descripción</label>
-                                        <div style="background-color: #f9f9f9;">
-                                            <div style="padding: 5px 10px;">
-                                                <p>daf dsf adsf dsfdf adsf adf adsf adsf adsds.</p>
-                                                <p>dfg fg fg sfgsdf gsfdg fdaf dsf adsf dsfdf adsf adf adsf adsf adsds.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="hr-line-dashed"></div>
-
-                                    <div class="form-group" style="margin-top: 20px;">
-                                        <label class="font-normal">
-                                        <div class="icheckbox_square-green" style="position: relative;">
-                                            <input type="checkbox" class="i-checks" name="activa" value="1" style="position: absolute; opacity: 0;" checked disabled="disabled">
-                                        </div>&nbsp;&nbsp;&nbsp;Notificar respuesta</label>
-                                    </div>
-                                    
-                                    <div class="hr-line-dashed"></div>
-
-                                    <div class="form-group">
-                                        <button class="btn btn-default" type="submit" style="margin-right: 10px;">Editar</button>
-                                    </div>
-                                </form>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
+				@endforeach
             </div>
         </div>
 
@@ -357,8 +284,8 @@
 <script type="text/javascript" src="{{ URL::asset('js/summernote.min.js') }}"></script>
 
 <script>
-	$(document).ready(
-		function(){$('#summernote').summernote({
+	$(document).ready(function(){
+		$('#summernote').summernote({
 			height: 300,
 			toolbar: [
 			    ['style', ['style']],
@@ -370,10 +297,19 @@
 			    ['help', ['help']]
 			],
 		});
+		$('.date-picker').datetimepicker({
+			locale:'es',
+			format: 'DD/MM/YYYY',
+				widgetPositioning: {
+				horizontal: 'left',
+						vertical: 'bottom'
+				}
+			});
+		
 		$('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
 		
 	});
 	</script>
