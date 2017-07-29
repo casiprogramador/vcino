@@ -583,8 +583,22 @@ class TaskController extends Controller
 		->with('contacts',$contacts);
 	}
 	
-	public function savecopy(){
+	public function search(Request $request){
 		
+		//tipo_tarea estado prioridad
+		$company = Auth::user()->company;
+		$tasks = Task::where('company_id',$company->id );
+		if($request->tipo_tarea != 'todos'){
+			$tasks->where('tipo_tarea',$request->tipo_tarea);
+		}
+		if ($request->estado != 'todos') {
+			$tasks->where('estado_solicitud',$request->estado);
+		}
+		if ($request->prioridad != 'todos') {
+			$tasks->where('prioridad',$request->prioridad);
+		}
+		 return view('tasks.index')
+		->with('tasks',$tasks->get());
 	}
 
 	public function reservation(){

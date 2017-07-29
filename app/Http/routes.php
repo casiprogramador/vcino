@@ -254,8 +254,8 @@ Route::group(['prefix' => 'taskrequest'], function () {
 	Route::get('/copy/{id}', [
         'as' => 'taskrequest.task.copy', 'uses' => 'TaskController@copy'
     ]);
-	Route::post('/copy', [
-        'as' => 'taskrequest.task.savecopy', 'uses' => 'TaskController@savecopy'
+	Route::post('/task/search', [
+        'as' => 'taskrequest.task.search', 'uses' => 'TaskController@search'
     ]);
 	//seguimiento de tareas
 	Route::get('/tasktracking', [
@@ -267,6 +267,7 @@ Route::group(['prefix' => 'taskrequest'], function () {
 	Route::post('/tasktracking/store', [
         'as' => 'taskrequest.tasktracking.store', 'uses' => 'TaskTrackingController@store'
     ]);
+	
 	//Reclamos y reservacion 
 	Route::get('/reservation', [
         'as' => 'taskrequest.reservation.index', 'uses' => 'TaskController@reservation'
