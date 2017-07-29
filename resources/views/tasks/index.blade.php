@@ -36,40 +36,43 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-
+				{!! Form::open(array('route' => 'taskrequest.task.search', 'class' => 'form-horizontal')) !!}
 				<div class="row">
                     <div class="col-sm-4 m-b-xs">
-                        <select class="input-sm form-control input-s-sm inline" name="Tipo">
-                            <option value="todos">Tipo: Todas</option>
-                            <option value="1">Mis tareas</option>
-                            <option value="2">Notificación de mudanzas</option>
-                            <option value="3">Notificación de trabajos o mejoras</option>
-                            <option value="5">Reclamos</option>
-                            <option value="6">Reservas de instalaciones</option>
-                            <option value="7">Solicitudes recibidas</option>
-                            <option value="8">Sugerencias</option>
-                        </select>
+						{{ Form::select('tipo_tarea',
+							array(
+							'todos' => 'Tipo: Todas',
+							'mis_tareas' => 'Mis tareas',
+							'solicitudes_recibidas' => 'Solicitudes recibidas',
+							'reserva_instalaciones' => 'Reserva de instalaciones',
+							'reclamos' => 'Reclamos',
+							'sugerencias' => 'Sugerencias',
+							'notificacion_mudanza' => 'Notificacion de mudanza',
+							'notificacion_trabajos' => 'Notificacion de trabajos'
+							),
+							old('tipo_tarea'),
+							['class' => 'input-sm form-control input-s-sm inline','id' => 'tipo-tarea']) }}
                     </div>
                     <div class="col-sm-3 m-b-xs">
                         <select class="input-sm form-control input-s-sm inline" name="estado">
                             <option value="todos">Estado: Todas</option>
-                            <option value="0">Pendientes</option>
-                            <option value="1">En proceso</option>
-                            <option value="2">Completadas</option>
+                            <option value="pendiente">Pendientes</option>
+                            <option value="en proceso">En proceso</option>
+                            <option value="completada">Completadas</option>
                         </select>
                     </div>
                     <div class="col-sm-3 m-b-xs">
                         <select class="input-sm form-control input-s-sm inline" name="prioridad">
                             <option value="todos">Prioridad: Todas</option>
-                            <option value="1">Alta</option>
-                            <option value="0">Normal</option>
+                            <option value="alta">Alta</option>
+                            <option value="normal">Normal</option>
                         </select>
                     </div>
                     <div class="col-sm-2 m-b-xs text-right">
                         <button class="btn btn-white btn-sm" type="submit" style="width: 100%;">Buscar</button>
                     </div>
                 </div>
-
+				{!! Form::close() !!}
                 <div class="row">
                     <div class="col-sm-12 m-b-xs">
                         <hr>
