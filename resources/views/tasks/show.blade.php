@@ -353,36 +353,171 @@
 
                     <div class="form-group" id="adjuntos">
                         <label class="col-sm-2 control-label">Adjuntos</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
+							        @if(!empty($task->documento_1))
+									<?php
+									$filename = explode("-name-", $task->documento_1);
+									$ext_array = explode(".", $task->documento_1);
+									$ext = end($ext_array);
+									?>
+									<div class="col-sm-4">
+										<div class="thumbnail">
+											@if($ext == 'jpg' || $ext == 'png')
+											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+												<img src="{{ URL::asset($task->documento_1)}}">
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											@elseif($ext == 'pdf')
+											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
+											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'xls' || $ext == 'xlsx')
+											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'rar' || $ext == 'zip')
+											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@else
+											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
+											@endif
 
-                            <div id="adjunto-1" class="fileinput input-group {{!empty($task->documento_1) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
-                                <div class="form-control" data-trigger="fileinput">
-                                    <i class="glyphicon glyphicon-file fileinput-exists"></i> 
-                                    <span class="fileinput-filename">{{ (!empty($task->documento_1) ) ? MenuRoute::filename($task->documento_1) : "" }}</span>
-                                </div>
-                                
-                               
-                            </div>
+										</div>
+									</div>
+									@endif
 
+									@if(!empty($task->documento_2))
+									<?php
+									$filename = explode("-name-", $task->documento_2);
+									$ext_array = explode(".", $task->documento_2);
+									$ext = end($ext_array);
+									?>
+									<div class="col-sm-4">
+										<div class="thumbnail">
+											@if($ext == 'jpg' || $ext == 'png')
+											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+												<img src="{{ URL::asset($task->documento_2)}}">
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											@elseif($ext == 'pdf')
+											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
+											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'xls' || $ext == 'xlsx')
+											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'rar' || $ext == 'zip')
+											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@else
+											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
+											@endif
 
-                            <!--    Para el caso de mas de un attach        -->
-                            <div id="adjunto-2" class="fileinput input-group {{!empty($task->documento_2) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
-                                <div class="form-control" data-trigger="fileinput">
-                                    <i class="glyphicon glyphicon-file fileinput-exists"></i> 
-                                    <span class="fileinput-filename">{{ (!empty($task->documento_2) ) ? MenuRoute::filename($task->documento_2) : "" }}</span>
-                                </div>
-                                
-                                
-                            </div>
-                            <!--    Para el caso de mas de un attach        -->
-                            <div id="adjunto-3" class="fileinput input-group {{!empty($task->documento_3) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
-                                <div class="form-control" data-trigger="fileinput">
-                                    <i class="glyphicon glyphicon-file fileinput-exists"></i> 
-                                    <span class="fileinput-filename">{{ (!empty($task->documento_3) ) ? MenuRoute::filename($task->documento_3) : "" }}</span>
-                                </div>
-                                
-                              
-                            </div>
+										</div>
+									</div>
+									@endif
+									
+									@if(!empty($task->documento_3))
+									<?php
+									$filename = explode("-name-", $task->documento_3);
+									$ext_array = explode(".", $task->documento_3);
+									$ext = end($ext_array);
+									?>
+									<div class="col-sm-4">
+										<div class="thumbnail">
+											@if($ext == 'jpg' || $ext == 'png')
+											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+												<img src="{{ URL::asset($task->documento_3)}}" width="300">
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											@elseif($ext == 'pdf')
+											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
+											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'xls' || $ext == 'xlsx')
+											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@elseif($ext == 'rar' || $ext == 'zip')
+											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+												<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
+												<div class="caption">
+												<h4 class="text-center">{{$filename[1]}}</h4>
+												</div>
+											</a>
+											
+											@else
+											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
+											@endif
+
+										</div>
+									</div>
+									@endif
 
                         </div>
                     </div>

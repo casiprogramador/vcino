@@ -118,18 +118,19 @@
         <div class="col-lg-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Nuevo seguimiento</h5>
+                    <h5 style="padding-top: 2px;">Editar seguimiento</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="row">    
                     <div class="col-sm-12">
-                        {!! Form::open(array('route' => 'taskrequest.tasktracking.store', 'class' => 'form-horizontal', 'files' => true)) !!}
+
+						{!! Form::open(array('route' => array('taskrequest.tasktracking.update', Crypt::encrypt($tasktracking->id)),'method' => 'post' ,'class' => 'form-horizontal', 'files' => true)) !!}
 						<input type="hidden" name="task_id" value="{{$task->id}}">
                             <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
                                 <label class="font-normal">Fecha</label>
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-									<input type="text" class="form-control date-picker" name="fecha" value="{{ date('d/m/Y') }}">
+									<input type="text" class="form-control date-picker" name="fecha" value="{{ date_format(date_create($tasktracking->fecha),'d/m/Y') }}">
                                 </div>
 								@if ($errors->has('fecha'))
 								<span class="help-block">
@@ -141,24 +142,25 @@
                             <div class="form-group">
                                 <label class="font-normal">Descripción</label>
                                 <div class="ibox-content no-padding">
-									<textarea id="summernote" name="descripcion"></textarea>
+									<textarea id="summernote" name="descripcion">{{$tasktracking->descripcion}}</textarea>
 								</div>
                             </div>
 
                             <div class="form-group">
                                 <label class="font-normal">Adjunto</label>
-                                <div class="fileinput input-group fileinput-new" data-provides="fileinput">
-                                    <div class="form-control" data-trigger="fileinput">
-                                        <i class="glyphicon glyphicon-file fileinput-exists"></i> 
-                                        <span class="fileinput-filename"></span>
-                                    </div>
-                                    <span class="input-group-addon btn btn-default btn-file">
-                                        <span class="fileinput-new">Seleccionar archivo...</span>
-                                        <span class="fileinput-exists">Cambiar</span>
-                                        <input type="file" name="adjunto">
-                                    </span>
-                                    <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                <div id="adjunto-1" class="fileinput input-group {{!empty($tasktracking->adjunto) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+                                <div class="form-control" data-trigger="fileinput">
+                                    <i class="glyphicon glyphicon-file fileinput-exists"></i> 
+                                    <span class="fileinput-filename">{{ (!empty($tasktracking->adjunto) ) ? MenuRoute::filename($tasktracking->adjunto) : "" }}</span>
                                 </div>
+                                <span class="input-group-addon btn btn-default btn-file">
+                                    <span class="fileinput-new">Seleccionar archivo...</span>
+                                    <span class="fileinput-exists">Cambiar</span>
+                                    <input type="hidden" id="adjunto-ori" name="adjunto_ori" value="{{ (isset($tasktracking->adjunto) ) ? $tasktracking->adjunto : '' }}">
+									<input type="file" name="adjunto">
+                                </span>
+                                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                            </div>
                             </div>
 
                             <div class="form-group" style="margin-top: 20px;">
@@ -170,14 +172,14 @@
                             <div class="form-group">
                                 <label class="font-normal">
                                 <div class="icheckbox_square-green" style="position: relative;">
-                                    <input type="checkbox" class="i-checks" name="notificar" value="1" checked>
+                                    <input type="checkbox" class="i-checks" name="notificar" value="1" {{ $tasktracking->notificar == '1' ? 'checked' : '' }}>
                                 </div>&nbsp;&nbsp;&nbsp;Notificar respuesta</label>
                             </div>
 
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group">
-                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear seguimiento</button>
+                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Editar seguimiento</button>
                             </div>
                         {!! Form::close() !!}
                     </div>
@@ -258,7 +260,7 @@
                                     <div class="hr-line-dashed"></div>
 
                                     <div class="form-group">
-                                        <a href="{{ route('taskrequest.tasktracking.edit', array(Crypt::encrypt($task->id),Crypt::encrypt($tasktracking->id))) }}" class="btn btn-default" type="submit" style="margin-right: 10px;">Editar</a>
+                                       <a href="{{ route('taskrequest.tasktracking.edit', array(Crypt::encrypt($task->id),Crypt::encrypt($tasktracking->id))) }}" class="btn btn-default" type="submit" style="margin-right: 10px;">Editar</a>
                                     </div>
                                 </form>
                             </div>
@@ -310,7 +312,9 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
-		
+		$('#adjunto').on('clear.bs.fileinput', function(event) {
+			$('#adjunto-ori').val('');
+		});
 	});
 	</script>
 @endsection

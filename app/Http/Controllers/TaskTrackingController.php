@@ -95,9 +95,21 @@ class TaskTrackingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_task,$id_tasktracking)
     {
-        //
+		
+
+		$company = Auth::user()->company;
+		$id_task = \Crypt::decrypt($id_task);
+		$id_tasktracking = \Crypt::decrypt($id_tasktracking);
+		$task = Task::find($id_task);
+		$tasktrackings = TaskTracking::where('company_id',$company->id )->where('task_id',$id_task);
+		$tasktracking = TaskTracking::find($id_tasktracking);
+		
+        return view('tasktrackings.edit')
+			->with('task',$task)
+			->with('tasktrackings',$tasktrackings->get())
+			->with('tasktracking',$tasktracking);
     }
 
     /**
@@ -109,7 +121,37 @@ class TaskTrackingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		
+		$this->validate($request, [
+			'fecha' => 'required'
+		]);
+		$id = \Crypt::decrypt($id);
+		$company = Auth::user()->company;
+		$notificar = (empty($request->notificar) ? '0' : $request->notificar);
+		if(!empty($request->adjunto)){
+			$id_user = Auth::user()->id;
+			$id_tares = $request->task_id;
+			$file = $request->adjunto;
+			$tmpFilePath = '/img/upload/tareas/';
+			$tmpFileName = time() . '-'.$id_user. '-tarea-seg-'.$id_tares.'-name-' . $file->getClientOriginalName();
+			$file->move(public_path() . $tmpFilePath, $tmpFileName);
+			$path = $tmpFilePath . $tmpFileName;
+		}elseif(!empty($request->adjunto_ori)){
+			$path = $request->adjunto_ori;
+		}else{
+			$path="";
+		}
+		
+		$tasktracking = TaskTracking::find($id);
+		$tasktracking->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$tasktracking->descripcion = $request->descripcion;
+		$tasktracking->adjunto = $path;
+		$tasktracking->notificar = $notificar;
+		
+		$tasktracking->task_id = $request->task_id;
+		$tasktracking->company_id = $company->id;
+		$tasktracking->save();
+		return redirect()->route('taskrequest.tasktracking.index');
     }
 
     /**
