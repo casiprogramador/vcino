@@ -264,8 +264,14 @@ Route::group(['prefix' => 'taskrequest'], function () {
 	Route::get('/tasktracking/create/{id_task}', [
         'as' => 'taskrequest.tasktracking.create', 'uses' => 'TaskTrackingController@create'
     ]);
+	Route::get('/tasktracking/create/{id_task}/{id_tasktracking}', [
+        'as' => 'taskrequest.tasktracking.edit', 'uses' => 'TaskTrackingController@edit'
+    ]);
 	Route::post('/tasktracking/store', [
         'as' => 'taskrequest.tasktracking.store', 'uses' => 'TaskTrackingController@store'
+    ]);
+	Route::post('/tasktracking/update/{id}', [
+        'as' => 'taskrequest.tasktracking.update', 'uses' => 'TaskTrackingController@update'
     ]);
 	
 	//Reclamos y reservacion 

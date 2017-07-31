@@ -8,6 +8,7 @@ use Auth;
 use App\Collection;
 use App\Accountsreceivable;
 use App\Transaction;
+use App\Task;
 use Illuminate\Support\Facades\DB;
 use Redis;
 use App\Http\Requests;
@@ -49,6 +50,7 @@ class AdminController extends Controller
 		//Ultimas transacciones
 		$transacciones = $this->ultimas_transacciones();
 		//dd($importe_promedio/$importe_promedio_total*100);
+		$tasks = Task::where('company_id',$company->id )->orderBy('fecha', 'desc')->limit(5);
         return view('admin')
 			->with('transacciones',$transacciones)
 			->with('importe_pagado_actual',$cuotas_pagadas_actual['importe_pagado'])
@@ -63,7 +65,8 @@ class AdminController extends Controller
 			->with('mes_actual',$mes_actual)
 			->with('mes_anterior',$mes_anterior)
 			->with('cobranzas_mes_actual',json_encode($cobranzas['cobranza_mes_actual']))
-			->with('cobranza_mes_anterior',json_encode($cobranzas['cobranza_mes_anterior']));
+			->with('cobranza_mes_anterior',json_encode($cobranzas['cobranza_mes_anterior']))
+			->with('tasks',$tasks->get());
     }
 	
 	public function cobranzas_barras(){

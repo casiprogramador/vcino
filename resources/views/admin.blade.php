@@ -220,83 +220,46 @@
                 <div class="ibox-content">
                     <div>
                         <div class="feed-activity-list">
+							@foreach($tasks as $task)
                             <div class="feed-element">
                                 <p class="pull-left">
                                     <img alt="image" src="img/system/solicitudes1.png" class="img-circle">
                                 </p>
                                 <div class="media-body ">
-                                    <small class="pull-right">Hoy</small>
-                                    <strong>Mis tareas</strong><br>
-                                    Asunto de la tarea propia<br>
+                                    <small class="pull-right">{{ date_format(date_create($task->fecha),'d/m/Y') }}</small>
+                                    <strong>{{$task->titulo_tarea}}</strong><br>
+                                    @if($task->tipo_tarea == 'mis_tareas')
+									MIS TAREAS
+
+								@elseif($task->tipo_tarea =='solicitudes_recibidas')
+									SOLICITUDES RECIBIDAS
+
+								@elseif($task->tipo_tarea =='reserva_instalaciones')
+									RESERVA DE INSTALACION
+
+								@elseif($task->tipo_tarea =='reclamos')
+									RECLAMOS
+
+								@elseif($task->tipo_tarea =='sugerencias')
+									SUGERENCIAS
+
+								@elseif($task->tipo_tarea =='notificacion_mudanza')
+									NOTIFICACION DE MUDANZA
+
+								@elseif($task->tipo_tarea =='notificacion_trabajos')
+									NOTIFICACION DE TRABAJO
+
+								@endif
                                     <small class="text-muted"></small>
                                     <div class="actions">
-                                        <a class="btn btn-xs btn-white">Ver solicitud</a>
+                                        <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" class="btn btn-xs btn-white">Ver solicitud</a>
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="feed-element">
-                                <p class="pull-left">
-                                    <img alt="image" src="img/system/solicitudes1.png" class="img-circle">
-                                </p>
-                                <div class="media-body ">
-                                    <small class="pull-right">Hoy</small>
-                                    <strong>Reserva de instalaciones comunes</strong><br>
-                                    Asunto de la solicitud<br>
-                                    <small class="text-muted">Propiedad: Cupesi 15</small>
-                                    <div class="actions">
-                                        <a class="btn btn-xs btn-white">Ver solicitud</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="feed-element">
-                                <p class="pull-left">
-                                    <img alt="image" src="img/system/solicitudes1.png" class="img-circle">
-                                </p>
-                                <div class="media-body ">
-                                    <small class="pull-right">Ayer <i class="fa fa-exclamation-circle text-danger fa-lg"></i></small>
-                                    <strong>Solicitudes Administrador</strong><br>
-                                    Asunto de la solicitud al administrador<br>
-                                    <small class="text-muted">Propiedad: 19 PH</small>
-                                    <div class="actions">
-                                        <a class="btn btn-xs btn-white">Ver solicitud</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="feed-element">
-                                <p class="pull-left">
-                                    <img alt="image" src="img/system/solicitudes1.png" class="img-circle">
-                                </p>
-                                <div class="media-body ">
-                                    <small class="pull-right">2 días <i class="fa fa-exclamation-circle text-danger fa-lg"></i></small>
-                                    <strong>Reclamo</strong><br>
-                                    Asunto de la solicitud<br>
-                                    <small class="text-muted">Propiedad: 3 AB</small>
-                                    <div class="actions">
-                                        <a class="btn btn-xs btn-white">Ver solicitud</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="feed-element">
-                                <p class="pull-left">
-                                    <img alt="image" src="img/system/solicitudes1.png" class="img-circle">
-                                </p>
-                                <div class="media-body ">
-                                    <small class="pull-right">5 días</small>
-                                    <strong>Sugerencia</strong><br>
-                                    Asunto del reclamo recibido<br>
-                                    <small class="text-muted">Propiedad: 3 AB</small>
-                                    <div class="actions">
-                                        <a class="btn btn-xs btn-white">Ver solicitud</a>
-                                    </div>
-
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                        <button class="btn btn-success btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas</button>
+                        <a href="{{ route('taskrequest.task.index')}}" class="btn btn-success btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas</a>
                     </div>
 
                 </div>
