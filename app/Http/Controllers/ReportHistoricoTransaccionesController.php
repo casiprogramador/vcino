@@ -468,9 +468,9 @@ class ReportHistoricoTransaccionesController extends Controller
 			   $fecha = date_format(date_create($ingreso->fecha_pago),'d/m/Y');
 			   $nro_documento = str_pad($ingreso->nro_documento, 6, "0", STR_PAD_LEFT);
 			   $collection = Collection::find($ingreso->id_collection);
-			   $array_ingreso = array($fecha, $nro_documento,'',$ingreso->concepto,$collection->account->nombre,$ingreso->forma_pago,$ingreso->importe_credito);
+			   $array_ingreso = array($fecha, $nro_documento,'',$ingreso->concepto,$collection->account->nombre,$ingreso->forma_pago,$ingreso->importe_por_cobrar);
 			   array_push($array_categorias, $array_ingreso);
-			   $importe_total = $importe_total+$ingreso->importe_credito;
+			   $importe_total = $importe_total+$ingreso->importe_por_cobrar;
 			}
 
 		}else{
@@ -489,7 +489,7 @@ class ReportHistoricoTransaccionesController extends Controller
 			if($anio != 0) $gastos->whereYear('fecha_pago', '=', $anio);
 
 			$resultado = $gastos->get();
-			//dd($resultado);
+
 			$array_categorias = $array_inicio;
 			$importe_total = 0;
 			foreach ($resultado as $egreso) {
