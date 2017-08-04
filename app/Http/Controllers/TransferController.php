@@ -254,7 +254,7 @@ class TransferController extends Controller
 			$transactions = $transactions->where('tipo_transaccion','Egreso');
 	
 		}elseif ($request->tipo == "traspaso") {
-			$transactions = $transactions->where('tipo_transaccion','Traspaso-Egreso')->orWhere('tipo_transaccion','Traspaso-Ingreso');
+			$transactions = $transactions->where('tipo_transaccion','like','Traspaso%');
 		}
 		//Busqueda por categoria
 		if($request->categoria != "todos"){

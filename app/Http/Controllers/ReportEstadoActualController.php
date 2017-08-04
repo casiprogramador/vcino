@@ -333,16 +333,21 @@ class ReportEstadoActualController extends Controller
   		$importe_total_ingresos = 0;
   		foreach($categories as $category){
 
-
+				
+			
   			$categoria =DB::table('accountsreceivables')
   						->join('collections', 'collections.id', '=', 'accountsreceivables.id_collection')
   						->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
   						->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
   						->join('categories', 'categories.id', '=', 'quotas.category_id')
   						->where('category_id', '=', $category->id)
+						->where('accountsreceivables.company_id',$company->id)
   						->where('cancelada',1)
   						->where('anulada',0)
-  						->where('excluir_reportes',0);
+  						->where('excluir_reportes',0)
+						->orderBy('fecha_pago', 'asc');
+
+			
 
          if($mes != 0) $categoria->whereMonth('fecha_pago', '=', $mes);
          if($anio != 0) $categoria->whereYear('fecha_pago', '=', $anio);

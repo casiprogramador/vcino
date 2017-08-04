@@ -112,19 +112,19 @@
 										@else
                                         <tr>
                                             <td><strong>{{$categorias[$i][0]}}</strong></td>
-                                            <td style="text-align:right;" id="ene_total"><strong>{{$categorias[$i][1]}}</strong></td>
-                                            <td style="text-align:right;" id="feb_total"><strong>{{$categorias[$i][2]}}</strong></td>
-                                            <td style="text-align:right;" id="mar_total"><strong>{{$categorias[$i][3]}}</strong></td>
-                                            <td style="text-align:right;" id="abr_total"><strong>{{$categorias[$i][4]}}</strong></td>
-                                            <td style="text-align:right;" id="may_total"><strong>{{$categorias[$i][5]}}</strong></td>
-                                            <td style="text-align:right;" id="jun_total"><strong>{{$categorias[$i][6]}}</strong></td>
-                                            <td style="text-align:right;" id="jul_total"><strong>{{$categorias[$i][7]}}</strong></td>
-                                            <td style="text-align:right;" id="ago_total"><strong>{{$categorias[$i][8]}}</strong></td>
-                                            <td style="text-align:right;" id="sep_total"><strong>{{$categorias[$i][9]}}</strong></td>
-                                            <td style="text-align:right;" id="oct_total"><strong>{{$categorias[$i][10]}}</strong></td>
-                                            <td style="text-align:right;" id="nov_total"><strong>{{$categorias[$i][11]}}</strong></td>
-                                            <td style="text-align:right;" id="dic_total"><strong>{{$categorias[$i][12]}}</strong></td>
-                                            <td style="text-align:right;" id="ene_total"><strong>{{$categorias[$i][13]}}</strong></td>
+                                            <td style="text-align:right;" id="ene_total" suma="{{$categorias[$i][1]}}"><strong>{{number_format($categorias[$i][1], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="feb_total" suma="{{$categorias[$i][2]}}"><strong>{{number_format($categorias[$i][2], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="mar_total" suma="{{$categorias[$i][3]}}"><strong>{{number_format($categorias[$i][3], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="abr_total" suma="{{$categorias[$i][4]}}"><strong>{{number_format($categorias[$i][4], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="may_total" suma="{{$categorias[$i][5]}}"><strong>{{number_format($categorias[$i][5], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="jun_total" suma="{{$categorias[$i][6]}}"><strong>{{number_format($categorias[$i][6], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="jul_total" suma="{{$categorias[$i][7]}}"><strong>{{number_format($categorias[$i][7], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="ago_total" suma="{{$categorias[$i][8]}}"><strong>{{number_format($categorias[$i][8], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="sep_total" suma="{{$categorias[$i][9]}}"><strong>{{number_format($categorias[$i][9], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="oct_total" suma="{{$categorias[$i][10]}}"><strong>{{number_format($categorias[$i][10], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="nov_total" suma="{{$categorias[$i][11]}}"><strong>{{number_format($categorias[$i][11], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="dic_total" suma="{{$categorias[$i][12]}}"><strong>{{number_format($categorias[$i][12], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="sum_total" suma="{{$categorias[$i][13]}}"><strong>{{number_format($categorias[$i][13], 2, '.', '.')}}</strong></td>
                                         </tr>
 										@endif
                                         @endfor
@@ -210,18 +210,18 @@
 <script src="{{ URL::asset('js/Chart.min.js') }}"></script>
 <script>
 $(document).ready(function(){
-	ene = $('#ene_total').text();
-	feb = $('#feb_total').text();
-	mar = $('#mar_total').text();
-	abr = $('#abr_total').text();
-	may = $('#may_total').text();
-	jun = $('#jun_total').text();
-	jul = $('#jul_total').text();
-	ago = $('#ago_total').text();
-	sep = $('#sep_total').text();
-	oct = $('#oct_total').text();
-	nov = $('#nov_total').text();
-	dic = $('#dic_total').text();
+	ene = $('#ene_total').attr('suma');
+	feb = $('#feb_total').attr('suma');
+	mar = $('#mar_total').attr('suma');
+	abr = $('#abr_total').attr('suma');
+	may = $('#may_total').attr('suma');
+	jun = $('#jun_total').attr('suma');
+	jul = $('#jul_total').attr('suma');
+	ago = $('#ago_total').attr('suma');
+	sep = $('#sep_total').attr('suma');
+	oct = $('#oct_total').attr('suma');
+	nov = $('#nov_total').attr('suma');
+	dic = $('#dic_total').attr('suma');
 	
 	gestion = $('#gestion').text();
 

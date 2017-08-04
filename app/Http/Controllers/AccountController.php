@@ -142,6 +142,8 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $account = Account::find($id);
+		$account->delete();
+		return redirect()->route('config.account.index');
     }
 }
