@@ -41,7 +41,7 @@
                             <table class="table" style="width: 90%; margin: auto; margin-bottom: 10px;">
                                 <tbody>
                                     <tr>
-                                        <td style="border: 0;">
+                                        <td style="border: 0; padding-left: 0;">
                                             <div class="p-h-xl"><img src="{{ URL::asset(Auth::user()->company->logotipo)}}" width="{{Auth::user()->company->width_logo}}"></div>
                                         </td>
                                         <td style="border: 0; vertical-align:bottom">

@@ -75,4 +75,9 @@ class Company extends Model
     {
         return $this->hasMany('App\TaskTracking');
     }
+	
+	 public function document()
+    {
+        return $this->hasMany('App\Document');
+    }
 }

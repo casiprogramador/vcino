@@ -12,7 +12,7 @@
                 Tareas & Solicitudes
             </li>
             <li>
-                <a href="#">Tareas</a>
+                <a href="{{ route('taskrequest.task.index') }}">Tareas</a>
             </li>
             <li class="active">
                 <strong>Ver tarea</strong>
@@ -59,8 +59,6 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha-tarea">
                         <label class="col-sm-2 control-label">Fecha</label>
                         <div class="col-sm-3">
@@ -77,22 +75,24 @@
                             <input type="text" class="form-control input-sm" name="titulo_tarea" value="{{$task->titulo_tarea}}" disabled="disabled">
 							@if ($errors->has('titulo_tarea'))
 								<span class="help-block">
-										<strong>{{ $errors->first('titulo_tarea') }}</strong>
-									</span>
+									<strong>{{ $errors->first('titulo_tarea') }}</strong>
+								</span>
 							@endif
                         </div>
                     </div>
 
+                    @if (!empty($task->nota))
                     <div class="form-group" id="nota">
 						<label class="col-sm-2 control-label">Nota</label>
                         <div class="col-sm-10">
-                            <div class="ibox-content no-padding">
+                            <div class="ibox-content no-padding" style="background-color: #EBEBEB;">
                                 <?php echo $task->nota ?>
                             </div>
                         </div>
                     </div>
+                    @endif
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="nota-linea"></div>
 
                     <div class="form-group" id="prioridad">
                         <label class="col-sm-2 control-label">Prioridad</label>
@@ -156,7 +156,8 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="medio-solicitud-linea"></div>
+
 					@if($task->tipo_tarea =='solicitudes_recibidas' ||
 					$task->tipo_tarea =='solicitudes_recibidas' ||
 					$task->tipo_tarea =='reclamos' ||
@@ -189,7 +190,7 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                   <div class="hr-line-dashed" id="propiedad-linea"></div>
 
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
@@ -228,8 +229,6 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
@@ -267,8 +266,6 @@
 							@endif
                         </div>
                     </div>
-
-                    <div class="hr-line-dashed"></div>
 
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
@@ -323,7 +320,7 @@
                         <label class="col-sm-2 control-label">Hora hasta</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_final),'H:i') }}" disabled="disabled">
+                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_fin),'H:i') }}" disabled="disabled">
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
@@ -349,199 +346,202 @@
 						@endif
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group" id="adjuntos">
-                        <label class="col-sm-2 control-label">Adjuntos</label>
-                        <div class="col-sm-12">
-							        @if(!empty($task->documento_1))
-									<?php
-									$filename = explode("-name-", $task->documento_1);
-									$ext_array = explode(".", $task->documento_1);
-									$ext = end($ext_array);
-									?>
-									<div class="col-sm-4">
-										<div class="thumbnail">
-											@if($ext == 'jpg' || $ext == 'png')
-											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
-												<img src="{{ URL::asset($task->documento_1)}}">
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											@elseif($ext == 'pdf')
-											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
-											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'xls' || $ext == 'xlsx')
-											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'rar' || $ext == 'zip')
-											<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@else
-											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
-											@endif
-
+                        @if(!empty($task->documento_1) || !empty($task->documento_2) || !empty($task->documento_3))
+                            <label class="col-sm-2 control-label">Adjuntos</label>
+                        @endif
+					        @if(!empty($task->documento_1))
+							<?php
+							$filename = explode("-name-", $task->documento_1);
+							$ext_array = explode(".", $task->documento_1);
+							$ext = end($ext_array);
+							?>
+							<div class="col-sm-3">
+								<div class="thumbnail">
+									@if($ext == 'jpg' || $ext == 'png')
+									<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+										<img src="{{ URL::asset($task->documento_1)}}">
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
 										</div>
-									</div>
-									@endif
-
-									@if(!empty($task->documento_2))
-									<?php
-									$filename = explode("-name-", $task->documento_2);
-									$ext_array = explode(".", $task->documento_2);
-									$ext = end($ext_array);
-									?>
-									<div class="col-sm-4">
-										<div class="thumbnail">
-											@if($ext == 'jpg' || $ext == 'png')
-											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
-												<img src="{{ URL::asset($task->documento_2)}}">
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											@elseif($ext == 'pdf')
-											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
-											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'xls' || $ext == 'xlsx')
-											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'rar' || $ext == 'zip')
-											<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@else
-											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
-											@endif
-
+									</a>
+									@elseif($ext == 'pdf')
+									<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
 										</div>
-									</div>
-									@endif
+									</a>
 									
-									@if(!empty($task->documento_3))
-									<?php
-									$filename = explode("-name-", $task->documento_3);
-									$ext_array = explode(".", $task->documento_3);
-									$ext = end($ext_array);
-									?>
-									<div class="col-sm-4">
-										<div class="thumbnail">
-											@if($ext == 'jpg' || $ext == 'png')
-											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
-												<img src="{{ URL::asset($task->documento_3)}}" width="300">
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											@elseif($ext == 'pdf')
-											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
-											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'xls' || $ext == 'xlsx')
-											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@elseif($ext == 'rar' || $ext == 'zip')
-											<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
-												<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
-												<div class="caption">
-												<h4 class="text-center">{{$filename[1]}}</h4>
-												</div>
-											</a>
-											
-											@else
-											<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
-											@endif
-
+									@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
+									<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
 										</div>
-									</div>
+									</a>
+									
+									@elseif($ext == 'xls' || $ext == 'xlsx')
+									<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@elseif($ext == 'rar' || $ext == 'zip')
+									<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@else
+									<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
 									@endif
 
-                        </div>
+								</div>
+							</div>
+							@endif
+
+							@if(!empty($task->documento_2))
+							<?php
+							$filename = explode("-name-", $task->documento_2);
+							$ext_array = explode(".", $task->documento_2);
+							$ext = end($ext_array);
+							?>
+							<div class="col-sm-3">
+								<div class="thumbnail">
+									@if($ext == 'jpg' || $ext == 'png')
+									<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+										<img src="{{ URL::asset($task->documento_2)}}">
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									@elseif($ext == 'pdf')
+									<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
+									<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@elseif($ext == 'xls' || $ext == 'xlsx')
+									<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@elseif($ext == 'rar' || $ext == 'zip')
+									<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@else
+									<h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
+									@endif
+
+								</div>
+							</div>
+							@endif
+							
+							@if(!empty($task->documento_3))
+							<?php
+							$filename = explode("-name-", $task->documento_3);
+							$ext_array = explode(".", $task->documento_3);
+							$ext = end($ext_array);
+							?>
+							<div class="col-sm-3">
+								<div class="thumbnail">
+									@if($ext == 'jpg' || $ext == 'png')
+									<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+										<img src="{{ URL::asset($task->documento_3)}}" width="300">
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									@elseif($ext == 'pdf')
+									<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa fa-file-pdf-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@elseif($ext == 'doc' || $ext == 'txt' || $ext == 'docx')
+									<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-word-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@elseif($ext == 'xls' || $ext == 'xlsx')
+									<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-excel-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@elseif($ext == 'rar' || $ext == 'zip')
+									<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
+										<h4 class="text-center"><i class="fa fa-file-archive-o fa-5x"></i></h4>
+										<div class="caption">
+										<h4 class="text-center">{{$filename[1]}}</h4>
+										</div>
+									</a>
+									
+									@else
+                                        <h3 class="text-center"><i class="fa fa-file fa-5x"></i></h3>
+									@endif
+
+								</div>
+							</div>
+							@endif
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    @if(!empty($task->documento_1) || !empty($task->documento_2) || !empty($task->documento_3))
+                        <div class="hr-line-dashed"></div>
+                    @endif
+
 					<div class="form-group">
                         <label class="col-sm-2 control-label">Estado</label>
                         <div class="col-sm-8">
-                            <div data-toggle="buttons" class="btn-group">
-                                <label class="btn btn-sm btn-white {{ $task->estado_solicitud == 'pendiente' ? 'active' : '' }}">
-                                    <input type="radio" id="option1" name="tarea_estado" disabled value="pendiente" {{ $task->estado_solicitud == 'pendiente' ? 'checked' : '' }}> <span style="color: #F7B77B;"> PENDIENTE</span> </label>
-                                <label class="btn btn-sm btn-white {{ $task->estado_solicitud == 'en proceso' ? 'active' : '' }}"> 
-                                    <input type="radio" id="option2" name="tarea_estado" disabled value="en proceso" {{ $task->estado_solicitud == 'en proceso' ? 'checked' : '' }}> <span style="color: #5D96CC;">EN PROCESO</span> </label>
-                                <label class="btn btn-sm btn-white {{ $task->estado_solicitud == 'completada' ? 'active' : '' }}"> 
-                                    <input type="radio" id="option3" name="tarea_estado" disabled value="completada" {{ $task->estado_solicitud == 'completada' ? 'checked' : '' }}> <span style="color: #5CBD7E;">COMPLETADA</span> </label>
-                            </div>
-                        </div>
-                    </div>
-					<div class="form-group">
-                        <div class="col-sm-12">
-                            <a href="{{ route('taskrequest.task.index') }}" class="btn btn-promary">Atras</a>
+                            <p class="form-control-static">
+                                @if($task->estado_solicitud == 'pendiente')
+                                <span class="label label-warning" style="font-size: 12px; background-color: #F7B77B;">&nbsp;{{strtoupper($task->estado_solicitud)}}&nbsp;</span>
+                                @elseif($task->estado_solicitud == 'en proceso')
+                                <span class="label label-success" style="font-size: 11px; background-color: #5D96CC">&nbsp;EN PROCESO&nbsp;</span>
+                                @else
+                                <span class="label label-primary" style="font-size: 11px; background-color: #5CBD7E">COMPLETADA</span>
+                                @endif
+                            </p>
                         </div>
                     </div>
 
+                    <div class="hr-line-dashed"></div>
+
+					<div class="form-group">
+                        <div class="col-sm-12">
+                            <a href="{{ route('taskrequest.task.index') }}" class="btn btn-success">Volver</a>
+                        </div>
+                    </div>
                     
                     </form>
                 </div>
@@ -565,135 +565,160 @@
 	$(document).ready(function(){
 		
 		tipo_tarea = $('#tipo-tarea option:selected').val();
-		
-		if(tipo_tarea == "mis_tareas"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').show("slow");
-			$('#frecuencia').show("slow");
-			$('#medio-solicitud').hide();
-			$('#propiedad').hide();
-			$('#contacto').hide();
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        console.log(tipo_tarea);
+        
+        if(tipo_tarea == "mis_tareas"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').show("slow");
+            $('#frecuencia').show("slow");
+            $('#medio-solicitud').hide();
+            $('#medio-solicitud-linea').hide();
+            $('#propiedad').hide();
+            $('#propiedad-linea').hide();
+            $('#contacto').hide();
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "solicitudes_recibidas"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').show("slow");
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "solicitudes_recibidas"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').show("slow");
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "reserva_instalaciones"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').show("slow");
-			$('#fecha-requerida').show("slow");
-			$('#hora-inicio').show("slow");
-			$('#hora-final').show("slow");
-			$('#costo').show("slow");
-			$('#adjuntos').hide();
+        }else if(tipo_tarea == "reserva_instalaciones"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').show("slow");
+            $('#fecha-requerida').show("slow");
+            $('#hora-inicio').show("slow");
+            $('#hora-final').show("slow");
+            $('#costo').show("slow");
+            $('#adjuntos').hide();
 
-		}else if(tipo_tarea == "reclamos"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').show("slow");
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "reclamos"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').show("slow");
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "sugerencias"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "sugerencias"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "notificacion_mudanza"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').show("slow");
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').hide();
+        }else if(tipo_tarea == "notificacion_mudanza"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').show("slow");
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').hide();
 
-		}else if(tipo_tarea == "notificacion_trabajos"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').show("slow");
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "notificacion_trabajos"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').show("slow");
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else{
-			$('#fecha-tarea').hide();
-			$('#titulo-tarea').hide();
-			$('#nota').hide();
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').hide();
-			$('#propiedad').hide();
-			$('#contacto').hide();
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').hide();
-		}
+        }else{
+            $('#fecha-tarea').hide();
+            $('#titulo-tarea').hide();
+            $('#nota').hide();
+            $('#nota-linea').hide();
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').hide();
+            $('#medio-solicitud-linea').hide();
+            $('#propiedad').hide();
+            $('#propiedad-linea').hide();
+            $('#contacto').hide();
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').hide();
+        }
 		
 		//ajax contactos por propiedad
 		$.ajaxSetup({

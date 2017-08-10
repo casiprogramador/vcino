@@ -37,11 +37,13 @@
                                 <button type="submit" class="btn btn-success block full-width m-b">Ingresar</button>
 
                                 <a href="#"><small>¿Olvidaste tu contraseña?</small></a>
+                                <!--
                                 <p class="text-center"><small>¿No tienes una cuenta?
                                 <a href="{{ url('/register') }}">Registrarse</a></small>.</p>
+                                -->
                             </form>
-                    <p class="m-t"> <small>Constantemente actualizado y mejorado por el equipo de Esfera SAAS.</small> </p>
-                    <p class="m-t"> <small>Esfera SAAS &copy; 2017</small> </p>
+                    <p class="m-t"> <small>Constantemente actualizado y mejorado por el equipo de Versión Digital.</small> </p>
+                    <p class="m-t"> <small>Versión Digital SAAS &copy; 2017</small> </p>
                 </div>
         </div>
     </div>

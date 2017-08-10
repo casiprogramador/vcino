@@ -33,7 +33,7 @@ class TaskTrackingController extends Controller
 		$company = Auth::user()->company;
 		$id_task = \Crypt::decrypt($id_task);
 		$task = Task::find($id_task);
-		$tasktrackings = TaskTracking::where('company_id',$company->id )->where('task_id',$id_task);
+		$tasktrackings = TaskTracking::where('company_id',$company->id )->where('task_id',$id_task)->orderBy('fecha', 'desc');
         return view('tasktrackings.create')
 			->with('task',$task)
 			->with('tasktrackings',$tasktrackings->get());
@@ -103,7 +103,7 @@ class TaskTrackingController extends Controller
 		$id_task = \Crypt::decrypt($id_task);
 		$id_tasktracking = \Crypt::decrypt($id_tasktracking);
 		$task = Task::find($id_task);
-		$tasktrackings = TaskTracking::where('company_id',$company->id )->where('task_id',$id_task);
+		$tasktrackings = TaskTracking::where('company_id',$company->id )->where('task_id',$id_task)->orderBy('fecha', 'desc');
 		$tasktracking = TaskTracking::find($id_tasktracking);
 		
         return view('tasktrackings.edit')

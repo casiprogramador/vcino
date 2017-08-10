@@ -12,7 +12,7 @@
                 Tareas & Solicitudes
             </li>
             <li>
-                <a href="#">Tareas</a>
+                <a href="{{ route('taskrequest.task.index') }}">Tareas</a>
             </li>
             <li class="active">
                 <strong>Seguimiento</strong>
@@ -51,25 +51,25 @@
                                 <p class="form-control-static">
 								
 								@if($task->tipo_tarea == 'mis_tareas')
-									MIS TAREAS
+									Mis tareas
 
 								@elseif($task->tipo_tarea =='solicitudes_recibidas')
-									SOLICITUDES RECIBIDAS
+									Solicitud recibida
 
 								@elseif($task->tipo_tarea =='reserva_instalaciones')
-									RESERVA DE INSTALACION
+									Reserva de instalación
 
 								@elseif($task->tipo_tarea =='reclamos')
-									RECLAMOS
+									Reclamo
 
 								@elseif($task->tipo_tarea =='sugerencias')
-									SUGERENCIAS
+									Sugerencia
 
 								@elseif($task->tipo_tarea =='notificacion_mudanza')
-									NOTIFICACION DE MUDANZA
+									Notificación de mudanza
 
 								@elseif($task->tipo_tarea =='notificacion_trabajos')
-									NOTIFICACION DE TRABAJO
+									Notificación de trabajo
 
 								@endif
 								</p>
@@ -82,22 +82,22 @@
 									Administración
 								@elseif($task->tipo_tarea =='solicitudes_recibidas')
 
-									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+									{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} 
 								@elseif($task->tipo_tarea =='reserva_instalaciones')
 
-									{{$task->taskreservation->contact->nombre}} {{$task->taskreservation->contact->apellido}} {{$task->taskreservation->property->nro}}
+									{{$task->taskreservation->property->nro}} - {{$task->taskreservation->contact->nombre}} {{$task->taskreservation->contact->apellido}} 
 								@elseif($task->tipo_tarea =='reclamos')
 						
-									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+									{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} 
 								@elseif($task->tipo_tarea =='sugerencias')
 									
-									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+									{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} 
 								@elseif($task->tipo_tarea =='notificacion_mudanza')
 								
-									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+									{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} 
 								@elseif($task->tipo_tarea =='notificacion_trabajos')
 					
-									{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}
+									{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} 
 								@endif
 								</p>
                             </div>
@@ -124,7 +124,7 @@
                     <div class="row">    
                     <div class="col-sm-12">
 
-						{!! Form::open(array('route' => array('taskrequest.tasktracking.update', Crypt::encrypt($tasktracking->id)),'method' => 'post' ,'class' => 'form-horizontal', 'files' => true)) !!}
+						{!! Form::open(array('route' => array('taskrequest.tasktracking.update', Crypt::encrypt($tasktracking->id)),'method' => 'post' ,'class' => 'form', 'files' => true)) !!}
 						<input type="hidden" name="task_id" value="{{$task->id}}">
                             <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
                                 <label class="font-normal">Fecha</label>
@@ -141,14 +141,14 @@
 
                             <div class="form-group">
                                 <label class="font-normal">Descripción</label>
-                                <div class="ibox-content no-padding">
+                                <div class="no-padding">
 									<textarea id="summernote" name="descripcion">{{$tasktracking->descripcion}}</textarea>
 								</div>
                             </div>
 
                             <div class="form-group">
                                 <label class="font-normal">Adjunto</label>
-                                <div id="adjunto-1" class="fileinput input-group {{!empty($tasktracking->adjunto) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
+                                <div id="adjunto" class="fileinput input-group {{!empty($tasktracking->adjunto) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
                                 <div class="form-control" data-trigger="fileinput">
                                     <i class="glyphicon glyphicon-file fileinput-exists"></i> 
                                     <span class="fileinput-filename">{{ (!empty($tasktracking->adjunto) ) ? MenuRoute::filename($tasktracking->adjunto) : "" }}</span>
@@ -163,24 +163,30 @@
                             </div>
                             </div>
 
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="checkbox checkbox-primary">
+                                <input id="checkbox2" type="checkbox" name="notificar" value="1" {{ $tasktracking->notificar == '1' ? 'checked' : '' }}>
+                                <label for="checkbox2">
+                                    Notificar respuesta
+                                </label>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
                             <div class="form-group" style="margin-top: 20px;">
                                 <label class="font-normal">Creado por:&nbsp;&nbsp;</label>
                                     <span style="font-weight: normal;">{{ Auth::user()->nombre }}</span>
                                 </label>
                             </div>
 
-                            <div class="form-group">
-                                <label class="font-normal">
-                                <div class="icheckbox_square-green" style="position: relative;">
-                                    <input type="checkbox" class="i-checks" name="notificar" value="1" {{ $tasktracking->notificar == '1' ? 'checked' : '' }}>
-                                </div>&nbsp;&nbsp;&nbsp;Notificar respuesta</label>
-                            </div>
-
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group">
-                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Editar seguimiento</button>
+                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Grabar</button>
+                                <button class="btn btn-danger" type="submit" style="margin-right: 10px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
                             </div>
+
                         {!! Form::close() !!}
                     </div>
                     </div>
@@ -203,22 +209,22 @@
 									Administración
 								@elseif($tasktracking->task->tipo_tarea =='solicitudes_recibidas')
 
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='reserva_instalaciones')
 
-									{{$tasktracking->task->taskreservation->contact->nombre}} {{$tasktracking->task->taskreservation->contact->apellido}} {{$tasktracking->task->taskreservation->property->nro}}
+									{{$tasktracking->task->taskreservation->property->nro}} - {{$tasktracking->task->taskreservation->contact->nombre}} {{$tasktracking->task->taskreservation->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='reclamos')
 						
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='sugerencias')
 									
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='notificacion_mudanza')
 								
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='notificacion_trabajos')
 					
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@endif
                             </h5>
                             <h5 class="pull-right" style="margin-right: 10px;">{{date_format(date_create($tasktracking->fecha),'d/m/Y')}}</h5>
@@ -228,7 +234,6 @@
                             <div class="col-sm-12">
                                 <form role="form">
                                     <div class="form-group">
-                                        <label class="font-normal">Descripción</label>
                                         <?php echo $tasktracking->descripcion ?>
                                     </div>
 
@@ -237,26 +242,45 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="file-box">
+
+                                                <?php
+                                                $filename = explode("-name-", $tasktracking->adjunto);
+                                                $ext_array = explode(".", $tasktracking->adjunto);
+                                                $ext = end($ext_array);
+                                                ?>
+
+                                                @if($ext == 'jpg' || $ext == 'png')
                                                 <div class="file">
-                                                    <a href="#">
-                                                        <div class="image">
-                                                            <img alt="image" class="img-responsive" src="{{ $tasktracking->adjunto }}">
+                                                    <div class="image">
+                                                        <a href="{{ URL::asset($tasktracking->adjunto)}}" target="_blank">
+                                                        <img alt="image" class="img-responsive" src="{{ $tasktracking->adjunto }}">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                @else
+                                                <div class="file">
+                                                    <a href="{{ URL::asset($tasktracking->adjunto)}}" target="_blank">
+                                                        <h5 class="text-center"><i class="fa fa-file fa-2x"></i></h5>
+                                                        <div class="caption">
+                                                        <h5 class="text-center">{{$filename[1]}}</h5>
                                                         </div>
                                                     </a>
                                                 </div>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
-									@endif
                                     <div class="hr-line-dashed"></div>
+									@endif
 
-                                    <div class="form-group" style="margin-top: 20px;">
-                                        <label class="font-normal">
-                                        <div class="icheckbox_square-green" style="position: relative;">
-                                            <input type="checkbox" class="i-checks" name="activa" value="1" style="position: absolute; opacity: 0;" {{ ($tasktracking->notificar == 1) ? 'checked' : '' }} disabled="disabled">
-                                        </div>&nbsp;&nbsp;&nbsp;Notificar respuesta</label>
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="checkbox2" type="checkbox" name="activa" value="1" {{ ($tasktracking->notificar == 1) ? 'checked' : '' }} disabled="disabled">
+                                        <label for="checkbox2">
+                                            Notificar respuesta
+                                        </label>
                                     </div>
-                                    
+
                                     <div class="hr-line-dashed"></div>
 
                                     <div class="form-group">
@@ -288,14 +312,13 @@
 <script>
 	$(document).ready(function(){
 		$('#summernote').summernote({
-			height: 300,
+			height: 250,
 			toolbar: [
 			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline']],
 			    ['color', ['color']],
 			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['insert', ['hr']],
-			    ['view', ['codeview']],
 			    ['help', ['help']]
 			],
 		});
@@ -308,10 +331,6 @@
 				}
 			});
 		
-		$('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
 		$('#adjunto').on('clear.bs.fileinput', function(event) {
 			$('#adjunto-ori').val('');
 		});

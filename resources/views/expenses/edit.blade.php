@@ -215,7 +215,7 @@
 					dia = fecha_pago.getDate();
 					var fecha_pago_format = ("0" + dia).slice(-2)+"/"+("0" + mes).slice(-2)+"/"+fecha_pago.getFullYear();
 					//console.log(fecha_pago);
-					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.razon_social+'</td><td>'+expense.concepto+'</td><td>'+expense.forma_pago+'</td><td class="text-right">'+expense.importe_debito+'</td></tr>';
+					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.razon_social+'</td><td>'+expense.concepto+'</td><td style="text-transform: capitalize;">'+expense.forma_pago+'</td><td class="text-right">'+expense.importe_debito+'</td></tr>';
 					table_gastos.append(trHtml);
 				})
 			}

@@ -11,6 +11,9 @@
             <li>
                 Tareas & Solicitudes
             </li>
+            <li>
+                <a href="{{ route('taskrequest.task.index') }}">Tareas</a>
+            </li>
             <li class="active">
                 <strong>Lista de seguimiento a tareas</strong>
             </li>
@@ -43,54 +46,51 @@
                         <tbody>
 							@foreach ($tasktrackings as $tasktracking)
                             <tr>
-                                <td>{{ date_format(date_create($tasktracking->fecha),'d/m/Y') }}</td>
+                                <td data-order="{{ $tasktracking->fecha }}">{{ date_format(date_create($tasktracking->fecha),'d/m/Y') }}</td>
                                 <td>{{$tasktracking->task->titulo_tarea}} ({{date_format(date_create($tasktracking->task->fecha),'d/m/Y')}})</td>
                                 <td>
 								@if($tasktracking->task->tipo_tarea == 'mis_tareas')
-									MIS TAREAS
+									Mis tareas
 
 								@elseif($tasktracking->task->tipo_tarea =='solicitudes_recibidas')
-									SOLICITUDES RECIBIDAS
+									Solicitudes recibidas
 
 								@elseif($tasktracking->task->tipo_tarea =='reserva_instalaciones')
-									RESERVA DE INSTALACION
+									Reserva de instalación
 
 								@elseif($tasktracking->task->tipo_tarea =='reclamos')
-									RECLAMOS
+									Reclamo
 
 								@elseif($tasktracking->task->tipo_tarea =='sugerencias')
-									SUGERENCIAS
+									Sugerencia
 
 								@elseif($tasktracking->task->tipo_tarea =='notificacion_mudanza')
-									NOTIFICACION DE MUDANZA
+									Notificación de mudanza
 
 								@elseif($tasktracking->task->tipo_tarea =='notificacion_trabajos')
-									NOTIFICACION DE TRABAJO
-
+									Notificación de trabajo
 								@endif
 								</td>
                                 <td>
 								@if($tasktracking->task->tipo_tarea == 'mis_tareas')
-
 									Administración
 								@elseif($tasktracking->task->tipo_tarea =='solicitudes_recibidas')
-
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}}
 								@elseif($tasktracking->task->tipo_tarea =='reserva_instalaciones')
 
-									{{$tasktracking->task->taskreservation->contact->nombre}} {{$tasktracking->task->taskreservation->contact->apellido}} {{$tasktracking->task->taskreservation->property->nro}}
+									{{$tasktracking->task->taskreservation->property->nro}} - {{$tasktracking->task->taskreservation->contact->nombre}} {{$tasktracking->task->taskreservation->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='reclamos')
 						
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='sugerencias')
 									
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='notificacion_mudanza')
 								
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@elseif($tasktracking->task->tipo_tarea =='notificacion_trabajos')
 					
-									{{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} {{$tasktracking->task->taskrequest->property->nro}}
+									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
 								@endif
 								</td>
                                 <td style="vertical-align:middle; text-align:right;">
@@ -116,6 +116,49 @@
 
 </div>
 
-
-
 @endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
+
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados.",
+                    "sEmptyTable":     "No se encontraron tareas.",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "order": [[ 0, "desc" ]],
+                "pageLength": 100,
+                "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
+                "bLengthChange" : false,
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 4 } ]
+            });
+        } );
+    </script>
+@endsection
+
