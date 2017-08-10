@@ -12,7 +12,7 @@
                 Tareas & Solicitudes
             </li>
             <li>
-                <a href="#">Tareas</a>
+                <a href="{{ route('taskrequest.task.index') }}">Tareas</a>
             </li>
             <li class="active">
                 <strong>Duplicar tarea</strong>
@@ -322,7 +322,7 @@
                         <label class="col-sm-2 control-label">Hora hasta</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_final),'H:i') }}">
+                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_fin),'H:i') }}">
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Empresa Nueva</div>
+                    <div class="panel-heading">Nuevo condominio</div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/company') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
@@ -23,7 +23,7 @@
 							</div>
 
                             <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-3 control-label">Nombre Empresa</label>
+                                <label for="name" class="col-md-3 control-label">Nombre condominio</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-3 control-label">Direccion</label>
+                                <label for="name" class="col-md-3 control-label">Dirección</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}">
@@ -51,7 +51,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-3 control-label">Telefono Empresa</label>
+                                <label for="name" class="col-md-3 control-label">Teléfono</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="telefono" value="{{ old('telefono') }}">
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('dias_mora') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-3 control-label">Dias de mora</label>
+                                <label for="name" class="col-md-3 control-label">Días de mora</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="dias_mora" value="{{ old('dias_mora') }}">
@@ -78,14 +78,14 @@
                                 </div>
                             </div>
 							<div class="form-group{{ $errors->has('dias_mora') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-3 control-label">Pago:</label>
+                                <label for="name" class="col-md-3 control-label">Forma de pago</label>
 
                                 <div class="col-md-6">
                                     {{ Form::select('pago',array('prepago' => 'Prepago', 'postpago' => 'Postpago'),old('prepago'),['class' => 'form-control input-sm']) }}
                                 </div>
                             </div>
 							<div class="form-group{{ $errors->has('email_prueba') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-3 control-label">Email para pruebas:</label>
+                                <label for="name" class="col-md-3 control-label">E-mail para pruebas</label>
 
                                 <div class="col-md-6">
                                     <input id="email-prueba" type="text" class="form-control" name="email_prueba" value="{{ old('email_prueba') }}">
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 							<div class="form-group{{ $errors->has('forma_pago') ? ' has-error' : '' }}">
-								<label class="col-sm-3 control-label">Forma de Pago:</label>
+								<label class="col-sm-3 control-label">Descripción para forma de Pago</label>
 								<div class="col-sm-9">
 									<div class="no-padding">
 										<textarea id="summernote" name="forma_pago"></textarea>
@@ -113,8 +113,8 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-btn fa-user"></i> Registrar
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa fa-btn fa-user"></i> Crear condominio
                                     </button>
                                 </div>
                             </div>

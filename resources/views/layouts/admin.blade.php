@@ -8,11 +8,11 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <a href="{{ route('admin.home') }}">
-                            <img src="{{ URL::asset('img/system/logo.png')}}" width="70" />
+                            <img src="{{ URL::asset('img/system/logo.png')}}" width="100" />
                         </a>
                     </div>
                     <div class="logo-element" style="font-size: 14px;">
-                        XPENSA
+                        <img src="{{ URL::asset('img/system/logo-h.png')}}" width="30" />
                     </div>
                 </li>
 
@@ -54,7 +54,7 @@
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('communication/communication') }}"><a href="{{ route('communication.communication.index') }}">Comunicados</a></li>
 						<li class="{{ MenuRoute::active('communication/phonesite') }}"><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
-                        <li class=""><a href="">Directorio de documentos</a></li>
+                        <li class="{{ MenuRoute::active('communication/document') }}"><a href="{{ route('communication.document.index') }}">Directorio de documentos</a></li>
                     </ul>
                 </li>
                 <li {!! (Request::is('properties/*') ? ' class="active"' : '') !!}>
@@ -126,10 +126,10 @@
         @yield('admin-content')
         <div class="footer">
             <div class="pull-right">
-                <span style="color: #ccc">v1.2</span>
+                <span style="color: #ccc">v1.3</span>
             </div>
             <div>
-                <strong></strong><span style="color: #ccc">&copy; 2017 ESFERA SAAS</span>
+                <strong></strong><span style="color: #ccc">&copy; 2017 Versión Digital</span>
             </div>
         </div>
     </div>

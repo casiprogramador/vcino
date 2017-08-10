@@ -12,7 +12,7 @@
                 Tareas & Solicitudes
             </li>
             <li>
-                <a href="#">Tareas</a>
+                <a href="{{ route('taskrequest.task.index') }}">Tareas</a>
             </li>
             <li class="active">
                 <strong>Editar tarea</strong>
@@ -58,8 +58,6 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}" id="fecha-tarea">
                         <label class="col-sm-2 control-label">Fecha</label>
                         <div class="col-sm-3">
@@ -85,13 +83,13 @@
                     <div class="form-group" id="nota">
 						<label class="col-sm-2 control-label">Nota</label>
                         <div class="col-sm-10">
-                            <div class="ibox-content no-padding">
+                            <div class="no-padding">
                                 <textarea id="summernote" name="nota">{{$task->nota}}</textarea>
                             </div>
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="nota-linea"></div>
 
                     <div class="form-group" id="prioridad">
                         <label class="col-sm-2 control-label">Prioridad</label>
@@ -155,7 +153,8 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="medio-solicitud-linea"></div>
+
 					@if($task->tipo_tarea =='solicitudes_recibidas' ||
 					$task->tipo_tarea =='solicitudes_recibidas' ||
 					$task->tipo_tarea =='reclamos' ||
@@ -167,7 +166,7 @@
 					<div class="form-group{{ $errors->has('propiedad') ? ' has-error' : '' }}" id="propiedad">
                         <label class="col-sm-2 control-label">Propiedad</label>
                         <div class="col-sm-3">
-                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->taskrequest->property->id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
+                            {{ Form::select('propiedad',['0'=>'Seleccione una propiedad']+$properties, $task->taskrequest->property->id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
 							@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -188,7 +187,7 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="propiedad-linea"></div>
 
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
@@ -206,7 +205,7 @@
 					<div class="form-group{{ $errors->has('propiedad') ? ' has-error' : '' }}" id="propiedad">
                         <label class="col-sm-2 control-label">Propiedad</label>
                         <div class="col-sm-3">
-                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->taskreservation->property->id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
+                            {{ Form::select('propiedad',['0'=>'Seleccione una propiedad']+$properties, $task->taskreservation->property->id, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
 							@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -227,12 +226,12 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="propiedad-linea"></div>
 
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',['0'=>'Selecciona una instalacion']+$installations,$task->taskreservation->installation->id, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
+                           {{ Form::select('instalacion',['0'=>'Seleccione una instalación']+$installations,$task->taskreservation->installation->id, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -244,7 +243,7 @@
 					<div class="form-group{{ $errors->has('propiedad') ? ' has-error' : '' }}" id="propiedad">
                         <label class="col-sm-2 control-label">Propiedad</label>
                         <div class="col-sm-3">
-                            {{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $task->propiedad, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
+                            {{ Form::select('propiedad',['0'=>'Seleccione una propiedad']+$properties, $task->propiedad, ['class' => 'form-control input-sm','id'=>'propiedades']) }}
 							@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
@@ -267,12 +266,10 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',['0'=>'Selecciona una instalacion']+$installations,$task->instalacion, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
+                           {{ Form::select('instalacion',['0'=>'Seleccione una instalación']+$installations,$task->instalacion, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -289,7 +286,7 @@
 							
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control input-sm date-picker" name="fecha_requerida" value="{{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}">
+                                <input type="text" class="form-control input-sm date-picker-2" name="fecha_requerida" value="{{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}">
 							@if ($errors->has('fecha_requerida'))
 								<span class="help-block">
 									<strong>{{ $errors->first('fecha_requerida') }}</strong>
@@ -322,7 +319,7 @@
                         <label class="col-sm-2 control-label">Hora hasta</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_final),'H:i') }}">
+                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_fin),'H:i') }}">
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
@@ -348,8 +345,6 @@
 						@endif
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group" id="adjuntos">
                         <label class="col-sm-2 control-label">Adjuntos</label>
                         <div class="col-sm-8">
@@ -367,7 +362,6 @@
                                 </span>
                                 <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                             </div>
-
 
                             <!--    Para el caso de mas de un attach        -->
                             <div id="adjunto-2" class="fileinput input-group {{!empty($task->documento_2) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
@@ -402,6 +396,7 @@
                     </div>
 
                     <div class="hr-line-dashed"></div>
+
 					<div class="form-group">
                         <label class="col-sm-2 control-label">Estado</label>
                         <div class="col-sm-8">
@@ -415,13 +410,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="hr-line-dashed"></div>
+
                     <div class="form-group">
                         <div class="col-sm-12">
                             <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                             <a href="{{ route('taskrequest.task.index') }}" class="btn btn-white">Cancelar</a>
                         </div>
                     </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button class="btn btn-danger" type="submit" style="margin-right: 10px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
+                        </div>
+                    </div>
                     {!! Form::close() !!}
+
                 </div>
             </div>
         </div>
@@ -443,135 +450,160 @@
 	$(document).ready(function(){
 		
 		tipo_tarea = $('#tipo-tarea option:selected').val();
-		
-		if(tipo_tarea == "mis_tareas"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').show("slow");
-			$('#frecuencia').show("slow");
-			$('#medio-solicitud').hide();
-			$('#propiedad').hide();
-			$('#contacto').hide();
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        console.log(tipo_tarea);
+        
+        if(tipo_tarea == "mis_tareas"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').show("slow");
+            $('#frecuencia').show("slow");
+            $('#medio-solicitud').hide();
+            $('#medio-solicitud-linea').hide();
+            $('#propiedad').hide();
+            $('#propiedad-linea').hide();
+            $('#contacto').hide();
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "solicitudes_recibidas"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').show("slow");
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "solicitudes_recibidas"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').show("slow");
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "reserva_instalaciones"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').show("slow");
-			$('#fecha-requerida').show("slow");
-			$('#hora-inicio').show("slow");
-			$('#hora-final').show("slow");
-			$('#costo').show("slow");
-			$('#adjuntos').hide();
+        }else if(tipo_tarea == "reserva_instalaciones"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').show("slow");
+            $('#fecha-requerida').show("slow");
+            $('#hora-inicio').show("slow");
+            $('#hora-final').show("slow");
+            $('#costo').show("slow");
+            $('#adjuntos').hide();
 
-		}else if(tipo_tarea == "reclamos"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').show("slow");
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "reclamos"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').show("slow");
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "sugerencias"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "sugerencias"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else if(tipo_tarea == "notificacion_mudanza"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').show("slow");
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').hide();
+        }else if(tipo_tarea == "notificacion_mudanza"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').show("slow");
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').hide();
 
-		}else if(tipo_tarea == "notificacion_trabajos"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').show("slow");
-			$('#propiedad').show("slow");
-			$('#contacto').show("slow");
-			$('#instalacion').hide();
-			$('#fecha-requerida').show("slow");
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+        }else if(tipo_tarea == "notificacion_trabajos"){
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#nota-linea').show("slow");
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').show("slow");
+            $('#medio-solicitud-linea').show("slow");
+            $('#propiedad').show("slow");
+            $('#propiedad-linea').show("slow");
+            $('#contacto').show("slow");
+            $('#instalacion').hide();
+            $('#fecha-requerida').show("slow");
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
 
-		}else{
-			$('#fecha-tarea').hide();
-			$('#titulo-tarea').hide();
-			$('#nota').hide();
-			$('#prioridad').hide();
-			$('#frecuencia').hide();
-			$('#medio-solicitud').hide();
-			$('#propiedad').hide();
-			$('#contacto').hide();
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').hide();
-		}
+        }else{
+            $('#fecha-tarea').hide();
+            $('#titulo-tarea').hide();
+            $('#nota').hide();
+            $('#nota-linea').hide();
+            $('#prioridad').hide();
+            $('#frecuencia').hide();
+            $('#medio-solicitud').hide();
+            $('#medio-solicitud-linea').hide();
+            $('#propiedad').hide();
+            $('#propiedad-linea').hide();
+            $('#contacto').hide();
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').hide();
+        }
 		
 		//ajax contactos por propiedad
 		$.ajaxSetup({
@@ -602,12 +634,20 @@
 			}, 'json');
 		});
 
-		$('.date-picker').datetimepicker({
+        $('.date-picker').datetimepicker({
+            locale:'es',
+            format: 'DD/MM/YYYY',
+                widgetPositioning: {
+                horizontal: 'left',
+                        vertical: 'bottom'
+                }
+        });
+    		$('.date-picker-2').datetimepicker({
 			locale:'es',
 			format: 'DD/MM/YYYY',
 				widgetPositioning: {
 				horizontal: 'left',
-						vertical: 'bottom'
+						vertical: 'top'
 				}
 		});
 		
@@ -615,11 +655,11 @@
             format: 'HH:mm',
 			widgetPositioning: {
 			horizontal: 'left',
-				vertical: 'bottom'
+				vertical: 'top'
 			}
         });
 		$('#summernote').summernote({
-			height: 300,
+			height: 250,
 			toolbar: [
 			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline']],

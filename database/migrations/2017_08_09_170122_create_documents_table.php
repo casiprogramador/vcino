@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaskTrackingsTable extends Migration
+class CreateDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,13 @@ class CreateTaskTrackingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('task_trackings', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
 			$table->date('fecha');
-			$table->text('descripcion')->nullable();
-			$table->string('adjunto')->nullable();
-			$table->tinyInteger('notificar')->default(0);
-			$table->integer('task_id')->unsigned();
-            $table->foreign('task_id')->references('id')->on('tasks');
+			$table->string('nombre');
+			$table->string('archivo')->nullable();
+			$table->string('size');
+			$table->string('type');
 			$table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
@@ -33,6 +32,6 @@ class CreateTaskTrackingsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('task_trackings');
+        Schema::drop('documents');
     }
 }

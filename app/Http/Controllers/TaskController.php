@@ -27,7 +27,7 @@ class TaskController extends Controller
     public function index()
     {
 		$company = Auth::user()->company;
-		$tasks = Task::where('company_id',$company->id );
+		$tasks = Task::where('company_id',$company->id )->where('estado_solicitud','!=','completada')->orderBy('prioridad', 'asc');
          return view('tasks.index')
 		->with('tasks',$tasks->get());
     }
@@ -41,7 +41,7 @@ class TaskController extends Controller
     {
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
-		$installations = Installation::where('company_id',$company->id )->lists('instalacion','id')->all();
+		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1' )->lists('instalacion','id')->all();
         return view('tasks.create')
 		->with('properties',$properties)
 		->with('installations',$installations);
@@ -213,7 +213,8 @@ class TaskController extends Controller
 		$task->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$task->titulo_tarea = $request->titulo_tarea;
 		$task->tipo_tarea = $request->tipo_tarea;
-		$task->estado_solicitud = 'pendiente';
+		$task->estado_solicitud = $request->tarea_estado;
+		//$task->estado_solicitud = 'pendiente';
 		$task->nota = $request->nota;
 		$task->medio_solicitud = $request->medio_solicitud;
 		$task->prioridad = $request->prioridad;
@@ -265,7 +266,7 @@ class TaskController extends Controller
 		$task = Task::find($id);
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
-		$installations = Installation::where('company_id',$company->id )->lists('instalacion','id')->all();
+		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1')->lists('instalacion','id')->all();
 		if($task->tipo_tarea =='solicitudes_recibidas' ||
 		$task->tipo_tarea =='solicitudes_recibidas' ||
 		$task->tipo_tarea =='reclamos' ||
@@ -304,7 +305,7 @@ class TaskController extends Controller
 		$task = Task::find($id);
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
-		$installations = Installation::where('company_id',$company->id )->lists('instalacion','id')->all();
+		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1')->lists('instalacion','id')->all();
 		if($task->tipo_tarea =='solicitudes_recibidas' ||
 		$task->tipo_tarea =='solicitudes_recibidas' ||
 		$task->tipo_tarea =='reclamos' ||

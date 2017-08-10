@@ -79,7 +79,6 @@
                     </div>
                 </div>
 
-
                 <!--        Lista todas las tereas EN PROCESO y PENDIENTES              -->
                 <!--        El orden de la mas nueva a la más antigua                   -->
 
@@ -87,7 +86,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th style="vertical-align:bottom; width: 30px;"></th>
+                                <th style="vertical-align:bottom; width: 20px;"></th>
                                 <th style="vertical-align:bottom">Estado</th>
                                 <th style="vertical-align:bottom">Fecha Sol.</th>
                                 <th style="vertical-align:bottom">Tarea</th>
@@ -100,7 +99,7 @@
 
                             <tr>
 								@foreach ($tasks as $task)
-                                <td>
+                                <td data-order="{{ $task->prioridad }}">
 									@if($task->prioridad == 'alta')
 									<i class="fa fa-exclamation-circle fa-lg text-danger" aria-hidden="true"></i>
 									@endif
@@ -114,29 +113,29 @@
 									<span class="label label-primary" style="font-size: 9px; background-color: #5CBD7E">COMPLETADA</span>
 									@endif
                                 </td>
-                                <td>{{ date_format(date_create($task->fecha),'d/m/Y') }}</td>
+                                <td data-order="{{ $task->fecha }}">{{ date_format(date_create($task->fecha),'d/m/Y') }}</td>
                                 <td>{{$task->titulo_tarea}}</td>
 								@if($task->tipo_tarea == 'mis_tareas')
-									<td>MIS TAREAS</td>
+									<td>Mis tareas</td>
 									<td>Administración</td>
 								@elseif($task->tipo_tarea =='solicitudes_recibidas')
-									<td>SOLICITUDES RECIBIDAS</td>
-									<td>{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}</td>
+									<td>Solicitud recibida</td>
+									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='reserva_instalaciones')
-									<td>RESERVA DE INSTALACION</td>
-									<td>{{$task->taskreservation->contact->nombre}} {{$task->taskreservation->contact->apellido}} {{$task->taskreservation->property->nro}}</td>
+									<td>Reserva de instalación</td>
+									<td>{{$task->taskreservation->property->nro}} - {{$task->taskreservation->contact->nombre}} {{$task->taskreservation->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='reclamos')
-									<td>RECLAMOS</td>
-									<td>{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}</td>
+									<td>Reclamo</td>
+									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='sugerencias')
-									<td>SUGERENCIAS</td>
-									<td>{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}</td>
+									<td>Sugerencia</td>
+									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='notificacion_mudanza')
-									<td>NOTIFICACION DE MUDANZA</td>
-									<td>{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}</td>
+									<td>Notificación de mudanza</td>
+									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='notificacion_trabajos')
-									<td>NOTIFICACION DE TRABAJO</td>
-									<td>{{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}} {{$task->taskrequest->property->nro}}</td>
+									<td>Notificación de trabajo</td>
+									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@endif
                                 
                                 <td style="vertical-align:middle; text-align:right;">
@@ -162,7 +161,6 @@
                                </td>
                             </tr>
 							@endforeach
-                            
 
                         </tbody>
                     </table>
@@ -175,6 +173,50 @@
 
 </div>
 
-
-
 @endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
+
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados.",
+                    "sEmptyTable":     "No se encontraron tareas.",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "order": [[ 0, "asc" ], [ 2, "desc" ]],
+                "pageLength": 100,
+                "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
+                "bLengthChange" : false,
+                "info":     false,
+                "columnDefs": [ { "orderable": false, "targets": 1 }, { "orderable": false, "targets": 6 } ]
+            });
+        } );
+    </script>
+@endsection
+
+

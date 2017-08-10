@@ -147,13 +147,13 @@
 													{{ ' Diciembre' }}/{{ $gestiones[$i] }}
 												@endif
 											</td>
-                                            <td style="border-top: #D6D6D6 1px solid; text-align: right; padding: 5px 0;">{{money_format('%i', $importes[$i] ) }}</td>
+                                            <td style="border-top: #D6D6D6 1px solid; text-align: right; padding: 5px 0;">{{ number_format($importes[$i], 2, '.', '.') }}</td>
                                         </tr>
 										@endfor
 
                                         <tr style="font-size: 16px;">
                                             <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total</td>
-                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 5px 0;">{{ $sendalertpayment->importe_total }}</td>
+                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 5px 0;">{{ number_format($sendalertpayment->importe_total, 2, '.', '.') }}</td>
                                         </tr>
                                     </table>
                                 </td>

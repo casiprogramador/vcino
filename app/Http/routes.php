@@ -46,6 +46,7 @@ Route::group(['prefix' => 'equipment'], function () {
 Route::group(['prefix' => 'communication'], function () {
     Route::resource('phonesite', 'PhonesiteController');
     Route::resource('communication', 'CommunicationController');
+	Route::resource('document', 'DocumentController');
     Route::get('/send/{id}', [
         'as' => 'communication.communication.send', 'uses' => 'CommunicationController@send'
     ]);

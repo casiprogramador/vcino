@@ -114,7 +114,7 @@
 										<td>{{ $accountsreceivable->periodo }}</td>
 										<td>{{ $accountsreceivable->quota->cuota }}</td>
 										<td data-order="{{ $accountsreceivable->fecha_vencimiento }}">{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
-										<td class="text-right" style="padding-right: 30px;">{{ $accountsreceivable->importe_por_cobrar }}</td>
+										<td class="text-right" style="padding-right: 30px;">{{ number_format($accountsreceivable->importe_por_cobrar, 2, '.', '.') }}</td>
 										<td>
 											<i class="fa fa-lg fa-check-square text-primary"></i>
 										</td>
@@ -150,7 +150,7 @@
 										<td>{{ $accountsreceivable->periodo }}</td>
 										<td>{{ $accountsreceivable->quota->cuota }}</td>
 										<td data-order="{{ $accountsreceivable->fecha_vencimiento }}">{{ date_format(date_create($accountsreceivable->fecha_vencimiento),'d/m/Y') }}</td>
-										<td class="text-right" style="padding-right: 30px;">{{ $accountsreceivable->importe_por_cobrar }}</td>
+										<td class="text-right" style="padding-right: 30px;">{{ number_format($accountsreceivable->importe_por_cobrar, 2, '.', '.') }}</td>
 										<td>
 											<i class="fa fa-lg fa-square-o text-muted"></i>
 										</td>

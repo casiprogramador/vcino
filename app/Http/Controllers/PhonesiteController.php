@@ -69,7 +69,7 @@ class PhonesiteController extends Controller
         $phonesite->company_id = $company->id;
 
         $phonesite->save();
-        Session::flash('message', 'Nuevo télefono o sitio de interés registrado correctamente.');
+        Session::flash('message', 'Nuevo teléfono o sitio de interés registrado correctamente.');
         return redirect()->route('communication.phonesite.index');
     }
 

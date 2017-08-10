@@ -82,7 +82,7 @@
 
                         	<div class="row">
     	                    	<div class="col-sm-12">
-    	                    		<h3>Cuenta: {{$cuenta->nombre}} {{$cuenta->nro_cuenta}}</h3>
+    	                    		<h3>Cuenta: {{$cuenta->nombre}}</h3>
     	                    	</div>
     	                    </div>
 
@@ -121,7 +121,7 @@
                             </div>
 
                         </div>
-                    </tbody>
+                        </div>
 
                     <div class="row sec-volver">
                         <div class="col-sm-12">
