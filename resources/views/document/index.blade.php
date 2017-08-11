@@ -86,10 +86,14 @@
                                 <td style="vertical-align: middle;">{{strtoupper($document->type)}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Descargar documento">
+
+										<a href="{{ URL::asset($document->archivo)}}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver equipo" target="_blank">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                        <a href="{{ URL::asset($document->archivo)}}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Descargar documento" download>
                                             <i class="fa fa-download"></i>
                                         </a>
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro de documento">
+                                        <a href="{{ route('communication.document.edit', $document->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro de documento">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>

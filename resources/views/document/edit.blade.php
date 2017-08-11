@@ -16,7 +16,7 @@
                 <a href="#">Directorio de documentos</a>
             </li>
             <li class="active">
-                <strong>Subir documento</strong>
+                <strong>Editar documento</strong>
             </li>
         </ol>
     </div>
@@ -29,16 +29,16 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Subir documento</h5>
+                    <h5 style="padding-top: 2px;">Editar documento</h5>
                 </div>
 
                 <div class="ibox-content">
-                     {!! Form::open(array('route' => 'communication.document.store', 'class' => 'form-horizontal', 'files' => true)) !!}
+					 {!! Form::open(array('route' => array('communication.document.update', $document->id),'method' => 'patch' ,'class' => 'form-horizontal', 'files' => true)) !!}
 
                     <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
 						<label class="col-sm-2 control-label">Nombre documento</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control input-sm" name="nombre" value="{{old('nombre')}}">
+                            <input type="text" class="form-control input-sm" name="nombre" value="{{$document->nombre}}">
 							@if ($errors->has('nombre'))
 								<span class="help-block">
 									<strong>{{ $errors->first('nombre') }}</strong>
@@ -52,7 +52,7 @@
                         <div class="col-sm-3">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date('d/m/Y') }}">
+                                <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{date('d/m/Y', strtotime($document->fecha)) }}">
 								@if ($errors->has('fecha'))
 									<span class="help-block">
 											<strong>{{ $errors->first('fecha') }}</strong>
@@ -67,16 +67,18 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Archivo</label>
                         <div class="col-sm-8">
-
-                            <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                            <div id="archivo" class="fileinput input-group {{!empty($document->archivo) ? 'fileinput-exists'  : 'fileinput-new'}}" data-provides="fileinput">
                                 <div class="form-control" data-trigger="fileinput">
                                     <i class="glyphicon glyphicon-file fileinput-exists"></i> 
-                                    <span class="fileinput-filename"></span>
+                                    <span class="fileinput-filename">{{ (!empty($document->archivo) ) ? MenuRoute::filename($document->archivo) : "" }}</span>
                                 </div>
                                 <span class="input-group-addon btn btn-default btn-file">
                                     <span class="fileinput-new">Seleccionar archivo...</span>
                                     <span class="fileinput-exists">Cambiar</span>
-                                    <input type="hidden" value=""><input type="file" name="archivo">
+                                    <input type="hidden" id="archivo-ori" name="archivo_ori" value="{{ (isset($document->archivo) ) ? $document->archivo : '' }}">
+									<input type="hidden"name="size" value="{{ $document->size }}">
+									<input type="hidden"name="type" value="{{ $document->type }}">
+									<input type="file" name="archivo">
                                 </span>
                                 <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                             </div>
@@ -99,7 +101,13 @@
                     </div>
                     {!! Form::close() !!}
 
-                    
+                    <!--        SOLO PARA LA EDICIÓN SE ADICIONA EL BOTON Eliminar-->
+					{!! Form::open(['route' => ['communication.document.destroy', $document->id], 'method' => 'delete']) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar este documento?')"]) !!}
+					{!! Form::close() !!}
+                    <div class="hr-line-dashed"></div>
+
+              
 
                 </div>
             </div>
@@ -115,6 +123,9 @@
 
 	$('.date-picker').datetimepicker({
 		format: 'DD/MM/YYYY'
+	});
+	$('#archivo').on('clear.bs.fileinput', function(event) {
+			$('#archivo-ori').val('');
 	});
 </script>
 @endsection
