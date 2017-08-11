@@ -117,12 +117,12 @@ class DocumentController extends Controller
             'nombre' => 'required',
             'fecha' => 'required'
         ]);
-		$id = Auth::user()->id;
+		$id_user = Auth::user()->id;
         $company = Auth::user()->company;
 		if(!empty($request->archivo)){
             $file = $request->file('archivo');
             $tmpFilePathDoc = '/img/upload/documentos/';
-            $tmpFileNameDoc = time() .'-'. 'document'.'-'.$id. '-name-' . $file->getClientOriginalName();
+            $tmpFileNameDoc = time() .'-'. 'document'.'-'.$id_user. '-name-' . $file->getClientOriginalName();
             $file->move(public_path() . $tmpFilePathDoc, $tmpFileNameDoc);
 			//dd($file->getClientSize());
             $path = $tmpFilePathDoc . $tmpFileNameDoc;
