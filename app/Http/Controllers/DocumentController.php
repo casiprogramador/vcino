@@ -49,13 +49,13 @@ class DocumentController extends Controller
             'fecha' => 'required',
             'archivo' => 'required'
         ]);
-		//dd($request);
+
 		$id = Auth::user()->id;
         $company = Auth::user()->company;
         if(!empty($request->archivo)){
             $file = $request->file('archivo');
             $tmpFilePathDoc = '/img/upload/documentos/';
-            $tmpFileNameDoc = time() .'-'. 'document'.'-'.$id. '-' . $file->getClientOriginalName();
+            $tmpFileNameDoc = time() .'-'. 'document'.'-'.$id. '-name-' . $file->getClientOriginalName();
             $file->move(public_path() . $tmpFilePathDoc, $tmpFileNameDoc);
 			//dd($file->getClientSize());
             $path = $tmpFilePathDoc . $tmpFileNameDoc;
@@ -99,7 +99,9 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-        //
+		
+		$document = Document::find($id);
+        return view('document.edit')->with('document',$document);
     }
 
     /**
@@ -111,7 +113,39 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		$this->validate($request, [
+            'nombre' => 'required',
+            'fecha' => 'required'
+        ]);
+		$id = Auth::user()->id;
+        $company = Auth::user()->company;
+		if(!empty($request->archivo)){
+            $file = $request->file('archivo');
+            $tmpFilePathDoc = '/img/upload/documentos/';
+            $tmpFileNameDoc = time() .'-'. 'document'.'-'.$id. '-name-' . $file->getClientOriginalName();
+            $file->move(public_path() . $tmpFilePathDoc, $tmpFileNameDoc);
+			//dd($file->getClientSize());
+            $path = $tmpFilePathDoc . $tmpFileNameDoc;
+			$array_name = explode('.', $file->getClientOriginalName());
+			$extension = $array_name[1];
+			$size = $file->getClientSize();
+		}elseif(!empty($request->archivo_ori)){
+			$path = $request->archivo_ori;
+			$extension = $request->type;
+			$size = $request->size;
+		}else{
+			$pathReglamento="";
+		}
+		
+		$document = Document::find($id);
+        $document->nombre = $request->nombre;
+		$document->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$document->archivo = $path;
+		$document->size = $size;
+		$document->type = $extension;
+		$document->save();
+        Session::flash('message', 'Documento actualizado exitosamente.');
+        return redirect()->route('communication.document.index');
     }
 
     /**
@@ -122,6 +156,8 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $document = Document::find($id);
+		$document->delete();
+		return redirect()->route('communication.document.index');
     }
 }
