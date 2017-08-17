@@ -248,6 +248,18 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('historicotransacciones/transacciones/{opcion}/excel', [
         'as' => 'report.historicotransacciones.transacciones.excel', 'uses' => 'ReportHistoricoTransaccionesController@historicotransacciones_transacciones_excel'
     ]);
+	
+	//Reporte Estado de cobranzas 
+	Route::get('estadocobranzas', [
+		'as' => 'report.estadocobranzas', 'uses' => 'ReportEstadoCobranzasController@estadocobranzas'
+	]);
+	Route::post('estadocobranzas/show', [
+		'as' => 'report.estadocobranzas.show', 'uses' => 'ReportEstadoCobranzasController@estadocobranzas_show'
+	]);
+	Route::get('estadocobranzas/{opcion}/excel', [
+        'as' => 'report.estadocobranzas.excel', 'uses' => 'ReportEstadoCobranzasController@estadocobranzasExcel'
+    ]);
+	
 });
 //Rutas de Tareas
 Route::group(['prefix' => 'taskrequest'], function () {
