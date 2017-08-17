@@ -231,13 +231,11 @@
 </div>
 @endsection
 @section('style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
  <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
 @endsection
 
 
 @section('javascript')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>
     $(document).ready(function () {

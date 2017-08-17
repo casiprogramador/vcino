@@ -71,14 +71,11 @@
 
 </div>
 @endsection
-@section('style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
-@endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-select.min.css') }}" />
+@endsection
 
 @section('javascript')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/bootstrap-select.min.js') }}"></script>
 @endsection
-
-
-
