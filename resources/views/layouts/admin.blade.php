@@ -84,6 +84,7 @@
                         <li class="{{ MenuRoute::active('report/categoriaperiodogestion') }}"><a href="{{ route('report.reportcategoriaperiodogestion') }}">Categorías por periodo y gestión</a></li>
                         <li class="{{ MenuRoute::active('report/cuentascobrar') }}"><a href="{{ route('report.cuentascobrar') }}">Cuotas por cobrar</a></li>
                         <li class="{{ MenuRoute::active('report/historicotransacciones') }}"><a href="{{ route('report.historicotransacciones') }}">Histórico de transacciones</a></li>
+						<li class="{{ MenuRoute::active('report/estadocobranzas') }}"><a href="{{ route('report.estadocobranzas') }}">Estado de Cobranzas</a></li>
                     </ul>
                 </li>
 
