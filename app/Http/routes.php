@@ -286,6 +286,9 @@ Route::group(['prefix' => 'taskrequest'], function () {
 	Route::post('/tasktracking/update/{id}', [
         'as' => 'taskrequest.tasktracking.update', 'uses' => 'TaskTrackingController@update'
     ]);
+	Route::post('/tasktracking/destroy/{id}', [
+        'as' => 'taskrequest.tasktracking.destroy', 'uses' => 'TaskTrackingController@destroy'
+    ]);
 	
 	//Reclamos y reservacion 
 	Route::get('/reservation', [

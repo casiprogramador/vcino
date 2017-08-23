@@ -10,7 +10,9 @@ use App\Property;
 use App\Contact;
 use App\Installation;
 use App\Task;
+use App\TaskTracking;
 use App\TaskRequest;
+use Session;
 use App\TaskReservation;
 
 class TaskController extends Controller
@@ -41,10 +43,10 @@ class TaskController extends Controller
     {
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
-		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1' )->lists('instalacion','id')->all();
+		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1' );
         return view('tasks.create')
 		->with('properties',$properties)
-		->with('installations',$installations);
+		->with('installations',$installations->get());
     }
 
     /**
@@ -624,6 +626,22 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+		$task = Task::find($id);
+		if($task->tipo_tarea == 'reserva_instalaciones'){
+			$taskreservation = TaskReservation::where('task_id',$id)->delete();
+			
+		}elseif($task->tipo_tarea == 'solicitudes_recibidas' ||
+				$task->tipo_tarea == 'reclamos' ||
+				$task->tipo_tarea == 'sugerencias' ||
+				$task->tipo_tarea == 'notificacion_mudanza' ||
+				$task->tipo_tarea == 'notificacion_trabajos'){
+			
+			$taskrequest = TaskRequest::where('task_id',$id)->delete();
+				
+		}		
+        $tasktracking = TaskTracking::where('task_id',$id)->delete();
+		$task->delete();
+		Session::flash('message', 'Tarea eliminada exitosamente');
+		return redirect()->route('taskrequest.task.index');
     }
 }

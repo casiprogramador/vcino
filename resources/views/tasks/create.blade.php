@@ -190,7 +190,12 @@
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',['0'=>'Seleccione una instalación']+$installations, old('instalacion'), ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
+							 <select class="form-control input-sm" name="instalacion" id="instalaciones">
+								<option costo="0" value="0">Seleccione una instalación</option>
+								@foreach($installations as $instalacion )
+								<option costo="{{$instalacion->costo}}" value="{{$instalacion->id}}">{{$instalacion->instalacion}}</option>
+								@endforeach
+							</select>
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -253,7 +258,7 @@
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" name="costo">
+                            <input type="text" class="form-control input-sm" name="costo" id="costo-input">
                         </div>
 						@if ($errors->has('costo'))
 						<span class="help-block">
@@ -721,5 +726,11 @@
 		});
 		
 	});
+	$('#instalaciones').change(function () {
+
+			$('#costo-input').val($('#instalaciones option:selected').attr('costo'));
+
+		});
 	</script>
+
 @endsection

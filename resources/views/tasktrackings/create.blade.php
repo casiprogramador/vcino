@@ -144,7 +144,7 @@
                             <div class="form-group">
                                 <label class="font-normal">Descripción</label>
                                 <div class="no-padding">
-    								<textarea id="summernote" name="descripcion"></textarea>
+    								<textarea id="summernote" name="descripcion">{{old('descripcion')}}</textarea>
     							</div>
                             </div>
 
@@ -163,11 +163,18 @@
                                     <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                                 </div>
                                 <span class="help-block m-b-none"></span>
+								@if ($errors->has('adjunto'))
+								<div class="has-error">
+    							<span class="help-block">
+    									<strong>{{ $errors->first('adjunto') }}</strong>
+    								</span>
+									</div>
+    							@endif
                             </div>
 
                             <div class="hr-line-dashed"></div>
 
-                            <div class="checkbox checkbox-primary">
+                            <div class="checkbox checkbox-primary" style="display:none">
                                 <input id="checkbox2" type="checkbox" name="notificar" value="1" checked>
                                 <label for="checkbox2">
                                     Notificar respuesta
@@ -232,7 +239,7 @@
                         <div class="ibox-content">
                             <div class="row">    
                             <div class="col-sm-12">
-                                <form role="form">
+                                <div role="form">
                                     <div class="form-group">
                                         <?php echo $tasktracking->descripcion ?>
                                     </div>
@@ -280,13 +287,15 @@
                                             Notificar respuesta
                                         </label>
                                     </div>
-                                    
-                                    <div class="hr-line-dashed"></div>
+
 
                                     <div class="form-group">
                                         <a href="{{ route('taskrequest.tasktracking.edit', array(Crypt::encrypt($task->id),Crypt::encrypt($tasktracking->id))) }}" class="btn btn-default" type="submit" style="margin-right: 10px;">Editar</a>
                                     </div>
-                                </form>
+									{!! Form::open(['route' => ['taskrequest.tasktracking.destroy', $tasktracking->id], 'method' => 'post']) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
+					{!! Form::close() !!}
+                                </div>
                             </div>
                             </div>
                         </div>

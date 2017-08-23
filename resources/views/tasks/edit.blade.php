@@ -411,8 +411,6 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group">
                         <div class="col-sm-12">
                             <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
@@ -420,15 +418,13 @@
                         </div>
                     </div>
 
+
+                    {!! Form::close() !!}
                     <div class="hr-line-dashed"></div>
 
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <button class="btn btn-danger" type="submit" style="margin-right: 10px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
-                        </div>
-                    </div>
-                    {!! Form::close() !!}
-
+                    {!! Form::open(['route' => ['taskrequest.task.destroy', $task->id], 'method' => 'delete']) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
+					{!! Form::close() !!}
                 </div>
             </div>
         </div>
