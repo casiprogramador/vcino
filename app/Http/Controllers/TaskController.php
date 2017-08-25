@@ -210,7 +210,20 @@ class TaskController extends Controller
 		$fechaHoraFin = \DateTime::createFromFormat('Y-m-d H:i:s', $hoy.' '.$hora_fin.':00');
 		
 		$company = Auth::user()->company;
-		
+		if($request->tipo_tarea == 'reserva_instalaciones'){
+
+			$instalacion = Installation::find($request->instalacion);
+			
+			if( strtotime($request->hora_inicio) < strtotime($instalacion->hora_dia_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva de inicio no son validos.');
+				return redirect()->route('taskrequest.task.create')->withInput();
+			} 
+			
+			if( strtotime($request->hora_final) > strtotime($instalacion->hora_fin_de_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva final no son validos.');
+				return redirect()->route('taskrequest.task.create')->withInput();
+			} 
+		}
 		$task = new Task();
 		$task->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$task->titulo_tarea = $request->titulo_tarea;
@@ -303,6 +316,7 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
+
 		$id = \Crypt::decrypt($id);
 		$task = Task::find($id);
 		$company = Auth::user()->company;
@@ -345,6 +359,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
+		
 		//dd($request);
         if($request->tipo_tarea == 'mis_tareas'){
 			$this->validate($request, [
@@ -388,7 +403,7 @@ class TaskController extends Controller
 			//'medio_solicitud' => 'required',
 			'propiedad' => 'required|not_in:0',
 			'contacto' => 'required|not_in:0',
-            'instalacion' => 'required|not_in:0',
+            //'instalacion' => 'required|not_in:0',
 			'fecha_requerida' => 'required',
 			'hora_inicio' => 'required',
 			'hora_final' => 'required',
@@ -461,6 +476,9 @@ class TaskController extends Controller
 		}
 		$id = \Crypt::decrypt($id);
 		
+		
+		
+		
 		if(!empty($request->adjunto_1)){
 			$id_user = Auth::user()->id;
 			$file = $request->adjunto_1;
@@ -502,6 +520,7 @@ class TaskController extends Controller
 		}
 		
 		
+		
 		$hoy = date("Y-m-d");
 		$hora_ini = $request->hora_inicio;
 		$hora_fin = $request->hora_final;
@@ -511,6 +530,23 @@ class TaskController extends Controller
 		$company = Auth::user()->company;
 		
 		$task = Task::find($id);
+		
+		
+		if($request->tipo_tarea == 'reserva_instalaciones'){
+
+			$instalacion = Installation::find($task->taskreservation->installation->id);
+			
+			if( strtotime($request->hora_inicio) < strtotime($instalacion->hora_dia_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva de inicio no son validos.');
+				return redirect()->route('taskrequest.task.edit',['id' => \Crypt::encrypt($id)])->withInput();
+			} 
+			
+			if( strtotime($request->hora_final) > strtotime($instalacion->hora_fin_de_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva final no son validos.');
+				return redirect()->route('taskrequest.task.edit',['id' => \Crypt::encrypt($id)])->withInput();
+			} 
+		}
+
 		$task->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$task->titulo_tarea = $request->titulo_tarea;
 
@@ -534,7 +570,6 @@ class TaskController extends Controller
 			$taskreservation = TaskReservation::find($request->tipo_tarea_id);
 			$taskreservation->property_id = $request->propiedad;
 			$taskreservation->contact_id = $request->contacto;
-			$taskreservation->installation_id = $request->instalacion;
 
 			$task->taskreservation()->save($taskreservation);
 		}elseif($request->tipo_tarea == 'solicitudes_recibidas' ||
@@ -644,4 +679,5 @@ class TaskController extends Controller
 		Session::flash('message', 'Tarea eliminada exitosamente');
 		return redirect()->route('taskrequest.task.index');
     }
+	
 }

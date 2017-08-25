@@ -24,7 +24,14 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-
+			@if (Session::has('message'))
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
@@ -231,7 +238,7 @@
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',['0'=>'Seleccione una instalación']+$installations,$task->taskreservation->installation->id, ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
+                           {{ Form::select('instalacion',['0'=>'Seleccione una instalación']+$installations,$task->taskreservation->installation->id, ['class' => 'form-control input-sm','id'=>'instalaciones','disabled'=>'disabled']) }}
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -301,17 +308,19 @@
                         <label class="col-sm-2 control-label">Hora desde</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}">
+                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}" readonly>
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
                                 </span>
-								@if ($errors->has('hora_inicio'))
+								
+                            </div>
+							@if ($errors->has('hora_inicio'))
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_inicio') }}</strong>
 								</span>
 								@endif
-                            </div>
+							<p class="help-block m-b-none" style="color: #a5a5a5">Hora minima permitida:<span id="hora-minima">{{substr($task->taskreservation->installation->hora_dia_semana_hasta,0,5)}}</span> </p>
                         </div>
                     </div>
 
@@ -324,12 +333,14 @@
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
                                 </span>
-								@if ($errors->has('hora_final'))
+								
+                            </div>
+							@if ($errors->has('hora_final'))
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_final') }}</strong>
 								</span>
 								@endif
-                            </div>
+							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida:<span id="hora-maxima">{{substr($task->taskreservation->installation->hora_fin_de_semana_hasta,0,5)}}</span> </p>
                         </div>
                     </div>
 
