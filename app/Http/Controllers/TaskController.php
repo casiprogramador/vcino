@@ -13,6 +13,7 @@ use App\Task;
 use App\TaskTracking;
 use App\TaskRequest;
 use Session;
+use Illuminate\Support\Facades\DB;
 use App\TaskReservation;
 
 class TaskController extends Controller
@@ -208,7 +209,7 @@ class TaskController extends Controller
 		$hora_fin = $request->hora_final;
 		$fechaHoraIni = \DateTime::createFromFormat('Y-m-d H:i:s', $hoy.' '.$hora_ini.':00');
 		$fechaHoraFin = \DateTime::createFromFormat('Y-m-d H:i:s', $hoy.' '.$hora_fin.':00');
-		
+		$estado_tarea = $request->tarea_estado;
 		$company = Auth::user()->company;
 		if($request->tipo_tarea == 'reserva_instalaciones'){
 
@@ -223,13 +224,40 @@ class TaskController extends Controller
 				Session::flash('message', 'Los horarios de reserva final no son validos.');
 				return redirect()->route('taskrequest.task.create')->withInput();
 			} 
+			
+			$instalaciones_reservadas_ini =  DB::table('task_reservations')
+					->join('tasks', 'task_reservations.task_id', '=', 'tasks.id')
+					->where('task_reservations.installation_id',$request->instalacion)
+					->where('tasks.hora_inicio','<=',$fechaHoraIni->format('Y-m-d H:i:s'))
+					->where('tasks.hora_fin','>=',$fechaHoraIni->format('Y-m-d H:i:s'))
+					->get();
+			
+			$instalaciones_reservadas_fin =  DB::table('task_reservations')
+					->join('tasks', 'task_reservations.task_id', '=', 'tasks.id')
+					->where('task_reservations.installation_id',$request->instalacion)
+					->where('hora_inicio','<=',$fechaHoraFin->format('Y-m-d H:i:s'))
+					->where('hora_fin','>=',$fechaHoraFin->format('Y-m-d H:i:s'))
+					->get();
+
+			$numero_instalaciones_reservadas = count($instalaciones_reservadas_ini)+count($instalaciones_reservadas_fin);
+
+			if($numero_instalaciones_reservadas > 0){
+				$estado_tarea = 'en proceso';
+			}else{
+				$estado_tarea = 'pendiente';
+			}
+			
+			
+			
 		}
+		
+		
 		$task = new Task();
 		$task->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$task->titulo_tarea = $request->titulo_tarea;
 		$task->tipo_tarea = $request->tipo_tarea;
-		$task->estado_solicitud = $request->tarea_estado;
-		//$task->estado_solicitud = 'pendiente';
+		$task->estado_solicitud = $estado_tarea;
+
 		$task->nota = $request->nota;
 		$task->medio_solicitud = $request->medio_solicitud;
 		$task->prioridad = $request->prioridad;
