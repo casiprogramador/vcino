@@ -10,7 +10,10 @@ use App\Property;
 use App\Contact;
 use App\Installation;
 use App\Task;
+use App\TaskTracking;
 use App\TaskRequest;
+use Session;
+use Illuminate\Support\Facades\DB;
 use App\TaskReservation;
 
 class TaskController extends Controller
@@ -41,10 +44,10 @@ class TaskController extends Controller
     {
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
-		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1' )->lists('instalacion','id')->all();
+		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1' );
         return view('tasks.create')
 		->with('properties',$properties)
-		->with('installations',$installations);
+		->with('installations',$installations->get());
     }
 
     /**
@@ -206,15 +209,55 @@ class TaskController extends Controller
 		$hora_fin = $request->hora_final;
 		$fechaHoraIni = \DateTime::createFromFormat('Y-m-d H:i:s', $hoy.' '.$hora_ini.':00');
 		$fechaHoraFin = \DateTime::createFromFormat('Y-m-d H:i:s', $hoy.' '.$hora_fin.':00');
-		
+		$estado_tarea = $request->tarea_estado;
 		$company = Auth::user()->company;
+		if($request->tipo_tarea == 'reserva_instalaciones'){
+
+			$instalacion = Installation::find($request->instalacion);
+			
+			if( strtotime($request->hora_inicio) < strtotime($instalacion->hora_dia_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva de inicio no son validos.');
+				return redirect()->route('taskrequest.task.create')->withInput();
+			} 
+			
+			if( strtotime($request->hora_final) > strtotime($instalacion->hora_fin_de_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva final no son validos.');
+				return redirect()->route('taskrequest.task.create')->withInput();
+			} 
+			
+			$instalaciones_reservadas_ini =  DB::table('task_reservations')
+					->join('tasks', 'task_reservations.task_id', '=', 'tasks.id')
+					->where('task_reservations.installation_id',$request->instalacion)
+					->where('tasks.hora_inicio','<=',$fechaHoraIni->format('Y-m-d H:i:s'))
+					->where('tasks.hora_fin','>=',$fechaHoraIni->format('Y-m-d H:i:s'))
+					->get();
+			
+			$instalaciones_reservadas_fin =  DB::table('task_reservations')
+					->join('tasks', 'task_reservations.task_id', '=', 'tasks.id')
+					->where('task_reservations.installation_id',$request->instalacion)
+					->where('hora_inicio','<=',$fechaHoraFin->format('Y-m-d H:i:s'))
+					->where('hora_fin','>=',$fechaHoraFin->format('Y-m-d H:i:s'))
+					->get();
+
+			$numero_instalaciones_reservadas = count($instalaciones_reservadas_ini)+count($instalaciones_reservadas_fin);
+
+			if($numero_instalaciones_reservadas > 0){
+				$estado_tarea = 'en proceso';
+			}else{
+				$estado_tarea = 'pendiente';
+			}
+			
+			
+			
+		}
+		
 		
 		$task = new Task();
 		$task->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$task->titulo_tarea = $request->titulo_tarea;
 		$task->tipo_tarea = $request->tipo_tarea;
-		$task->estado_solicitud = $request->tarea_estado;
-		//$task->estado_solicitud = 'pendiente';
+		$task->estado_solicitud = $estado_tarea;
+
 		$task->nota = $request->nota;
 		$task->medio_solicitud = $request->medio_solicitud;
 		$task->prioridad = $request->prioridad;
@@ -301,6 +344,7 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
+
 		$id = \Crypt::decrypt($id);
 		$task = Task::find($id);
 		$company = Auth::user()->company;
@@ -343,6 +387,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
+		
 		//dd($request);
         if($request->tipo_tarea == 'mis_tareas'){
 			$this->validate($request, [
@@ -386,7 +431,7 @@ class TaskController extends Controller
 			//'medio_solicitud' => 'required',
 			'propiedad' => 'required|not_in:0',
 			'contacto' => 'required|not_in:0',
-            'instalacion' => 'required|not_in:0',
+            //'instalacion' => 'required|not_in:0',
 			'fecha_requerida' => 'required',
 			'hora_inicio' => 'required',
 			'hora_final' => 'required',
@@ -459,6 +504,9 @@ class TaskController extends Controller
 		}
 		$id = \Crypt::decrypt($id);
 		
+		
+		
+		
 		if(!empty($request->adjunto_1)){
 			$id_user = Auth::user()->id;
 			$file = $request->adjunto_1;
@@ -500,6 +548,7 @@ class TaskController extends Controller
 		}
 		
 		
+		
 		$hoy = date("Y-m-d");
 		$hora_ini = $request->hora_inicio;
 		$hora_fin = $request->hora_final;
@@ -509,6 +558,23 @@ class TaskController extends Controller
 		$company = Auth::user()->company;
 		
 		$task = Task::find($id);
+		
+		
+		if($request->tipo_tarea == 'reserva_instalaciones'){
+
+			$instalacion = Installation::find($task->taskreservation->installation->id);
+			
+			if( strtotime($request->hora_inicio) < strtotime($instalacion->hora_dia_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva de inicio no son validos.');
+				return redirect()->route('taskrequest.task.edit',['id' => \Crypt::encrypt($id)])->withInput();
+			} 
+			
+			if( strtotime($request->hora_final) > strtotime($instalacion->hora_fin_de_semana_hasta)){
+				Session::flash('message', 'Los horarios de reserva final no son validos.');
+				return redirect()->route('taskrequest.task.edit',['id' => \Crypt::encrypt($id)])->withInput();
+			} 
+		}
+
 		$task->fecha = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$task->titulo_tarea = $request->titulo_tarea;
 
@@ -532,7 +598,6 @@ class TaskController extends Controller
 			$taskreservation = TaskReservation::find($request->tipo_tarea_id);
 			$taskreservation->property_id = $request->propiedad;
 			$taskreservation->contact_id = $request->contacto;
-			$taskreservation->installation_id = $request->instalacion;
 
 			$task->taskreservation()->save($taskreservation);
 		}elseif($request->tipo_tarea == 'solicitudes_recibidas' ||
@@ -624,6 +689,23 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+		$task = Task::find($id);
+		if($task->tipo_tarea == 'reserva_instalaciones'){
+			$taskreservation = TaskReservation::where('task_id',$id)->delete();
+			
+		}elseif($task->tipo_tarea == 'solicitudes_recibidas' ||
+				$task->tipo_tarea == 'reclamos' ||
+				$task->tipo_tarea == 'sugerencias' ||
+				$task->tipo_tarea == 'notificacion_mudanza' ||
+				$task->tipo_tarea == 'notificacion_trabajos'){
+			
+			$taskrequest = TaskRequest::where('task_id',$id)->delete();
+				
+		}		
+        $tasktracking = TaskTracking::where('task_id',$id)->delete();
+		$task->delete();
+		Session::flash('message', 'Tarea eliminada exitosamente');
+		return redirect()->route('taskrequest.task.index');
     }
+	
 }

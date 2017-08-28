@@ -25,7 +25,14 @@
 
     <div class="row">
         <div class="col-lg-12">
-
+			@if (Session::has('message'))
+				<div class="alert alert-success alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					{!! session('message') !!}
+				</div>
+			@endif
             <div class="ibox">
                 <div class="ibox-title">
                     <h5 style="padding-top: 2px;">Lista de seguimiento a tareas</h5>
@@ -46,7 +53,7 @@
                         <tbody>
 							@foreach ($tasktrackings as $tasktracking)
                             <tr>
-                                <td data-order="{{ $tasktracking->fecha }}">{{ date_format(date_create($tasktracking->fecha),'d/m/Y') }}</td>
+                                <td data-order="{{ $tasktracking->created_at }}">{{ date_format(date_create($tasktracking->fecha),'d/m/Y') }}</td>
                                 <td>{{$tasktracking->task->titulo_tarea}} ({{date_format(date_create($tasktracking->task->fecha),'d/m/Y')}})</td>
                                 <td>
 								@if($tasktracking->task->tipo_tarea == 'mis_tareas')

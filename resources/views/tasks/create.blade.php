@@ -24,7 +24,14 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-
+			@if (Session::has('message'))
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
@@ -190,7 +197,12 @@
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
-                           {{ Form::select('instalacion',['0'=>'Seleccione una instalación']+$installations, old('instalacion'), ['class' => 'form-control input-sm','id'=>'instalaciones']) }}
+							 <select class="form-control input-sm" name="instalacion" id="instalaciones">
+								<option horamin="00:00:00" horamax="00:00:00" costo="0" value="0">Seleccione una instalación</option>
+								@foreach($installations as $instalacion )
+								<option horamin="{{$instalacion->hora_dia_semana_hasta}}" horamax="{{$instalacion->hora_fin_de_semana_hasta}}" costo="{{$instalacion->costo}}" value="{{$instalacion->id}}">{{$instalacion->instalacion}}</option>
+								@endforeach
+							</select>
 						   @if ($errors->has('instalacion'))
 								<span class="help-block">
 									<strong>{{ $errors->first('instalacion') }}</strong>
@@ -223,12 +235,15 @@
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
                                 </span>
-								@if ($errors->has('hora_inicio'))
+								
+								
+                            </div>
+							@if ($errors->has('hora_inicio'))
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_inicio') }}</strong>
 								</span>
 								@endif
-                            </div>
+								<p class="help-block m-b-none" style="color: #a5a5a5">Hora minima permitida:<span id="hora-minima"></span> </p>
                         </div>
                     </div>
 
@@ -241,19 +256,21 @@
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
                                 </span>
+								
+                            </div>
+							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida:<span id="hora-maxima"></span> </p>
 								@if ($errors->has('hora_final'))
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_final') }}</strong>
 								</span>
 								@endif
-                            </div>
                         </div>
                     </div>
 
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" name="costo">
+                            <input type="text" class="form-control input-sm" name="costo" id="costo-input">
                         </div>
 						@if ($errors->has('costo'))
 						<span class="help-block">
@@ -319,7 +336,7 @@
                         </div>
                     </div>
                     {!! Form::close() !!}
-                </div>
+                
             </div>
         </div>
     </div>
@@ -721,5 +738,15 @@
 		});
 		
 	});
+	$('#instalaciones').change(function () {
+
+		$('#costo-input').val($('#instalaciones option:selected').attr('costo'));
+		var hora_min = $('#instalaciones option:selected').attr('horamin');
+		var hora_max = $('#instalaciones option:selected').attr('horamax');
+		//hora-minima
+		$('#hora-minima').text(hora_min.substring(0,5));
+		$('#hora-maxima').text(hora_max.substring(0,5));
+	});
 	</script>
+
 @endsection

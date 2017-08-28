@@ -8,6 +8,7 @@ use App\Http\Requests;
 use Auth;
 use App\Task;
 use App\TaskTracking;
+use Session;
 class TaskTrackingController extends Controller
 {
     /**
@@ -30,6 +31,7 @@ class TaskTrackingController extends Controller
      */
     public function create($id_task)
     {
+		
 		$company = Auth::user()->company;
 		$id_task = \Crypt::decrypt($id_task);
 		$task = Task::find($id_task);
@@ -49,7 +51,8 @@ class TaskTrackingController extends Controller
     {
         //dd($request);
 		$this->validate($request, [
-			'fecha' => 'required'
+			'fecha' => 'required',
+			'adjunto' => 'mimes:jpeg,jpg,png'
 		]);
 		
 		$company = Auth::user()->company;
@@ -123,7 +126,8 @@ class TaskTrackingController extends Controller
     {
 		
 		$this->validate($request, [
-			'fecha' => 'required'
+			'fecha' => 'required',
+			'adjunto' => 'mimes:jpeg,jpg,png'
 		]);
 		$id = \Crypt::decrypt($id);
 		$company = Auth::user()->company;
@@ -160,8 +164,11 @@ class TaskTrackingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $tasktracking = TaskTracking::find($id);
+		$tasktracking->delete();
+		Session::flash('message', 'Seguimiento de tarea eliminada exitosamente');
+		return redirect()->route('taskrequest.tasktracking.index');
     }
 }
