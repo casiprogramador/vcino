@@ -71,8 +71,8 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('equipment/machinery') }}"><a href="{{ route('equipment.machinery.index') }}">Equipos y maquinarias</a></li>
-                        <li class=""><a href="">Plan de mantenimiento</a></li>
-                        <li class=""><a href="">Registro de mantenimiento</a></li>
+                        <li class="{{ MenuRoute::active('equipment/maintenanceplan') }}"><a href="{{ route('equipment.maintenanceplan.index') }}">Plan de mantenimiento</a></li>
+                        <li class="{{ MenuRoute::active('equipment/maintenancerecord') }}"><a href="{{ route('equipment.maintenancerecord.index') }}">Registro de mantenimiento</a></li>
                     </ul>
                 </li>
 
