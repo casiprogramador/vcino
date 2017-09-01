@@ -286,7 +286,7 @@
                     </div>
 					@endif
                     
-
+					
                     <div class="form-group{{ $errors->has('fecha_requerida') ? ' has-error' : '' }}" id="fecha-requerida">
                         <label class="col-sm-2 control-label">Fecha requerida</label>
                         <div class="col-sm-3">
@@ -302,7 +302,7 @@
                             </div>
                         </div>
                     </div>
-
+					@if($task->tipo_tarea =='reserva_instalaciones')
                     <div class="form-group{{ $errors->has('hora_inicio') ? ' has-error' : '' }}" id="hora-inicio">
 
                         <label class="col-sm-2 control-label">Hora desde</label>
@@ -355,7 +355,7 @@
 						</span>
 						@endif
                     </div>
-
+					@endif
                     <div class="form-group" id="adjuntos">
                         <label class="col-sm-2 control-label">Adjuntos</label>
                         <div class="col-sm-8">
