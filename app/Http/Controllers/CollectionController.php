@@ -63,45 +63,53 @@ class CollectionController extends Controller
             'cuenta' => 'required|not_in:0',
 			'forma_pago' => 'required',
         ]);
+		$company = Auth::user()->company;
 		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Ingreso')->max('nro_documento');
 		//dd($numero_documento);
 		
+		$cobranzas_verificar = Collection::where('company_id',$company->id )->where('cuotas',implode(',', $request->cuotas))->get();
+		
+		if(count($cobranzas_verificar) === 0){
+			
+		
+			$transaction = new Transaction();
+			$transaction->nro_documento = $numero_documento+1;
+			$transaction->tipo_transaccion = 'Ingreso';
+			$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+			$transaction->concepto = $request->concepto;
+			$transaction->forma_pago = $request->forma_pago;
+			$transaction->numero_forma_pago = $request->nro_forma_pago;
+			$transaction->importe_credito = $request->importe_total;
+			$transaction->importe_debito= '0';
+			$transaction->notas = $request->notas;
+			$transaction->user_id= Auth::user()->id;
+			$transaction->save();
 
-		$company = Auth::user()->company;
-		
-		$transaction = new Transaction();
-		$transaction->nro_documento = $numero_documento+1;
-		$transaction->tipo_transaccion = 'Ingreso';
-		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
-		$transaction->concepto = $request->concepto;
-		$transaction->forma_pago = $request->forma_pago;
-		$transaction->numero_forma_pago = $request->nro_forma_pago;
-		$transaction->importe_credito = $request->importe_total;
-		$transaction->importe_debito= '0';
-		$transaction->notas = $request->notas;
-		$transaction->user_id= Auth::user()->id;
-		$transaction->save();
-		
-		$collection = new Collection();
-		$collection->cuotas = implode(',', $request->cuotas);
-		$collection->property_id = $request->propiedad;
-		$collection->contact_id = $request->contacto;
-		$collection->account_id = $request->cuenta;
-		$collection->company_id = $company->id;
-		//$collection->transaction_id = $request->concepto;
-		$transaction->collection()->save($collection);
-		
-		$cuotas = $request->cuotas;
-		foreach ($cuotas as $cuota_id){
-			$cuota = Accountsreceivable::find($cuota_id);
-			$cuota->cancelada = 1;
-			$cuota->id_collection = $collection->id;
-			$cuota->save();
+			$collection = new Collection();
+			$collection->cuotas = implode(',', $request->cuotas);
+			$collection->property_id = $request->propiedad;
+			$collection->contact_id = $request->contacto;
+			$collection->account_id = $request->cuenta;
+			$collection->company_id = $company->id;
+			//$collection->transaction_id = $request->concepto;
+			$transaction->collection()->save($collection);
+
+			$cuotas = $request->cuotas;
+			foreach ($cuotas as $cuota_id){
+				$cuota = Accountsreceivable::find($cuota_id);
+				$cuota->cancelada = 1;
+				$cuota->id_collection = $collection->id;
+				$cuota->save();
+			}
+
+			//$collection->id;
+			Session::flash('message', 'Transacción registrada correctamente.');
+			return redirect()->route('transaction.collection.show', [$collection->id]);
+		}else{
+			$last_collection = Collection::where('company_id',$company->id )->orderBy('created_at','desc')->first();
+			return redirect()->route('transaction.collection.show', [$last_collection->id]);
 		}
 		
-		//$collection->id;
-		Session::flash('message', 'Transacción registrada correctamente.');
-		return redirect()->route('transaction.collection.show', [$collection->id]);
         
     }
 
