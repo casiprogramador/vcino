@@ -260,19 +260,19 @@ class CommunicationController extends Controller
 		$company = Auth::user()->company;
 		//correspondencia
 		if($dirigido == 'todos'){
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('email','<>','')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('email','<>','')->where('activa',1)->get();
 		}elseif ($dirigido == 'copropietarios') {
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',1)->where('email','<>','')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',1)->where('activa',1)->where('email','<>','')->get();
 		}elseif ($dirigido == 'inquilinos') {
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',2)->where('email','<>','')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Comunicados%')->where('typecontact_id',2)->where('activa',1)->where('email','<>','')->get();
 
 		}elseif ($dirigido == 'directorio') {
-			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Directorio%')->where('email','<>','')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('correspondencia','like','%Directorio%')->where('email','<>','')->where('activa',1)->get();
 
 		}elseif ($dirigido == 'propiedad') {
-			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->where('correspondencia','like','%Comunicados%')->where('email','<>','')->get();
+			$contacts = Contact::where('company_id',$company->id)->where('property_id',$request->propiedad)->where('correspondencia','like','%Comunicados%')->where('activa',1)->where('email','<>','')->get();
 		}elseif ($dirigido == 'contacto') {
-			$contacts = Contact::whereIn('id',$request->destinatario)->get();
+			$contacts = Contact::whereIn('id',$request->destinatario)->where('activa',1)->get();
 		}elseif ($dirigido == 'correo') {
 			$contacts = explode(",", trim($request->correo));
 		}elseif ($dirigido == 'prueba') {
