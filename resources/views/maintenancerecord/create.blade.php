@@ -33,35 +33,59 @@
 
                 <div class="ibox-content">
                     {!! Form::open(array('route' => 'equipment.maintenancerecord.store', 'class' => 'form-horizontal', 'files' => true)) !!}
-
-                         <div class="form-group">
+					@if(isset($id_maintenanceplan))
+					<input type="hidden" value="{{$id_maintenanceplan}}" name="id_maintenanceplan">
+					@else
+					<input type="hidden" value="0" name="id_maintenanceplan">
+					@endif
+                         <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Fecha de realización</label>
                             <div class="col-sm-3">
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date('d/m/Y') }}">
+									@if ($errors->has('fecha'))
+										<span class="help-block">
+											<strong>{{ $errors->first('fecha') }}</strong>
+										</span>
+									@endif
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('equipo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Equipo</label>
                             <div class="col-sm-5">
                                 {{ Form::select('equipo',['0' => 'Seleccione un equipo']+$equipmets,old('equipo'), ['class' => 'form-control input-sm']) }}
+								@if ($errors->has('equipo'))
+										<span class="help-block">
+											<strong>{{ $errors->first('equipo') }}</strong>
+										</span>
+								@endif
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('proveedor') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Proveedor</label>
                             <div class="col-sm-5">
                                 {{ Form::select('proveedor',['0' => 'Seleccione un proveedor']+$suppliers,old('proveedor'), ['class' => 'form-control input-sm']) }}
+								@if ($errors->has('proveedor'))
+										<span class="help-block">
+											<strong>{{ $errors->first('proveedor') }}</strong>
+										</span>
+								@endif
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Costo</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" name="costo">
+								@if ($errors->has('costo'))
+										<span class="help-block">
+											<strong>{{ $errors->first('costo') }}</strong>
+										</span>
+								@endif
                             </div>
                         </div>
 
@@ -71,9 +95,9 @@
                             <label class="col-sm-3 control-label">Tipo</label>
                             <div class="col-sm-3">
                                 <select class="form-control input-sm" name="tipo">
-                                    <option>Preventivo</option>
-                                    <option>Correctivo</option>
-                                    <option>Emergencia</option>
+                                    <option value="Preventivo">Preventivo</option>
+                                    <option value="Correctivo">Correctivo</option>
+                                    <option value="Emergencia">Emergencia</option>
                                 </select>
                             </div>
                         </div>
@@ -103,7 +127,7 @@
                                     <span class="input-group-addon btn btn-default btn-file">
                                         <span class="fileinput-new">Seleccionar archivo...</span>
                                         <span class="fileinput-exists">Cambiar</span>
-                                        <input type="hidden" value=""><input type="file" name="adjunto[]">
+                                        <input type="hidden" value=""><input type="file" name="adjunto_1">
                                     </span>
                                     <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                                 </div>
@@ -116,7 +140,7 @@
                                     <span class="input-group-addon btn btn-default btn-file">
                                         <span class="fileinput-new">Seleccionar archivo...</span>
                                         <span class="fileinput-exists">Cambiar</span>
-                                        <input type="hidden" value=""><input type="file" name="adjunto[]">
+                                        <input type="hidden" value=""><input type="file" name="adjunto_2">
                                     </span>
                                     <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                                 </div>
@@ -129,7 +153,7 @@
                                     <span class="input-group-addon btn btn-default btn-file">
                                         <span class="fileinput-new">Seleccionar archivo...</span>
                                         <span class="fileinput-exists">Cambiar</span>
-                                        <input type="hidden" value=""><input type="file" name="adjunto[]">
+                                        <input type="hidden" value=""><input type="file" name="adjunto_3">
                                     </span>
                                     <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                                 </div>

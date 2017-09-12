@@ -15,4 +15,9 @@ class Supplier extends Model
     {
         return $this->hasMany('App\Expenses');
     }
+	
+	public function maintenancerecords()
+    {
+        return $this->hasMany('App\MaintenanceRecord','equipment_id');
+    }
 }

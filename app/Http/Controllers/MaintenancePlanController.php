@@ -8,6 +8,7 @@ use App\Equipment;
 use Auth;
 use Session;
 use App\Http\Requests;
+use App\MaintenancePlan;
 
 class MaintenancePlanController extends Controller
 {
@@ -21,7 +22,12 @@ class MaintenancePlanController extends Controller
      */
     public function index()
     {
-        return view('maintenanceplan.index');
+		$company = Auth::user()->company;
+		$maintenance_plans = MaintenancePlan::where('company_id',$company->id );
+
+        return view('maintenanceplan.index')
+				->with('maintenanceplans',$maintenance_plans->get());
+		
     }
 
     /**
@@ -47,7 +53,27 @@ class MaintenancePlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$this->validate($request, [
+            'fecha' => 'required',
+            'equipo' => 'required|not_in:0',
+            'costo' => 'required|numeric',
+            'referencia' => 'required',
+
+        ]);
+		
+		$company = Auth::user()->company;
+		
+        $maintenance_plan= new MaintenancePlan();
+        $maintenance_plan->fecha_estimada = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$maintenance_plan->referencia = $request->referencia;
+		$maintenance_plan->notas = $request->notas;
+		$maintenance_plan->costo_estimado = $request->costo;
+		$maintenance_plan->equipment_id = $request->equipo;
+		$maintenance_plan->company_id = $company->id;
+        $maintenance_plan->save();
+		
+		Session::flash('message', 'Nuevo plan de mantenimiento registrado.');
+        return redirect()->route('equipment.maintenanceplan.index');
     }
 
     /**
@@ -58,7 +84,13 @@ class MaintenancePlanController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = \Crypt::decrypt($id);
+		$company = Auth::user()->company;
+        $maintenance_plan= MaintenancePlan::find($id);
+		 $equipments = Equipment::where('company_id',$company->id )->where('activa',1)->orderBy('fecha_instalacion', 'asc')->lists('equipo','id')->all();
+		return view('maintenanceplan.show')
+		->with('maintenanceplan',$maintenance_plan)
+		->with('equipmets',$equipments);
     }
 
     /**
@@ -69,7 +101,13 @@ class MaintenancePlanController extends Controller
      */
     public function edit($id)
     {
-        //
+		$id = \Crypt::decrypt($id);
+		$company = Auth::user()->company;
+        $maintenance_plan= MaintenancePlan::find($id);
+		 $equipments = Equipment::where('company_id',$company->id )->where('activa',1)->orderBy('fecha_instalacion', 'asc')->lists('equipo','id')->all();
+		return view('maintenanceplan.edit')
+		->with('maintenanceplan',$maintenance_plan)
+		->with('equipmets',$equipments);
     }
 
     /**
@@ -81,7 +119,26 @@ class MaintenancePlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'fecha' => 'required',
+            'equipo' => 'required|not_in:0',
+            'costo' => 'required|numeric',
+            'referencia' => 'required',
+
+        ]);
+		
+		$company = Auth::user()->company;
+		
+        $maintenance_plan= MaintenancePlan::find($id);
+        $maintenance_plan->fecha_estimada = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$maintenance_plan->referencia = $request->referencia;
+		$maintenance_plan->notas = $request->notas;
+		$maintenance_plan->costo_estimado = $request->costo;
+		$maintenance_plan->equipment_id = $request->equipo;
+        $maintenance_plan->save();
+		
+		Session::flash('message', 'Plan de mantenimiento editado.');
+        return redirect()->route('equipment.maintenanceplan.index');
     }
 
     /**

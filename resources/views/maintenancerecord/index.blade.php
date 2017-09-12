@@ -46,12 +46,12 @@
                             </tr>
                         </thead>
                         <tbody>
-
+							@foreach ($maintenancerecords as $maintenancerecord)
                             <tr>
-                                <td style="vertical-align: middle;">20/06/2017</td>
-                                <td style="vertical-align: middle;">Equipos de gimnasio marca 1</td>
-                                <td style="vertical-align: middle;">Preventivo</td>
-                                <td style="vertical-align: middle;">200.00</td>
+                                <td style="vertical-align: middle;">{{ date_format(date_create($maintenancerecord->fecha_realizacion),'d/m/Y') }}</td>
+                                <td style="vertical-align: middle;">{{$maintenancerecord->equipment->equipo}}</td>
+                                <td style="vertical-align: middle;">{{$maintenancerecord->tipo}}</td>
+                                <td style="vertical-align: middle;">{{$maintenancerecord->costo}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro de mantenimiento">
@@ -63,7 +63,7 @@
                                     </div>
                                </td>
                             </tr>
-
+							@endforeach
                         </tbody>
                     </table>
                 </div>

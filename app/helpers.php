@@ -173,3 +173,12 @@ function bytesToHuman($bytes)
 
         return round($bytes, 2) . ' ' . $units[$i];
     }
+	
+function diffdays($fecha){
+	$now = new DateTime("now");
+	$fecha_estimada = new DateTime($fecha);
+	$interval = $now->diff($fecha_estimada);
+	return $interval->format('%R%a');
+}
+	
+	

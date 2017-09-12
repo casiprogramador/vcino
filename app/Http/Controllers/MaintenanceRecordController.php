@@ -9,6 +9,7 @@ use Auth;
 use Session;
 use App\Supplier;
 use App\Http\Requests;
+use App\MaintenanceRecord;
 
 class MaintenanceRecordController extends Controller
 {
@@ -22,7 +23,10 @@ class MaintenanceRecordController extends Controller
      */
     public function index()
     {
-        return view('maintenancerecord.index');
+		$company = Auth::user()->company;
+		$maintenance_records = MaintenanceRecord::where('company_id',$company->id );
+        return view('maintenancerecord.index')
+				->with('maintenancerecords',$maintenance_records->get());
     }
 
     /**
@@ -40,6 +44,17 @@ class MaintenanceRecordController extends Controller
 		->with('equipmets',$equipments)
 		->with('suppliers',$suppliers);
     }
+	
+	public function createbymaintenanceplan($id_maintenanceplan){
+		$id_maintenanceplan = \Crypt::decrypt($id_maintenanceplan);
+		$company = Auth::user()->company;
+		$equipments = Equipment::where('company_id',$company->id )->where('activa',1)->orderBy('fecha_instalacion', 'asc')->lists('equipo','id')->all();
+		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('suppliers.razon_social', 'asc')->lists('razon_social','id')->all();
+        return view('maintenancerecord.create')
+		->with('equipmets',$equipments)
+		->with('suppliers',$suppliers)
+		->with('id_maintenanceplan',$id_maintenanceplan);
+	}
 
     /**
      * Store a newly created resource in storage.
@@ -49,7 +64,61 @@ class MaintenanceRecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'fecha' => 'required',
+            'equipo' => 'required|not_in:0',
+			'proveedor' => 'required|not_in:0',
+            'costo' => 'required|numeric',
+			'tipo' => 'required',
+        ]);
+		$id = Auth::user()->id;
+		$company = Auth::user()->company;
+		
+		if(!empty($request->adjunto_1)){
+        $fileA1 = $request->file('adjunto_1');
+        $tmpFilePathA1 = '/img/upload/registro_mantenimiento/';
+        $tmpFileNameA1 = time() .'-'. 'regman'.'-'.$id. '-' . $fileA1->getClientOriginalName();
+        $fileA1->move(public_path() . $tmpFilePathA1, $tmpFileNameA1);
+        $path_1 = $tmpFilePathA1 . $tmpFileNameA1;
+		}else{
+			$path_1 = '';
+		}
+		
+		if(!empty($request->adjunto_2)){
+        $fileA2 = $request->file('adjunto_2');
+        $tmpFilePathA2 = '/img/upload/registro_mantenimiento/';
+        $tmpFileNameA2 = time() .'-'. 'regman'.'-'.$id. '-' . $fileA2->getClientOriginalName();
+        $fileA2->move(public_path() . $tmpFilePathA2, $tmpFileNameA2);
+        $path_2 = $tmpFilePathA2 . $tmpFileNameA2;
+		}else{
+			$path_2 = '';
+		}
+		
+		if(!empty($request->adjunto_3)){
+        $fileA3 = $request->file('adjunto_3');
+        $tmpFilePathA3 = '/img/upload/registro_mantenimiento/';
+        $tmpFileNameA3 = time() .'-'. 'regman'.'-'.$id. '-' . $fileA3->getClientOriginalName();
+        $fileA3->move(public_path() . $tmpFilePathA3, $tmpFileNameA3);
+        $path_3 = $tmpFilePathA3 . $tmpFileNameA3;
+		}else{
+			$path_3 = '';
+		}
+		
+        $maintenance_record= new MaintenanceRecord();
+        $maintenance_record->fecha_realizacion = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$maintenance_record->tipo = $request->tipo;
+		$maintenance_record->notas = $request->notas;
+		$maintenance_record->costo = $request->costo;
+		$maintenance_record->equipment_id = $request->equipo;
+		$maintenance_record->supplier_id = $request->proveedor;
+		$maintenance_record->company_id = $company->id;
+		$maintenance_record->adjunto_1 = $path_1;
+		$maintenance_record->adjunto_2 = $path_2;
+		$maintenance_record->adjunto_3 = $path_3;
+        $maintenance_record->save();
+		
+		Session::flash('message', 'Nuevo registro de mantenimiento registrado.');
+        return redirect()->route('equipment.maintenancerecord.index');
     }
 
     /**

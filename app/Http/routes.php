@@ -44,6 +44,9 @@ Route::group(['prefix' => 'equipment'], function () {
     Route::resource('machinery', 'EquipmentController');
 	Route::resource('maintenanceplan', 'MaintenancePlanController');
 	Route::resource('maintenancerecord', 'MaintenanceRecordController');
+	Route::get('/maintenancerecord/{id_maintenanceplan}/create', [
+        'as' => 'equipment.maintenancerecord.maintenanceplan.create', 'uses' => 'MaintenanceRecordController@createbymaintenanceplan'
+    ]);
 });
 Route::group(['prefix' => 'communication'], function () {
     Route::resource('phonesite', 'PhonesiteController');

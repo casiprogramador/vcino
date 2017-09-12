@@ -15,7 +15,7 @@
                 <a href="#">Plan de mantenimiento</a>
             </li>
             <li class="active">
-                <strong>Nuevo</strong>
+                <strong>Ver</strong>
             </li>
         </ol>
     </div>
@@ -28,18 +28,18 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Nuevo plan de mantenimiento</h5>
+                    <h5 style="padding-top: 2px;">Ver plan de mantenimiento</h5>
                 </div>
 
                 <div class="ibox-content">
-                     {!! Form::open(array('route' => 'equipment.maintenanceplan.store', 'class' => 'form-horizontal')) !!}
+					 {!! Form::open(array('route' => array('equipment.maintenanceplan.update', $maintenanceplan->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
 
                         <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Fecha estimada</label>
                             <div class="col-sm-3">
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date('d/m/Y') }}">
+                                    <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date_format(date_create($maintenanceplan->fecha_estimada),'d/m/Y') }}" disabled="disabled">
 									 @if ($errors->has('fecha'))
 										<span class="help-block">
 											<strong>{{ $errors->first('fecha') }}</strong>
@@ -52,14 +52,15 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Equipo</label>
                             <div class="col-sm-6">
-                                {{ Form::select('equipo',['0' => 'Seleccione un equipo']+$equipmets,old('equipo'), ['class' => 'form-control input-sm']) }}
+                                {{ Form::select('equipo',['0' => 'Seleccione un equipo']+$equipmets,
+								$maintenanceplan->equipment_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('referencia') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Referencia</label>
                             <div class="col-sm-6">
-                                <input type="text" name="referencia" class="form-control input-sm">
+                                <input type="text" name="referencia" class="form-control input-sm" value="{{$maintenanceplan->referencia}}" disabled="disabled">
 								@if ($errors->has('referencia'))
 									<span class="help-block">
 										<strong>{{ $errors->first('referencia') }}</strong>
@@ -71,7 +72,7 @@
                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Costo estimado</label>
                             <div class="col-sm-3">
-                                <input type="text" name="costo" class="form-control input-sm">
+                                <input type="text" name="costo" class="form-control input-sm" value="{{$maintenanceplan->costo_estimado}}" disabled="disabled">
 								@if ($errors->has('costo'))
 									<span class="help-block">
 										<strong>{{ $errors->first('costo') }}</strong>
@@ -86,7 +87,7 @@
 							<label class="col-sm-3 control-label">Notas</label>
 							<div class="col-sm-8">
 								<div class="no-padding">
-									<textarea id="summernote" name="notas"></textarea>
+									<?php echo $maintenanceplan->notas ?>
 								</div>
 							</div>
 						</div>
@@ -95,8 +96,8 @@
                         
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear plan</button>
-                                 <a href="{{ route('equipment.maintenanceplan.index')}}" class="btn btn-white" type="submit">Cancelar</a>
+
+                                <a href="{{ route('equipment.maintenanceplan.index')}}" class="btn btn-white">Atras</a>
                             </div>
                         </div>
 
