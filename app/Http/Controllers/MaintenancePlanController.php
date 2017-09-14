@@ -149,6 +149,18 @@ class MaintenancePlanController extends Controller
      */
     public function destroy($id)
     {
-        //
+		$maintenance_records = MaintenancePlan::find($id)->maintenancerecords()->get();
+		$maintenanceplan = MaintenancePlan::find($id);
+		if(count($maintenance_records) > 0){
+			
+			foreach ($maintenance_records as $maintenance_record) {
+				$maintenanceplan->maintenancerecords()->detach($maintenance_record->id);
+				$maintenance_record->delete();		
+			}
+		}
+
+		$maintenanceplan->delete();
+		Session::flash('message', 'Plan de mantenimiento elimando.');
+        return redirect()->route('equipment.maintenanceplan.index');
     }
 }

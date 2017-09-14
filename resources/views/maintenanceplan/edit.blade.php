@@ -105,8 +105,9 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-danger" type="submit">
-                                    <i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...</button>
+                                  {!! Form::open(['route' => ['equipment.maintenanceplan.destroy', $maintenanceplan->id], 'method' => 'delete']) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
+					{!! Form::close() !!}
                             </div>
                         </div>
 

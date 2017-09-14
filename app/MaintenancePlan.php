@@ -17,6 +17,6 @@ class MaintenancePlan extends Model
     }
 	
     public function maintenancerecords(){
-		return $this->belongsToMany('App\MaintenanceRecord','maintenance_plans_records');
+		return $this->belongsToMany('App\MaintenanceRecord','maintenance_plans_records')->withTimestamps();
 	}
 }
