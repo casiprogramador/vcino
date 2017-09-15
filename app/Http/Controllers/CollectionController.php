@@ -11,6 +11,7 @@ use App\Transaction;
 use App\Collection;
 use App\Accountsreceivable;
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 use Mail;
 use Session;
 class CollectionController extends Controller
@@ -66,10 +67,16 @@ class CollectionController extends Controller
         ]);
 		$company = Auth::user()->company;
 		$numero_documento = Transaction::where('user_id',Auth::user()->id)->where('tipo_transaccion','Ingreso')->max('nro_documento');
-		//dd($numero_documento);
+
+		$cobranzas_verificar = DB::table('collections')
+					->select('collections.id')
+  					->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
+  					->where('transactions.anulada',0)
+  					->where('collections.cuotas',implode(',', $request->cuotas))
+					->where('company_id',$company->id )
+					->get();
 		
-		$cobranzas_verificar = Collection::where('company_id',$company->id )->where('cuotas',implode(',', $request->cuotas))->get();
-		
+
 		if(count($cobranzas_verificar) === 0){
 			
 		
