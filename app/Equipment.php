@@ -10,4 +10,14 @@ class Equipment extends Model
     {
         return $this->belongsTo('App\Company');
     }
+	
+	public function maintenanceplans()
+    {
+        return $this->hasMany('App\MaintenancePlan','equipment_id');
+    }
+	
+	public function maintenancerecords()
+    {
+        return $this->hasMany('App\MaintenanceRecord','equipment_id');
+    }
 }

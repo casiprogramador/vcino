@@ -22,7 +22,14 @@
 
     <div class="row">
         <div class="col-lg-12">
-
+			@if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {!! session('message') !!}
+                    </div>
+                @endif
             <div class="ibox">
                 <div class="ibox-title">
                     <h5 style="padding-top: 7px;">Plan de mantenimiento</h5>
@@ -45,67 +52,34 @@
                             </tr>
                         </thead>
                         <tbody>
-
+							@foreach ($maintenanceplans as $maintenanceplan)
                             <tr>
-                                <td style="vertical-align: middle;">20/07/2017 (<span style="color: red;">-6</span>)</td>
-                                <td style="vertical-align: middle;">Equipos de gimnasio marca 1</td>
-                                <td style="vertical-align: middle;">Mantenimiento completo 4 equipos</td>
+                                <td data-order="{{ $maintenanceplan->fecha_estimada }}" style="vertical-align: middle;">{{ date_format(date_create($maintenanceplan->fecha_estimada),'d/m/Y') }} 
+									@if(diffdays($maintenanceplan->fecha_estimada) >= 0)
+									  ({{diffdays($maintenanceplan->fecha_estimada)}})
+									@else
+									(<span style="color: red;">{{diffdays($maintenanceplan->fecha_estimada)}}</span>)
+									@endif
+								</td>
+                                <td style="vertical-align: middle;">{{$maintenanceplan->equipment->equipo}}</td>
+                                <td style="vertical-align: middle;">{{$maintenanceplan->referencia}}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group" style="padding-right: 10px;">
-                                        <a style="width: 80px; text-align: left;" href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Registrar mantenimiento">
+                                        <a style="width: 80px; text-align: left;" href="{{route('equipment.maintenancerecord.maintenanceplan.create',Crypt::encrypt($maintenanceplan->id) )}}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Registrar mantenimiento">
                                             <i class="fa fa-wrench"></i> Registrar 
                                         </a>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro de plan de mantenimiento">
+                                        <a href="{{ route('equipment.maintenanceplan.show', Crypt::encrypt($maintenanceplan->id) ) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro de plan de mantenimiento">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro de plan de mantenimiento">
+                                        <a href="{{ route('equipment.maintenanceplan.edit', Crypt::encrypt($maintenanceplan->id) ) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro de plan de mantenimiento">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>
                                </td>
                             </tr>
-                            <tr>
-                                <td style="vertical-align: middle;">20/08/2017 (31)</td>
-                                <td style="vertical-align: middle;">Bomba sumergible subsuelo</td>
-                                <td style="vertical-align: middle;">Mantenimiento preventivo</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group" style="padding-right: 10px;">
-                                        <a style="width: 80px; text-align: left;" href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Registrar mantenimiento">
-                                            <i class="fa fa-wrench"></i> Registrar 
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro de plan de mantenimiento">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro de plan de mantenimiento">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle;">10/09/2017 (41)</td>
-                                <td style="vertical-align: middle;">Tanques de agua</td>
-                                <td style="vertical-align: middle;">Limpieza completa de 2 tanques cisterna</td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group" style="padding-right: 10px;">
-                                        <a style="width: 80px; text-align: left;" href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Registrar mantenimiento">
-                                            <i class="fa fa-wrench"></i> Registrar 
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro de plan de mantenimiento">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a href="" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro de plan de mantenimiento">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
+                            @endforeach
 
                         </tbody>
                     </table>
@@ -118,7 +92,44 @@
 
 </div>
 
-
-
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+@endsection
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "No se encontraron Comunicados.",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "order": [[ 0, "desc" ]],
+                "paging":   false,
+                "info":     false
+            });
+        } );
+    </script>
+@endsection
