@@ -181,8 +181,10 @@
                                 <a href="{{ route('equipment.maintenancerecord.index')}}" class="btn btn-white">Cancelar</a>
                             </div>
                         </div>
+						
 
-                        <!--    ESTA PARTE SOLO PARA LA OPCION <<EDITAR>>       -->
+                    {!! Form::close() !!}
+					                        <!--    ESTA PARTE SOLO PARA LA OPCION <<EDITAR>>       -->
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
@@ -191,9 +193,6 @@
 					{!! Form::close() !!}
                             </div>
                         </div>
-						
-
-                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
