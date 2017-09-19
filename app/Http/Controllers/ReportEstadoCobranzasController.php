@@ -69,13 +69,21 @@ class ReportEstadoCobranzasController extends Controller
 		//$monto = $this->montoTotalPropiedadGestion(4,2017,29,1,$tipo_cuotas);
 		//dd($monto);
 		$cuotas_resultado = $this->estadocobranzas_array(array(),$request->anio,$tipo_cuotas);
+		$company = Auth::user()->company;
+		if($company->pago == 'prepago'){
+			$mes = date('m');
+		}else{
+			$mes = (date('m') == 1) ? 12 : date('m')-1;
+		}
+		
 		//dd($cuotas_resultado['total']);
 		return view('reports.estadocobranzas_show')
 				->with('propiedades',$cuotas_resultado['resultado'])
 				->with('total',$cuotas_resultado['total'])
 				->with('gestion',$request->anio)
 				->with('cuotas',$nombre_cuotas)
-				->with('opcion',$opcion);
+				->with('opcion',$opcion)
+				->with('mes',$mes);
 	}
 	
 	function estadocobranzasExcel($opcion){
