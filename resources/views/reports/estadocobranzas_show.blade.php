@@ -60,7 +60,7 @@
                                     <thead>
                                         <tr bgcolor="#D6D6D6">
                                             <th>Propiedad</th>
-											@if(date('m')==1 && date('Y')==$gestion)
+											@if($mes==1 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Ene</span>
@@ -69,7 +69,7 @@
 											@else
 											<th style="text-align:right;">Ene</th>
 											@endif
-                                            @if(date('m')==2 && date('Y')==$gestion)
+                                            @if($mes==2 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Feb</span>
@@ -78,7 +78,7 @@
 											@else
 											<th style="text-align:right;">Feb</th>
 											@endif
-                                            @if(date('m')==3 && date('Y')==$gestion)
+                                            @if($mes==3 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Mar</span>
@@ -87,7 +87,7 @@
 											@else
 											<th style="text-align:right;">Mar</th>
 											@endif
-                                            @if(date('m')==4 && date('Y')==$gestion)
+                                            @if($mes==4 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Abr</span>
@@ -96,7 +96,7 @@
 											@else
 											<th style="text-align:right;">Abr</th>
 											@endif
-                                            @if(date('m')==5 && date('Y')==$gestion)
+                                            @if($mes==5 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">May</span>
@@ -105,7 +105,7 @@
 											@else
 											<th style="text-align:right;">May</th>
 											@endif
-                                            @if(date('m')==6 && date('Y')==$gestion)
+                                            @if($mes==6 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Jun</span>
@@ -114,7 +114,7 @@
 											@else
 											<th style="text-align:right;">Jun</th>
 											@endif
-                                            @if(date('m')==7 && date('Y')==$gestion)
+                                            @if($mes==7 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Jul</span>
@@ -123,7 +123,7 @@
 											@else
 											<th style="text-align:right;">Jul</th>
 											@endif
-                                            @if(date('m')==8 && date('Y')==$gestion)
+                                            @if($mes==8 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Ago</span>
@@ -132,7 +132,7 @@
 											@else
 											<th style="text-align:right;">Ago</th>
 											@endif
-                                            @if(date('m')==9 && date('Y')==$gestion)
+                                            @if($mes==9 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Sep</span>
@@ -141,7 +141,7 @@
 											@else
 											<th style="text-align:right;">Sep</th>
 											@endif
-                                            @if(date('m')==10 && date('Y')==$gestion)
+                                            @if($mes==10 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Oct</span>
@@ -150,7 +150,7 @@
 											@else
 											<th style="text-align:right;">Oct</th>
 											@endif
-                                            @if(date('m')==11 && date('Y')==$gestion)
+                                            @if($mes==11 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Nov</span>
@@ -159,7 +159,7 @@
 											@else
 											<th style="text-align:right;">Nov</th>
 											@endif
-                                            @if(date('m')==12 && date('Y')==$gestion)
+                                            @if($mes==12 && date('Y')==$gestion)
                                             <th style="text-align:right;">
                                                 <i class="fa fa-angle-right fa-fw text-success" aria-hidden="true"></i>
                                                 <span class="text-success">Dic</span>
@@ -175,35 +175,145 @@
 										@for ($i = 0; $i < count($propiedades); $i++)
                                         <tr>
                                             <td>{{$propiedades[$i][0]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][1]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][2]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][3]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][4]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][5]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][6]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][7]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][8]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][9]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][10]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][11]}}</td>
-                                            <td style="text-align:right;">{{$propiedades[$i][12]}}</td>
+											
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][1],'*') === false )
+													{{number_format($propiedades[$i][1], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][1]), 2, '.', '.')}}*
+												@endif
+											</td>
+											
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][2],'*') === false )
+													{{number_format($propiedades[$i][2], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][2]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][3],'*') === false )
+													{{number_format($propiedades[$i][3], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][3]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][4],'*') === false )
+													{{number_format($propiedades[$i][4], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][4]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][5],'*') === false )
+													{{number_format($propiedades[$i][5], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][5]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][6],'*') === false )
+													{{number_format($propiedades[$i][6], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][6]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][7],'*') === false )
+													{{number_format($propiedades[$i][7], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][7]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][8],'*') === false )
+													{{number_format($propiedades[$i][8], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][8]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][9],'*') === false )
+													{{number_format($propiedades[$i][9], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][9]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][10],'*') === false )
+													{{number_format($propiedades[$i][10], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][10]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][11],'*') === false )
+													{{number_format($propiedades[$i][11], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][11]), 2, '.', '.')}}*
+												@endif
+											</td>
+                                            <td style="text-align:right;">
+												@if(strpos($propiedades[$i][12],'*') === false )
+													{{number_format($propiedades[$i][12], 2, '.', '.')}}
+												@else
+													
+													{{number_format(str_replace('*','',$propiedades[$i][12]), 2, '.', '.')}}*
+												@endif
+											</td>
                                         </tr>
                                         @endfor
                                     </tbody>
                                     <tfoot>
                                             <th>Total</td>
-                                            <th style="text-align:right;">{{$total[1]}}</td>
-                                            <th style="text-align:right;">{{$total[2]}}</td>
-                                            <th style="text-align:right;">{{$total[3]}}</td>
-                                            <th style="text-align:right;">{{$total[4]}}</td>
-                                            <th style="text-align:right;">{{$total[5]}}</td>
-                                            <th style="text-align:right;">{{$total[6]}}</td>
-                                            <th style="text-align:right;">{{$total[7]}}</td>
-                                            <th style="text-align:right;">{{$total[8]}}</td>
-                                            <th style="text-align:right;">{{$total[9]}}</td>
-                                            <th style="text-align:right;">{{$total[10]}}</td>
-                                            <th style="text-align:right;">{{$total[11]}}</td>
-                                            <th style="text-align:right;">{{$total[12]}}</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[1], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[2], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[3], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[4], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[5], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[6], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[7], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[8], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[9], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[10], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[11], 2, '.', '.')}}
+											</td>
+                                            <th style="text-align:right;">
+												{{number_format($total[12], 2, '.', '.')}}
+											</td>
                                     </tfoot>
                                 </table>
                             </div>

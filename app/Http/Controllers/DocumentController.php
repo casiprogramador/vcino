@@ -59,8 +59,9 @@ class DocumentController extends Controller
             $file->move(public_path() . $tmpFilePathDoc, $tmpFileNameDoc);
 			//dd($file->getClientSize());
             $path = $tmpFilePathDoc . $tmpFileNameDoc;
-			$array_name = explode('.', $file->getClientOriginalName());
-			$extension = $array_name[1];
+			//$array_name = explode('.', $file->getClientOriginalName());
+			$info = pathinfo($path);
+			$extension = $info['extension'];
 			$size = $file->getClientSize();
         }else{
 			$path='';
@@ -126,8 +127,8 @@ class DocumentController extends Controller
             $file->move(public_path() . $tmpFilePathDoc, $tmpFileNameDoc);
 			//dd($file->getClientSize());
             $path = $tmpFilePathDoc . $tmpFileNameDoc;
-			$array_name = explode('.', $file->getClientOriginalName());
-			$extension = $array_name[1];
+			$info = pathinfo($path);
+			$extension = $info['extension'];
 			$size = $file->getClientSize();
 		}elseif(!empty($request->archivo_ori)){
 			$path = $request->archivo_ori;
