@@ -183,6 +183,7 @@ class MaintenanceRecordController extends Controller
             'costo' => 'required|numeric',
 			'tipo' => 'required',
         ]);
+		 $id_maintenancerecord = $id;
 		$id = Auth::user()->id;
 		$company = Auth::user()->company;
 		
@@ -224,7 +225,7 @@ class MaintenanceRecordController extends Controller
 			$path_3 = '';
 		}
 		
-        $maintenance_record= MaintenanceRecord::find($id);
+        $maintenance_record= MaintenanceRecord::find($id_maintenancerecord);
         $maintenance_record->fecha_realizacion = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$maintenance_record->tipo = $request->tipo;
 		$maintenance_record->notas = $request->notas;
