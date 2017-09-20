@@ -55,42 +55,47 @@
                         </fieldset>
 						<h1>Cuotas por cobrar</h1>
                         <fieldset>
-                    		<h4 style="font-weight: normal;">Seleccione la(s) cuota(s) por cobrar que serán canceladas, luego presione el botón siguiente.</h4>
-                            <div class="col-lg-10">
-                                <div class="form-group">
-									<div class="table-responsive">
-									<div style="height:270px; overflow: auto;">
-										<table class="table table-striped" id="cuentas-cobrar">
-											<thead>
-												<tr>
-													<th width="50" style="background-color: #a4a5a6;"></th>
-													<th style="background-color: #a4a5a6">Gestión</th>
-													<th style="background-color: #a4a5a6">Periodo</th>
-													<th style="background-color: #a4a5a6">Cuota</th>
-													<th class="text-right" style="background-color: #a4a5a6">Importe</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td class="text-right"></td>
-												</tr>
-												
-											</tbody>
-											<tfoot>
-												<tr>
-													<th colspan="4" style="border-top: 1px solid #a4a5a6;">Total Bs.</th>
-													<th class="text-right" style="border-top: 1px solid #a4a5a6;" id="importe-total">0</th>
-												</tr>
-											</tfoot>
-										</table>
+							<div id="panel-cuotas-cobrar-lleno">
+								<h4 style="font-weight: normal;">Seleccione la(s) cuota(s) por cobrar que serán canceladas, luego presione el botón siguiente.</h4>
+								<div class="col-lg-10">
+									<div class="form-group">
+										<div class="table-responsive">
+										<div style="height:270px; overflow: auto;">
+											<table class="table table-striped" id="cuentas-cobrar">
+												<thead>
+													<tr>
+														<th width="50" style="background-color: #a4a5a6;"></th>
+														<th style="background-color: #a4a5a6">Gestión</th>
+														<th style="background-color: #a4a5a6">Periodo</th>
+														<th style="background-color: #a4a5a6">Cuota</th>
+														<th class="text-right" style="background-color: #a4a5a6">Importe</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td class="text-right"></td>
+													</tr>
+
+												</tbody>
+												<tfoot>
+													<tr>
+														<th colspan="4" style="border-top: 1px solid #a4a5a6;">Total Bs.</th>
+														<th class="text-right" style="border-top: 1px solid #a4a5a6;" id="importe-total">0</th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+										</div>
 									</div>
-									</div>
-                                </div>
-                            </div>
+								</div>
+							</div>
+							<div id="panel-cuotas-cobrar-vacio">
+								<h4 style="font-weight: normal;">No existe cuota(s) por cobrar.</h4>
+							</div>
 							<div class="col-lg-2">
                             </div>
 
@@ -253,7 +258,7 @@
 			onCanceled:function (event)
 			{
 				href = $("#direccion-lista").attr("href");
-				console.log(href);
+				//console.log(href);
 				window.location = href;
 			},
 			onFinishing: function (event, currentIndex)
@@ -320,12 +325,18 @@
 		//LLenado de cuentas por cobrar
 		var propiedad_id = $( "#propiedades option:selected" ).val();
 		$.post('/accountsreceivable/'+propiedad_id+'/property', function(response){
+			
 			if(response.success)
 			{
+				
+
 				var table_contacto = $('#cuentas-cobrar tbody').empty();
 				var importe_total = 0;
-				$.each(response.accountsreceivables, function(i, accountsreceivable){
-					console.log(accountsreceivable);
+				if(response.accountsreceivables.length > 0){
+					$('#panel-cuotas-cobrar-lleno').show();
+					$('#panel-cuotas-cobrar-vacio').hide();
+					$.each(response.accountsreceivables, function(i, accountsreceivable){
+					//console.log(accountsreceivable);
 					switch(Number(accountsreceivable.periodo)){
 						case 1:
 							periodo_literal = "Enero";
@@ -368,9 +379,14 @@
 						
 					}
 					importe_total = importe_total + Number(accountsreceivable.importe_por_cobrar);
-					trHtml = '<tr><td><input type="checkbox" importe="'+accountsreceivable.importe_por_cobrar+'" value="'+accountsreceivable.id+'" checked class="i-checks check-cuotas" name="cuotas[]"></td><td>'+accountsreceivable.gestion+'</td><td>'+periodo_literal+'</td><td>'+accountsreceivable.quota.cuota+'</td><td class="text-right">'+accountsreceivable.importe_por_cobrar+'</td></tr>';
-					table_contacto.append(trHtml);
-				});
+						trHtml = '<tr><td><input type="checkbox" importe="'+accountsreceivable.importe_por_cobrar+'" value="'+accountsreceivable.id+'" checked class="i-checks check-cuotas" name="cuotas[]"></td><td>'+accountsreceivable.gestion+'</td><td>'+periodo_literal+'</td><td>'+accountsreceivable.quota.cuota+'</td><td class="text-right">'+accountsreceivable.importe_por_cobrar+'</td></tr>';
+						table_contacto.append(trHtml);
+					});
+				}else{
+					$('#panel-cuotas-cobrar-lleno').hide();
+					$('#panel-cuotas-cobrar-vacio').show();
+				}
+
 				//console.log(importe_total);
 				$('#importe-total').text(importe_total.toFixed(2));
 				$('#importe').val(importe_total.toFixed(2));

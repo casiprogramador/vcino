@@ -584,8 +584,12 @@ class TaskController extends Controller
 		$task->prioridad = $request->prioridad;
 		$task->frecuencia= $request->frecuencia;
 		$task->fecha_requerida = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha_requerida)));
-		$task->hora_inicio= $fechaHoraIni->format('Y-m-d H:i:s');
-		$task->hora_fin= $fechaHoraFin->format('Y-m-d H:i:s');
+		if(!empty($request->hora_inicio)){
+			$task->hora_inicio= $fechaHoraIni->format('Y-m-d H:i:s');
+		}
+		if(!empty($request->hora_final)){
+			$task->hora_fin= $fechaHoraFin->format('Y-m-d H:i:s');
+		}
 		$task->costo= $request->costo;
 		$task->documento_1= $path_1;
 		$task->documento_2= $path_2;

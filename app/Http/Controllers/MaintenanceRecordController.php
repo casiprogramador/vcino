@@ -48,13 +48,14 @@ class MaintenanceRecordController extends Controller
 	
 	public function createbymaintenanceplan($id_maintenanceplan){
 		$id_maintenanceplan = \Crypt::decrypt($id_maintenanceplan);
+		$maintenanceplan = MaintenancePlan::find($id_maintenanceplan);
 		$company = Auth::user()->company;
 		$equipments = Equipment::where('company_id',$company->id )->where('activa',1)->orderBy('fecha_instalacion', 'asc')->lists('equipo','id')->all();
 		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('suppliers.razon_social', 'asc')->lists('razon_social','id')->all();
         return view('maintenancerecord.create')
 		->with('equipmets',$equipments)
 		->with('suppliers',$suppliers)
-		->with('id_maintenanceplan',$id_maintenanceplan);
+		->with('maintenanceplan',$maintenanceplan);
 	}
 
     /**

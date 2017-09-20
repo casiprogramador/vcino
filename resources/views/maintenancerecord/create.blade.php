@@ -33,17 +33,14 @@
 
                 <div class="ibox-content">
                     {!! Form::open(array('route' => 'equipment.maintenancerecord.store', 'class' => 'form-horizontal', 'files' => true)) !!}
-					@if(isset($id_maintenanceplan))
-					<input type="hidden" value="{{$id_maintenanceplan}}" name="id_maintenanceplan">
-					@else
-					<input type="hidden" value="0" name="id_maintenanceplan">
-					@endif
+					<input type="hidden" value="{{ (isset($maintenanceplan->id) ) ? $maintenanceplan->id : '0' }}" name="id_maintenanceplan">
                          <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Fecha de realización</label>
                             <div class="col-sm-3">
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control input-sm date-picker" name="fecha" value="{{ date('d/m/Y') }}">
+                                    <input type="text" class="form-control input-sm date-picker" name="fecha" 
+										   value="{{ (isset($maintenanceplan->fecha_estimada) ) ? date_format(date_create($maintenanceplan->fecha_estimada),'d/m/Y') : date('d/m/Y')  }}">
 									@if ($errors->has('fecha'))
 										<span class="help-block">
 											<strong>{{ $errors->first('fecha') }}</strong>
@@ -56,7 +53,7 @@
                         <div class="form-group{{ $errors->has('equipo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Equipo</label>
                             <div class="col-sm-5">
-                                {{ Form::select('equipo',['0' => 'Seleccione un equipo']+$equipmets,old('equipo'), ['class' => 'form-control input-sm']) }}
+                                {{ Form::select('equipo',['0' => 'Seleccione un equipo']+$equipmets,(isset($maintenanceplan->id) ) ? $maintenanceplan->equipment_id :old('equipo'), ['class' => 'form-control input-sm']) }}
 								@if ($errors->has('equipo'))
 										<span class="help-block">
 											<strong>{{ $errors->first('equipo') }}</strong>
@@ -80,7 +77,7 @@
                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Costo</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control input-sm" name="costo">
+                                <input type="text" class="form-control input-sm" name="costo" value="{{ (isset($maintenanceplan->costo_estimado) ) ? $maintenanceplan->costo_estimado : old('costo') }}">
 								@if ($errors->has('costo'))
 										<span class="help-block">
 											<strong>{{ $errors->first('costo') }}</strong>
@@ -108,7 +105,9 @@
 							<label class="col-sm-3 control-label">Notas</label>
 							<div class="col-sm-8">
 								<div class="no-padding">
-									<textarea id="summernote" name="notas"></textarea>
+									<textarea id="summernote" name="notas">
+										<?php echo (isset($maintenanceplan->notas) ) ? $maintenanceplan->notas : old('notas') ?>
+									</textarea>
 								</div>
 							</div>
 						</div>

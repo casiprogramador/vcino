@@ -59,46 +59,51 @@
 					</fieldset>
 					<h1>Transacciones anteriores</h1>
 					<fieldset>
-						<h4 style="font-weight: normal;">Últimos gastos de la categoría: <span id="nombre-proveedor" style="font-weight: bold;"></span></h4>
-						<div class="col-lg-12">
-							<div class="form-group">
-                                <div class="table-responsive">
-                                    <table class="table table-striped" style="font-size: 12px;" id="gastos-table">
-                                        <thead>
-											<tr>
-												<th style="background-color: #a4a5a6">Fecha de pago</th>
-												<th style="background-color: #a4a5a6">Proveedor</th>
-												<th style="background-color: #a4a5a6">Concepto</th>
-												<th style="background-color: #a4a5a6">Forma de pago</th>
-												<th style="background-color: #a4a5a6" class="text-right">Importe</th>
-											</tr>
-                                        </thead>
-                                        <tbody>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td class="text-right"></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td class="text-right"></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td class="text-right"></td>
-											</tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+						<div id="panel-cuotas-cobrar-lleno">
+							<h4 style="font-weight: normal;">Últimos gastos de la categoría: <span id="nombre-proveedor" style="font-weight: bold;"></span></h4>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<div class="table-responsive">
+										<table class="table table-striped" style="font-size: 12px;" id="gastos-table">
+											<thead>
+												<tr>
+													<th style="background-color: #a4a5a6">Fecha de pago</th>
+													<th style="background-color: #a4a5a6">Proveedor</th>
+													<th style="background-color: #a4a5a6">Concepto</th>
+													<th style="background-color: #a4a5a6">Forma de pago</th>
+													<th style="background-color: #a4a5a6" class="text-right">Importe</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td class="text-right"></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td class="text-right"></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td class="text-right"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
+						</div>
+						<div id="panel-cuotas-cobrar-vacio">
+							<h4 style="font-weight: normal;">No existe gastos en esta categoria.</h4>
 						</div>
 					</fieldset>
 					<h1>Importe y forma de pago</h1>
@@ -278,22 +283,32 @@
 		var proveedor_text = $('#categoria-select option:selected').text(); 
 		$('#nombre-proveedor').text(proveedor_text);
 		$.post('/expenses/'+ proveedor_id +'/category', function(response){
+			
 			if (response.success)
 			{
 				//console.log(response.expenses);
-				var table_gastos = $('#gastos-table tbody').empty();
-				$.each(response.expenses, function(i, expense){
-					//console.log(expense.fecha_pago)
-					var fecha_pago = new Date(expense.fecha_pago);
-					fecha_pago.setDate(fecha_pago.getDate() + 1);
-					mes = fecha_pago.getMonth()+1;
-					dia = fecha_pago.getDate();
-					var fecha_pago_format = ("0" + dia).slice(-2)+"/"+("0" + mes).slice(-2)+"/"+fecha_pago.getFullYear();
-					//console.log(fecha_pago);
+				if(response.expenses.length > 0){
+					$('#panel-cuotas-cobrar-lleno').show();
+					$('#panel-cuotas-cobrar-vacio').hide();
+					var table_gastos = $('#gastos-table tbody').empty();
 
-					trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.razon_social+'</td><td>'+expense.concepto+'</td><td style="text-transform: capitalize;">'+expense.forma_pago+'</td><td class="text-right">'+expense.importe_debito+'</td></tr>';
-					table_gastos.append(trHtml);
-				})
+					$.each(response.expenses, function(i, expense){
+						//console.log(expense.fecha_pago)
+						var fecha_pago = new Date(expense.fecha_pago);
+						fecha_pago.setDate(fecha_pago.getDate() + 1);
+						mes = fecha_pago.getMonth()+1;
+						dia = fecha_pago.getDate();
+						var fecha_pago_format = ("0" + dia).slice(-2)+"/"+("0" + mes).slice(-2)+"/"+fecha_pago.getFullYear();
+						//console.log(fecha_pago);
+
+						trHtml = '<tr><td>'+fecha_pago_format+'</td><td>'+expense.razon_social+'</td><td>'+expense.concepto+'</td><td style="text-transform: capitalize;">'+expense.forma_pago+'</td><td class="text-right">'+expense.importe_debito+'</td></tr>';
+						table_gastos.append(trHtml);
+					})
+				}else{
+					$('#panel-cuotas-cobrar-lleno').hide();
+					$('#panel-cuotas-cobrar-vacio').show();
+				}
+				
 			}
 		}, 'json');
 	});
