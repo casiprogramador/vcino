@@ -96,7 +96,7 @@
                             <div class="form-group" id="correo">
                                 <label class="col-sm-3 control-label">Dirección de correo</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" name="correo" value="{{Auth::user()->company->email_prueba}}">
+                                    <input type="text" class="form-control input-sm" name="correo" id="correo-input" value="{{Auth::user()->company->email_prueba}}">
                                 </div>
                             </div>
 
@@ -142,28 +142,33 @@
             $('#select-propiedad').hide();
             $('#select-contacto').hide();
             $('#correo').hide();
+			correo_prueba = $('#correo-input').val();
             $('#dirigido-a').change(function(){
-                    if ( $(this).val() === "propiedad" ) {
-                        $('#select-propiedad').show("slow");
-                        $('#select-contacto').hide();
-						$('#correo').hide();
-                    }else if( $(this).val() === "contacto" ){
-                        $('#select-propiedad').hide();
-                        $('#select-contacto').show("slow");
-						$('#correo').hide();
-                    }else if( $(this).val() === "correo" ){
-                        $('#select-propiedad').hide();
-                        $('#select-contacto').hide();
-						$('#correo').show("slow");
-                    }else if( $(this).val() === "prueba" ){
-                        $('#select-propiedad').hide();
-                        $('#select-contacto').hide();
-						$('#correo').show("slow");
-                    }else{
-						$('#select-propiedad').hide();
-                        $('#select-contacto').hide();
-						$('#correo').hide();
-					}
+				
+				
+				if ( $(this).val() === "propiedad" ) {
+					$('#select-propiedad').show("slow");
+					$('#select-contacto').hide();
+					$('#correo').hide();
+				}else if( $(this).val() === "contacto" ){
+					$('#select-propiedad').hide();
+					$('#select-contacto').show("slow");
+					$('#correo').hide();
+				}else if( $(this).val() === "correo" ){
+					$('#select-propiedad').hide();
+					$('#select-contacto').hide();
+					$('#correo').show("slow");
+					$('#correo-input').val('');
+				}else if( $(this).val() === "prueba" ){
+					$('#select-propiedad').hide();
+					$('#select-contacto').hide();
+					$('#correo').show("slow");
+					$('#correo-input').val(correo_prueba);
+				}else{
+					$('#select-propiedad').hide();
+					$('#select-contacto').hide();
+					$('#correo').hide();
+				}
 					
             });
 			
@@ -185,6 +190,7 @@
 			 });
 
 		});
+
 		$(".chosen-select").chosen();
     </script>
 @endsection

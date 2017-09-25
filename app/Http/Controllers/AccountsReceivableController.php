@@ -102,6 +102,7 @@ class AccountsReceivableController extends Controller
 	
 	public function edit($id)
     {
+		$id = \Crypt::decrypt($id);
 		$company = Auth::user()->company;
 		$quotas = Quota::where('company_id',$company->id )->orderBy('cuota', 'asc')->lists('cuota','id');
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
@@ -155,6 +156,7 @@ class AccountsReceivableController extends Controller
 
     public function show($id)
     {
+		$id = \Crypt::decrypt($id);
         $company = Auth::user()->company;
 		$quotas = Quota::where('company_id',$company->id )->lists('cuota','id');
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');

@@ -94,10 +94,10 @@
                                 <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, '.', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="{{ route('transaction.collection.show', $collection->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+                                        <a href="{{ route('transaction.collection.show',Crypt::encrypt($collection->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('transaction.collection.edit', $collection->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+                                        <a href="{{ route('transaction.collection.edit',Crypt::encrypt($collection->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>

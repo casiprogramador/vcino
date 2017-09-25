@@ -214,16 +214,21 @@ class TaskController extends Controller
 		if($request->tipo_tarea == 'reserva_instalaciones'){
 
 			$instalacion = Installation::find($request->instalacion);
+			$dia_requerido_semana =  date('w', strtotime(str_replace('/','-',$request->fecha_requerida)));
+			//dd($dia_requerido_semana);
+			$dias_semana = array(1,2,3,4,5);
+			if (in_array($dia_requerido_semana, $dias_semana)) {
+				if( strtotime($request->hora_inicio) > strtotime($instalacion->hora_dia_semana_hasta)){
+					Session::flash('message', 'Los horarios de reserva no son validos.');
+					return redirect()->route('taskrequest.task.create')->withInput();
+				} 
+			}else{
+				if( strtotime($request->hora_inicio) > strtotime($instalacion->hora_fin_de_semana_hasta)){
+					Session::flash('message', 'Los horarios de reserva no son validos.');
+					return redirect()->route('taskrequest.task.create')->withInput();
+				} 
+			}
 			
-			if( strtotime($request->hora_inicio) < strtotime($instalacion->hora_dia_semana_hasta)){
-				Session::flash('message', 'Los horarios de reserva de inicio no son validos.');
-				return redirect()->route('taskrequest.task.create')->withInput();
-			} 
-			
-			if( strtotime($request->hora_final) > strtotime($instalacion->hora_fin_de_semana_hasta)){
-				Session::flash('message', 'Los horarios de reserva final no son validos.');
-				return redirect()->route('taskrequest.task.create')->withInput();
-			} 
 			
 			$instalaciones_reservadas_ini =  DB::table('task_reservations')
 					->join('tasks', 'task_reservations.task_id', '=', 'tasks.id')
@@ -242,9 +247,11 @@ class TaskController extends Controller
 			$numero_instalaciones_reservadas = count($instalaciones_reservadas_ini)+count($instalaciones_reservadas_fin);
 
 			if($numero_instalaciones_reservadas > 0){
-				$estado_tarea = 'en proceso';
-			}else{
+				Session::flash('message', 'La instalacion ya se encuentra reservada.');
 				$estado_tarea = 'pendiente';
+			}else{
+				Session::flash('message', 'Reserva registrada exitosamente.');
+				$estado_tarea = 'en proceso';
 			}
 			
 			

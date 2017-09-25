@@ -243,7 +243,6 @@
 									<strong>{{ $errors->first('hora_inicio') }}</strong>
 								</span>
 								@endif
-								<p class="help-block m-b-none" style="color: #a5a5a5">Hora minima permitida:<span id="hora-minima"></span> </p>
                         </div>
                     </div>
 
@@ -258,7 +257,8 @@
                                 </span>
 								
                             </div>
-							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida:<span id="hora-maxima"></span> </p>
+							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitido dia de semana:<span id="hora-minima"></span> </p>
+								<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida fin de semana:<span id="hora-maxima"></span> </p>
 								@if ($errors->has('hora_final'))
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_final') }}</strong>

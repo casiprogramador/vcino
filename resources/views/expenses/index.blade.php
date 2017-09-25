@@ -75,13 +75,13 @@
                                 <td style="text-align: right;">{{ number_format($expense->transaction->importe_debito, 2, '.', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a href="{{ route('transaction.expense.show', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+                                        <a href="{{ route('transaction.expense.show',Crypt::encrypt($expense->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('transaction.expense.copy', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar gasto">
+                                        <a href="{{ route('transaction.expense.copy',Crypt::encrypt($expense->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Copiar gasto">
                                             <i class="fa fa-files-o"></i>
                                         </a>
-                                        <a href="{{ route('transaction.expense.edit', $expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+                                        <a href="{{ route('transaction.expense.edit', Crypt::encrypt($expense->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>
