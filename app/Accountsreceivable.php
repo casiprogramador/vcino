@@ -25,4 +25,8 @@ class Accountsreceivable extends Model
     {
         return $this->belongsTo('App\Quota');
     }
+	
+	public function tasks(){
+		return $this->belongsToMany('App\Task','tasks_accountsreceivables')->withTimestamps();
+	}
 }

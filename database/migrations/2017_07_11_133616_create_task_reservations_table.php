@@ -26,6 +26,9 @@ class CreateTaskReservationsTable extends Migration
 			$table->integer('installation_id')->unsigned();
             $table->foreign('installation_id')->references('id')->on('installations');
 			
+			$table->integer('quota_id')->unsigned();
+            $table->foreign('quota_id')->references('id')->on('quotas');
+			
 			$table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
