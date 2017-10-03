@@ -13,7 +13,7 @@
                 Comunicación & Información
             </li>
             <li>
-                <a href="#">Directorio de documentos</a>
+                <a href="{{ route('communication.document.index') }}">Directorio de documentos</a>
             </li>
             <li class="active">
                 <strong>Subir documento</strong>

@@ -6,13 +6,13 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu nav-custom" id="side-menu">
                 <li class="nav-header">
-                    <div class="dropdown profile-element">
-                        <a href="{{ route('admin.home') }}">
+                    <div class="dropdown profile-element" style="height: 95px;">
+                        <!-- <a href="{{ route('admin.home') }}">
                             <img src="{{ URL::asset('img/system/logo.png')}}" width="100" />
-                        </a>
+                        </a> -->
                     </div>
                     <div class="logo-element" style="font-size: 14px;">
-                        <img src="{{ URL::asset('img/system/logo-h.png')}}" width="30" />
+                        <img src="{{ URL::asset('img/system/logo-h.png')}}" width="25" />
                     </div>
                 </li>
 
@@ -83,8 +83,8 @@
                         <li class="{{ MenuRoute::active('report/estadoresultados') }}"><a href="{{ route('report.estadoresultados') }}">Estado de Resultados</a></li>
                         <li class="{{ MenuRoute::active('report/categoriaperiodogestion') }}"><a href="{{ route('report.reportcategoriaperiodogestion') }}">Categorías por periodo y gestión</a></li>
                         <li class="{{ MenuRoute::active('report/cuentascobrar') }}"><a href="{{ route('report.cuentascobrar') }}">Cuotas por cobrar</a></li>
+                        <li class="{{ MenuRoute::active('report/estadocobranzas') }}"><a href="{{ route('report.estadocobranzas') }}">Estado de cobranzas</a></li>
                         <li class="{{ MenuRoute::active('report/historicotransacciones') }}"><a href="{{ route('report.historicotransacciones') }}">Histórico de transacciones</a></li>
-						<li class="{{ MenuRoute::active('report/estadocobranzas') }}"><a href="{{ route('report.estadocobranzas') }}">Estado de Cobranzas</a></li>
                     </ul>
                 </li>
 
@@ -127,7 +127,7 @@
         @yield('admin-content')
         <div class="footer">
             <div class="pull-right">
-                <span style="color: #ccc">v1.3</span>
+                <span style="color: #ccc">v1.5</span>
             </div>
             <div>
                 <strong></strong><span style="color: #ccc">&copy; 2017 Versión Digital</span>

@@ -373,22 +373,32 @@ class AccountsReceivableController extends Controller
 	
 	public function storealertpayment(Request $request){
 		$this->validate($request, [
-            'gestion' => 'required',
-            'periodo' => 'required',
+            'gestion_desde' => 'required',
+            'periodo_desde' => 'required',
+			'gestion_hasta' => 'required',
+            'periodo_hasta' => 'required',
             'propiedad' => 'required',
 			'asunto' => 'required'
         ]);
-		
+		//dd($request);
 		$company = Auth::user()->company;
-		$year=$request->gestion;
-		$month=$request->periodo;
-		$date_gestion_periodo = new \DateTime($year.'-'.$month.'-'.'02');
+		//Vencimiento desde
+		$year_desde=$request->gestion_desde;
+		$month_desde=$request->periodo_desde;
+		$date_gestion_periodo_desde = new \DateTime($year_desde.'-'.$month_desde.'-'.'02');
+		//Vencimiento hasta
+		$year_hasta=$request->gestion_hasta;
+		$month_hasta=$request->periodo_hasta;
+		$date_gestion_periodo_hasta = new \DateTime($year_hasta.'-'.$month_hasta.'-'.'02');
+		
+		
 		if($request->propiedad == 'todas'){
 		$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
 				->join('categories', 'categories.id', '=', 'quotas.category_id')
-				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
+				->where('fecha_gestion_periodo','>=',$date_gestion_periodo_desde)
+				->where('fecha_gestion_periodo','<=',$date_gestion_periodo_hasta)
 				->where('cancelada','0')
 				->where('properties.company_id',$company->id)
 				->select(
@@ -408,16 +418,16 @@ class AccountsReceivableController extends Controller
 				->groupBy('properties.id')
 				->get();
 		
-		
+				
 		
 		}else{	
 			
 			$properties = DB::table('properties')
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
-				->join('categories', 'categories.id', '=', 'quotas.category_id')	
-				//->where('gestion','<=',$request->gestion)
-				->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
+				->join('categories', 'categories.id', '=', 'quotas.category_id')
+				//->where('fecha_gestion_periodo','>=',$date_gestion_periodo_desde)
+				->where('fecha_gestion_periodo','<=',$date_gestion_periodo_hasta)
 				->where('accountsreceivables.property_id',$request->propiedad)	
 				->where('cancelada','0')
 				->select(
@@ -447,8 +457,8 @@ class AccountsReceivableController extends Controller
 			$sendalertpayment = new Sendalertpayment();
 			$sendalertpayment->asunto = $request->asunto;
 			$sendalertpayment->nota = $request->nota;
-			$sendalertpayment->limite_periodo = $request->periodo;
-			$sendalertpayment->limite_gestion = $request->gestion;
+			$sendalertpayment->limite_periodo = $request->periodo_hasta;
+			$sendalertpayment->limite_gestion = $request->gestion_hasta;
 			$sendalertpayment->property_id = $propertypayment->id;
 			$sendalertpayment->importe_total = $propertypayment->importe_total;
 			$sendalertpayment->id_cuentas_pagar = $propertypayment->id_cuenta_pagar;

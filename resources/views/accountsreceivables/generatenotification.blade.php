@@ -59,11 +59,10 @@
 							@endif
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Vencimiento a</label>
+					<div class="form-group">
+                        <label class="col-sm-3 control-label">Vencimiento desde:</label>
                         <div class="col-sm-3 m-b-xs">
-                            {{ Form::select('periodo',
+                            {{ Form::select('periodo_desde',
                             array(
                             '1' => 'Enero',
                             '2' => 'Febrero',
@@ -79,18 +78,53 @@
                             '12' => 'Diciembre',
                             ), date("m"),
                             ['class' => 'form-control input-sm']) }}
-                            @if ($errors->has('periodo'))
+                            @if ($errors->has('periodo_desde'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('periodo') }}</strong>
+                                <strong>{{ $errors->first('periodo_desde') }}</strong>
                             </span>
                             @endif
                         </div>
 
                         <div class="col-sm-2 m-b-xs">
-                            {{ Form::select('gestion',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
-                            @if ($errors->has('gestion'))
+                            {{ Form::select('gestion_desde',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
+                            @if ($errors->has('gestion_desde'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('gestion') }}</strong>
+                                <strong>{{ $errors->first('gestion_desde') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Vencimiento hasta:</label>
+                        <div class="col-sm-3 m-b-xs">
+                            {{ Form::select('periodo_hasta',
+                            array(
+                            '1' => 'Enero',
+                            '2' => 'Febrero',
+                            '3' => 'Marzo',
+                            '4' => 'Abril',
+                            '5' => 'Mayo',
+                            '6' => 'Junio',
+                            '7' => 'Julio',
+                            '8' => 'Agosto',
+                            '9' => 'Septiembre',
+                            '10' => 'Octubre',
+                            '11' => 'Noviembre',
+                            '12' => 'Diciembre',
+                            ), date("m"),
+                            ['class' => 'form-control input-sm']) }}
+                            @if ($errors->has('periodo_hasta'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('periodo_hasta') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+
+                        <div class="col-sm-2 m-b-xs">
+                            {{ Form::select('gestion_hasta',$gestiones, date("Y"), ['class' => 'form-control input-sm']) }}
+                            @if ($errors->has('gestion_hasta'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('gestion_hasta') }}</strong>
                             </span>
                             @endif
                         </div>

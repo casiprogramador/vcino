@@ -74,8 +74,11 @@
                         	<div class="row">
                                 <table cellpadding="0" cellspacing="0" style="width: 100%;">
                                     <tr>
-                                        <td style="padding-left: 15px"><h3>Propiedad: {{ strtoupper($propiedad) }}</h3></td>
+                                        <td style="padding-left: 15px"><h4>Propiedad:&nbsp;&nbsp;&nbsp;&nbsp;{{ strtoupper($propiedad) }} </h4></td>
                                         <td align="right" style="padding-right: 15px;"><small>Fecha reporte: {{date('d/m/Y')}}</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding-left: 15px"><h4>Propietario:&nbsp;&nbsp;&nbsp;{{ $propietario }}</h4></td>
                                     </tr>
                                 </table>
     	                    </div>

@@ -125,7 +125,11 @@ class AdminController extends Controller
 		//$mes = 5;
     	//$anio = 2017;
 		
-		$array_colores = ["#ACDBFE","#ACDBFE","#2A363F","#ACDBFE","#B1B16F","#6691B1","#FEC7C6","#CACB75"];
+		$array_colores = [	"#4E5B6C","#91A5BC","#D1DAE3",
+							"#E06F27","#EDB527","#F6D58F",
+							"#1A7CC0","#90BFE1","#CCE2F1",
+							"32BFCE","ABEEEA","DDF8F7",
+							"#FBEEC0"];
 
 		$egresos = DB::table('expenses')
 			->select('categories.nombre as categoria','transactions.importe_debito as importe')

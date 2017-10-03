@@ -11,6 +11,7 @@ use App\Accountsreceivable;
 use App\Property;
 use App\Contact;
 use App\Gestion;
+use App\TypeProperty;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -71,12 +72,14 @@ class ReportCuentasCobrarController extends Controller
 			$cuotas = $porpropiedad['resultado'];
 			$monto_total = $porpropiedad['monto'];
 			$propiead = $porpropiedad['propiedad'];
+			$propietario = $porpropiedad['propietario'];
 			return view('reports.cuentascobrar_porpropiedad')
 					->with('mes',$mes)
 					->with('anio',$anio)
 					->with('cuotas',$cuotas)
 					->with('propiedad',$propiead)
 					->with('id_propiedad',$request->propiedad)
+					->with('propietario',$propietario)
 					->with('monto_total',$monto_total);
 		}else{
 			return view('reports.cuentascobrar_detallado');
@@ -101,7 +104,7 @@ class ReportCuentasCobrarController extends Controller
                 $sheet->fromArray($resultado, null, 'A1', true, false);
 				$sheet->row(1, function($row) {
 
-					$row->setBackground('#feff01');
+					$row->setBackground('#1A7CC0');
 
 				});
  
@@ -113,11 +116,11 @@ class ReportCuentasCobrarController extends Controller
 		$opcion_array = explode('_', $opcion);
 		$anio = $opcion_array[0];
 		$mes = $opcion_array[1];
-		$consolidado = array(array('PROPIEDAD','PROPIETARIO','TOTAL'));
+		$consolidado = array(array('PROPIEDAD','PROPIETARIO','TIPO PROPIEDAD','TOTAL'));
 		$consolidado = $this->cuotasConsolidadoArray($anio,$mes,$consolidado);
 		$resultado = $consolidado['resultado'];
 		$monto_total = $consolidado['monto'];
-		$montoTotalArray = array('Total','',$monto_total);
+		$montoTotalArray = array('TOTAL','','',$monto_total);
 		array_push($resultado, $montoTotalArray);
 		Excel::create('Reporte_Cuentas_Cobrar_detallado', function($excel) use($resultado){
  
@@ -127,7 +130,7 @@ class ReportCuentasCobrarController extends Controller
                 $sheet->fromArray($resultado, null, 'A1', true, false);
 				$sheet->row(1, function($row) {
 
-					$row->setBackground('#feff01');
+					$row->setBackground('#1A7CC0');
 
 				});
  
@@ -152,7 +155,7 @@ class ReportCuentasCobrarController extends Controller
                 $sheet->fromArray($resultado, null, 'A1', true, false);
 				$sheet->row(1, function($row) {
 
-					$row->setBackground('#feff01');
+					$row->setBackground('#1A7CC0');
 
 				});
  
@@ -216,13 +219,18 @@ class ReportCuentasCobrarController extends Controller
 			$apellido_contacto = $contacto->apellido;
 			$nombre_propietario = $nombre_contacto." ".$apellido_contacto;
 			}
+
+			$tipo_p = TypeProperty::where('company_id',$company->id )->where('activa',1)->where('id',$property->type_property_id)->first();
+			$tipo = "";
+			$tipo = $tipo_p->tipo_propiedad;
+
 			//Armamos el array
-			$propiedad = array($property->nro,$nombre_propietario,$importe_total);
+			$propiedad = array($property->nro,$nombre_propietario,$tipo,$importe_total);
 			$total = $total + $importe_total;
 			array_push($resultado, $propiedad);
 
 		}
-		//dd($total);
+		//dd($propiedad);
 		return array("resultado"=>$resultado,"monto"=>$total);
 	}
 	
@@ -244,10 +252,22 @@ class ReportCuentasCobrarController extends Controller
 			$importe_total = $importe_total + $cuotapagar->importe_por_cobrar;
 		}
 
+
+		$contacto = Contact::where('company_id',$company->id )->where('activa',1)->where('property_id',$propiedad)->where('typecontact_id',1)->first();
+
+			//Obtenermos el nombre del propietario
+			$nombre_propietario = "";
+			if(count($contacto)){
+			$nombre_contacto = $contacto->nombre;
+			$apellido_contacto = $contacto->apellido;
+			$nombre_propietario = $nombre_contacto." ".$apellido_contacto;
+			}
+			
+
 		$montoTotalArray = array('Total','','',$importe_total);
 		array_push($resultado, $montoTotalArray);
 
-		return array("resultado"=>$resultado,"monto"=>$importe_total,"propiedad"=>$properties->nro);
+		return array("resultado"=>$resultado,"monto"=>$importe_total,"propiedad"=>$properties->nro,"propietario"=>$nombre_propietario);
 	}
 	
 }
