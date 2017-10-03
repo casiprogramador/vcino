@@ -156,7 +156,7 @@
 										</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group" style="width: 50px;">
-												<a href="{{ route('transaction.accountsreceivable.show', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
+												<a href="{{ route('transaction.accountsreceivable.show', Crypt::encrypt($accountsreceivable->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver">
 													<i class="fa fa-eye"></i>
 												</a>
                                                 <!--
@@ -164,7 +164,7 @@
 													<i class="fa fa-files-o"></i>
 												</a>
                                                 -->
-												<a href="{{ route('transaction.accountsreceivable.edit', $accountsreceivable->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
+												<a href="{{ route('transaction.accountsreceivable.edit',Crypt::encrypt($accountsreceivable->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar">
 													<i class="fa fa-pencil"></i>
 												</a>
 											</div>

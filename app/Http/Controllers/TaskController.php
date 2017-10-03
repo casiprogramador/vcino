@@ -11,6 +11,8 @@ use App\Contact;
 use App\Installation;
 use App\Task;
 use App\TaskTracking;
+use App\Quota;
+use App\Accountsreceivable;
 use App\TaskRequest;
 use Session;
 use Illuminate\Support\Facades\DB;
@@ -45,8 +47,10 @@ class TaskController extends Controller
 		$company = Auth::user()->company;
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
 		$installations = Installation::where('company_id',$company->id )->where('requiere_reserva','1' );
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->orderBy('cuota', 'asc');
         return view('tasks.create')
 		->with('properties',$properties)
+		->with('cuotas',$quotas->get())
 		->with('installations',$installations->get());
     }
 
@@ -172,6 +176,7 @@ class TaskController extends Controller
 			//'costo' => 'required',
 			]);
 		}
+
 		if(!empty($request->adjunto_1)){
 			$id_user = Auth::user()->id;
 			$file = $request->adjunto_1;
@@ -214,16 +219,21 @@ class TaskController extends Controller
 		if($request->tipo_tarea == 'reserva_instalaciones'){
 
 			$instalacion = Installation::find($request->instalacion);
+			$dia_requerido_semana =  date('w', strtotime(str_replace('/','-',$request->fecha_requerida)));
+			//dd($dia_requerido_semana);
+			$dias_semana = array(1,2,3,4,5);
+			if (in_array($dia_requerido_semana, $dias_semana)) {
+				if( strtotime($request->hora_inicio) > strtotime($instalacion->hora_dia_semana_hasta)){
+					Session::flash('message', 'Los horarios de reserva no son validos.');
+					return redirect()->route('taskrequest.task.create')->withInput();
+				} 
+			}else{
+				if( strtotime($request->hora_inicio) > strtotime($instalacion->hora_fin_de_semana_hasta)){
+					Session::flash('message', 'Los horarios de reserva no son validos.');
+					return redirect()->route('taskrequest.task.create')->withInput();
+				} 
+			}
 			
-			if( strtotime($request->hora_inicio) < strtotime($instalacion->hora_dia_semana_hasta)){
-				Session::flash('message', 'Los horarios de reserva de inicio no son validos.');
-				return redirect()->route('taskrequest.task.create')->withInput();
-			} 
-			
-			if( strtotime($request->hora_final) > strtotime($instalacion->hora_fin_de_semana_hasta)){
-				Session::flash('message', 'Los horarios de reserva final no son validos.');
-				return redirect()->route('taskrequest.task.create')->withInput();
-			} 
 			
 			$instalaciones_reservadas_ini =  DB::table('task_reservations')
 					->join('tasks', 'task_reservations.task_id', '=', 'tasks.id')
@@ -242,9 +252,11 @@ class TaskController extends Controller
 			$numero_instalaciones_reservadas = count($instalaciones_reservadas_ini)+count($instalaciones_reservadas_fin);
 
 			if($numero_instalaciones_reservadas > 0){
-				$estado_tarea = 'en proceso';
-			}else{
+				Session::flash('message', 'La instalacion ya se encuentra reservada.');
 				$estado_tarea = 'pendiente';
+			}else{
+				Session::flash('message', 'Reserva registrada exitosamente.');
+				$estado_tarea = 'en proceso';
 			}
 			
 			
@@ -279,6 +291,33 @@ class TaskController extends Controller
 			$taskreservation->installation_id = $request->instalacion;
 			$taskreservation->company_id = $company->id;
 			$task->taskreservation()->save($taskreservation);
+			$id_last_task_insert = $task->id;
+			
+			if($request->costo > 0 && $request->cuota != 0){
+				$fecha_reserva = explode('/', $request->fecha_requerida);
+
+				$date = new \DateTime($fecha_reserva[2].'-'.$fecha_reserva[1].'-'.'01');
+				$accountsreceivable = new Accountsreceivable();
+				$accountsreceivable->gestion = $fecha_reserva[2];
+				$accountsreceivable->periodo = $fecha_reserva[1];
+				$accountsreceivable->fecha_gestion_periodo = $date->format('Y-m-d');
+				$accountsreceivable->fecha_vencimiento = $date->format('Y-m-d');
+				$accountsreceivable->cantidad = '0';
+				$accountsreceivable->importe_por_cobrar = $request->costo;
+				$accountsreceivable->importe_abonado = '0';
+				$accountsreceivable->cancelada = '0';
+				$accountsreceivable->quota_id = $request->cuota;
+				$accountsreceivable->property_id = $request->propiedad;
+				$accountsreceivable->company_id = $company->id;
+				$accountsreceivable->user_id = Auth::user()->id;
+				$accountsreceivable->save();
+				
+				$task->accountreceivables()->attach($accountsreceivable->id);
+			}else{
+				Session::flash('message', 'Los horarios de reserva no son validos.');
+				return redirect()->route('taskrequest.task.create')->withInput();
+			}
+			
 		}elseif($request->tipo_tarea == 'solicitudes_recibidas' ||
 				$request->tipo_tarea == 'reclamos' ||
 				$request->tipo_tarea == 'sugerencias' ||

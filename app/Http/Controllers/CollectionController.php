@@ -129,6 +129,7 @@ class CollectionController extends Controller
      */
     public function show($id)
     {
+		$id = \Crypt::decrypt($id);
 		$company = Auth::user()->company;
 		$collection = Collection::find($id);
 		$contacts = Contact::where('company_id',$company->id )->where('activa',1)->where('email','<>','')->where('property_id',$collection->property_id)->get();
@@ -149,6 +150,7 @@ class CollectionController extends Controller
      */
     public function edit($id)
     {
+		$id = \Crypt::decrypt($id);
 		$collection= Collection::find($id);
         $company = Auth::user()->company;
 

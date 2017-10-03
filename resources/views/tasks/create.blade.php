@@ -243,7 +243,6 @@
 									<strong>{{ $errors->first('hora_inicio') }}</strong>
 								</span>
 								@endif
-								<p class="help-block m-b-none" style="color: #a5a5a5">Hora minima permitida:<span id="hora-minima"></span> </p>
                         </div>
                     </div>
 
@@ -258,7 +257,8 @@
                                 </span>
 								
                             </div>
-							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida:<span id="hora-maxima"></span> </p>
+							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitido dia de semana:<span id="hora-minima"></span> </p>
+								<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida fin de semana:<span id="hora-maxima"></span> </p>
 								@if ($errors->has('hora_final'))
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_final') }}</strong>
@@ -266,6 +266,25 @@
 								@endif
                         </div>
                     </div>
+					
+					<div class="form-group{{ $errors->has('cuota') ? ' has-error' : '' }}" id="cuota">
+						<label class="col-sm-2 control-label">Cuota</label>
+						<div class="col-sm-5">
+							<select id="cuota" class="form-control input-sm" name="cuota">
+								<option importe="0" value="0">Sin cuota</option> 
+								@foreach($cuotas as $cuota)
+
+								<option importe="{{$cuota->importe}}" value="{{$cuota->id}}">{{$cuota->cuota}}</option>
+								@endforeach
+							</select>
+							@if ($errors->has('cuota'))
+							<span class="help-block">
+								<strong>{{ $errors->first('cuota') }}</strong>
+							</span>
+							@endif
+						</div>
+					</div>
+					
 
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
@@ -377,6 +396,7 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
+			$('#cuota').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "solicitudes_recibidas"){
@@ -396,6 +416,7 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
+			$('#cuota').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "reserva_instalaciones"){
@@ -415,6 +436,7 @@
 			$('#hora-inicio').show("slow");
 			$('#hora-final').show("slow");
 			$('#costo').show("slow");
+			$('#cuota').show();
 			$('#adjuntos').hide();
 
 		}else if(tipo_tarea == "reclamos"){
@@ -434,6 +456,7 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
+			$('#cuota').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "sugerencias"){
@@ -453,6 +476,7 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
+			$('#cuota').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "notificacion_mudanza"){
@@ -472,6 +496,7 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
+			$('#cuota').hide();
 			$('#adjuntos').hide();
 
 		}else if(tipo_tarea == "notificacion_trabajos"){
@@ -491,6 +516,7 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
+			$('#cuota').hide();
 			$('#adjuntos').show("slow");
 
 		}else{
@@ -510,6 +536,7 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
+			$('#cuota').hide();
 			$('#adjuntos').hide();
 		}
 	
@@ -532,6 +559,7 @@
 				$('#hora-inicio').hide();
 				$('#hora-final').hide();
 				$('#costo').hide();
+				$('#cuota').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "solicitudes_recibidas"){
@@ -551,6 +579,7 @@
 				$('#hora-inicio').hide();
 				$('#hora-final').hide();
 				$('#costo').hide();
+				$('#cuota').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "reserva_instalaciones"){
@@ -570,6 +599,7 @@
 				$('#hora-inicio').show("slow");
 				$('#hora-final').show("slow");
 				$('#costo').show("slow");
+				$('#cuota').show("slow");
 				$('#adjuntos').hide();
 
 			}else if($(this).val() == "reclamos"){
@@ -589,6 +619,7 @@
 				$('#hora-inicio').hide();
 				$('#hora-final').hide();
 				$('#costo').hide();
+				$('#cuota').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "sugerencias"){
@@ -608,6 +639,7 @@
 				$('#hora-inicio').hide();
 				$('#hora-final').hide();
 				$('#costo').hide();
+				$('#cuota').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "notificacion_mudanza"){
@@ -627,6 +659,7 @@
 				$('#hora-inicio').hide();
 				$('#hora-final').hide();
 				$('#costo').hide();
+				$('#cuota').hide();
 				$('#adjuntos').hide();
 
 			}else if($(this).val() == "notificacion_trabajos"){
@@ -646,6 +679,7 @@
 				$('#hora-inicio').hide();
 				$('#hora-final').hide();
 				$('#costo').hide();
+				$('#cuota').hide();
 				$('#adjuntos').show("slow");
 
 			}else{
@@ -665,6 +699,7 @@
 				$('#hora-inicio').hide();
 				$('#hora-final').hide();
 				$('#costo').hide();
+				$('#cuota').hide();
 				$('#adjuntos').hide();
 			}
 

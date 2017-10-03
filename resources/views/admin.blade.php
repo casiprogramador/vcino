@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Cobranzas: {{nombremes($mes_actual)}} <small>(Comparativo mes anterior)</small></h5>
+                    <h5>Cobranza correspondiente a: {{nombremes($mes_actual)}} <small>(Comparativo mes anterior)</small></h5>
                 </div>
                 <div class="ibox-content">
                     <div>
@@ -49,12 +49,12 @@
                             <p><br></p>
                             <ul class="stat-list">
                                 <li>
-                                    <h2 class="no-margins">{{$importe_pagado_actual}}</h2>
+                                    <h2 class="no-margins">{{ number_format($importe_pagado_actual,2,',','.') }}</h2>
                                     <small>Total cobranzas mes actual</small>
 									@if($importe_pagado_total != 0)
-                                    <div class="stat-percent">{{number_format ($importe_pagado_actual/$importe_pagado_total*100,2)}}%</div>
+                                    <div class="stat-percent">{{ number_format($importe_pagado_actual/$importe_pagado_total*100,2,',','.') }}%</div>
                                     <div class="progress progress-mini">
-                                        <div style="width: {{$importe_pagado_actual/$importe_pagado_total}}%;" class="progress-bar"></div>
+                                        <div style="width: {{$importe_pagado_actual/$importe_pagado_total*100}}%;" class="progress-bar"></div>
                                     </div>
 									@else
 									<div class="stat-percent">0 %</div>
@@ -64,14 +64,14 @@
 									@endif
                                 </li>
                                 <li>
-                                    <h2 class="no-margins ">{{$importe_pagado_anterior}}</h2>
+                                    <h2 class="no-margins ">{{ number_format($importe_pagado_anterior,2,',','.') }}</h2>
                                     <small>Total cobranzas mes anterior</small>
 									@if($importe_pagado_total_anterior != 0)
                                     <div class="stat-percent">
-										{{number_format ( $importe_pagado_anterior/$importe_pagado_total_anterior*100,2)}}%
+										{{ number_format($importe_pagado_anterior/$importe_pagado_total_anterior*100,2,',','.')}}%
 									</div>
                                     <div class="progress progress-mini">
-                                        <div style="width: {{number_format ( $importe_pagado_anterior/$importe_pagado_total_anterior*100,0)}}%;" class="progress-bar progress-bar-2"></div>
+                                        <div style="width: {{ number_format($importe_pagado_anterior/$importe_pagado_total_anterior*100,0)}}%;" class="progress-bar progress-bar-2"></div>
                                     </div>
 									@else
 									<div class="stat-percent">
@@ -83,17 +83,17 @@
 									@endif
                                 </li>
                                 <li>
-                                    <h2 class="no-margins ">{{number_format ($importe_pagado_promedio,2)}}</h2>
+                                    <h2 class="no-margins ">{{number_format ($importe_pagado_promedio,2,',','.')}}</h2>
                                     <small>Promedio cobranzas mensuales</small>
 									@if($importe_pagado_promedio_total != 0)
-                                    <div class="stat-percent">{{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),2)}}%</div>
+                                    <div class="stat-percent">{{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),2,',','.')}}%</div>
 									
                                     <div class="progress progress-mini">
                                         <div style="width: {{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),0)}}%;" class="progress-bar progress-bar-2"></div>
                                     </div>
 									@else
 									<div class="stat-percent">0%</div>
-									
+                                    
                                     <div class="progress progress-mini">
                                         <div style="width: 0%;" class="progress-bar progress-bar-2"></div>
                                     </div>
@@ -105,71 +105,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Ejecución Presupuestaria: Noviembre</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="vertical-align:bottom">Categoría</th>
-                                            <th style="vertical-align:bottom" class="text-right">Presupuestado</th>
-                                            <th style="vertical-align:bottom" class="text-right">Ejecutado</th>
-                                            <th style="vertical-align:bottom" class="text-right">Diferencia</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Administración</td>
-                                            <td class="text-right">6.500,00</td>
-                                            <td class="text-right">6.500,00</td>
-                                            <td class="text-right">0,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mantenimiento jardín y áreas verdes</td>
-                                            <td class="text-right">12.350,00</td>
-                                            <td class="text-right">12.350,00</td>
-                                            <td class="text-right">0,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mantenimieto maquinaria y herramienta</td>
-                                            <td class="text-right">0,00</td>
-                                            <td class="text-right">150,00</td>
-                                            <td class="text-right text-danger">-150,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mantenimiento piscina</td>
-                                            <td class="text-right">2.650,00</td>
-                                            <td class="text-right">0,00</td>
-                                            <td class="text-right">2.650,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Servicio acceso Internet</td>
-                                            <td class="text-right">205,00</td>
-                                            <td class="text-right">205,00</td>
-                                            <td class="text-right">0,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Servivio de energía eléctrica</td>
-                                            <td class="text-right">2.000,00</td>
-                                            <td class="text-right">1.650,00</td>
-                                            <td class="text-right">350,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Servicio de vigilancia y seguridad</td>
-                                            <td class="text-right">8.000,00</td>
-                                            <td class="text-right">8.000,00</td>
-                                            <td class="text-right">0,00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -214,7 +150,9 @@
                 <div class="ibox-title">
                     <h5>Solicitudes recibidas</h5>
                     <div class="ibox-tools">
+                        <!--
                         <span class="label label-success pull-right">2 Mensajes nuevos</span>
+                        -->
                        </div>
                 </div>
                 <div class="ibox-content">
@@ -223,7 +161,7 @@
 							@foreach($tasks as $task)
                             <div class="feed-element">
                                 <p class="pull-left">
-                                    <img alt="image" src="img/system/solicitudes1.png" class="img-circle">
+                                    <img alt="Sol." src="img/system/solicitudes1.png" class="img-circle">
                                 </p>
                                 <div class="media-body ">
                                     <small class="pull-right">{{ date_format(date_create($task->fecha),'d/m/Y') }}</small>
@@ -294,14 +232,14 @@ $(function () {
         datasets: [
             {
                 label: nombre_mes_anterior,
-                backgroundColor: 'rgba(74, 181 , 255, 0.5)',
-                borderColor: 'rgba(74, 181 , 255, 0)',
+                backgroundColor: 'rgba(144, 191 , 225, 0.6)',
+                borderColor: 'rgba(144, 191 , 225, 0)',
                 data: mes_cobranza_anterior
             },
             {
                 label: nombre_mes_actual,
-                backgroundColor: 'rgba(63, 73, 94, 0.4)',
-                borderColor: "rgba(63, 73, 94, 0)",
+                backgroundColor: 'rgba(224, 111, 39, 0.6)',
+                borderColor: "rgba(224, 111, 39, 0)",
                 data: mes_cobranza_actual
             }
         ]

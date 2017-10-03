@@ -13,7 +13,7 @@
                 Comunicación & Información
             </li>
             <li>
-                <a href="#">Directorio de documentos</a>
+                <a href="{{ route('communication.document.index') }}">Directorio de documentos</a>
             </li>
             <li class="active">
                 <strong>Editar documento</strong>
@@ -101,14 +101,13 @@
                     </div>
                     {!! Form::close() !!}
 
+                    <div class="hr-line-dashed"></div>
                     <!--        SOLO PARA LA EDICIÓN SE ADICIONA EL BOTON Eliminar-->
 					{!! Form::open(['route' => ['communication.document.destroy', $document->id], 'method' => 'delete']) !!}
 					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar este documento?')"]) !!}
 					{!! Form::close() !!}
-                    <div class="hr-line-dashed"></div>
 
               
-
                 </div>
             </div>
         </div>

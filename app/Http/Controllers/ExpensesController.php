@@ -122,6 +122,7 @@ class ExpensesController extends Controller
      */
     public function show($id)
     {
+		$id = \Crypt::decrypt($id);
 		$expense = Expenses::find($id);
 
         return view('expenses.show')->with('expense',$expense);
@@ -135,6 +136,7 @@ class ExpensesController extends Controller
      */
     public function edit($id)
     {
+		$id = \Crypt::decrypt($id);
         $company = Auth::user()->company;
 		$categories = Category::where('company_id',$company->id )->where('activa',1)->where('tipo_categoria','Egreso')->orderBy('nombre', 'asc')->lists('nombre','id')->all();
 		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('razon_social', 'asc')->lists('razon_social','id')->all();
@@ -213,6 +215,7 @@ class ExpensesController extends Controller
 	
 	public function copy($id)
     {
+		$id = \Crypt::decrypt($id);
          $company = Auth::user()->company;
 		$categories = Category::where('company_id',$company->id )->orderBy('nombre', 'asc')->lists('nombre','id')->all();
 		$suppliers = Supplier::where('company_id',$company->id )->orderBy('razon_social', 'asc')->lists('razon_social','id')->all();

@@ -77,6 +77,7 @@
                                         <tr bgcolor="#D6D6D6">
                                             <th>Propiedad</th>
                                             <th>Propietario</th>
+                                            <th>Tipo propiedad</th>
                                             <th style="text-align:right;">Importe</th>
                                         </tr>
                                     </thead>
@@ -86,14 +87,15 @@
                                         <tr>
                                             <td>{{$cuotas[$i][0]}}</td>
                                             <td>{{$cuotas[$i][1]}}</td>
-                                            <td style="text-align:right;">{{ number_format($cuotas[$i][2], 2, '.', '.') }}</td>
+                                            <td>{{$cuotas[$i][2]}}</td>
+                                            <td style="text-align:right;">{{ number_format($cuotas[$i][3], 2, ',', '.') }}</td>
                                         </tr>
     									@endfor
 
                                     </tbody>
                                     <tfoot>
-                                        <th colspan="2">Total</th>
-                                        <th style="text-align:right;">{{ number_format($monto_total, 2, '.', '.') }}</th>
+                                        <th colspan="3">Total</th>
+                                        <th style="text-align:right;">{{ number_format($monto_total, 2, ',', '.') }}</th>
                                     </tfoot>
                                 </table>
                             </div>

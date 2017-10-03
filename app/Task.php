@@ -25,4 +25,8 @@ class Task extends Model
     {
         return $this->hasMany('App\TaskTracking');
     }
+	
+	public function accountreceivables(){
+		return $this->belongsToMany('App\Accountsreceivable','tasks_accountsreceivables','task_id','accountreceivable_id')->withTimestamps();
+	}
 }
