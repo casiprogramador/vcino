@@ -111,7 +111,7 @@ class ExpensesController extends Controller
 
 		$transaction->expense()->save($expense);
 		Session::flash('message', 'Transacción registrada correctamente.');
-		return redirect()->route('transaction.expense.show', [$expense->id]);
+		return redirect()->route('transaction.expense.show', [\Crypt::encrypt($expense->id)]);
     }
 
     /**
@@ -209,7 +209,7 @@ class ExpensesController extends Controller
 		$expense->adjunto = $path;
 		$transaction->expense()->save($expense);
 		Session::flash('message', 'Transacción actualizada correctamente.');
-		return redirect()->route('transaction.expense.show', [$expense->id]);
+		return redirect()->route('transaction.expense.show', [\Crypt::encrypt($expense->id)]);
 		
     }
 	
