@@ -111,10 +111,10 @@ class CollectionController extends Controller
 
 			//$collection->id;
 			Session::flash('message', 'Transacción registrada correctamente.');
-			return redirect()->route('transaction.collection.show', [$collection->id]);
+			return redirect()->route('transaction.collection.show', [\Crypt::encrypt($collection->id)]);
 		}else{
 			$last_collection = Collection::where('company_id',$company->id )->orderBy('created_at','desc')->first();
-			return redirect()->route('transaction.collection.show', [$last_collection->id]);
+			return redirect()->route('transaction.collection.show', [\Crypt::encrypt($last_collection->id)]);
 		}
 		
         
@@ -218,7 +218,7 @@ class CollectionController extends Controller
 		$transaction->notas = $request->notas;
 		$transaction->save();
 		
-		return redirect()->route('transaction.collection.show', [$collection->id]);
+		return redirect()->route('transaction.collection.show', [\Crypt::encrypt($collection->id)]);
     }
 
     /**
