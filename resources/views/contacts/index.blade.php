@@ -101,6 +101,7 @@
                         </tbody>
                     </table>
                 </div>
+                <p>Total contactos: <span id="cantidad"></span></p>
                 </div>
             </div>
         </div>
@@ -149,6 +150,8 @@
 				"columnDefs": [ { "orderable": false, "targets": 5 },{ "orderable": false, "targets": 6 } ]
             });
         } );
+        var cantidad = $('.table tbody tr:visible').length;
+        document.getElementById("cantidad").innerHTML = cantidad;
     </script>
 @endsection
 

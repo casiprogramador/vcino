@@ -308,7 +308,7 @@
                         <label class="col-sm-2 control-label">Hora desde</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}" readonly>
+                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}" >
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
@@ -319,8 +319,7 @@
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_inicio') }}</strong>
 								</span>
-								@endif
-							<p class="help-block m-b-none" style="color: #a5a5a5">Hora minima permitida:<span id="hora-minima">{{substr($task->taskreservation->installation->hora_dia_semana_hasta,0,5)}}</span> </p>
+							@endif
                         </div>
                     </div>
 
@@ -340,7 +339,11 @@
 									<strong>{{ $errors->first('hora_final') }}</strong>
 								</span>
 								@endif
-							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida:<span id="hora-maxima">{{substr($task->taskreservation->installation->hora_fin_de_semana_hasta,0,5)}}</span> </p>
+                        </div>
+                        <div class="col-sm-6" style="margin-top: -45px;">
+                            <p class="help-block m-b-none" style="color: #a5a5a5">Días permitidos: <b><span id="dias-permitidos"></span></b> </p>
+                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida día de semana (Lu, Ma, Mi, Ju, Do): <b><span id="hora-minima">{{substr($task->taskreservation->installation->hora_dia_semana_hasta,0,5)}}</span></b> </p>
+                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida fin de semana (Vi, Sá): <b><span id="hora-maxima">{{substr($task->taskreservation->installation->hora_fin_de_semana_hasta,0,5)}}</span></b> </p>
                         </div>
                     </div>
 
@@ -356,6 +359,9 @@
 						@endif
                     </div>
 					@endif
+
+                    <div class="hr-line-dashed" id="nota-linea-2"></div>
+
                     <div class="form-group" id="adjuntos">
                         <label class="col-sm-2 control-label">Adjuntos</label>
                         <div class="col-sm-8">
@@ -422,6 +428,8 @@
                         </div>
                     </div>
 
+                    <div class="hr-line-dashed"></div>
+
                     <div class="form-group">
                         <div class="col-sm-12">
                             <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
@@ -457,13 +465,13 @@
 	$(document).ready(function(){
 		
 		tipo_tarea = $('#tipo-tarea option:selected').val();
-        console.log(tipo_tarea);
-        
+
         if(tipo_tarea == "mis_tareas"){
             $('#fecha-tarea').show("slow");
             $('#titulo-tarea').show("slow");
             $('#nota').show("slow");
             $('#nota-linea').show("slow");
+            $('#nota-linea-2').show("slow");
             $('#prioridad').show("slow");
             $('#frecuencia').show("slow");
             $('#medio-solicitud').hide();
@@ -483,6 +491,7 @@
             $('#titulo-tarea').show("slow");
             $('#nota').show("slow");
             $('#nota-linea').show("slow");
+            $('#nota-linea-2').hide();
             $('#prioridad').show("slow");
             $('#frecuencia').hide();
             $('#medio-solicitud').show("slow");
@@ -502,6 +511,7 @@
             $('#titulo-tarea').show("slow");
             $('#nota').show("slow");
             $('#nota-linea').show("slow");
+            $('#nota-linea-2').hide();
             $('#prioridad').hide();
             $('#frecuencia').hide();
             $('#medio-solicitud').show("slow");
@@ -521,6 +531,7 @@
             $('#titulo-tarea').show("slow");
             $('#nota').show("slow");
             $('#nota-linea').show("slow");
+            $('#nota-linea-2').hide();
             $('#prioridad').show("slow");
             $('#frecuencia').hide();
             $('#medio-solicitud').show("slow");
@@ -540,6 +551,7 @@
             $('#titulo-tarea').show("slow");
             $('#nota').show("slow");
             $('#nota-linea').show("slow");
+            $('#nota-linea-2').hide();
             $('#prioridad').hide();
             $('#frecuencia').hide();
             $('#medio-solicitud').show("slow");
@@ -559,6 +571,7 @@
             $('#titulo-tarea').show("slow");
             $('#nota').show("slow");
             $('#nota-linea').show("slow");
+            $('#nota-linea-2').hide();
             $('#prioridad').hide();
             $('#frecuencia').hide();
             $('#medio-solicitud').show("slow");

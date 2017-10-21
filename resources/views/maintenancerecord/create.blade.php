@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Plan de mantenimiento</h2>
+        <h2>Registro de mantenimiento</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,10 +12,10 @@
                 Equipamiento
             </li>
             <li>
-                <a href="#">Plan de mantenimiento</a>
+                <a href="{{ route('equipment.maintenancerecord.index') }}">Registro de mantenimiento</a>
             </li>
             <li class="active">
-                <strong>Registro de mantenimiento</strong>
+                <strong>Nuevo</strong>
             </li>
         </ol>
     </div>
@@ -28,7 +28,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Registro de mantenimiento</h5>
+                    <h5 style="padding-top: 2px;">Nuevo registro de mantenimiento</h5>
                 </div>
 
                 <div class="ibox-content">

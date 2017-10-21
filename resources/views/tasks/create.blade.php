@@ -24,7 +24,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-			@if (Session::has('message'))
+                @if (Session::has('message'))
                     <div class="alert alert-warning alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -95,7 +95,7 @@
 						<label class="col-sm-2 control-label">Nota</label>
                         <div class="col-sm-10">
                             <div class="no-padding">
-                                <textarea id="summernote" name="nota"></textarea>
+                                <textarea id="summernote" name="nota"><?php echo old('nota') ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -198,9 +198,9 @@
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
 							 <select class="form-control input-sm" name="instalacion" id="instalaciones">
-								<option horamin="00:00:00" horamax="00:00:00" costo="0" value="0">Seleccione una instalación</option>
+								<option horamin="" horamax="" costo="0" value="0" diasper="">Seleccione una instalación</option>
 								@foreach($installations as $instalacion )
-								<option horamin="{{$instalacion->hora_dia_semana_hasta}}" horamax="{{$instalacion->hora_fin_de_semana_hasta}}" costo="{{$instalacion->costo}}" value="{{$instalacion->id}}">{{$instalacion->instalacion}}</option>
+								<option horamin="{{$instalacion->hora_dia_semana_hasta}}" horamax="{{$instalacion->hora_fin_de_semana_hasta}}" diasper="{{ ucfirst($instalacion->dias_permitidos) }}" costo="{{$instalacion->costo}}" value="{{$instalacion->id}}">{{$instalacion->instalacion}}</option>
 								@endforeach
 							</select>
 						   @if ($errors->has('instalacion'))
@@ -230,19 +230,18 @@
                         <label class="col-sm-2 control-label">Hora desde</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="00:00">
+                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{old('hora_inicio')}}">
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
                                 </span>
-								
 								
                             </div>
 							@if ($errors->has('hora_inicio'))
 								<span class="help-block">
 									<strong>{{ $errors->first('hora_inicio') }}</strong>
 								</span>
-								@endif
+							@endif
                         </div>
                     </div>
 
@@ -250,25 +249,28 @@
                         <label class="col-sm-2 control-label">Hora hasta</label>
                         <div class="col-sm-3">
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="00:00">
+                                <input type="text" class="form-control time-picker" name="hora_final" value="{{old('hora_final')}}">
 
                                 <span class="input-group-addon">
                                     <span class="fa fa-clock-o"></span>
                                 </span>
 								
                             </div>
-							<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitido dia de semana:<span id="hora-minima"></span> </p>
-								<p class="help-block m-b-none" style="color: #a5a5a5">Hora maxima permitida fin de semana:<span id="hora-maxima"></span> </p>
-								@if ($errors->has('hora_final'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_final') }}</strong>
-								</span>
-								@endif
+							@if ($errors->has('hora_final'))
+							<span class="help-block">
+								<strong>{{ $errors->first('hora_final') }}</strong>
+							</span>
+							@endif
+                        </div>
+                        <div class="col-sm-6" style="margin-top: -45px;">
+                            <p class="help-block m-b-none" style="color: #a5a5a5">Días permitidos: <b><span id="dias-permitidos"></span></b> </p>
+                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida día de semana (Lu, Ma, Mi, Ju, Do): <b><span id="hora-minima"></span></b> </p>
+                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida fin de semana (Vi, Sá): <b><span id="hora-maxima"></span></b> </p>
                         </div>
                     </div>
 					
 					<div class="form-group{{ $errors->has('cuota') ? ' has-error' : '' }}" id="cuota">
-						<label class="col-sm-2 control-label">Cuota</label>
+						<label class="col-sm-2 control-label">Cuota por cobrar</label>
 						<div class="col-sm-5">
 							<select id="cuota" class="form-control input-sm" name="cuota">
 								<option importe="0" value="0">Sin cuota</option> 
@@ -289,7 +291,7 @@
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" name="costo" id="costo-input">
+                            <input type="text" class="form-control input-sm" name="costo" id="costo-input" value="{{old('costo')}}">
                         </div>
 						@if ($errors->has('costo'))
 						<span class="help-block">
@@ -297,6 +299,8 @@
 						</span>
 						@endif
                     </div>
+
+                    <div class="hr-line-dashed" id="nota-linea-2"></div>
 
                     <div class="form-group" id="adjuntos">
                         <label class="col-sm-2 control-label">Adjuntos</label>
@@ -355,7 +359,7 @@
                         </div>
                     </div>
                     {!! Form::close() !!}
-                
+                </div>
             </div>
         </div>
     </div>
@@ -377,13 +381,15 @@
 	$(document).ready(function(){
 		
 		tipo_tarea = $('#tipo-tarea option:selected').val();
-		console.log(tipo_tarea);
+		$('#propiedades').val('0');
+		$('#contactos').val('0');
 		
 		if(tipo_tarea == "mis_tareas"){
 			$('#fecha-tarea').show("slow");
 			$('#titulo-tarea').show("slow");
             $('#nota').show("slow");
-			$('#nota-linea').show("slow");
+            $('#nota-linea').show("slow");
+			$('#nota-linea-2').show("slow");
 			$('#prioridad').show("slow");
 			$('#frecuencia').show("slow");
             $('#medio-solicitud').hide();
@@ -523,11 +529,12 @@
 			$('#fecha-tarea').hide();
 			$('#titulo-tarea').hide();
             $('#nota').hide();
-			$('#nota-linea').hide();
+            $('#nota-linea').hide();
+			$('#nota-linea-2').hide();
 			$('#prioridad').hide();
 			$('#frecuencia').hide();
             $('#medio-solicitud').hide();
-			$('#medio-solicitud-linea').hide();
+            $('#medio-solicitud-linea').hide();
             $('#propiedad').hide();
 			$('#propiedad-linea').hide();
 			$('#contacto').hide();
@@ -546,7 +553,8 @@
 				$('#fecha-tarea').show("slow");
 				$('#titulo-tarea').show("slow");
                 $('#nota').show("slow");
-				$('#nota-linea').show("slow");
+                $('#nota-linea').show("slow");
+				$('#nota-linea-2').show("slow");
 				$('#prioridad').show("slow");
 				$('#frecuencia').show("slow");
                 $('#medio-solicitud').hide();
@@ -566,7 +574,8 @@
 				$('#fecha-tarea').show("slow");
 				$('#titulo-tarea').show("slow");
                 $('#nota').show("slow");
-				$('#nota-linea').show("slow");
+                $('#nota-linea').show("slow");
+				$('#nota-linea-2').hide();
 				$('#prioridad').show("slow");
 				$('#frecuencia').hide();
                 $('#medio-solicitud').show("slow");
@@ -606,7 +615,8 @@
 				$('#fecha-tarea').show("slow");
 				$('#titulo-tarea').show("slow");
                 $('#nota').show("slow");
-				$('#nota-linea').show("slow");
+                $('#nota-linea').show("slow");
+				$('#nota-linea-2').hide();
 				$('#prioridad').show("slow");
 				$('#frecuencia').hide();
                 $('#medio-solicitud').show("slow");
@@ -626,7 +636,8 @@
 				$('#fecha-tarea').show("slow");
 				$('#titulo-tarea').show("slow");
                 $('#nota').show("slow");
-				$('#nota-linea').show("slow");
+                $('#nota-linea').show("slow");
+				$('#nota-linea-2').hide();
 				$('#prioridad').hide();
 				$('#frecuencia').hide();
                 $('#medio-solicitud').show("slow");
@@ -646,7 +657,8 @@
 				$('#fecha-tarea').show("slow");
 				$('#titulo-tarea').show("slow");
                 $('#nota').show("slow");
-				$('#nota-linea').show("slow");
+                $('#nota-linea').show("slow");
+				$('#nota-linea-2').hide();
 				$('#prioridad').hide();
 				$('#frecuencia').hide();
                 $('#medio-solicitud').show("slow");
@@ -666,7 +678,8 @@
 				$('#fecha-tarea').show("slow");
 				$('#titulo-tarea').show("slow");
                 $('#nota').show("slow");
-				$('#nota-linea').show("slow");
+                $('#nota-linea').show("slow");
+				$('#nota-linea-2').show("slow");
 				$('#prioridad').hide();
 				$('#frecuencia').hide();
                 $('#medio-solicitud').show("slow");
@@ -686,7 +699,8 @@
 				$('#fecha-tarea').hide();
 				$('#titulo-tarea').hide();
                 $('#nota').hide();
-				$('#nota-linea').hide();
+                $('#nota-linea').hide();
+				$('#nota-linea-2').hide();
 				$('#prioridad').hide();
 				$('#frecuencia').hide();
                 $('#medio-solicitud').hide();
@@ -767,8 +781,7 @@
 			    ['color', ['color']],
 			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['insert', ['hr']],
-			    ['view', ['codeview']],
-			    ['help', ['help']]
+			    ['view', ['codeview']]
 			],
 		});
 		
@@ -777,10 +790,12 @@
 
 		$('#costo-input').val($('#instalaciones option:selected').attr('costo'));
 		var hora_min = $('#instalaciones option:selected').attr('horamin');
-		var hora_max = $('#instalaciones option:selected').attr('horamax');
+        var hora_max = $('#instalaciones option:selected').attr('horamax');
+		var dias_per = $('#instalaciones option:selected').attr('diasper');
 		//hora-minima
 		$('#hora-minima').text(hora_min.substring(0,5));
-		$('#hora-maxima').text(hora_max.substring(0,5));
+        $('#hora-maxima').text(hora_max.substring(0,5));
+		$('#dias-permitidos').text(dias_per);
 	});
 	</script>
 

@@ -12,7 +12,7 @@
                 Equipamiento
             </li>
             <li>
-                <a href="#">Plan de mantenimiento</a>
+                <a href="{{ route('equipment.maintenanceplan.index') }}">Plan de mantenimiento</a>
             </li>
             <li class="active">
                 <strong>Ver</strong>
@@ -85,10 +85,9 @@
 						
 						<div class="form-group" id="nota">
 							<label class="col-sm-3 control-label">Notas</label>
-							<div class="col-sm-8">
-								<div class="no-padding">
-									<?php echo $maintenanceplan->notas ?>
-								</div>
+							<div class="col-sm-8" style="background-color: #EBEBEB; margin-left: 15px;">
+                                <br>
+								<?php echo $maintenanceplan->notas ?>
 							</div>
 						</div>
 
@@ -97,7 +96,7 @@
                         <div class="form-group">
                             <div class="col-sm-12">
 
-                                <a href="{{ route('equipment.maintenanceplan.index')}}" class="btn btn-white">Atras</a>
+                                <a href="{{ route('equipment.maintenanceplan.index')}}" class="btn btn-success" type="submit">Volver</a>
                             </div>
                         </div>
 

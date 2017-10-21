@@ -48,4 +48,11 @@
 	.tabla-compress.table>tbody>tr>td {
 		font-size: 11px;
 	}
+	tr {
+		font-size: 12px !important;
+	}
+	td {
+		padding-top: 3px !important;
+		padding-bottom: 3px !important;
+	}
 }

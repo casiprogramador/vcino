@@ -149,7 +149,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="font-normal">Adjunto</label>
+                                <label class="font-normal">Adjunto <span style="font-weight: normal;">(Sólo imágenes)</span></label>
                                 <div class="fileinput input-group fileinput-new" data-provides="fileinput">
                                     <div class="form-control" data-trigger="fileinput">
                                         <i class="glyphicon glyphicon-file fileinput-exists"></i> 
@@ -181,9 +181,7 @@
                                 </label>
                             </div>
 
-                            <div class="hr-line-dashed"></div>
-
-                            <div class="form-group" style="margin-top: 20px;">
+                            <div class="form-group" style="margin-top: 20px; display: none;">
                                 <label class="font-normal">Creado por:&nbsp;&nbsp;</label>
                                     <span style="font-weight: normal;">{{ Auth::user()->nombre }}</span>
                                 </label>
@@ -209,32 +207,7 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5 style="padding-top: 2px;">
-                            <span style="font-weight: normal">Creado por:</span> 
-							@if($tasktracking->task->tipo_tarea == 'mis_tareas')
-
-									{{ Auth::user()->nombre }}
-								@elseif($tasktracking->task->tipo_tarea =='solicitudes_recibidas')
-
-									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
-								@elseif($tasktracking->task->tipo_tarea =='reserva_instalaciones')
-
-									{{$tasktracking->task->taskreservation->property->nro}} - {{$tasktracking->task->taskreservation->contact->nombre}} {{$tasktracking->task->taskreservation->contact->apellido}} 
-								@elseif($tasktracking->task->tipo_tarea =='reclamos')
-						
-									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
-								@elseif($tasktracking->task->tipo_tarea =='sugerencias')
-									
-									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
-								@elseif($tasktracking->task->tipo_tarea =='notificacion_mudanza')
-								
-									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
-								@elseif($tasktracking->task->tipo_tarea =='notificacion_trabajos')
-					
-									{{$tasktracking->task->taskrequest->property->nro}} - {{$tasktracking->task->taskrequest->contact->nombre}} {{$tasktracking->task->taskrequest->contact->apellido}} 
-								@endif
-                            </h5>
-                            <h5 class="pull-right" style="margin-right: 10px;">{{date_format(date_create($tasktracking->fecha),'d/m/Y')}}</h5>
+                            <h5 style="padding-top: 2px;">{{date_format(date_create($tasktracking->fecha),'d/m/Y')}}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="row">    
@@ -281,7 +254,7 @@
                                     <div class="hr-line-dashed"></div>
 									@endif
 
-                                    <div class="checkbox checkbox-primary">
+                                    <div class="checkbox checkbox-primary" style="display: none;">
                                         <input id="checkbox2" type="checkbox" name="activa" value="1" {{ ($tasktracking->notificar == 1) ? 'checked' : '' }} disabled="disabled">
                                         <label for="checkbox2">
                                             Notificar respuesta
@@ -293,7 +266,7 @@
                                         <a href="{{ route('taskrequest.tasktracking.edit', array(Crypt::encrypt($task->id),Crypt::encrypt($tasktracking->id))) }}" class="btn btn-default" type="submit" style="margin-right: 10px;">Editar</a>
                                     </div>
 									{!! Form::open(['route' => ['taskrequest.tasktracking.destroy', $tasktracking->id], 'method' => 'post']) !!}
-					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Está usted seguro de eliminar el registro?')"]) !!}
 					{!! Form::close() !!}
                                 </div>
                             </div>
@@ -328,8 +301,7 @@
     			    ['font', ['bold', 'italic', 'underline']],
     			    ['color', ['color']],
     			    ['para', ['ul', 'ol', 'paragraph']],
-    			    ['insert', ['hr']],
-    			    ['help', ['help']]
+    			    ['insert', ['hr']]
     			],
     		});
     		$('.date-picker').datetimepicker({

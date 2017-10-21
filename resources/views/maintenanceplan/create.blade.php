@@ -12,7 +12,7 @@
                 Equipamiento
             </li>
             <li>
-                <a href="#">Plan de mantenimiento</a>
+                <a href="{{ route('equipment.maintenanceplan.index') }}">Plan de mantenimiento</a>
             </li>
             <li class="active">
                 <strong>Nuevo</strong>
