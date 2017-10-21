@@ -86,6 +86,7 @@
 							@endforeach
                         </tbody>
                     </table>
+                    <p>Total propiedades: <span id="cantidad"></span></p>
                 </div>
                 </div>
             </div>
@@ -136,5 +137,7 @@
 				"columnDefs": [ { "targets": [0],"visible": false,"searchable": false },{ "orderable": false, "targets": 5 },{ "orderable": false, "targets": 6 } ]
             });
         } );
+        var cantidad = $('.table tbody tr:visible').length;
+        document.getElementById("cantidad").innerHTML = cantidad;
     </script>
 @endsection

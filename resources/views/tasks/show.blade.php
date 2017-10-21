@@ -28,7 +28,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Editar tarea</h5>
+                    <h5 style="padding-top: 2px;">Ver tarea</h5>
                 </div>
 
                 <div class="ibox-content">
@@ -86,7 +86,7 @@
 						<label class="col-sm-2 control-label">Nota</label>
                         <div class="col-sm-10">
                             <div class="ibox-content no-padding" style="background-color: #EBEBEB;">
-                                <?php echo $task->nota ?>
+                                <p><?php echo $task->nota ?></p>
                             </div>
                         </div>
                     </div>
@@ -516,9 +516,7 @@
 							@endif
                     </div>
 
-                    @if(!empty($task->documento_1) || !empty($task->documento_2) || !empty($task->documento_3))
-                        <div class="hr-line-dashed"></div>
-                    @endif
+                    <div class="hr-line-dashed"></div>
 
 					<div class="form-group">
                         <label class="col-sm-2 control-label">Estado</label>

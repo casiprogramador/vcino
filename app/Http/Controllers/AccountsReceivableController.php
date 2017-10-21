@@ -426,7 +426,7 @@ class AccountsReceivableController extends Controller
 				->join('accountsreceivables', 'properties.id', '=', 'accountsreceivables.property_id')
 				->join('quotas', 'quotas.id', '=', 'accountsreceivables.quota_id')
 				->join('categories', 'categories.id', '=', 'quotas.category_id')
-				//->where('fecha_gestion_periodo','>=',$date_gestion_periodo_desde)
+				->where('fecha_gestion_periodo','>=',$date_gestion_periodo_desde)
 				->where('fecha_gestion_periodo','<=',$date_gestion_periodo_hasta)
 				->where('accountsreceivables.property_id',$request->propiedad)	
 				->where('cancelada','0')

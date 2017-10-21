@@ -733,8 +733,29 @@ class TaskController extends Controller
     public function destroy($id)
     {
 		$task = Task::find($id);
+		//$accountreceibable = Accountsreceivable::find(1492);
+		//$accountreceibable->delete();
+
 		if($task->tipo_tarea == 'reserva_instalaciones'){
+
+			$task_accountreceivables = $task->accountreceivables()->get();
+			foreach ($task_accountreceivables as $task_accountreceivable) {
+				
+				//dd($task_accountreceivable->id);
+				
+				if($task_accountreceivable->cancelada == 1){
+					Session::flash('message', 'No se puede eliminar esta reserva porque se encuentra cancelada');
+					return redirect()->route('taskrequest.task.index');
+				}
+				$task->accountreceivables()->detach($task_accountreceivable->id);
+				$accountreceibable = Accountsreceivable::find($task_accountreceivable->id);
+				
+				$accountreceibable->delete();
+				//dd($accountreceibable);
+
+			}
 			$taskreservation = TaskReservation::where('task_id',$id)->delete();
+			
 			
 		}elseif($task->tipo_tarea == 'solicitudes_recibidas' ||
 				$task->tipo_tarea == 'reclamos' ||

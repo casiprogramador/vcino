@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Plan de mantenimiento</h2>
+        <h2>Registro de mantenimiento</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,10 +12,10 @@
                 Equipamiento
             </li>
             <li>
-                <a href="#">Plan de mantenimiento</a>
+                <a href="{{ route('equipment.maintenancerecord.index') }}">Registro de mantenimiento</a>
             </li>
             <li class="active">
-                <strong>Editar registro de mantenimiento</strong>
+                <strong>Editar</strong>
             </li>
         </ol>
     </div>
@@ -177,22 +177,18 @@
                         
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Registrar mantenimiento</button>
+                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Grabar registro</button>
                                 <a href="{{ route('equipment.maintenancerecord.index')}}" class="btn btn-white">Cancelar</a>
                             </div>
                         </div>
 						
 
                     {!! Form::close() !!}
-					                        <!--    ESTA PARTE SOLO PARA LA OPCION <<EDITAR>>       -->
+                        <!--    ESTA PARTE SOLO PARA LA OPCION <<EDITAR>>       -->
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                               {!! Form::open(['route' => ['equipment.maintenancerecord.destroy', $maintenancerecord->id], 'method' => 'delete']) !!}
-					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
-					{!! Form::close() !!}
-                            </div>
-                        </div>
+                           {!! Form::open(['route' => ['equipment.maintenancerecord.destroy', $maintenancerecord->id], 'method' => 'delete']) !!}
+        					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Está usted seguro de eliminar el registro?')"]) !!}
+    	          			{!! Form::close() !!}
                 </div>
             </div>
         </div>

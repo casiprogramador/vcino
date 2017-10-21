@@ -52,8 +52,8 @@
 
                                         <div class="form-group{{ $errors->has('categoria') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Categoría</label>
-                                            <div class="col-sm-3">
-                                                {{ Form::select('categoria',array('0' => 'Seleccione','Servicios basicos' => 'Servicios basicos', 'Taxis' => 'Taxis', 'Fontaneros' => 'Fontaneros', 'Electricistas' => 'Electricistas', 'Policia y Transito' => 'Policia y Transito', 'Salud' => 'Salud'),$phonesite->categoria,['class' => 'form-control input-sm']) }}
+                                            <div class="col-sm-5">
+                                                {{ Form::select('categoria',array('0' => 'Seleccione','Emergencias y seguridad ciudadana' => 'Emergencias y seguridad ciudadana', 'Empresas y servicios profesionales' => 'Empresas y servicios profesionales', 'Instituciones financieras' => 'Instituciones financieras', 'Instituciones públicas' => 'Instituciones públicas', 'Medios de comunicación' => 'Medios de comunicación', 'Salud' => 'Salud','Servicios básicos' => 'Servicios básicos', 'Otras categorías' => 'Otras categorías'),$phonesite->categoria,['class' => 'form-control input-sm']) }}
                                                 @if ($errors->has('categoria'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('categoria') }}</strong>

@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Plan de mantenimiento</h2>
+        <h2>Registro de mantenimiento</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,10 +12,10 @@
                 Equipamiento
             </li>
             <li>
-                <a href="#">Plan de mantenimiento</a>
+                <a href="{{ route('equipment.maintenancerecord.index') }}">Registro de mantenimiento</a>
             </li>
             <li class="active">
-                <strong>Ver registro de mantenimiento</strong>
+                <strong>Ver</strong>
             </li>
         </ol>
     </div>
@@ -93,10 +93,9 @@
 
                         <div class="form-group" id="nota">
 							<label class="col-sm-3 control-label">Notas</label>
-							<div class="col-sm-8">
-								<div class="no-padding">
-									<?php echo $maintenancerecord->notas ?>
-								</div>
+							<div class="col-sm-8" style="background-color: #EBEBEB; margin-left: 15px;">
+                                <br>
+								<?php echo $maintenancerecord->notas ?>
 							</div>
 						</div>
 
@@ -279,10 +278,9 @@
                         
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <a href="{{ route('equipment.maintenancerecord.index')}}" class="btn btn-white">Cancelar</a>
+                                <a href="{{ route('equipment.maintenancerecord.index')}}" class="btn btn-success">Volver</a>
                             </div>
                         </div>
-
 
                     {!! Form::close() !!}
                 </div>

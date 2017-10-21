@@ -12,7 +12,7 @@
                 Equipamiento
             </li>
             <li>
-                <a href="#">Plan de mantenimiento</a>
+                <a href="{{ route('equipment.maintenanceplan.index')}}">Plan de mantenimiento</a>
             </li>
             <li class="active">
                 <strong>Editar</strong>
@@ -96,23 +96,18 @@
                         
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Editar plan</button>
+                                <button class="btn btn-success" type="submit" style="margin-right: 10px;">Grabar plan</button>
                                 <a href="{{ route('equipment.maintenanceplan.index')}}" class="btn btn-white" type="submit">Cancelar</a>
                             </div>
                         </div>
 
-                       
-
                     {!! Form::close() !!}
+
 					 <!--    ESTA PARTE SOLO PARA LA OPCION <<EDITAR>>       -->
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
                                   {!! Form::open(['route' => ['equipment.maintenanceplan.destroy', $maintenanceplan->id], 'method' => 'delete']) !!}
-					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Esta usted seguro de eliminar el registro?')"]) !!}
-					{!! Form::close() !!}
-                            </div>
-                        </div>
+					{!! Form::button('<i class="fa fa-trash"></i>&nbsp;&nbsp;Eliminar...', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('¿Está usted seguro de eliminar el registro?')"]) !!}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

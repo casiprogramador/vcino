@@ -15,7 +15,7 @@
                 <a href="{{ route('taskrequest.task.index') }}">Tareas</a>
             </li>
             <li class="active">
-                <strong>Duplicar tarea</strong>
+                <strong>Copiar</strong>
             </li>
         </ol>
     </div>
@@ -28,7 +28,7 @@
             <div class="ibox float-e-margins">
 
                 <div class="ibox-title">
-                    <h5 style="padding-top: 2px;">Editar tarea</h5>
+                    <h5 style="padding-top: 2px;">Copiar tarea</h5>
                 </div>
 
                 <div class="ibox-content">
@@ -348,7 +348,7 @@
 						@endif
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="nota-linea-2"></div>
 
                     <div class="form-group" id="adjuntos">
                         <label class="col-sm-2 control-label">Adjuntos</label>
@@ -402,6 +402,7 @@
                     </div>
 
                     <div class="hr-line-dashed"></div>
+
 					<div class="form-group">
                         <label class="col-sm-2 control-label">Estado</label>
                         <div class="col-sm-8">
@@ -415,6 +416,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="hr-line-dashed"></div>
+
                     <div class="form-group">
                         <div class="col-sm-12">
                             <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
@@ -495,7 +499,8 @@
 		}else if(tipo_tarea == "reclamos"){
 			$('#fecha-tarea').show("slow");
 			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
+            $('#nota').show("slow");
+			$('#nota-linea-2').hide();
 			$('#prioridad').show("slow");
 			$('#frecuencia').hide();
 			$('#medio-solicitud').show("slow");
@@ -511,7 +516,8 @@
 		}else if(tipo_tarea == "sugerencias"){
 			$('#fecha-tarea').show("slow");
 			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
+            $('#nota').show("slow");
+			$('#nota-linea-2').hide();
 			$('#prioridad').hide();
 			$('#frecuencia').hide();
 			$('#medio-solicitud').show("slow");
@@ -527,7 +533,8 @@
 		}else if(tipo_tarea == "notificacion_mudanza"){
 			$('#fecha-tarea').show("slow");
 			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
+            $('#nota').show("slow");
+			$('#nota-linea-2').hide();
 			$('#prioridad').hide();
 			$('#frecuencia').hide();
 			$('#medio-solicitud').show("slow");
