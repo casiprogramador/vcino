@@ -1,16 +1,17 @@
 @extends('layouts.app')
-@section('body-class', 'gray-bg')
+@section('body-class')
 @section('content')
     <div class="text-center animated fadeInDown">
-        <div class="col-md-6 col-md-offset-3">
-            <div>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12" style="width: 330px; margin: auto;">
 
-                <h1 class="logo-name" style="font-size: 140px;">XPENSA</h1>
+                <div style="padding-top: 100px; padding-bottom: 50px; width: 300px;">
+                    <img src="img/system/logo-login.png">
+                </div>
 
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-                    <h3>Bienvenido a XPENSA</h3>
-                    <p>Diseñado para la administración de condominios.</p>
+                    <p style="color: #91A5BC;">Diseñado para la administración de condominios.</p>
                     
                             <form class="m-t" role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
@@ -42,11 +43,18 @@
                                 <a href="{{ url('/register') }}">Registrarse</a></small>.</p>
                                 -->
                             </form>
-                    <p class="m-t"> <small>Constantemente actualizado y mejorado por el equipo de Versión Digital.</small> </p>
-                    <p class="m-t"> <small>Versión Digital SAAS &copy; 2017</small> </p>
+                    <p class="m-t" style="color: #91A5BC;"> <small>Constantemente actualizado y mejorado por el equipo de Versión Digital.</small> </p>
+                    <p class="m-t" style="color: #91A5BC;"> <small>Versión Digital SAAS &copy; 2017</small> </p>
                 </div>
         </div>
+        <div class="col-md-2">
+        </div>
+
     </div>
+@endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/login.css') }}"/>
 @endsection
 
 @section('javascript')

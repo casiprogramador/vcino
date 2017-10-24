@@ -3,11 +3,90 @@
 @section('admin-content')
 
 <div class="wrapper wrapper-content">
+
+    <!--
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-success alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <p>Texto aquí</p>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="pull-right"></span>
+                    <h5><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>Cuotas por cobrar</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="no-margins">3.451,90</h2>
+                            <div class="text-navy" style="color: #1A7CC0;"><small>Octubre</small></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="no-margins">45.206,12</h2>
+                            <div class="text-navy" style="color: #1A7CC0;"><small>Total acumulado</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="pull-right"></span>
+                    <h5><i class="fa fa-plus-circle" aria-hidden="true">&nbsp;&nbsp;</i>Ingresos</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="no-margins">23.546,90</h2>
+                            <div class="text-navy" style="color: #1A7CC0;"><small>Octubre (A la fecha)</small></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="no-margins">34.546,21</h2>
+                            <div class="text-navy" style="color: #1A7CC0;"><small>Septiembre</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="pull-right"></span>
+                    <h5><i class="fa fa-minus-circle" aria-hidden="true">&nbsp;&nbsp;</i>Gastos</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="no-margins">23.546,90</h2>
+                            <div class="text-navy" style="color: #e88b51;"><small>Octubre (A la fecha)</small></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="no-margins">34.546,21</h2>
+                            <div class="text-navy" style="color: #e88b51;"><small>Septiembre</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Cobranza correspondiente a: {{nombremes($mes_actual)}} <small>(Comparativo mes anterior)</small></h5>
+                    <h5>Cobranza correspondiente a: {{ nombremes($mes_actual) }} <small>(Comparativo mes anterior)</small></h5>
                 </div>
                 <div class="ibox-content">
                     <div>
@@ -21,89 +100,31 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-lg-8">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Gastos: {{nombremes($mes_actual)}}</h5>
+                            <h5>Gastos: {{nombremes(date('m'))}}</h5>
                         </div>
                         <div class="ibox-content">
+                            @if (($gastos_torta_nombre <> '[]') && ($gastos_torta_importe <> '[]'))
                             <div>
-                                <canvas id="doughnutChart" height="250"></canvas>
-								<input  id ="nombres-gastos-torta" type="hidden" value="{{$gastos_torta_nombre}}"> 
+                                <canvas id="doughnutChart" height="120"></canvas>
+								<input  id ="nombres-gastos-torta" type="hidden" value="{{$gastos_torta_nombre}}">
 								<input  id ="importes-gastos-torta" type="hidden" value="{{$gastos_torta_importe}}">
-								<input  id ="colores-gastos-torta" type="hidden" value="{{$gastos_torta_color}}"> 
-	
+								<input  id ="colores-gastos-torta" type="hidden" value="{{$gastos_torta_color}}">
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Ingresos: {{nombremes($mes_actual)}} </h5>
-                        </div>
-                        <div class="ibox-content">
-                            <p><br></p>
-                            <ul class="stat-list">
-                                <li>
-                                    <h2 class="no-margins">{{ number_format($importe_pagado_actual,2,',','.') }}</h2>
-                                    <small>Total cobranzas mes actual</small>
-									@if($importe_pagado_total != 0)
-                                    <div class="stat-percent">{{ number_format($importe_pagado_actual/$importe_pagado_total*100,2,',','.') }}%</div>
-                                    <div class="progress progress-mini">
-                                        <div style="width: {{$importe_pagado_actual/$importe_pagado_total*100}}%;" class="progress-bar"></div>
-                                    </div>
-									@else
-									<div class="stat-percent">0 %</div>
-                                    <div class="progress progress-mini">
-                                        <div style="width: 0%;" class="progress-bar"></div>
-                                    </div>
-									@endif
-                                </li>
-                                <li>
-                                    <h2 class="no-margins ">{{ number_format($importe_pagado_anterior,2,',','.') }}</h2>
-                                    <small>Total cobranzas mes anterior</small>
-									@if($importe_pagado_total_anterior != 0)
-                                    <div class="stat-percent">
-										{{ number_format($importe_pagado_anterior/$importe_pagado_total_anterior*100,2,',','.')}}%
-									</div>
-                                    <div class="progress progress-mini">
-                                        <div style="width: {{ number_format($importe_pagado_anterior/$importe_pagado_total_anterior*100,0)}}%;" class="progress-bar progress-bar-2"></div>
-                                    </div>
-									@else
-									<div class="stat-percent">
-										0%
-									</div>
-                                    <div class="progress progress-mini">
-                                        <div style="width: 0%;" class="progress-bar progress-bar-2"></div>
-                                    </div>
-									@endif
-                                </li>
-                                <li>
-                                    <h2 class="no-margins ">{{number_format ($importe_pagado_promedio,2,',','.')}}</h2>
-                                    <small>Promedio cobranzas mensuales</small>
-									@if($importe_pagado_promedio_total != 0)
-                                    <div class="stat-percent">{{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),2,',','.')}}%</div>
-									
-                                    <div class="progress progress-mini">
-                                        <div style="width: {{number_format ( ($importe_pagado_promedio/$importe_pagado_promedio_total*100),0)}}%;" class="progress-bar progress-bar-2"></div>
-                                    </div>
-									@else
-									<div class="stat-percent">0%</div>
-                                    
-                                    <div class="progress progress-mini">
-                                        <div style="width: 0%;" class="progress-bar progress-bar-2"></div>
-                                    </div>
-									@endif
-                                </li>
-                            </ul>
+                            @else
+                                <p>No se encontraron gastos para el mes de <b>{{ strtolower(nombremes(date('m'))) }}</b>.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 
                 <div class="col-lg-12">
@@ -148,7 +169,7 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Solicitudes recibidas</h5>
+                    <h5>Solicitudes & tareas</h5>
                     <div class="ibox-tools">
                         <!--
                         <span class="label label-success pull-right">2 Mensajes nuevos</span>
@@ -157,52 +178,131 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        @if ( $tasks_count > 0 )
                         <div class="feed-activity-list">
 							@foreach($tasks as $task)
                             <div class="feed-element">
                                 <p class="pull-left">
-                                    <img alt="Sol." src="img/system/solicitudes1.png" class="img-circle">
-                                </p>
-                                <div class="media-body ">
-                                    <small class="pull-right">{{ date_format(date_create($task->fecha),'d/m/Y') }}</small>
-                                    <strong>{{$task->titulo_tarea}}</strong><br>
+                                    <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" >
                                     @if($task->tipo_tarea == 'mis_tareas')
-									MIS TAREAS
+                                        <img alt="Sol." src="img/system/mt.png" class="img-circle" title="Mis tareas">
 
-								@elseif($task->tipo_tarea =='solicitudes_recibidas')
-									SOLICITUDES RECIBIDAS
+                                    @elseif($task->tipo_tarea =='solicitudes_recibidas')
+                                        <img alt="Sol." src="img/system/sga.png" class="img-circle" title="Solicitudes recibidas">
 
-								@elseif($task->tipo_tarea =='reserva_instalaciones')
-									RESERVA DE INSTALACION
+                                    @elseif($task->tipo_tarea =='reserva_instalaciones')
+                                        <img alt="Sol." src="img/system/sri.png" class="img-circle" title="Reserva de instalaciones">
 
-								@elseif($task->tipo_tarea =='reclamos')
-									RECLAMOS
+                                    @elseif($task->tipo_tarea =='reclamos')
+                                        <img alt="Sol." src="img/system/re.png" class="img-circle" title="Reclamos">
 
-								@elseif($task->tipo_tarea =='sugerencias')
-									SUGERENCIAS
+                                    @elseif($task->tipo_tarea =='sugerencias')
+                                        <img alt="Sol." src="img/system/su.png" class="img-circle" title="Sugerencias">
 
-								@elseif($task->tipo_tarea =='notificacion_mudanza')
-									NOTIFICACION DE MUDANZA
+                                    @elseif($task->tipo_tarea =='notificacion_mudanza')
+                                        <img alt="Sol." src="img/system/nm.png" class="img-circle" title="Notificación de mudanza">
 
-								@elseif($task->tipo_tarea =='notificacion_trabajos')
-									NOTIFICACION DE TRABAJO
+                                    @elseif($task->tipo_tarea =='notificacion_trabajos')
+                                        <img alt="Sol." src="img/system/nmc.png" class="img-circle" title="Notificación de trabajos">
 
-								@endif
-                                    <small class="text-muted"></small>
+                                    @endif
+                                </a>
+                                </p>
+                                <div class="media-body">
+                                    <small class="pull-right">{{ date_format(date_create($task->fecha),'d/m/Y') }}</small>
+                                    
+                                    <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" style="font-size: 14px;" >{{ $task->titulo_tarea }}</a>
+                                    <br>
+                                
+                                    <!--
+                                    @if($task->estado_solicitud == 'pendiente')
+                                       <i style="color: #F7B77B;" class="fa fa-circle" aria-hidden="true"></i>
+                                    @else
+                                        <i style="color: #5D96CC;" class="fa fa-circle" aria-hidden="true"></i>
+                                    @endif
+                                    -->
+
+                                    <small class="text-muted">
+                                    @if($task->tipo_tarea == 'mis_tareas')
+                                        MIS TAREAS
+
+    								@elseif($task->tipo_tarea =='solicitudes_recibidas')
+    									SOLICITUDES RECIBIDAS
+
+    								@elseif($task->tipo_tarea =='reserva_instalaciones')
+    									RESERVA DE INSTALACION
+
+    								@elseif($task->tipo_tarea =='reclamos')
+    									RECLAMOS
+
+    								@elseif($task->tipo_tarea =='sugerencias')
+    									SUGERENCIAS
+
+    								@elseif($task->tipo_tarea =='notificacion_mudanza')
+    									NOTIFICACION DE MUDANZA
+
+    								@elseif($task->tipo_tarea =='notificacion_trabajos')
+    									NOTIFICACION DE TRABAJO
+
+    								@endif
+                                    </small>
+
+                                    <!--
                                     <div class="actions">
                                         <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" class="btn btn-xs btn-white">Ver solicitud</a>
                                     </div>
-
+                                    -->
                                 </div>
                             </div>
                             @endforeach
                         </div>
-                        <a href="{{ route('taskrequest.task.index')}}" class="btn btn-success btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas</a>
+                        <a href="{{ route('taskrequest.task.index')}}" class="btn btn-success btn-block m-t">
+                        <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas</a>
+                        @else
+                            <p>No se encontraron solicitudes o tareas pendientes.</p>
+
+                            <a href="{{ route('taskrequest.task.create') }}" class="btn btn-default btn-block m-t">
+                            <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Nueva tarea</a>
+                        @endif
                     </div>
 
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Planes de mantenimiento</h5>
+                </div>
+                <div class="ibox-content">
+                    @if ( $maintenances_count > 0 )
+                    <div class="feed-activity-list">
+                        @foreach($maintenances as $maintenance)
+                        <div class="feed-element">
+                            <p class="no-margins" style="font-size: 14px;">{{ $maintenance->equipment->equipo }}</p>
+                            <small class="text-muted">FECHA ESTIMADA: {{ date_format(date_create($maintenance->fecha_estimada),'d/m/Y') }}</small>
+                            <div class="stat-percent">
+                                @if(diffdays($maintenance->fecha_estimada) >= 0)
+                                    <span class="badge" style="font-size: 10px; font-weight: normal; font-family: Tahoma, Geneva;">{{diffdays($maintenance->fecha_estimada)}} d.</span>
+                                @else
+                                    <span class="badge" style="background-color: #E06F27; font-size: 10px; font-weight: normal; color: white; font-family: Tahoma, Geneva;">{{diffdays($maintenance->fecha_estimada)}} d.</span>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <a href="{{ route('equipment.maintenanceplan.index') }}" class="btn btn-success btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todos</a>
+                    @else
+                        <p>No se encontraron planes de mantenimiento.</p>
+                        <p>Los planes de mantenimiento permiten organizar adecuadamente la realización de mantenimiento preventivo a cada uno de los equipos con los que cuenta el condominio.</p>
+
+                        <a href="{{ route('equipment.maintenanceplan.create') }}" class="btn btn-default btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Nuevo plan de mantenimiento</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -271,7 +371,9 @@ $(function () {
 	nombres_gastos_torta = JSON.parse($('#nombres-gastos-torta').val());
 	importes_gastos_torta = JSON.parse($('#importes-gastos-torta').val());
 	colores_gastos_torta = JSON.parse($('#colores-gastos-torta').val());
-	console.log(nombres_gastos_torta);
+    //console.log(nombres_gastos_torta.length);
+	//console.log(importes_gastos_torta.length);
+
     var doughnutData = {
         labels: nombres_gastos_torta,
         datasets: [{
@@ -286,15 +388,13 @@ $(function () {
         }]
     } ;
 
-
     var doughnutOptions = {
         responsive: true,
         legend: {
-            display: false,
-            position: 'bottom'
+            display: true,
+            position: 'right'
         },
     };
-
 
     var ctx4 = document.getElementById("doughnutChart").getContext("2d");
     new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});

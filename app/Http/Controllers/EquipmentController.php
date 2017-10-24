@@ -92,7 +92,7 @@ class EquipmentController extends Controller
             $pathF2 = $tmpFilePathF2 . $tmpFileNameF2;
         }
         //Foto 3
-        if(!empty($request->fotografia_1)){
+        if(!empty($request->fotografia_3)){
             $fileF3 = $request->file('fotografia_3');
             $tmpFilePathF3 = '/img/upload/';
             $tmpFileNameF3 = time() .'-'. 'f3-eq'.'-'.$id. '-' . $fileF3->getClientOriginalName();
