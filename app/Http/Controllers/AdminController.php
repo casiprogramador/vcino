@@ -9,6 +9,7 @@ use App\Collection;
 use App\Accountsreceivable;
 use App\Transaction;
 use App\Task;
+use App\MaintenancePlan;
 use Illuminate\Support\Facades\DB;
 use Redis;
 use App\Http\Requests;
@@ -50,7 +51,16 @@ class AdminController extends Controller
 		//Ultimas transacciones
 		$transacciones = $this->ultimas_transacciones();
 		//dd($importe_promedio/$importe_promedio_total*100);
-		$tasks = Task::where('company_id',$company->id )->orderBy('fecha', 'desc')->limit(5);
+
+		$tasks = Task::where('company_id',$company->id )->where('estado_solicitud','<>','completada' )->orderBy('fecha', 'desc')->limit(3);
+
+		$maintenances = MaintenancePlan::where('company_id',$company->id )
+			->where('id', '<>', 'maintenance_plans_records.maintenance_plan_id')
+			->orderBy('fecha_estimada', 'asc')
+			->limit(3);
+		$maintenances_count = $maintenances->get()->count();
+		$tasks_count = $tasks->get()->count();
+
         return view('admin')
 			->with('transacciones',$transacciones)
 			->with('importe_pagado_actual',$cuotas_pagadas_actual['importe_pagado'])
@@ -66,7 +76,10 @@ class AdminController extends Controller
 			->with('mes_anterior',$mes_anterior)
 			->with('cobranzas_mes_actual',json_encode($cobranzas['cobranza_mes_actual']))
 			->with('cobranza_mes_anterior',json_encode($cobranzas['cobranza_mes_anterior']))
-			->with('tasks',$tasks->get());
+			->with('maintenances',$maintenances->get())
+			->with('tasks',$tasks->get())
+			->with('maintenances_count', $maintenances_count)
+			->with('tasks_count', $tasks_count);		
     }
 	
 	public function cobranzas_barras(){
