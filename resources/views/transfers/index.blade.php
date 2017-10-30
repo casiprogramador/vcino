@@ -90,7 +90,7 @@
 										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, '.', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
-												<a href="{{ route('transaction.collection.show', $transaction->collection->id ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+												<a href="{{ route('transaction.collection.show', Crypt::encrypt($transaction->collection->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													   <i class="fa fa-eye"></i>
 												   </a>
 											</div>
@@ -126,7 +126,7 @@
 										<td style="text-align: right;">{{ number_format($transaction->importe_debito, 2, '.', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
-												<a href="{{ route('transaction.expense.show', $transaction->expense->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+												<a href="{{ route('transaction.expense.show', Crypt::encrypt($transaction->expense->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													<i class="fa fa-eye"></i>
 												</a>
 											</div>
@@ -162,7 +162,7 @@
 										<td style="text-align: right;">-{{ number_format($transaction->importe_debito, 2, '.', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
-												<a href="{{ route('transaction.transfer.show', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+												<a href="{{ route('transaction.transfer.show', Crypt::encrypt($transaction->transfersOrigin[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													<i class="fa fa-eye"></i>
 												</a>
 												<a href="{{ route('transaction.transfer.edit', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
@@ -201,7 +201,7 @@
 										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, '.', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
-												<a href="{{ route('transaction.transfer.show', $transaction->transfersDestiny[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
+												<a href="{{ route('transaction.transfer.show', Crypt::encrypt($transaction->transfersDestiny[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													<i class="fa fa-eye"></i>
 												</a>
 												<a href="{{ route('transaction.transfer.edit', $transaction->transfersDestiny[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
