@@ -139,6 +139,7 @@ class TransferController extends Controller
      */
     public function show($id)
     {
+		$id = \Crypt::decrypt($id);
 		$transfer = Transfer::find($id);
         return view('transfers.show')->with('transfer',$transfer);
     }
@@ -151,6 +152,7 @@ class TransferController extends Controller
      */
     public function edit($id)
     {
+		$id = \Crypt::decrypt($id);
        $company = Auth::user()->company;
 	   $accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
 	   $transfer = Transfer::find($id);
