@@ -165,7 +165,7 @@
 												<a href="{{ route('transaction.transfer.show', Crypt::encrypt($transaction->transfersOrigin[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													<i class="fa fa-eye"></i>
 												</a>
-												<a href="{{ route('transaction.transfer.edit', $transaction->transfersOrigin[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+												<a href="{{ route('transaction.transfer.edit', Crypt::encrypt($transaction->transfersOrigin[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
 													<i class="fa fa-pencil"></i>
 												</a>
 											</div>
@@ -204,7 +204,7 @@
 												<a href="{{ route('transaction.transfer.show', Crypt::encrypt($transaction->transfersDestiny[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
 													<i class="fa fa-eye"></i>
 												</a>
-												<a href="{{ route('transaction.transfer.edit', $transaction->transfersDestiny[0]->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
+												<a href="{{ route('transaction.transfer.edit', Crypt::encrypt($transaction->transfersDestiny[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Editar comprobante">
 													<i class="fa fa-pencil"></i>
 												</a>
 											</div>
