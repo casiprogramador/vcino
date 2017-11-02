@@ -264,7 +264,13 @@ Route::group(['prefix' => 'report'], function () {
 	Route::get('estadocobranzas/{opcion}/excel', [
         'as' => 'report.estadocobranzas.excel', 'uses' => 'ReportEstadoCobranzasController@estadocobranzasExcel'
     ]);
-	
+	//Reporte Estado de pagos
+	Route::get('estadopagos', [
+		'as' => 'report.estadopagos', 'uses' => 'ReportEstadoPagosController@estadopagos'
+	]);
+	Route::post('estadopagos/show', [
+		'as' => 'report.estadopagos.show', 'uses' => 'ReportEstadoPagosController@estadopagos_show'
+	]);
 });
 //Rutas de Tareas
 Route::group(['prefix' => 'taskrequest'], function () {
