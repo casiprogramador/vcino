@@ -57,8 +57,11 @@ class ReportEstadoPagosController extends Controller
 			->where('cancelada',1)
 			->where('anulada',0)
 			->where('excluir_reportes',0)
+			->whereYear('fecha_pago','=',$gestion)
+			->whereMonth('fecha_pago','=',$periodo)
+			//->where('periodo','=',$periodo)
 			->orderBy('fecha_pago', 'asc')
-			->select('gestion','periodo','fecha_pago', 'importe_por_cobrar as importe')
+			->select('gestion','periodo','fecha_gestion_periodo as fecha_cobro','fecha_pago', 'importe_por_cobrar as importe')
 			->get();
 		//dd($cuentas_cobrar);
 		$suma_total = 0;
@@ -70,6 +73,8 @@ class ReportEstadoPagosController extends Controller
 	
 	function pagosVigentes($periodo,$gestion){
 		$company = Auth::user()->company;
+		$date_gestion_periodo_ini = new \DateTime($gestion.'-'.$periodo.'-'.'01');
+		$date_gestion_periodo_fin = new \DateTime($gestion.'-'.$periodo.'-'.'31');
 		$cuentas_cobrar =DB::table('accountsreceivables')
 			->join('collections', 'collections.id', '=', 'accountsreceivables.id_collection')
 			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
@@ -77,8 +82,9 @@ class ReportEstadoPagosController extends Controller
 			->where('cancelada',1)
 			->where('anulada',0)
 			->where('excluir_reportes',0)
-			->where('accountsreceivables.periodo',$periodo)
-			->where('accountsreceivables.gestion',$gestion)
+			->whereYear('fecha_pago','=',$gestion)
+			->whereMonth('fecha_pago','=',$periodo)
+			->where('periodo','=',$periodo)
 			->orderBy('fecha_pago', 'asc')
 			->select('gestion','periodo','fecha_gestion_periodo as fecha_cobro','fecha_pago', 'importe_por_cobrar as importe')
 			->get();
@@ -109,8 +115,9 @@ class ReportEstadoPagosController extends Controller
 			->where('cancelada',1)
 			->where('anulada',0)
 			->where('excluir_reportes',0)
-			//->where('fecha_gestion_periodo','<=',$date_gestion_periodo_ini)
-			->where('fecha_pago','>',$date_gestion_periodo_fin)
+			->whereYear('fecha_pago','=',$gestion)
+			->whereMonth('fecha_pago','=',$periodo)
+			->where('periodo','<',$periodo)
 			->orderBy('fecha_pago', 'asc')
 			->select('gestion','periodo','fecha_gestion_periodo as fecha_cobro','fecha_pago', 'importe_por_cobrar as importe')
 			->get();
@@ -119,17 +126,7 @@ class ReportEstadoPagosController extends Controller
 		$suma_atrasados = 0;
 		$cuotasAtrasadas = array();
 		foreach ($cuentas_cobrar as $cuentacobrar) {
-			
-			$gestion_cobro = date('Y', strtotime($cuentacobrar->fecha_cobro));
-			$periodo_cobro = date('m', strtotime($cuentacobrar->fecha_cobro));
-			$gestion_pago = date('Y', strtotime($cuentacobrar->fecha_pago));
-			$periodo_pago = date('m', strtotime($cuentacobrar->fecha_pago));
-			if($gestion_cobro == $gestion_pago && $periodo_cobro == $periodo_pago){
-				$suma_atrasados = $suma_atrasados + 0;
-			}else{
-				$suma_atrasados = $suma_atrasados + $cuentacobrar->importe;
-				array_push($cuotasAtrasadas, $cuentacobrar);
-			}
+			$suma_atrasados = $suma_atrasados + $cuentacobrar->importe;
 		}
 		//dd($cuentas_cobrar);
 		return $suma_atrasados;
@@ -139,30 +136,23 @@ class ReportEstadoPagosController extends Controller
 		$company = Auth::user()->company;
 		$date_gestion_periodo_ini = new \DateTime($gestion.'-'.$periodo.'-'.'01');
 		$date_gestion_periodo_fin = new \DateTime($gestion.'-'.$periodo.'-'.'31');
-		$cuentas_cobrar =DB::table('accountsreceivables')
+			$cuentas_cobrar =DB::table('accountsreceivables')
 			->join('collections', 'collections.id', '=', 'accountsreceivables.id_collection')
 			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
 			->where('accountsreceivables.company_id',$company->id)
 			->where('cancelada',1)
 			->where('anulada',0)
 			->where('excluir_reportes',0)
-			->where('fecha_gestion_periodo','>=',$date_gestion_periodo_ini)
-			->where('fecha_pago','<',$date_gestion_periodo_fin)
+			->whereYear('fecha_pago','=',$gestion)
+			->whereMonth('fecha_pago','=',$periodo)
+			->where('periodo','>',$periodo)
 			->orderBy('fecha_pago', 'asc')
 			->select('gestion','periodo','fecha_gestion_periodo as fecha_cobro','fecha_pago', 'importe_por_cobrar as importe')
 			->get();
 		//dd($cuentas_cobrar);
 		$suma_adelantados = 0;
 		foreach ($cuentas_cobrar as $cuentacobrar) {
-			$gestion_cobro = date('Y', strtotime($cuentacobrar->fecha_cobro));
-			$periodo_cobro = date('m', strtotime($cuentacobrar->fecha_cobro));
-			$gestion_pago = date('Y', strtotime($cuentacobrar->fecha_pago));
-			$periodo_pago = date('m', strtotime($cuentacobrar->fecha_pago));
-			if($gestion_cobro == $gestion_pago && $periodo_cobro == $periodo_pago){
-				$suma_adelantados = $suma_adelantados + 0;
-			}else{
 				$suma_adelantados = $suma_adelantados + $cuentacobrar->importe;
-			}
 		}
 		return $suma_adelantados;
 	}
