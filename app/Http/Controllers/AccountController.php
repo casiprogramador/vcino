@@ -65,6 +65,7 @@ class AccountController extends Controller
         $account->nombre_cuentahabiente = $request->nombre_cuentahabiente;
         $account->nota = $request->nota;
         $account->activa = $activa;
+		$account->balance_inicial = $request->balance_inicial;
         $account->company_id = $company->id;
 
         $account->save();
@@ -128,7 +129,7 @@ class AccountController extends Controller
         $account->nombre_cuentahabiente = $request->nombre_cuentahabiente;
         $account->nota = $request->nota;
         $account->activa = $activa;
-
+		$account->balance_inicial = $request->balance_inicial;
         $account->save();
         Session::flash('message', 'Cuenta actualizada correctamente.');
         return redirect()->route('config.account.index');

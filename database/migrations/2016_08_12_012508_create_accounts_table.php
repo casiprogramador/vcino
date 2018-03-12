@@ -15,6 +15,7 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+			$table->decimal('balance_inicial', 10, 2)->default(0);
             $table->string('nro_cuenta')->nullable();
             $table->enum('tipo_cuenta', ['Caja de Ahorro', 'Cuenta Corriente','Efectivo']);
             $table->integer('bank_id')->unsigned();

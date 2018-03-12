@@ -47,7 +47,17 @@
                                                     @endif
                                                 </div>
                                             </div>
-
+                                            <div class="form-group{{ $errors->has('balance_inicial') ? ' has-error' : '' }}">
+                                                <label class="col-sm-3 control-label">Balance Inicial</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control input-sm" name="balance_inicial" value="{{old('balance_inicial')}}">
+                                                    @if ($errors->has('balance_inicial'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('balance_inicial') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
                                             <div class="form-group{{ $errors->has('tipo_cuenta') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Tipo de cuenta</label>
                                                 <div class="col-sm-4">
