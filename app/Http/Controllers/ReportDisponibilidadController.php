@@ -125,7 +125,7 @@ class ReportDisponibilidadController extends Controller
 		$disponibilidad = array();
 		$suma_total = 0;
 		foreach($accounts as $account){
-			//Suma de importe en cobranza
+			//Suma de importe en cobranza mas balance inicial
 			$collection = DB::table('collections')
 					->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
 					->where('account_id',$account->id)
@@ -134,7 +134,9 @@ class ReportDisponibilidadController extends Controller
 					->where('excluir_reportes',0)
 					->sum('importe_credito');
 			$sum_account_cobranza = (is_null($collection)) ? 0 : $collection;
+			
 			$suma_total = $suma_total+$sum_account_cobranza;
+			//dd($suma_total+$sum_account_cobranza+$account->balance_inicial);
 			//Suma de importe en gastos
 			$expense = DB::table('expenses')
 					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
@@ -166,7 +168,7 @@ class ReportDisponibilidadController extends Controller
 			$sum_account_egresos_transf = (is_null($transfers_ori)) ? 0 : $transfers_ori;
 			$suma_total= $suma_total-$sum_account_egresos_transf;
 			//Envio de datos
-			$datos_cuenta = array('cuenta'=>$account->nombre,'ingreso'=>$sum_account_cobranza,'egreso'=>$sum_account_gastos,'ingreso_trans'=>$sum_account_ingreso_transf,'egreso_trans'=>$sum_account_egresos_transf);
+			$datos_cuenta = array('cuenta'=>$account->nombre,'balance_inicial'=>$account->balance_inicial,'ingreso'=>$sum_account_cobranza,'egreso'=>$sum_account_gastos,'ingreso_trans'=>$sum_account_ingreso_transf,'egreso_trans'=>$sum_account_egresos_transf);
 			array_push($disponibilidad, $datos_cuenta);
 
 		}
@@ -227,7 +229,7 @@ class ReportDisponibilidadController extends Controller
 			$sum_account_egresos_transf = (is_null($transfers_ori)) ? 0 : $transfers_ori;
 			$suma_total= $suma_total-$sum_account_egresos_transf;
 			//Envio de datos
-			$datos_cuenta = array($account->nombre,'','',$sum_account_cobranza-$sum_account_gastos+$sum_account_ingreso_transf-$sum_account_egresos_transf);
+			$datos_cuenta = array($account->nombre,'','',$account->balance_inicial+$sum_account_cobranza-$sum_account_gastos+$sum_account_ingreso_transf-$sum_account_egresos_transf);
 			array_push($disponibilidad, $datos_cuenta);
 
 		}

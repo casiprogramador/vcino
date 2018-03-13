@@ -87,7 +87,7 @@
     									@for ($i = 0; $i < count($cuentas); $i++)
                                         <tr>
                                             <td>{{$cuentas[$i]['cuenta']}}</td>
-                                            <td style="text-align:right;">{{ number_format($cuentas[$i]['ingreso']-$cuentas[$i]['egreso']+$cuentas[$i]['ingreso_trans']-$cuentas[$i]['egreso_trans'], 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($cuentas[$i]['balance_inicial']+$cuentas[$i]['ingreso']-$cuentas[$i]['egreso']+$cuentas[$i]['ingreso_trans']-$cuentas[$i]['egreso_trans'], 2, '.', '.') }}</td>
                                         </tr>
     									@endfor
                                     </tbody>
