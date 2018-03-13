@@ -69,7 +69,7 @@ class ReportHistoricoTransaccionesController extends Controller
 		}
 
 		if($request->tipo == 'cuentas'){
-			$resultado = $this->historicoCuentasArray($request->cuenta,$mes,$anio);
+			$resultado = $this->historicoCuentasArray($cuenta,$request->cuenta,$mes,$anio);
 			//dd($resultado['resultado']);
 			return view('reports.historico.cuentas')
 					->with('cuenta',$cuenta)
@@ -78,6 +78,7 @@ class ReportHistoricoTransaccionesController extends Controller
 					->with('transactions',$resultado['resultado'])
 					->with('ingreso_total',$resultado['ingreso_total'])
 					->with('egreso_total',$resultado['egreso_total']);
+			
 		}elseif($request->tipo == 'categorias'){
 			$resultado = $this->historicoCategoriasArray($request->categoria,$mes,$anio);
 			//dd($resultado['resultado']);
@@ -146,9 +147,9 @@ class ReportHistoricoTransaccionesController extends Controller
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
 		$cuenta = $opcion_mes_anio[2];
-
+		$cuenta_datos = Account::find($cuenta);
 		$array_titulo = array(array('FECHA','DOCUMENTO','CONCEPTO','FORMA DE PAGO','NRO FORMA PAGO','INGRESO','EGRESO')); 
-		$resultado = $this->historicoCuentasArray($cuenta,$mes,$anio,$array_titulo);
+		$resultado = $this->historicoCuentasArray($cuenta_datos,$cuenta,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -384,7 +385,7 @@ class ReportHistoricoTransaccionesController extends Controller
 
 	}
 	//Array base
-	function historicoCuentasArray($id_cuenta,$mes,$anio,$array_inicio = array()){
+	function historicoCuentasArray($cuenta_datos,$id_cuenta,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
 		$id_transactions = array();
 		$expenses = Expenses::where('company_id',$company->id )->where('account_id',$id_cuenta)->get();
@@ -418,6 +419,10 @@ class ReportHistoricoTransaccionesController extends Controller
 		$array_resultado = $array_inicio;
 		$total_ingreso = 0;
 		$total_egreso = 0;
+		//Aumento balance inicial
+		$array_transaction_bal_ini = array(date_format(date_create($cuenta_datos->created_at),'d/m/Y'),'Balance Inicial','','','',$cuenta_datos->balance_inicial,0);
+		array_push($array_resultado, $array_transaction_bal_ini);
+		
 		foreach ($transactions as $transaction) {
 			//dd($transaction->expense);
 			$fecha_pago = date_format(date_create($transaction->fecha_pago),'d/m/Y');
@@ -439,7 +444,7 @@ class ReportHistoricoTransaccionesController extends Controller
 			array_push($array_resultado, $array_transaction);
 		}
 
-		return array('resultado'=>$array_resultado,'ingreso_total'=>$total_ingreso,'egreso_total'=>$total_egreso);
+		return array('resultado'=>$array_resultado,'ingreso_total'=>$total_ingreso+$cuenta_datos->balance_inicial,'egreso_total'=>$total_egreso);
 	}
 	
 	function historicoCategoriasArray($id_categoria,$mes,$anio,$array_inicio = array()){

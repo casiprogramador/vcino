@@ -156,7 +156,7 @@ class ReportEstadoPagosController extends Controller
 		$company = Auth::user()->company;
 		$date_gestion_periodo_ini = new \DateTime($gestion.'-'.$periodo.'-'.'01');
 		$date_gestion_periodo_fin = new \DateTime($gestion.'-'.$periodo.'-'.'31');
-			$cuentas_cobrar =DB::table('accountsreceivables')
+		$cuentas_cobrar_gestion_actual =DB::table('accountsreceivables')
 			->join('collections', 'collections.id', '=', 'accountsreceivables.id_collection')
 			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
 			->where('accountsreceivables.company_id',$company->id)
@@ -166,16 +166,37 @@ class ReportEstadoPagosController extends Controller
 			->whereYear('fecha_pago','=',$gestion)
 			->whereMonth('fecha_pago','=',$periodo)
 			->where('periodo','>',$periodo)
-			->where('gestion','>=',$gestion)
+			->where('gestion','=',$gestion)
 			->orderBy('fecha_pago', 'asc')
 			->select('gestion','periodo','fecha_gestion_periodo as fecha_cobro','fecha_pago', 'importe_por_cobrar as importe')
 			->get();
 		//dd($cuentas_cobrar);
-		$suma_adelantados = 0;
-		foreach ($cuentas_cobrar as $cuentacobrar) {
-				$suma_adelantados = $suma_adelantados + $cuentacobrar->importe;
+		
+		$suma_adelantados_gestion_actual = 0;
+		foreach ($cuentas_cobrar_gestion_actual as $cuentacobrar) {
+				$suma_adelantados_gestion_actual = $suma_adelantados_gestion_actual + $cuentacobrar->importe;
 		}
-		return $suma_adelantados;
+		
+		$cuentas_cobrar_gestion_futura =DB::table('accountsreceivables')
+			->join('collections', 'collections.id', '=', 'accountsreceivables.id_collection')
+			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
+			->where('accountsreceivables.company_id',$company->id)
+			->where('cancelada',1)
+			->where('anulada',0)
+			->where('excluir_reportes',0)
+			->whereYear('fecha_pago','=',$gestion)
+			->whereMonth('fecha_pago','=',$periodo)
+			->where('gestion','>',$gestion)
+			->orderBy('fecha_pago', 'asc')
+			->select('gestion','periodo','fecha_gestion_periodo as fecha_cobro','fecha_pago', 'importe_por_cobrar as importe')
+			->get();
+		//dd($cuentas_cobrar);
+		$suma_adelantados_gestion_futura = 0;
+		foreach ($cuentas_cobrar_gestion_futura as $cuentacobrar) {
+				$suma_adelantados_gestion_futura = $suma_adelantados_gestion_futura + $cuentacobrar->importe;
+		}
+		
+		return $suma_adelantados_gestion_actual+$suma_adelantados_gestion_futura;
 	}
   
 }

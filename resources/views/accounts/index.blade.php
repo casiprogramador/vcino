@@ -46,6 +46,7 @@
                                 <th style="vertical-align:bottom">Nombre cuenta</th>
                                 <th style="vertical-align:bottom">Tipo de cuenta</th>
                                 <th style="vertical-align:bottom">Número</th>
+								<th style="vertical-align:bottom">Balance Inicial</th>
                                 <th style="vertical-align:bottom">Estado</th>
                                 <th style="vertical-align:bottom" width="70"></th>
                             </tr>
@@ -57,6 +58,7 @@
                                         <td>{{ $account->nombre }}</td>
                                         <td>{{ $account->tipo_cuenta }}</td>
                                         <td>{{ $account->nro_cuenta }}</td>
+										<td><span class="text-muted">{{ $account->balance_inicial }}</span></td>
                                         <td>
                                             <span>Activa</span>
                                         </td>
@@ -77,6 +79,7 @@
                                         <td><span class="text-muted">{{ $account->nombre }}</span></td>
                                         <td><span class="text-muted">{{ $account->tipo_cuenta }}</span></td>
                                         <td><span class="text-muted">{{ $account->nro_cuenta }}</span></td>
+										<td><span class="text-muted">{{ $account->balance_inicial }}</span></td>
                                         <td>
                                             <span class="text-muted">Inactiva</span>
                                         </td>
@@ -98,29 +101,6 @@
                     </div>
                 </div>
             </div>
-            <!--
-            <div class="col-lg-12">
-                <div class="ibox collapsed">
-                    <div class="ibox-title">
-                        <h5>Ayuda | Cuentas</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-
-                        <h4>¿Qué son las Cuentas?</h4>
-                        <p>Las cuentas son...</p>
-                        <h4>¿Tipos de cuentas?</h4>
-                        <p>Las cuentas son...</p>
-                        <h4>Tutoriales</h4>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            -->
 
         </div>
 
