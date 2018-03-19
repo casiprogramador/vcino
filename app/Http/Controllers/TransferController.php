@@ -124,8 +124,9 @@ class TransferController extends Controller
 		$transfer->adjunto = $path;
 
 		$transfer->save();
+		$id_transfer = \Crypt::encrypt($transfer->id);
 		Session::flash('message', 'Transacción registrada correctamente.');
-		return redirect()->route('transaction.transfer.show', [$transfer->id]);
+		return redirect()->route('transaction.transfer.show', [$id_transfer]);
 		
 		
 		
@@ -230,8 +231,10 @@ class TransferController extends Controller
 		$transfer->adjunto = $path;
 
 		$transfer->save();
+		$id_transfer = \Crypt::encrypt($id);
+		
 		Session::flash('message', 'Transacción registrada correctamente.');
-		return redirect()->route('transaction.transfer.show', [$id]);
+		return redirect()->route('transaction.transfer.show', [$id_transfer]);
     }
 
     /**
