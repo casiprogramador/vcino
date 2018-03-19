@@ -69,13 +69,14 @@ class AccountsReceivableController extends Controller
 		$year=$request->gestion;
 		$month=$request->periodo;
 		$date = new \DateTime($year.'-'.$month.'-'.'01');
-		
+		$quota = Quota::find($request->cuota);
+
 			//Validar propiedad, gestion, periodo, cuota
 			$accountsreceivable_validate = Accountsreceivable::where('gestion',$request->gestion)
 					->where('periodo',$request->periodo)
 					->where('property_id',$request->propiedad)
 					->where('quota_id',$request->cuota)->get();
-			if(count($accountsreceivable_validate)){
+			if(count($accountsreceivable_validate) && $quota->frecuencia_pago != 'Variable'){
 				Session::flash('message', 'Ya existe una cuota por cobrar para el periodo seleccionado. No se registraron nuevos registros.');
 				return redirect()->route('transaction.accountsreceivable.index');
 			}else{

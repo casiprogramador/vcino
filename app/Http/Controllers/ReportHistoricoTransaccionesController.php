@@ -420,8 +420,8 @@ class ReportHistoricoTransaccionesController extends Controller
 		$total_ingreso = 0;
 		$total_egreso = 0;
 		//Aumento balance inicial
-		$array_transaction_bal_ini = array(date_format(date_create($cuenta_datos->created_at),'d/m/Y'),'Balance Inicial','','','',$cuenta_datos->balance_inicial,0);
-		array_push($array_resultado, $array_transaction_bal_ini);
+		//$array_transaction_bal_ini = array(date_format(date_create($cuenta_datos->created_at),'d/m/Y'),'Balance Inicial','','','',$cuenta_datos->balance_inicial,0);
+		//array_push($array_resultado, $array_transaction_bal_ini);
 		
 		foreach ($transactions as $transaction) {
 			//dd($transaction->expense);
@@ -444,7 +444,7 @@ class ReportHistoricoTransaccionesController extends Controller
 			array_push($array_resultado, $array_transaction);
 		}
 
-		return array('resultado'=>$array_resultado,'ingreso_total'=>$total_ingreso+$cuenta_datos->balance_inicial,'egreso_total'=>$total_egreso);
+		return array('resultado'=>$array_resultado,'ingreso_total'=>$total_ingreso,'egreso_total'=>$total_egreso);
 	}
 	
 	function historicoCategoriasArray($id_categoria,$mes,$anio,$array_inicio = array()){
