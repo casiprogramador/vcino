@@ -37,7 +37,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-success block full-width m-b">Ingresar</button>
 
-                                <a href="#"><small>¿Olvidaste tu contraseña?</small></a>
+                                <a href="{{ url('/password/reset')}}"><small>¿Olvidaste tu contraseña?</small></a>
                                 <!--
                                 <p class="text-center"><small>¿No tienes una cuenta?
                                 <a href="{{ url('/register') }}">Registrarse</a></small>.</p>
