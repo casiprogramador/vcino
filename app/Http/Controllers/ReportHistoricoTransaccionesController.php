@@ -25,7 +25,7 @@ class ReportHistoricoTransaccionesController extends Controller
     }
 	
 	function historicotransacciones(){
-		
+
 		$company = Auth::user()->company;
 		$gestiones = Gestion::lists('nombre','nombre')->all();
 		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
@@ -47,93 +47,127 @@ class ReportHistoricoTransaccionesController extends Controller
 		if($request->periodo == "actual"){
 			$mes = date('m');
     		$anio = date('Y');
+			$fecha_ini = 0;
+			$fecha_fin = 0;
 		}elseif($request->periodo == "anterior"){
 			$mes = (date('m') == 1) ? 12 : date('m')-1;
 			$anio = (date('m') == 1) ? date('Y')-1 : date('Y');
+			$fecha_ini = 0;
+			$fecha_fin = 0;
 		}elseif($request->periodo == "gestionactual"){
 			$mes = 0;
     		$anio = date('Y');
+			$fecha_ini = 0;
+			$fecha_fin = 0;
 		}elseif($request->periodo == "gestionanterior"){
 			$mes = 0;
 			$anio = date('Y')-1;
+			$fecha_ini = 0;
+			$fecha_fin = 0;
 		}elseif($request->periodo == "mesgestion"){
 			$mes = $request->mes;
             $anio = $request->anio;
-
+			$fecha_ini = 0;
+			$fecha_fin = 0;
 		}elseif($request->periodo == "porgestion"){
 			$mes = 0;
 			$anio = $request->anio;
+			$fecha_ini = 0;
+			$fecha_fin = 0;
+		}elseif($request->periodo == 'rango'){
+			$mes = 0;
+			$anio = 0;
+			$fecha_ini = $request->fecha_ini;
+			$fecha_fin = $request->fecha_fin;
 		}else{
 			$mes = date('m');
     		$anio = date('Y');
+			$fecha_ini = 0;
+			$fecha_fin = 0;
 		}
 
 		if($request->tipo == 'cuentas'){
-			$resultado = $this->historicoCuentasArray($cuenta,$request->cuenta,$mes,$anio);
+			$resultado = $this->historicoCuentasArray($fecha_ini,$fecha_fin,$cuenta,$request->cuenta,$mes,$anio);
 			//dd($resultado['resultado']);
 			return view('reports.historico.cuentas')
 					->with('cuenta',$cuenta)
 					->with('mes',$mes)
 					->with('anio',$anio)
+					->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+					->with('fecha_fin',str_replace('/', '-', $fecha_fin))
 					->with('transactions',$resultado['resultado'])
 					->with('ingreso_total',$resultado['ingreso_total'])
 					->with('egreso_total',$resultado['egreso_total']);
 			
 		}elseif($request->tipo == 'categorias'){
-			$resultado = $this->historicoCategoriasArray($request->categoria,$mes,$anio);
+			$resultado = $this->historicoCategoriasArray($fecha_ini,$fecha_fin,$request->categoria,$mes,$anio);
 			//dd($resultado['resultado']);
 			$categoria = Category::find($request->categoria);
 			return view('reports.historico.categoria')
 			->with('categoria',$categoria)
 			->with('mes',$mes)
 			->with('anio',$anio)
+			->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+			->with('fecha_fin',str_replace('/', '-', $fecha_fin))
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'proveedores'){
-			$resultado = $this->historicoProveedoresArray($request->proveedor,$mes,$anio);
+			$resultado = $this->historicoProveedoresArray($fecha_ini,$fecha_fin,$request->proveedor,$mes,$anio);
 			//dd($resultado['resultado']);
 			$proveedor = Supplier::find($request->proveedor);
 			return view('reports.historico.proveedor')
 			->with('proveedor',$proveedor)
 			->with('mes',$mes)
 			->with('anio',$anio)
+			->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+			->with('fecha_fin',str_replace('/', '-', $fecha_fin))
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'pagos'){
-			$resultado = $this->historicoPropiedadesArray($request->propiedad,$mes,$anio);
+			$resultado = $this->historicoPropiedadesArray($fecha_ini,$fecha_fin,$request->propiedad,$mes,$anio);
 			$propiedad = Property::find($request->propiedad);
 			return view('reports.historico.pagospropiedad')
 			->with('propiedad',$propiedad)
 			->with('mes',$mes)
 			->with('anio',$anio)
+			->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+			->with('fecha_fin',str_replace('/', '-', $fecha_fin))
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'ingresos'){
-			$resultado = $this->historicoIngresosArray($mes,$anio);
+			$resultado = $this->historicoIngresosArray($fecha_ini,$fecha_fin,$mes,$anio);
 			return view('reports.historico.ingresos')
 			->with('mes',$mes)
 			->with('anio',$anio)
+			->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+			->with('fecha_fin',str_replace('/', '-', $fecha_fin))		
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'egresos'){
-			$resultado = $this->historicoEgresosArray($mes,$anio);
+			$resultado = $this->historicoEgresosArray($fecha_ini,$fecha_fin,$mes,$anio);
 			return view('reports.historico.egresos')
 			->with('mes',$mes)
 			->with('anio',$anio)
+			->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+			->with('fecha_fin',str_replace('/', '-', $fecha_fin))
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'traspasos'){
-			$resultado = $this->historicoTraspasosArray($mes,$anio);
+			$resultado = $this->historicoTraspasosArray($fecha_ini,$fecha_fin,$mes,$anio);
 			return view('reports.historico.traspasos')
 			->with('mes',$mes)
 			->with('anio',$anio)
+			->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+			->with('fecha_fin',str_replace('/', '-', $fecha_fin))
 			->with('datos',$resultado['resultado'])
 			->with('monto',$resultado['monto_total']);
 		}elseif($request->tipo == 'todas'){
-			$resultado = $this->historicoTransaccionesArray($mes,$anio);
+			$resultado = $this->historicoTransaccionesArray($fecha_ini,$fecha_fin,$mes,$anio);
 			return view('reports.historico.transacciones')
 			->with('mes',$mes)
 			->with('anio',$anio)
+			->with('fecha_ini',  str_replace('/', '-', $fecha_ini))
+			->with('fecha_fin',str_replace('/', '-', $fecha_fin))
 			->with('datos',$resultado['resultado'])
 			->with('monto_credito',$resultado['monto_total_credito'])
 			->with('monto_debito',$resultado['monto_total_debito']);
@@ -147,9 +181,12 @@ class ReportHistoricoTransaccionesController extends Controller
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
 		$cuenta = $opcion_mes_anio[2];
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[3]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[4]);
+
 		$cuenta_datos = Account::find($cuenta);
 		$array_titulo = array(array('FECHA','DOCUMENTO','CONCEPTO','FORMA DE PAGO','NRO FORMA PAGO','INGRESO','EGRESO')); 
-		$resultado = $this->historicoCuentasArray($cuenta_datos,$cuenta,$mes,$anio,$array_titulo);
+		$resultado = $this->historicoCuentasArray($fecha_ini,$fecha_fin,$cuenta_datos,$cuenta,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -178,9 +215,11 @@ class ReportHistoricoTransaccionesController extends Controller
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
 		$categoria = $opcion_mes_anio[2];
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[3]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[4]);
 
 		$array_titulo = array(array('FECHA','DOCUMENTO','PROVEEDOR','CONCEPTO','FORMA PAGO','IMPORTE')); 
-		$resultado = $this->historicoCategoriasArray($categoria,$mes,$anio,$array_titulo);
+		$resultado = $this->historicoCategoriasArray($fecha_ini,$fecha_fin,$categoria,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -209,9 +248,11 @@ class ReportHistoricoTransaccionesController extends Controller
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
 		$proveedor = $opcion_mes_anio[2];
-
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[3]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[4]);
+		
 		$array_titulo = array(array('FECHA','DOCUMENTO','CATEGORIA','CONCEPTO','CUENTA','FORMA PAGO','IMPORTE')); 
-		$resultado = $this->historicoProveedoresArray($proveedor,$mes,$anio,$array_titulo);
+		$resultado = $this->historicoProveedoresArray($fecha_ini,$fecha_fin,$proveedor,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -239,9 +280,10 @@ class ReportHistoricoTransaccionesController extends Controller
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
 		$proveedor = $opcion_mes_anio[2];
-
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[3]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[4]);
 		$array_titulo = array(array('FECHA','CUOTA','CONCEPTO','IMPORTE')); 
-		$resultado = $this->historicoPropiedadesArray($proveedor,$mes,$anio,$array_titulo);
+		$resultado = $this->historicoPropiedadesArray($fecha_ini,$fecha_fin,$proveedor,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -269,9 +311,10 @@ class ReportHistoricoTransaccionesController extends Controller
 		$opcion_mes_anio = explode('_', $opcion);
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
-
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[2]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[3]);
 		$array_titulo = array(array('FECHA','DOCUMENTO','BENEFICIARIO','CONCEPTO','CUENTA','IMPORTE')); 
-		$resultado = $this->historicoIngresosArray($mes,$anio,$array_titulo);
+		$resultado = $this->historicoIngresosArray($fecha_ini,$fecha_fin,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -299,9 +342,10 @@ class ReportHistoricoTransaccionesController extends Controller
 		$opcion_mes_anio = explode('_', $opcion);
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
-
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[2]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[3]);
 		$array_titulo = array(array('FECHA','DOCUMENTO','PROVEEDOR','CATEGORIA','CONCEPTO','CUENTA','IMPORTE')); 
-		$resultado = $this->historicoEgresosArray($mes,$anio,$array_titulo);
+		$resultado = $this->historicoEgresosArray($fecha_ini,$fecha_fin,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -329,9 +373,10 @@ class ReportHistoricoTransaccionesController extends Controller
 		$opcion_mes_anio = explode('_', $opcion);
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
-
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[2]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[3]);
 		$array_titulo = array(array('FECHA','DOCUMENTO','CONCEPTO','CUENTA ORIGEN','CUENTA DESTINO','FORMA PAGO','IMPORTE')); 
-		$resultado = $this->historicoTraspasosArray($mes,$anio,$array_titulo);
+		$resultado = $this->historicoTraspasosArray($fecha_ini,$fecha_fin,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -359,9 +404,10 @@ class ReportHistoricoTransaccionesController extends Controller
 		$opcion_mes_anio = explode('_', $opcion);
 		$mes = $opcion_mes_anio[0];
 		$anio = $opcion_mes_anio[1];
-
+		$fecha_ini = str_replace('-', '/', $opcion_mes_anio[2]);
+		$fecha_fin = str_replace('-', '/', $opcion_mes_anio[3]);
 		$array_titulo = array(array('FECHA','DOCUMENTO','BENEFICIARIO','CATEGORIA','CONCEPTO','CUENTA','INGRESO','EGRESO')); 
-		$resultado = $this->historicoTransaccionesArray($mes,$anio,$array_titulo);
+		$resultado = $this->historicoTransaccionesArray($fecha_ini,$fecha_fin,$mes,$anio,$array_titulo);
 		
 		
 		$resultado_datos = $resultado['resultado'];
@@ -385,8 +431,14 @@ class ReportHistoricoTransaccionesController extends Controller
 
 	}
 	//Array base
-	function historicoCuentasArray($cuenta_datos,$id_cuenta,$mes,$anio,$array_inicio = array()){
+	function historicoCuentasArray($fecha_ini,$fecha_fin,$cuenta_datos,$id_cuenta,$mes,$anio,$array_inicio = array()){
+		//dd($fecha_ini);
 		$company = Auth::user()->company;
+		if($fecha_ini != 0 || $fecha_fin != 0){
+			$fecha_ini =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_ini)));
+			$fecha_fin =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_fin)));
+		}
+
 		$id_transactions = array();
 		$expenses = Expenses::where('company_id',$company->id )->where('account_id',$id_cuenta)->get();
 		foreach($expenses as $expense){
@@ -410,6 +462,8 @@ class ReportHistoricoTransaccionesController extends Controller
 				->where('anulada',0)
 				->where('excluir_reportes',0)
 				->orderBy('fecha_pago', 'asc');
+		if($fecha_ini != 0) $transactions->where('fecha_pago', '>=', $fecha_ini);
+		if($fecha_fin != 0) $transactions->where('fecha_pago', '<=', $fecha_fin);
 		 if($mes != 0) $transactions->whereMonth('fecha_pago', '=', $mes);
          if($anio != 0) $transactions->whereYear('fecha_pago', '=', $anio);
 		 
@@ -447,10 +501,14 @@ class ReportHistoricoTransaccionesController extends Controller
 		return array('resultado'=>$array_resultado,'ingreso_total'=>$total_ingreso,'egreso_total'=>$total_egreso);
 	}
 	
-	function historicoCategoriasArray($id_categoria,$mes,$anio,$array_inicio = array()){
+	function historicoCategoriasArray($fecha_ini,$fecha_fin,$id_categoria,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
 		$categoria = Category::find($id_categoria);
-
+		if($fecha_ini != 0 || $fecha_fin != 0){
+			$fecha_ini =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_ini)));
+			$fecha_fin =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_fin)));
+		}
+		
 		if($categoria->tipo_categoria == 'Ingreso'){
 			$ingresos =DB::table('accountsreceivables')
 			->join('collections', 'collections.id', '=', 'accountsreceivables.id_collection')
@@ -463,7 +521,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('accountsreceivables.company_id',$company->id)
 			->where('excluir_reportes',0)
 			->orderBy('fecha_pago', 'asc');
-
+			if($fecha_ini != 0) $ingresos->where('fecha_pago', '>=', $fecha_ini);
+			if($fecha_fin != 0) $ingresos->where('fecha_pago', '<=', $fecha_fin);
 			if($mes != 0) $ingresos->whereMonth('fecha_pago', '=', $mes);
 			if($anio != 0) $ingresos->whereYear('fecha_pago', '=', $anio);
 			$resultado = $ingresos->get();
@@ -489,7 +548,8 @@ class ReportHistoricoTransaccionesController extends Controller
   					->where('excluir_reportes',0)
   					->orderBy('fecha_pago', 'asc');
 
-
+			if($fecha_ini != 0) $gastos->where('fecha_pago', '>=', $fecha_ini);
+			if($fecha_fin != 0) $gastos->where('fecha_pago', '<=', $fecha_fin);
 			if($mes != 0) $gastos->whereMonth('fecha_pago', '=', $mes);
 			if($anio != 0) $gastos->whereYear('fecha_pago', '=', $anio);
 
@@ -511,10 +571,13 @@ class ReportHistoricoTransaccionesController extends Controller
 
 	}
 	
-	function historicoProveedoresArray($id_proveedor,$mes,$anio,$array_inicio = array()){
+	function historicoProveedoresArray($fecha_ini,$fecha_fin,$id_proveedor,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
 		//$categoria = Category::find($id_categoria);
-
+		if($fecha_ini != 0 || $fecha_fin != 0){
+			$fecha_ini =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_ini)));
+			$fecha_fin =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_fin)));
+		}
 		$proveedores =DB::table('expenses')
 			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','categories.nombre as categoria','transactions.concepto','accounts.nombre as cuenta','transactions.forma_pago as forma_pago','transactions.importe_debito as importe')
 			->join('suppliers', 'suppliers.id', '=', 'expenses.supplier_id')
@@ -526,7 +589,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('expenses.company_id',$company->id)
 			->where('transactions.excluir_reportes',0)
 			->orderBy('fecha_pago', 'asc');
-
+			if($fecha_ini != 0) $proveedores->where('fecha_pago', '>=', $fecha_ini);
+			if($fecha_fin != 0) $proveedores->where('fecha_pago', '<=', $fecha_fin);
 			if($mes != 0) $proveedores->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $proveedores->whereYear('transactions.fecha_pago', '=', $anio);
 			$resultado = $proveedores->get();
@@ -548,10 +612,13 @@ class ReportHistoricoTransaccionesController extends Controller
 
 	}
 	
-	function historicoPropiedadesArray($id_propiedad,$mes,$anio,$array_inicio = array()){
+	function historicoPropiedadesArray($fecha_ini,$fecha_fin,$id_propiedad,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
 		//$categoria = Category::find($id_categoria);
-
+		if($fecha_ini != 0 || $fecha_fin != 0){
+			$fecha_ini =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_ini)));
+			$fecha_fin =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_fin)));
+		}
 		$propiedades =DB::table('collections')
 			->select('transactions.fecha_pago as fecha_pago','transactions.concepto','collections.id')
 			->join('transactions', 'transactions.id', '=', 'collections.transaction_id')
@@ -560,7 +627,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('collections.company_id',$company->id)
 			->where('transactions.excluir_reportes',0)
 			->orderBy('fecha_pago', 'asc');
-
+			if($fecha_ini != 0) $propiedades->where('fecha_pago', '>=', $fecha_ini);
+			if($fecha_fin != 0) $propiedades->where('fecha_pago', '<=', $fecha_fin);
 			if($mes != 0) $propiedades->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $propiedades->whereYear('transactions.fecha_pago', '=', $anio);
 			$resultado = $propiedades->get();
@@ -586,8 +654,12 @@ class ReportHistoricoTransaccionesController extends Controller
 		//$collections = Collection::where('company_id',$company->id );
 	}
 	
-	function historicoIngresosArray($mes,$anio,$array_inicio = array()){
+	function historicoIngresosArray($fecha_ini,$fecha_fin,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
+		if($fecha_ini != 0 || $fecha_fin != 0){
+			$fecha_ini =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_ini)));
+			$fecha_fin =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_fin)));
+		}
 		$ingresos =DB::table('collections')
 			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','properties.nro as propiedad','contacts.nombre','contacts.apellido','transactions.concepto','accounts.nombre as cuenta','transactions.importe_credito as importe')
 			->join('properties', 'properties.id', '=', 'collections.property_id')
@@ -598,6 +670,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('collections.company_id',$company->id)
 			->where('transactions.excluir_reportes',0)
 			->orderBy('fecha_pago', 'asc');
+			if($fecha_ini != 0) $ingresos->where('transactions.fecha_pago', '>=', $fecha_ini);
+			if($fecha_fin != 0) $ingresos->where('transactions.fecha_pago', '<=', $fecha_fin);
 			if($mes != 0) $ingresos->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $ingresos->whereYear('transactions.fecha_pago', '=', $anio);
 			$resultado = $ingresos->get();
@@ -620,8 +694,12 @@ class ReportHistoricoTransaccionesController extends Controller
 		
 	}
 	
-	function historicoEgresosArray($mes,$anio,$array_inicio = array()){
+	function historicoEgresosArray($fecha_ini,$fecha_fin,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
+		if($fecha_ini != 0 || $fecha_fin != 0){
+			$fecha_ini =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_ini)));
+			$fecha_fin =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_fin)));
+		}
 		$egresos = DB::table('expenses')
 			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','suppliers.razon_social as proveedor','categories.nombre as categoria','transactions.concepto','accounts.nombre as cuenta','transactions.importe_debito as importe')
 			->join('suppliers', 'suppliers.id', '=', 'expenses.supplier_id')
@@ -632,7 +710,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('expenses.company_id',$company->id)
 			->where('transactions.excluir_reportes',0)
 			->orderBy('fecha_pago', 'asc');
-
+			if($fecha_ini != 0) $egresos->where('transactions.fecha_pago', '>=', $fecha_ini);
+			if($fecha_fin != 0) $egresos->where('transactions.fecha_pago', '<=', $fecha_fin);
 			if($mes != 0) $egresos->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $egresos->whereYear('transactions.fecha_pago', '=', $anio);
 			$resultado = $egresos->get();
@@ -652,8 +731,12 @@ class ReportHistoricoTransaccionesController extends Controller
 		
 	}
 	
-	function historicoTraspasosArray($mes,$anio,$array_inicio = array()){
+	function historicoTraspasosArray($fecha_ini,$fecha_fin,$mes,$anio,$array_inicio = array()){
 		$company = Auth::user()->company;
+		if($fecha_ini != 0 || $fecha_fin != 0){
+			$fecha_ini =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_ini)));
+			$fecha_fin =  date('Y-m-d', strtotime(str_replace('/','-',$fecha_fin)));
+		}
 		$traspaso = DB::table('transfers')
 			->select('transactions.fecha_pago as fecha_pago', 'transactions.nro_documento','transactions.concepto','cuenta_ori.nombre as cuenta_origen','cuenta_des.nombre as cuenta_destino','transactions.forma_pago as forma_pago','transactions.importe_debito as importe')
 			->join('transactions', 'transactions.id', '=', 'transfers.ori_transaction_id')
@@ -663,7 +746,8 @@ class ReportHistoricoTransaccionesController extends Controller
 			->where('transfers.company_id',$company->id)
 			->where('transactions.excluir_reportes',0)
 			->orderBy('fecha_pago', 'asc');
-
+			if($fecha_ini != 0) $traspaso->where('transactions.fecha_pago', '>=', $fecha_ini);
+			if($fecha_fin != 0) $traspaso->where('transactions.fecha_pago', '<=', $fecha_fin);
 			if($mes != 0) $traspaso->whereMonth('transactions.fecha_pago', '=', $mes);
 			if($anio != 0) $traspaso->whereYear('transactions.fecha_pago', '=', $anio);
 			$resultado = $traspaso->get();
@@ -684,10 +768,10 @@ class ReportHistoricoTransaccionesController extends Controller
 		
 	}
 	
-	function historicoTransaccionesArray($mes,$anio,$array_inicio = array()){
-		$ingresos = $this->historicoIngresosArray($mes,$anio);
-		$egresos = $this->historicoEgresosArray($mes,$anio);
-		$traspasos = $this->historicoTraspasosArray($mes,$anio);
+	function historicoTransaccionesArray($fecha_ini,$fecha_fin,$mes,$anio,$array_inicio = array()){
+		$ingresos = $this->historicoIngresosArray($fecha_ini,$fecha_fin,$mes,$anio);
+		$egresos = $this->historicoEgresosArray($fecha_ini,$fecha_fin,$mes,$anio);
+		$traspasos = $this->historicoTraspasosArray($fecha_ini,$fecha_fin,$mes,$anio);
 
 		$array_transacciones = $array_inicio;
 		$importe_total_credito = 0;

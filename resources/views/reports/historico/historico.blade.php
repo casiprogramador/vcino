@@ -60,6 +60,7 @@
                                             <optgroup>
                                                 <option value="mesgestion">Por mes y gestión</option>
                                                 <option value="porgestion">Por gestión</option>
+												<option value="rango">Rango de fechas</option>
                                             </optgroup>
                                         </select>
                                     </div>
@@ -84,6 +85,37 @@
                                         </select>
                                     </div>
                                 </div>
+								<div id="fecha-rango">
+																	<div class="form-group{{ $errors->has('fecha_ini') ? ' has-error' : '' }}" id="fecha-ini">
+									<label class="col-sm-4 control-label">Fecha Inicio</label>
+									<div class="col-sm-5">
+										<div class="input-group date">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input type="text" class="form-control input-sm date-picker" name="fecha_ini" value="{{ date('d/m/Y') }}">
+											@if ($errors->has('fecha_ini'))
+											<span class="help-block">
+												<strong>{{ $errors->first('fecha_ini') }}</strong>
+											</span>
+										@endif
+										</div>
+									</div>
+								</div>
+								<div class="form-group{{ $errors->has('fecha_fin') ? ' has-error' : '' }}" id="fecha-fin">
+									<label class="col-sm-4 control-label">Fecha Final</label>
+									<div class="col-sm-5">
+										<div class="input-group date">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input type="text" class="form-control input-sm date-picker" name="fecha_fin" value="{{ date('d/m/Y') }}">
+											@if ($errors->has('fecha_fin'))
+											<span class="help-block">
+												<strong>{{ $errors->first('fecha_fin') }}</strong>
+											</span>
+										@endif
+										</div>
+									</div>
+								</div>
+								</div>
+
 
                                 <div class="form-group" id="gestiones">
                                     <label class="col-sm-4 control-label">Gestión</label>
@@ -151,23 +183,32 @@
 
 @endsection
 @section('javascript')
+<script type="text/javascript" src="{{ URL::asset('js/moment.es.js') }}"></script>
     <script>
         $(document).ready(function () {
             //Oculta campos dependiendo la opcion
             $('#meses').hide();
             $('#gestiones').hide();
+			$('#fecha-rango').hide();
 			//cuentas categorias proveedores propiedades
             $('#periodo').change(function(){
 
                     if ( $(this).val() == "mesgestion" ) {
                         $('#meses').show();
 						$('#gestiones').show();
+						$('#fecha-rango').hide();
                     }else if($(this).val() == "porgestion"){
                         $('#meses').hide();
 						$('#gestiones').show();
+						$('#fecha-rango').hide();
+					}else if($(this).val() == "rango"){
+						$('#fecha-rango').show();
+						$('#meses').hide();
+						$('#gestiones').hide();
                     }else{
 						$('#meses').hide();
 						$('#gestiones').hide();
+						$('#fecha-rango').hide();
 					}
             });
 			//Ocutar select depende del tipo
@@ -224,6 +265,15 @@
 						$('#propiedades').hide();
 					}
             });
+			
+			$('.date-picker').datetimepicker({
+				locale:'es',
+				format: 'DD/MM/YYYY',
+					widgetPositioning: {
+					horizontal: 'left',
+						vertical: 'bottom'
+					}
+			});
         });
     </script>
 @endsection

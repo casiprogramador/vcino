@@ -34,7 +34,7 @@
                             <button type="button" class="btn btn-sm btn-default" id="printButton" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
-                            <a href="{{ route('report.historicotransacciones.categorias.excel', $mes.'_'.$anio.'_'.$categoria->id) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
+                            <a href="{{ route('report.historicotransacciones.categorias.excel', $mes.'_'.$anio.'_'.$categoria->id.'_'.$fecha_ini.'_'.$fecha_fin) }}" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
                                 <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar...
                             </a>
                         </div>
