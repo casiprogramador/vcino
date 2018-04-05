@@ -11,6 +11,7 @@ use App\Transfer;
 use App\Category;
 use App\Expenses;
 use App\Collection;
+use App\Logtransactions;
 use Auth;
 
 class TransferController extends Controller
@@ -197,33 +198,38 @@ class TransferController extends Controller
 		
 		$company = Auth::user()->company;
 		
-		$transaction = Transaction::find($request->transaction_ori);
-		$transaction->tipo_transaccion = 'Traspaso-Egreso';
-		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
-		$transaction->concepto = $request->concepto;
-		$transaction->forma_pago = $request->modo_traspaso;
-		$transaction->numero_forma_pago = $request->nro_transanccion;
-		$transaction->importe_credito = '0';
-		$transaction->importe_debito = $request->importe;
-		$transaction->notas = $request->nota;
-		$transaction->user_id= Auth::user()->id;
-		$transaction->save();
+		$transaction_ori = Transaction::find($request->transaction_ori);
+		$transaction_des = Transaction::find($request->transaction_des);
+		$transfer = Transfer::find($id);
 		
-		$transaction = Transaction::find($request->transaction_des);
-		$transaction->tipo_transaccion = 'Traspaso-Ingreso';
-		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
-		$transaction->concepto = $request->concepto;
-		$transaction->forma_pago = $request->modo_traspaso;
-		$transaction->numero_forma_pago = $request->nro_transanccion;
-		$transaction->importe_debito = '0';
-		$transaction->importe_credito = $request->importe;
-		$transaction->notas = $request->nota;
-		$transaction->user_id= Auth::user()->id;
-		$transaction->save();
+		$datos_antiguos_array = [$transaction_ori,$transaction_des,$transfer ];
+		
+		$transaction_ori->tipo_transaccion = 'Traspaso-Egreso';
+		$transaction_ori->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$transaction_ori->concepto = $request->concepto;
+		$transaction_ori->forma_pago = $request->modo_traspaso;
+		$transaction_ori->numero_forma_pago = $request->nro_transanccion;
+		$transaction_ori->importe_credito = '0';
+		$transaction_ori->importe_debito = $request->importe;
+		$transaction_ori->notas = $request->nota;
+		$transaction_ori->user_id= Auth::user()->id;
+		$transaction_ori->save();
+		
+		
+		$transaction_des->tipo_transaccion = 'Traspaso-Ingreso';
+		$transaction_des->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
+		$transaction_des->concepto = $request->concepto;
+		$transaction_des->forma_pago = $request->modo_traspaso;
+		$transaction_des->numero_forma_pago = $request->nro_transanccion;
+		$transaction_des->importe_debito = '0';
+		$transaction_des->importe_credito = $request->importe;
+		$transaction_des->notas = $request->nota;
+		$transaction_des->user_id= Auth::user()->id;
+		$transaction_des->save();
 		
 		//ori_transaction_id
 		
-		$transfer = Transfer::find($id);
+		
 		$transfer->ori_account_id = $request->cuenta_origen;
 		$transfer->des_account_id = $request->cuenta_destino;
 		$transfer->company_id = $company->id;
@@ -233,6 +239,12 @@ class TransferController extends Controller
 		$transfer->save();
 		$id_transfer = \Crypt::encrypt($id);
 		
+		$datos_nuevo_array = [Auth::user(),$transaction_ori,$transaction_des,$transfer ];
+		$logtransaction = new Logtransactions();
+		$logtransaction->tipo = 'transferencia';
+		$logtransaction->dato_anterior = implode('|', $datos_antiguos_array);
+		$logtransaction->dato_nuevo = implode('|', $datos_nuevo_array);
+		$logtransaction->save();
 		Session::flash('message', 'Transacción registrada correctamente.');
 		return redirect()->route('transaction.transfer.show', [$id_transfer]);
     }

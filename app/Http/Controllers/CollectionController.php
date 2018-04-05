@@ -10,6 +10,7 @@ use App\Account;
 use App\Transaction;
 use App\Collection;
 use App\Accountsreceivable;
+use App\Logtransactions;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Mail;
@@ -92,7 +93,7 @@ class CollectionController extends Controller
 			$transaction->notas = $request->notas;
 			$transaction->user_id= Auth::user()->id;
 			$transaction->save();
-
+			
 			$collection = new Collection();
 			$collection->cuotas = implode(',', $request->cuotas);
 			$collection->property_id = $request->propiedad;
@@ -109,7 +110,7 @@ class CollectionController extends Controller
 				$cuota->id_collection = $collection->id;
 				$cuota->save();
 			}
-
+			
 			//$collection->id;
 			Session::flash('message', 'Transacción registrada correctamente.');
 			return redirect()->route('transaction.collection.show', [\Crypt::encrypt($collection->id)]);
@@ -202,13 +203,16 @@ class CollectionController extends Controller
 		}
 		
 		$collection = Collection::find($id);
+		$transaction = Transaction::find($collection->transaction_id);
+		
+		$datos_antiguos_array = [$transaction,$collection ];
+		
 		$collection->cuotas = $cuotas_guardar;
 		$collection->property_id = $request->propiedad;
 		$collection->contact_id = $request->contacto;
 		$collection->account_id = $request->cuenta;
 		$collection->save();
-
-		$transaction = Transaction::find($collection->transaction_id);
+		
 		$transaction->tipo_transaccion = 'Ingreso';
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$transaction->concepto = $request->concepto;
@@ -219,6 +223,13 @@ class CollectionController extends Controller
 		$transaction->notas = $request->notas;
 		$transaction->save();
 		
+		
+		$datos_nuevo_array = [Auth::user(),$transaction,$collection ];
+		$logtransaction = new Logtransactions();
+		$logtransaction->tipo = 'cobranza';
+		$logtransaction->dato_anterior = implode('|', $datos_antiguos_array);
+		$logtransaction->dato_nuevo = implode('|', $datos_nuevo_array);
+		$logtransaction->save();
 		return redirect()->route('transaction.collection.show', [\Crypt::encrypt($collection->id)]);
     }
 

@@ -12,6 +12,8 @@ use App\Supplier;
 use App\Account;
 use App\Transaction;
 use App\Expenses;
+use App\Logtransactions;
+
 class ExpensesController extends Controller
 {
 	public function __construct(){
@@ -189,6 +191,10 @@ class ExpensesController extends Controller
 		$company = Auth::user()->company;
 		
 		$transaction = Transaction::find($request->transaction_id);
+		$expense = Expenses::find($id);
+		
+		$datos_antiguos_array = [$transaction,$expense ];
+		
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$transaction->concepto = $request->concepto;
 		$transaction->forma_pago = $request->forma_pago;
@@ -201,13 +207,20 @@ class ExpensesController extends Controller
 		$transaction->notas = $request->notas;
 		$transaction->save();
 		
-		$expense = Expenses::find($id);
+		
 		$expense->category_id = $request->categoria;
 		$expense->supplier_id = $request->proveedor;
 		$expense->account_id = $request->cuenta;
 
 		$expense->adjunto = $path;
 		$transaction->expense()->save($expense);
+		
+		$datos_nuevo_array = [Auth::user(),$transaction,$expense ];
+		$logtransaction = new Logtransactions();
+		$logtransaction->tipo = 'gasto                                ';
+		$logtransaction->dato_anterior = implode('|', $datos_antiguos_array);
+		$logtransaction->dato_nuevo = implode('|', $datos_nuevo_array);
+		$logtransaction->save();
 		Session::flash('message', 'Transacción actualizada correctamente.');
 		return redirect()->route('transaction.expense.show', [\Crypt::encrypt($expense->id)]);
 		

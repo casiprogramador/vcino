@@ -180,5 +180,3 @@ function diffdays($fecha){
 	$interval = $now->diff($fecha_estimada);
 	return $interval->format('%R%a');
 }
-	
-	
