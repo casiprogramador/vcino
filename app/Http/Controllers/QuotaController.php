@@ -70,6 +70,7 @@ class QuotaController extends Controller
 				$quota->cuota = $request->cuota;
 				$quota->frecuencia_pago = $request->frecuencia_pago;
 				$quota->tipo_importe = $request->tipo_importe;
+				$quota->forma_cobro = $request->forma_cobro;
 				$quota->importe = $request->importe;
 				$quota->notas = $request->notas;
 				$quota->category_id = $request->category;
@@ -84,6 +85,7 @@ class QuotaController extends Controller
 			$quota->cuota = $request->cuota;
 			$quota->frecuencia_pago = $request->frecuencia_pago;
 			$quota->tipo_importe = $request->tipo_importe;
+			$quota->forma_cobro = $request->forma_cobro;
 			$quota->importe = $request->importe;
 			$quota->notas = $request->notas;
 			$quota->category_id = $request->category;
@@ -157,6 +159,7 @@ class QuotaController extends Controller
         $quota->cuota = $request->cuota;
         $quota->frecuencia_pago = $request->frecuencia_pago;
         $quota->tipo_importe = $request->tipo_importe;
+		$quota->forma_cobro = $request->forma_cobro;
         $quota->importe = $request->importe;
         $quota->notas = $request->notas;
         $quota->category_id = $request->category;

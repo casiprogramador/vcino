@@ -17,6 +17,7 @@ class CreateQuotasTable extends Migration
             $table->string('cuota');
             $table->string('frecuencia_pago');
             $table->string('tipo_importe');
+			$table->string('forma_cobro');
             $table->decimal('importe', 10, 2);
             $table->text('notas');
             $table->tinyInteger('activa');
