@@ -105,15 +105,15 @@ class AccountsReceivableController extends Controller
     {
 		$id = \Crypt::decrypt($id);
 		$company = Auth::user()->company;
-		$quotas = Quota::where('company_id',$company->id )->orderBy('cuota', 'asc')->lists('cuota','id');
-		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->orderBy('cuota', 'asc');
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc');
 		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
         $accountsreceivable = Accountsreceivable::find($id);
         return view('accountsreceivables.edit')
             ->with('accountsreceivable',$accountsreceivable)
-			->with('properties',$properties)
+			->with('properties',$properties->get())
 			->with('gestiones',$gestiones)
-			->with('quotas',$quotas);
+			->with('quotas',$quotas->get());
     }
 	
 	public function update(Request $request, $id)

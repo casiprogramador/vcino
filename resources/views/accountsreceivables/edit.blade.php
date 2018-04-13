@@ -35,16 +35,21 @@
 
 					 {!! Form::open(array('route' => array('transaction.accountsreceivable.update', $accountsreceivable->id),'method' => 'patch' ,'class' => 'form-horizontal')) !!}
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Propiedad</label>
-                            <div class="col-sm-3">
-								{{ Form::select('propiedad',$properties, $accountsreceivable->property_id, ['class' => 'form-control input-sm']) }}
+							<label class="col-sm-3 control-label">Propiedad</label>
+							<div class="col-sm-3">
+								<select id="propiedad" class="form-control input-sm" name="propiedad">
+								@foreach($properties as $propertie)
+
+								<option fit="{{$propertie->fit}}" value="{{$propertie->id}}" {{ ($accountsreceivable->property_id == $propertie->id)? "selected" : ""}}>{{$propertie->nro}}</option>
+								@endforeach
+								</select>
 								@if ($errors->has('propiedad'))
 								<span class="help-block">
 									<strong>{{ $errors->first('propiedad') }}</strong>
 								</span>
 								@endif
-				            </div>
-                        </div>
+							</div>
+						</div>
 
                         <div class="form-group{{ $errors->has('gestion') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Gestión</label>
@@ -88,16 +93,22 @@
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group{{ $errors->has('cuota') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Cuota</label>
-                            <div class="col-sm-5">
-								{{ Form::select('cuota',$quotas, $accountsreceivable->quota_id, ['class' => 'form-control input-sm']) }}
+							<label class="col-sm-3 control-label">Cuota</label>
+							<div class="col-sm-5">
+								<select id="cuota" class="form-control input-sm" name="cuota">
+									<option importe="0" value="0">Seleccione una cuota</option> 
+									@foreach($quotas as $quota)
+
+									<option importe="{{$quota->importe}}" forma-cobro="{{$quota->forma_cobro}}" value="{{$quota->id}}" {{ ($accountsreceivable->quota_id == $quota->id)? "selected" : ""}} >{{$quota->cuota}}</option>
+									@endforeach
+								</select>
 								@if ($errors->has('cuota'))
 								<span class="help-block">
 									<strong>{{ $errors->first('cuota') }}</strong>
 								</span>
 								@endif
-                            </div>
-                        </div>
+							</div>
+						</div>
 
                         <div class="form-group{{ $errors->has('fecha_vencimiento') ? ' has-error' : '' }}" id="fecha">
                             <label class="col-sm-3 control-label">Fecha de vencimiento</label>
@@ -119,7 +130,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Importe por cobrar</label>
                             <div class="col-sm-2{{ $errors->has('importe_por_cobrar') ? ' has-error' : '' }}">
-                                <input name="importe_por_cobrar" type="text" class="form-control input-sm" value="{{ $accountsreceivable->importe_por_cobrar }}">
+                                <input name="importe_por_cobrar" id="importe-cobrar" type="text" class="form-control input-sm" value="{{ $accountsreceivable->importe_por_cobrar }}">
 								@if ($errors->has('importe_por_cobrar'))
 								<span class="help-block">
 									<strong>{{ $errors->first('importe_por_cobrar') }}</strong>
@@ -179,10 +190,35 @@
 @endsection
 @section('javascript')
     <script type="text/javascript" src="{{ URL::asset('js/summernote.min.js') }}"></script>
-    <script>
-        $('.date-picker').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-    </script>
+	<script>
+		$(document).ready(function () {
+			$('#cuota').change(function () {
+				forma_cobro = $('#cuota option:selected').attr('forma-cobro');
+				fit = $('#propiedad option:selected').attr('fit');
+				importe = $('#cuota option:selected').attr('importe');
+				console.log(fit);
+				if(forma_cobro == 'FIT'){
+					$('#importe-cobrar').val(importe*fit);
+				}else{
+					$('#importe-cobrar').val(importe);	
+				}
+			});
+			$('#propiedad').change(function () {
+				forma_cobro = $('#cuota option:selected').attr('forma-cobro');
+				fit = $('#propiedad option:selected').attr('fit');
+				importe = $('#cuota option:selected').attr('importe');
+				console.log(fit);
+				if(forma_cobro == 'FIT'){
+					$('#importe-cobrar').val(importe*fit);
+				}else{
+					$('#importe-cobrar').val(importe);	
+				}
+			});
+		});
+		$('.date-picker').datetimepicker({
+			format: 'DD/MM/YYYY'
+		});
+
+	</script>
 @endsection
 
