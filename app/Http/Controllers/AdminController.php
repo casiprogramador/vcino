@@ -219,4 +219,5 @@ class AdminController extends Controller
 		
 		return $resultado;
 	}
+	
 }

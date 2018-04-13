@@ -36,7 +36,12 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Propiedad</label>
 						<div class="col-sm-3">
-							{{ Form::select('propiedad',$properties, old('propiedad'), ['class' => 'form-control input-sm']) }}
+							<select id="propiedad" class="form-control input-sm" name="propiedad">
+							@foreach($properties as $propertie)
+
+							<option fit="{{$propertie->fit}}" value="{{$propertie->id}}">{{$propertie->nro}}</option>
+							@endforeach
+							</select>
 							@if ($errors->has('propiedad'))
 							<span class="help-block">
 								<strong>{{ $errors->first('propiedad') }}</strong>
@@ -93,7 +98,7 @@
 								<option importe="0" value="0">Seleccione una cuota</option> 
 								@foreach($quotas as $quota)
 
-								<option importe="{{$quota->importe}}" value="{{$quota->id}}">{{$quota->cuota}}</option>
+								<option importe="{{$quota->importe}}" forma-cobro="{{$quota->forma_cobro}}" value="{{$quota->id}}">{{$quota->cuota}}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('cuota'))
@@ -189,9 +194,26 @@
 <script>
 	$(document).ready(function () {
 		$('#cuota').change(function () {
-
-			$('#importe-cobrar').val($('#cuota option:selected').attr('importe'));
-
+			forma_cobro = $('#cuota option:selected').attr('forma-cobro');
+			fit = $('#propiedad option:selected').attr('fit');
+			importe = $('#cuota option:selected').attr('importe');
+			console.log(fit);
+			if(forma_cobro == 'FIT'){
+				$('#importe-cobrar').val(importe*fit);
+			}else{
+				$('#importe-cobrar').val(importe);	
+			}
+		});
+		$('#propiedad').change(function () {
+			forma_cobro = $('#cuota option:selected').attr('forma-cobro');
+			fit = $('#propiedad option:selected').attr('fit');
+			importe = $('#cuota option:selected').attr('importe');
+			console.log(fit);
+			if(forma_cobro == 'FIT'){
+				$('#importe-cobrar').val(importe*fit);
+			}else{
+				$('#importe-cobrar').val(importe);	
+			}
 		});
 	});
 	$('.date-picker').datetimepicker({
