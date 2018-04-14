@@ -215,6 +215,12 @@ class AccountsReceivableController extends Controller
 					->where('periodo',$request->periodo)
 					->where('property_id',$property->id)
 					->where('quota_id',$quota->id)->get();
+				
+					$forma_cobro = $quota->forma_cobro;
+					$importe = $quota->importe;
+					$fit = $property->fit;
+					$importe_cobrar = ($forma_cobro == 'FIT')? $fit*$importe : $importe;
+
 					if(count($accountsreceivable_validate)){
 						//Session::flash('message', 'Algunas cuotas ya fueron ingresadas.');
 					}else{
@@ -224,7 +230,7 @@ class AccountsReceivableController extends Controller
 						$accountsreceivable->fecha_gestion_periodo = $date->format('Y-m-d');
 						$accountsreceivable->fecha_vencimiento = $fecha_vencimiento;
 						$accountsreceivable->cantidad = '0';
-						$accountsreceivable->importe_por_cobrar = $quota->importe;
+						$accountsreceivable->importe_por_cobrar = $importe_cobrar;
 						$accountsreceivable->importe_abonado = '0';
 						$accountsreceivable->cancelada = '0';
 						$accountsreceivable->quota_id = $quota->id;
