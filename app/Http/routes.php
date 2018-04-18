@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::auth();
 Route::get('administrator', 'SuperadminController@index');
 Route::post('administrator', 'SuperadminController@login');
+Route::post('administrator/home', 'SuperadminController@home');
 Route::get('/home', 'HomeController@index');
 Route::resource('company', 'CompanyController');
 Route::group(['prefix' => 'config'], function () {
