@@ -23,7 +23,8 @@ class MaintenancePlanController extends Controller
     public function index()
     {
 		$company = Auth::user()->company;
-		$maintenance_plans = MaintenancePlan::where('company_id',$company->id );
+
+		$maintenance_plans = MaintenancePlan::doesnthave("maintenancerecords")->where('company_id',$company->id );
 
         return view('maintenanceplan.index')
 				->with('maintenanceplans',$maintenance_plans->get());
