@@ -40,7 +40,7 @@
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     <input type="text" class="form-control input-sm date-picker" name="fecha" 
-										   value="{{ (isset($maintenanceplan->fecha_estimada) ) ? date_format(date_create($maintenanceplan->fecha_estimada),'d/m/Y') : date('d/m/Y')  }}">
+										   value="{{ old('fecha',(isset($maintenanceplan->fecha_estimada) ) ? date_format(date_create($maintenanceplan->fecha_estimada),'d/m/Y') : date('d/m/Y') ) }}">
 									@if ($errors->has('fecha'))
 										<span class="help-block">
 											<strong>{{ $errors->first('fecha') }}</strong>
@@ -91,11 +91,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tipo</label>
                             <div class="col-sm-3">
-                                <select class="form-control input-sm" name="tipo">
-                                    <option value="Preventivo">Preventivo</option>
-                                    <option value="Correctivo">Correctivo</option>
-                                    <option value="Emergencia">Emergencia</option>
-                                </select>
+								 {{ Form::select('tipo',array('Preventivo' => 'Preventivo','Correctivo' => 'Correctivo', 'Emergencia' => 'Emergencia'),old('tipo'),['class' => 'form-control input-sm']) }}
                             </div>
                         </div>
 
