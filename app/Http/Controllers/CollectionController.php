@@ -204,7 +204,7 @@ class CollectionController extends Controller
 		$collection = Collection::find($id);
 		$transaction = Transaction::find($collection->transaction_id);
 		
-		$datos_antiguos_array = [$transaction,$collection ];
+		$datos_antiguos_array = [$transaction->toArray(),$collection->toArray() ];
 		
 		$collection->cuotas = $cuotas_guardar;
 		$collection->property_id = $request->propiedad;
@@ -223,11 +223,12 @@ class CollectionController extends Controller
 		$transaction->save();
 		
 		
-		$datos_nuevo_array = [Auth::user(),$transaction,$collection ];
+		$datos_nuevo_array = [Auth::user(),$transaction->toArray(),$collection->toArray() ];
+		
 		$logtransaction = new Logtransactions();
 		$logtransaction->tipo = 'cobranza';
-		$logtransaction->dato_anterior = implode('|', $datos_antiguos_array);
-		$logtransaction->dato_nuevo = implode('|', $datos_nuevo_array);
+		$logtransaction->dato_anterior = json_encode($datos_antiguos_array);
+		$logtransaction->dato_nuevo = json_encode($datos_nuevo_array);
 		$logtransaction->save();
 		return redirect()->route('transaction.collection.show', [\Crypt::encrypt($collection->id)]);
     }

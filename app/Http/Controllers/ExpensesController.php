@@ -193,7 +193,7 @@ class ExpensesController extends Controller
 		$transaction = Transaction::find($request->transaction_id);
 		$expense = Expenses::find($id);
 		
-		$datos_antiguos_array = [$transaction,$expense ];
+		$datos_antiguos_array = [$transaction->toArray(),$expense->toArray()];
 		
 		$transaction->fecha_pago = date('Y-m-d', strtotime(str_replace('/','-',$request->fecha)));
 		$transaction->concepto = $request->concepto;
@@ -215,11 +215,11 @@ class ExpensesController extends Controller
 		$expense->adjunto = $path;
 		$transaction->expense()->save($expense);
 		
-		$datos_nuevo_array = [Auth::user(),$transaction,$expense ];
+		$datos_nuevo_array = [Auth::user(),$transaction->toArray(),$expense->toArray() ];
 		$logtransaction = new Logtransactions();
 		$logtransaction->tipo = 'gasto                                ';
-		$logtransaction->dato_anterior = implode('|', $datos_antiguos_array);
-		$logtransaction->dato_nuevo = implode('|', $datos_nuevo_array);
+		$logtransaction->dato_anterior = json_encode($datos_antiguos_array);
+		$logtransaction->dato_nuevo = json_encode($datos_nuevo_array);
 		$logtransaction->save();
 		Session::flash('message', 'Transacción actualizada correctamente.');
 		return redirect()->route('transaction.expense.show', [\Crypt::encrypt($expense->id)]);
