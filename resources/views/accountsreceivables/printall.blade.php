@@ -54,16 +54,6 @@
                         </div>
                     </div>
 
-                    <div class="row" style="padding: 0 0 0 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6" style="width: 50%; margin: auto;">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                    </div>
-
                     <div class="row">
                         <table style="margin: 10px auto; text-align: left; width: 90%; font-size: 14px;">
                             <tr>
@@ -146,13 +136,13 @@
                                                     {{ ' Diciembre' }}/{{ $gestiones[$i] }}
                                                 @endif
                                             </td>
-                                            <td style="border-top: #999 1px solid; text-align: right; padding: 5px 0;">{{ number_format($importes[$i], 2, '.', '.') }}</td>
+                                            <td style="border-top: #999 1px solid; text-align: right; padding: 5px 0;">{{ number_format($importes[$i], 2, ',', '.') }}</td>
                                         </tr>
 										@endfor
 
                                         <tr style="font-size: 16px;">
                                             <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total</td>
-                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 5px 0;">{{ number_format($sendalertpayment->importe_total, 2, '.', '.') }}</td>
+                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 5px 0;">{{ number_format($sendalertpayment->importe_total, 2, ',', '.') }}</td>
                                         </tr>
                                     </table>
                                 </td>

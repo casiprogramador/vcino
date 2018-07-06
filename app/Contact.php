@@ -44,7 +44,13 @@ class Contact extends Model
 	//Mutator
 	
 	public function getFullNameAttribute(){
-		return $this->attributes['nombre'] . " " . $this->attributes['apellido'];
+        $tipo_contacto = $this->attributes['typecontact_id'];
+        if ($tipo_contacto == 2) {
+            $nombre_contacto = $this->attributes['nombre'] . " " . $this->attributes['apellido'] . " (Inquilino)";
+        } else { 
+            $nombre_contacto = $this->attributes['nombre'] . " " . $this->attributes['apellido'];
+        }
+		return $nombre_contacto;
 	}
 	
 }

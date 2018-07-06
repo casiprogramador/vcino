@@ -297,43 +297,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('hora_inicio') ? ' has-error' : '' }}" id="hora-inicio">
-
-                        <label class="col-sm-2 control-label">Hora desde</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}" disabled="disabled">
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								@if ($errors->has('hora_inicio'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_inicio') }}</strong>
-								</span>
-								@endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('hora_final') ? ' has-error' : '' }}" id="hora-final">
-                        <label class="col-sm-2 control-label">Hora hasta</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_fin),'H:i') }}" disabled="disabled">
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								@if ($errors->has('hora_final'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_final') }}</strong>
-								</span>
-								@endif
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
@@ -346,10 +309,10 @@
 						@endif
                     </div>
 
+                    <div class="hr-line-dashed" id="nota-linea-2"></div>
+
                     <div class="form-group" id="adjuntos">
-                        @if(!empty($task->documento_1) || !empty($task->documento_2) || !empty($task->documento_3))
                             <label class="col-sm-2 control-label">Adjuntos</label>
-                        @endif
 					        @if(!empty($task->documento_1))
 							<?php
 							$filename = explode("-name-", $task->documento_1);
@@ -514,6 +477,12 @@
 								</div>
 							</div>
 							@endif
+							@if(empty($task->documento_1) && empty($task->documento_2) && empty($task->documento_3))
+								<div class="col-sm-9">
+									<label class="control-label text-muted" style="font-weight: normal; font-style: italic;">Sin adjuntos</label>
+								</div>
+							@endif
+
                     </div>
 
                     <div class="hr-line-dashed"></div>
@@ -582,6 +551,7 @@
             $('#hora-inicio').hide();
             $('#hora-final').hide();
             $('#costo').hide();
+            $('#nota-linea-2').show("slow");
             $('#adjuntos').show("slow");
 
         }else if(tipo_tarea == "solicitudes_recibidas"){
@@ -598,6 +568,7 @@
             $('#contacto').show("slow");
             $('#instalacion').hide();
             $('#fecha-requerida').hide();
+            $('#nota-linea-2').hide();
             $('#hora-inicio').hide();
             $('#hora-final').hide();
             $('#costo').hide();
@@ -617,6 +588,7 @@
             $('#contacto').show("slow");
             $('#instalacion').show("slow");
             $('#fecha-requerida').show("slow");
+            $('#nota-linea-2').hide();
             $('#hora-inicio').show("slow");
             $('#hora-final').show("slow");
             $('#costo').show("slow");
@@ -638,6 +610,7 @@
             $('#fecha-requerida').hide();
             $('#hora-inicio').hide();
             $('#hora-final').hide();
+            $('#nota-linea-2').hide();            
             $('#costo').hide();
             $('#adjuntos').show("slow");
 
@@ -656,6 +629,7 @@
             $('#instalacion').hide();
             $('#fecha-requerida').hide();
             $('#hora-inicio').hide();
+            $('#nota-linea-2').hide();
             $('#hora-final').hide();
             $('#costo').hide();
             $('#adjuntos').show("slow");
@@ -674,6 +648,7 @@
             $('#contacto').show("slow");
             $('#instalacion').hide();
             $('#fecha-requerida').show("slow");
+            $('#nota-linea-2').hide();
             $('#hora-inicio').hide();
             $('#hora-final').hide();
             $('#costo').hide();

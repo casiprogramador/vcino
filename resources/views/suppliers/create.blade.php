@@ -54,10 +54,10 @@
                                                 <div class="col-sm-9">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="Nombre" class="form-control" name="contacto_nombre">
+                                                            <input type="text" placeholder="Nombre" class="form-control" name="contacto_nombre" value="{{old('contacto_nombre')}}">
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <input type="text" placeholder="Apellido" class="form-control" name="contacto_apellido">
+                                                            <input type="text" placeholder="Apellido" class="form-control" name="contacto_apellido" value="{{old('contacto_apellido')}}">
                                                         </div>
                                                     </div>
                                                 </div>

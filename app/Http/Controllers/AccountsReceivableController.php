@@ -77,7 +77,7 @@ class AccountsReceivableController extends Controller
 					->where('property_id',$request->propiedad)
 					->where('quota_id',$request->cuota)->get();
 			if(count($accountsreceivable_validate) && $quota->frecuencia_pago != 'Variable'){
-				Session::flash('message', 'Ya existe una cuota por cobrar para el periodo seleccionado. No se registraron nuevos registros.');
+				Session::flash('message', 'Ya existe una cuota por cobrar para el periodo seleccionado. No se registraron nuevas cuotas.');
 				return redirect()->route('transaction.accountsreceivable.index');
 			}else{
 				$accountsreceivable = new Accountsreceivable();
@@ -96,7 +96,7 @@ class AccountsReceivableController extends Controller
 				$accountsreceivable->save();
 			}
 
-        Session::flash('message', 'Nueva cuota por cobrar ingresada correctamente.');
+        Session::flash('message', 'Nueva cuota por cobrar registrada correctamente.');
         return redirect()->route('transaction.accountsreceivable.index');
 		 
     }
@@ -188,11 +188,24 @@ class AccountsReceivableController extends Controller
     }
 	
 	
-	
 	public function generate()
     {
+		$company = Auth::user()->company;
 		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
-        return view('accountsreceivables.generate')->with('gestiones',$gestiones);
+
+   		if($company->pago == 'prepago' ){
+			$mes_actual = date('m');
+			$mes_cobro = 'Mes adelantado';
+		}else{
+			$mes_cobro = 'Mes vencido';
+			$mes_actual = date('m');
+			$mes_actual = ($mes_actual == 1) ? 12 : $mes_actual-1;
+		}
+
+        return view('accountsreceivables.generate')
+        	->with('gestiones',$gestiones)
+        	->with('mes_cobro',$mes_cobro)
+	        ->with('mes_actual',$mes_actual);
     }
 	
 	public function storegenerate(Request $request){
@@ -243,7 +256,7 @@ class AccountsReceivableController extends Controller
 				}
 			}
 		}
-		Session::flash('message', 'Nuevas cuotas por cobrar ingresadas correctamente.');
+		Session::flash('message', 'Nuevas cuotas por cobrar registradas correctamente.');
         return redirect()->route('transaction.accountsreceivable.index');
 	}
 	
@@ -285,12 +298,23 @@ class AccountsReceivableController extends Controller
 		$subjects = Subject::where('company_id',$company->id )->lists('nombre','nombre')->all();
 		$gestiones = Gestion::orderBy('nombre', 'asc')->lists('nombre','nombre')->all();
 
+   		if($company->pago == 'prepago' ){
+			$mes_actual = date('m');
+			$mes_cobro = 'Mes adelantado';
+		}else{
+			$mes_cobro = 'Mes vencido';
+			$mes_actual = date('m');
+			$mes_actual = ($mes_actual == 1) ? 12 : $mes_actual-1;
+		}
+
 		return view('accountsreceivables.generatenotification')
 				->with('properties',$properties)
 				->with('subjects',$subjects)
-				->with('gestiones',$gestiones);
+				->with('gestiones',$gestiones)
+				->with('mes_cobro',$mes_cobro)
+				->with('mes_actual',$mes_actual);
 	}
-	
+
 	public function sendnotification(Request $request){
 		$this->validate($request, [
             'sendalertpayment' => 'required'
@@ -339,7 +363,7 @@ class AccountsReceivableController extends Controller
 							}
 						}//end foreach contacts
 					}else{
-						Session::flash('message', 'No se pudo enviar las notificaciones por falta de contactos.');
+						Session::flash('message', 'No se enviaron los <b>Avisos de cobranza</b> por falta de información de contacto.');
 						return redirect()->route('transaction.notification.send');
 					}
 					$sendalertpaymentUp = Sendalertpayment::find($sendalertpayment->id);
@@ -532,7 +556,8 @@ class AccountsReceivableController extends Controller
 	
 	public function accountsreceivablebyproperty($property_id){
 		$company = Auth::user()->company;
-        $accountsreceivables = Accountsreceivable::where('company_id',$company->id )->where('cancelada',0)->where('property_id',$property_id)->with('quota')->get();
+        $accountsreceivables = Accountsreceivable::where('company_id',$company->id )->where('cancelada',0)->where('property_id',$property_id)->orderBy('gestion','ASC')->orderBy('periodo','ASC')->with('quota')->get();
+
 		//$accountsreceivables = json_encode($accountsreceivables);
 		return response()->json(['success' => true, 'accountsreceivables' => $accountsreceivables]);
 	}

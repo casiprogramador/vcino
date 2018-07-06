@@ -76,7 +76,7 @@
                                 <td>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</td>
                                 <td>{{ $collection->transaction->concepto }}</td>
                                 <td>{{ $collection->account->nombre }}</td>
-                                <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, '.', '.') }}</td>
+                                <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, ',', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <span class="label label-warning">ANULADA</span>
                                </td>
@@ -91,7 +91,7 @@
                                 <td>{{ $collection->contact->nombre }} {{ $collection->contact->apellido }}</td>
                                 <td>{{ $collection->transaction->concepto }}</td>
                                 <td>{{ $collection->account->nombre }}</td>
-                                <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, '.', '.') }}</td>
+                                <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, ',', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="{{ route('transaction.collection.show',Crypt::encrypt($collection->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">

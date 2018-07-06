@@ -76,7 +76,7 @@
                             '10' => 'Octubre',
                             '11' => 'Noviembre',
                             '12' => 'Diciembre',
-                            ), date("m"),
+                            ), $mes_actual,
                             ['class' => 'form-control input-sm']) }}
                             @if ($errors->has('periodo_desde'))
                             <span class="help-block">
@@ -111,7 +111,7 @@
                             '10' => 'Octubre',
                             '11' => 'Noviembre',
                             '12' => 'Diciembre',
-                            ), date("m"),
+                            ), $mes_actual,
                             ['class' => 'form-control input-sm']) }}
                             @if ($errors->has('periodo_hasta'))
                             <span class="help-block">
@@ -128,6 +128,7 @@
                             </span>
                             @endif
                         </div>
+                        <label class="col-sm-4 control-label" style="text-align: left;"><span class="text-danger">Mes sugerido: {{ nombremes($mes_actual) }}</span> ({{ $mes_cobro }})</label>
                     </div>
 
                     <div class="form-group">

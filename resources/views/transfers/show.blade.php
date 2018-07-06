@@ -6,7 +6,7 @@
         <h2>Transacciones</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#/">Inicio</a>
+                <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
                 <a id="direccion-lista" href="{{ route('transaction.transfer.index') }}">Transacciones</a>
@@ -53,16 +53,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-3">
-                            </div>
-                            <div class="col-sm-6" style="width: 50%; margin: auto;">
-                                <div class="hr-line-solid"></div>
-                            </div>
-                            <div class="col-sm-3">
                             </div>
                         </div>
 
@@ -137,7 +127,7 @@
     										@endif
                                             <tr style="font-size: 14px;">
                                                 <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
-                                                <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($transfer->transactionOrigin->importe_debito, 2, '.', '.') }}</td>
+                                                <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($transfer->transactionOrigin->importe_debito, 2, ',', '.') }}</td>
                                             </tr>
                                         </table>
                                     </td>

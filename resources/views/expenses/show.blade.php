@@ -64,16 +64,6 @@
 								</div>
 
 								<div class="row">
-									<div class="col-sm-3">
-									</div>
-									<div class="col-sm-6" style="width: 50%; margin: auto;">
-										<div class="hr-line-solid"></div>
-									</div>
-									<div class="col-sm-3">
-									</div>
-								</div>
-
-								<div class="row">
 									<table style="margin: 10px auto; text-align: left; width: 90%; font-size: 13px;">
 										<tr>
 											<td style="padding: 0 0 20px 0; line-height: 20px;">
@@ -111,7 +101,7 @@
 													</tr>
 													<tr>
 														<td style="border-top: #eee 1px solid; padding: 3px 0;" colspan="2">
-															Cuenta: {{$expense->account->tipo_cuenta}} {{$expense->account->nro_cuenta}}
+															Cuenta: {{$expense->account->nombre}} ({{$expense->account->tipo_cuenta}})
 														</td>
 													</tr>
 													<tr>
@@ -125,7 +115,7 @@
 
 													<tr style="font-size: 14px;">
 														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
-														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($expense->transaction->importe_debito, 2, '.', '.') }}</td>
+														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($expense->transaction->importe_debito, 2, ',', '.') }}</td>
 													</tr>
 												</table>
 											</td>

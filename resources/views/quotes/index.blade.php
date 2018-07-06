@@ -58,7 +58,7 @@
                                 <td>{{ $quota->cuota }}</td>
                                 <td>{{ $quota->category->nombre }}</td>
                                 <td>{{ $quota->typeProperty->tipo_propiedad }}</td>
-                                <td style="padding-right: 30px;" class="text-right">{{ $quota->importe }}</td>
+                                <td style="padding-right: 30px;" class="text-right">{{ number_format($quota->importe, 2, ',', '.') }}</td>
                                 <td><span>Activa</span></td>
                                 
                                 <td style="vertical-align:middle; text-align:right;">
@@ -77,7 +77,7 @@
                                         <td ><span class="text-muted">{{ $quota->cuota }}</span></td>
                                         <td ><span class="text-muted">{{ $quota->category->nombre }}</span></td>
                                         <td ><span class="text-muted">{{ $quota->typeProperty->tipo_propiedad }}</span></td>
-                                        <td style="padding-right: 30px;" class="text-right text-muted">{{ $quota->importe }}</td>
+                                        <td style="padding-right: 30px;" class="text-right text-muted">{{ number_format($quota->importe, 2, ',', '.') }}</td>
                                         <td><span class="text-muted">Inactiva</span></td>
                                         <td style="vertical-align:middle; text-align:right;">
                                             <div class="btn-group">

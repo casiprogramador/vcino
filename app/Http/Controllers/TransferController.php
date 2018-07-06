@@ -28,7 +28,7 @@ class TransferController extends Controller
     {
 		$company = Auth::user()->company;
 		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('activa',1)->lists('nombre','id')->all();
-		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();
 		$transactions = Transaction::where('user_id',Auth::user()->id )->orderBy('fecha_pago', 'desc');
         return view('transfers.index')
 				->with('transactions',$transactions->get())
@@ -44,7 +44,7 @@ class TransferController extends Controller
     public function create()
     {
 		$company = Auth::user()->company;
-		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();
         return view('transfers.create')
 		->with('accounts',$accounts);
     }
@@ -155,9 +155,9 @@ class TransferController extends Controller
     public function edit($id)
     {
 		$id = \Crypt::decrypt($id);
-       $company = Auth::user()->company;
-	   $accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
-	   $transfer = Transfer::find($id);
+        $company = Auth::user()->company;
+	    $accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();
+	    $transfer = Transfer::find($id);
         return view('transfers.edit')
 		->with('accounts',$accounts)
 		->with('transfer',$transfer);

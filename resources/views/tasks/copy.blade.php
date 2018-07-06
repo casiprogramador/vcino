@@ -91,7 +91,7 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="nota-linea"></div>
 
                     <div class="form-group" id="prioridad">
                         <label class="col-sm-2 control-label">Prioridad</label>
@@ -155,7 +155,8 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="medio-solicitud-linea"></div>
+
 					@if($task->tipo_tarea =='solicitudes_recibidas' ||
 					$task->tipo_tarea =='solicitudes_recibidas' ||
 					$task->tipo_tarea =='reclamos' ||
@@ -188,7 +189,7 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="propiedad-linea"></div>
 
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
@@ -227,7 +228,7 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed" id="nota-linea-2"></div>
 
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
@@ -267,8 +268,6 @@
                         </div>
                     </div>
 
-                    <div class="hr-line-dashed"></div>
-
                     <div class="form-group{{ $errors->has('instalacion') ? ' has-error' : '' }}" id="instalacion">
                         <label class="col-sm-2 control-label">Instalación</label>
                         <div class="col-sm-5">
@@ -286,7 +285,6 @@
                     <div class="form-group{{ $errors->has('fecha_requerida') ? ' has-error' : '' }}" id="fecha-requerida">
                         <label class="col-sm-2 control-label">Fecha requerida</label>
                         <div class="col-sm-3">
-							
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 <input type="text" class="form-control input-sm date-picker" name="fecha_requerida" value="{{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}">
@@ -295,43 +293,6 @@
 									<strong>{{ $errors->first('fecha_requerida') }}</strong>
 								</span>
 							@endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('hora_inicio') ? ' has-error' : '' }}" id="hora-inicio">
-
-                        <label class="col-sm-2 control-label">Hora desde</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}">
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								@if ($errors->has('hora_inicio'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_inicio') }}</strong>
-								</span>
-								@endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('hora_final') ? ' has-error' : '' }}" id="hora-final">
-                        <label class="col-sm-2 control-label">Hora hasta</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_fin),'H:i') }}">
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								@if ($errors->has('hora_final'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_final') }}</strong>
-								</span>
-								@endif
                             </div>
                         </div>
                     </div>
@@ -449,20 +410,26 @@
 		tipo_tarea = $('#tipo-tarea option:selected').val();
 		
 		if(tipo_tarea == "mis_tareas"){
-			$('#fecha-tarea').show("slow");
-			$('#titulo-tarea').show("slow");
-			$('#nota').show("slow");
-			$('#prioridad').show("slow");
-			$('#frecuencia').show("slow");
-			$('#medio-solicitud').hide();
-			$('#propiedad').hide();
-			$('#contacto').hide();
-			$('#instalacion').hide();
-			$('#fecha-requerida').hide();
-			$('#hora-inicio').hide();
-			$('#hora-final').hide();
-			$('#costo').hide();
-			$('#adjuntos').show("slow");
+            $('#fecha-tarea').show("slow");
+            $('#titulo-tarea').show("slow");
+            $('#nota').show("slow");
+            $('#prioridad').show("slow");
+            $('#frecuencia').show("slow");
+            $('#medio-solicitud').hide();
+            $('#propiedad').hide();
+            $('#contacto').hide();
+            $('#instalacion').hide();
+            $('#fecha-requerida').hide();
+            $('#hora-inicio').hide();
+            $('#hora-final').hide();
+            $('#costo').hide();
+            $('#adjuntos').show("slow");
+            $('#nota-linea').show("slow");
+            $('#nota-linea-2').show("slow");
+            $('#medio-solicitud-linea').hide();
+            $('#propiedad-linea').hide();
+            $('#cuota').hide();
+            $('#dias-permitidos-reserva').hide();
 
 		}else if(tipo_tarea == "solicitudes_recibidas"){
 			$('#fecha-tarea').show("slow");

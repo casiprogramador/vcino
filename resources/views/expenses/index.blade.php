@@ -58,7 +58,7 @@
                                 <td>{{$expense->transaction->concepto}}</td>
                                 <td>{{$expense->account->nombre}} {{$expense->account->nro_cuenta}}</td>
                                 <td>{{ucfirst($expense->transaction->forma_pago)}} {{$expense->transaction->numero_forma_pago}}</td>
-                                <td style="text-align: right;">{{ number_format($expense->transaction->importe_debito, 2, '.', '.') }}</td>
+                                <td style="text-align: right;">{{ number_format($expense->transaction->importe_debito, 2, ',', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                      <span class="label label-warning">ANULADA</span>
                                </td>
@@ -72,7 +72,7 @@
                                 <td>{{$expense->transaction->concepto}}</td>
                                 <td>{{$expense->account->nombre}} {{$expense->account->nro_cuenta}}</td>
                                 <td>{{ucfirst($expense->transaction->forma_pago)}} {{$expense->transaction->numero_forma_pago}}</td>
-                                <td style="text-align: right;">{{ number_format($expense->transaction->importe_debito, 2, '.', '.') }}</td>
+                                <td style="text-align: right;">{{ number_format($expense->transaction->importe_debito, 2, ',', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="{{ route('transaction.expense.show',Crypt::encrypt($expense->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
