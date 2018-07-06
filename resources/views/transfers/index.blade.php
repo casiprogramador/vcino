@@ -87,7 +87,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->collection->account->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
 												<a href="{{ route('transaction.collection.show', Crypt::encrypt($transaction->collection->id) ) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
@@ -106,7 +106,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->collection->account->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											 <span class="label label-warning">ANULADA</span>
 									   </td>
@@ -123,7 +123,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->expense->account->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">{{ number_format($transaction->importe_debito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">{{ number_format($transaction->importe_debito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
 												<a href="{{ route('transaction.expense.show', Crypt::encrypt($transaction->expense->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
@@ -142,7 +142,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->expense->account->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">{{ number_format($transaction->importe_debito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">{{ number_format($transaction->importe_debito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<span class="label label-warning">ANULADA</span>
 									   </td>
@@ -159,7 +159,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->transfersOrigin[0]->accountOrigin->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">-{{ number_format($transaction->importe_debito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">-{{ number_format($transaction->importe_debito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
 												<a href="{{ route('transaction.transfer.show', Crypt::encrypt($transaction->transfersOrigin[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
@@ -181,7 +181,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->transfersOrigin[0]->accountOrigin->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">-{{ number_format($transaction->importe_debito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">-{{ number_format($transaction->importe_debito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<span class="label label-warning">ANULADA</span>
 									   </td>
@@ -198,7 +198,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->transfersDestiny[0]->accountDestiny->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<div class="btn-group">
 												<a href="{{ route('transaction.transfer.show', Crypt::encrypt($transaction->transfersDestiny[0]->id)) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver comprobante">
@@ -220,7 +220,7 @@
 										<td>{{$transaction->concepto}}</td>
 										<td>{{$transaction->transfersDestiny[0]->accountDestiny->nombre}}</td>
 										<td>{{ucfirst($transaction->forma_pago)}} {{$transaction->numero_forma_pago}}</td>
-										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, '.', '.') }}</td>
+										<td style="text-align: right;">{{ number_format($transaction->importe_credito, 2, ',', '.') }}</td>
 										<td style="vertical-align:middle; text-align:right;">
 											<span class="label label-warning">ANULADA</span>
 									   </td>

@@ -103,7 +103,7 @@
 							</div>
 						</div>
 						<div id="panel-cuotas-cobrar-vacio">
-							<h4 style="font-weight: normal;">No existe gastos en esta categoria.</h4>
+							<h4 style="font-weight: normal;">No existen gastos para esta categoría. Por favor presione <b>Siguiente</b> para continuar.</h4>
 						</div>
 					</fieldset>
 					<h1>Importe y forma de pago</h1>

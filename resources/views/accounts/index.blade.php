@@ -46,7 +46,7 @@
                                 <th style="vertical-align:bottom">Nombre cuenta</th>
                                 <th style="vertical-align:bottom">Tipo de cuenta</th>
                                 <th style="vertical-align:bottom">Número</th>
-								<th style="vertical-align:bottom">Balance Inicial</th>
+								<th style="vertical-align:bottom; text-align:right;">Balance Inicial</th>
                                 <th style="vertical-align:bottom">Estado</th>
                                 <th style="vertical-align:bottom" width="70"></th>
                             </tr>
@@ -58,7 +58,7 @@
                                         <td>{{ $account->nombre }}</td>
                                         <td>{{ $account->tipo_cuenta }}</td>
                                         <td>{{ $account->nro_cuenta }}</td>
-										<td><span class="text-muted">{{ $account->balance_inicial }}</span></td>
+										<td style="text-align:right;"><span class="text-muted">{{ number_format($account->balance_inicial, 2, ',', '.') }}</span></td>
                                         <td>
                                             <span>Activa</span>
                                         </td>
@@ -79,7 +79,7 @@
                                         <td><span class="text-muted">{{ $account->nombre }}</span></td>
                                         <td><span class="text-muted">{{ $account->tipo_cuenta }}</span></td>
                                         <td><span class="text-muted">{{ $account->nro_cuenta }}</span></td>
-										<td><span class="text-muted">{{ $account->balance_inicial }}</span></td>
+										<td style="text-align:right;"><span class="text-muted">{{ number_format($account->balance_inicial, 2, ',', '.') }}</span></td>
                                         <td>
                                             <span class="text-muted">Inactiva</span>
                                         </td>

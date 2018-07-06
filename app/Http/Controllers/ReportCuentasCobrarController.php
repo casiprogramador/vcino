@@ -168,7 +168,7 @@ class ReportCuentasCobrarController extends Controller
 	function cuotasDetalladoArray ($anio,$mes,$array_inicial){
 		$resultado = $array_inicial;
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->get();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->get();
 		$total = 0;
 		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
 		foreach ($properties as $property) {
@@ -196,7 +196,7 @@ class ReportCuentasCobrarController extends Controller
 	function cuotasConsolidadoArray ($anio,$mes,$array_inicial){
 		$resultado = $array_inicial;
 		$company = Auth::user()->company;
-		$properties = Property::where('company_id',$company->id )->get();
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->get();
 		$total = 0;
 		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
 		foreach ($properties as $property) {

@@ -121,7 +121,11 @@
 									@endif
                                 </td>
                                 <td data-order="{{ $task->fecha }}">{{ date_format(date_create($task->fecha),'d/m/Y') }}</td>
-                                <td>{{$task->titulo_tarea}}</td>
+                                <td>{{$task->titulo_tarea}}
+                                    @if(!empty($task->documento_1) || !empty($task->documento_2) || !empty($task->documento_3))
+                                        <span style="float: right;"><i class="fa fa-paperclip"></i></span>
+                                    @endif
+                                </td>
 								@if($task->tipo_tarea == 'mis_tareas')
 									<td>Mis tareas</td>
 									<td>Administración</td>
@@ -129,7 +133,8 @@
 									<td>Solicitud recibida</td>
 									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='reserva_instalaciones')
-									<td>Reserva de instalación</td>
+									<td>Reserva de instalación <br>
+                                        <span class="text-warning">{{$task->taskreservation->installation->instalacion}} - {{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}</span></td>
 									<td>{{$task->taskreservation->property->nro}} - {{$task->taskreservation->contact->nombre}} {{$task->taskreservation->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='reclamos')
 									<td>Reclamo</td>
@@ -138,29 +143,41 @@
 									<td>Sugerencia</td>
 									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='notificacion_mudanza')
-									<td>Notificación de mudanza</td>
+									<td>Notificación de mudanza
+                                    <br><span class="text-warning">{{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}</span>
+                                    </td>
 									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@elseif($task->tipo_tarea =='notificacion_trabajos')
-									<td>Notificación de trabajo</td>
+									<td>Notificación de trabajo
+                                    <br><span class="text-warning">{{ date_format(date_create($task->fecha_requerida),'d/m/Y') }}</span>
+                                    </td>
 									<td>{{$task->taskrequest->property->nro}} - {{$task->taskrequest->contact->nombre}} {{$task->taskrequest->contact->apellido}}</td>
 								@endif
-                                
+
                                 <td style="vertical-align:middle; text-align:right;">
 									@if($task->tipo_tarea == 'mis_tareas' || $task->tipo_tarea =='solicitudes_recibidas' || $task->tipo_tarea =='reserva_instalaciones' || $task->tipo_tarea =='reclamos')	
                                     <div class="btn-group" style="padding-right: 10px;">
                                         <a style="width: 50px; text-align: left;" href="{{ route('taskrequest.tasktracking.create', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Seguimiento">
                                             <i class="fa fa-exchange"></i> ({{$task->tasktrackings->count()}})
                                         </a>
-										
+
                                     </div>
 									@endif
                                     <div class="btn-group">
                                         <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver tarea">
                                             <i class="fa fa-eye"></i>
                                         </a>
+
+                                        @if($task->tipo_tarea == 'mis_tareas')
                                         <a href="{{ route('taskrequest.task.copy', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Copiar tarea...">
 											<i class="fa fa-files-o"></i>
-										</a>                                        
+										</a>
+                                        @else
+                                        <a href="{{ route('taskrequest.task.copy', Crypt::encrypt($task->id)) }}" class="btn btn-default btn-xs disabled" style="border-top: 1px solid #1A7CC0; border-bottom: 1px solid #1A7CC0; border-left: 1px solid #1A7CC0;" data-toggle="tooltip" data-placement="bottom" title="">
+                                            <i class="fa fa-files-o"></i>
+                                        </a>                                        
+                                        @endif
+
                                         <a href="{{ route('taskrequest.task.edit', Crypt::encrypt($task->id)) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar tarea">
                                             <i class="fa fa-pencil"></i>
                                         </a>
@@ -219,11 +236,10 @@
                 "pageLength": 100,
                 "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
                 "bLengthChange" : false,
-                "info":     false,
+                "info": false,
                 "columnDefs": [ { "orderable": false, "targets": 1 }, { "orderable": false, "targets": 6 } ]
             });
         } );
     </script>
 @endsection
-
 

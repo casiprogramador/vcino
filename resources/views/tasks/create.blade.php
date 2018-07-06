@@ -200,7 +200,7 @@
 							 <select class="form-control input-sm" name="instalacion" id="instalaciones">
 								<option horamin="" horamax="" costo="0" value="0" diasper="">Seleccione una instalación</option>
 								@foreach($installations as $instalacion )
-								<option horamin="{{$instalacion->hora_dia_semana_hasta}}" horamax="{{$instalacion->hora_fin_de_semana_hasta}}" diasper="{{ ucfirst($instalacion->dias_permitidos) }}" costo="{{$instalacion->costo}}" value="{{$instalacion->id}}">{{$instalacion->instalacion}}</option>
+								<option diasper="{{ ucfirst($instalacion->dias_permitidos) }}" costo="{{$instalacion->costo}}" value="{{$instalacion->id}}">{{$instalacion->instalacion}}</option>
 								@endforeach
 							</select>
 						   @if ($errors->has('instalacion'))
@@ -224,49 +224,7 @@
 							@endif
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('hora_inicio') ? ' has-error' : '' }}" id="hora-inicio">
-                        <label class="col-sm-2 control-label">Hora desde</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{old('hora_inicio')}}">
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								
-                            </div>
-							@if ($errors->has('hora_inicio'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_inicio') }}</strong>
-								</span>
-							@endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('hora_final') ? ' has-error' : '' }}" id="hora-final">
-                        <label class="col-sm-2 control-label">Hora hasta</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{old('hora_final')}}">
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								
-                            </div>
-							@if ($errors->has('hora_final'))
-							<span class="help-block">
-								<strong>{{ $errors->first('hora_final') }}</strong>
-							</span>
-							@endif
-                        </div>
-                        <div class="col-sm-6" style="margin-top: -45px;">
-                            <p class="help-block m-b-none" style="color: #a5a5a5">Días permitidos: <b><span id="dias-permitidos"></span></b> </p>
-                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida día de semana (Lu, Ma, Mi, Ju, Do): <b><span id="hora-minima"></span></b> </p>
-                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida fin de semana (Vi, Sá): <b><span id="hora-maxima"></span></b> </p>
-                        </div>
+                        <p class="help-block m-b-none" id="dias-permitidos-reserva">Días permitidos: <b><span id="dias-permitidos"></span></b> </p>
                     </div>
 					
 					<div class="form-group{{ $errors->has('cuota') ? ' has-error' : '' }}" id="cuota">
@@ -402,7 +360,8 @@
 			$('#hora-inicio').hide();
 			$('#hora-final').hide();
 			$('#costo').hide();
-			$('#cuota').hide();
+            $('#cuota').hide();
+			$('#dias-permitidos-reserva').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "solicitudes_recibidas"){
@@ -423,6 +382,7 @@
 			$('#hora-final').hide();
 			$('#costo').hide();
 			$('#cuota').hide();
+            $('#dias-permitidos-reserva').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "reserva_instalaciones"){
@@ -443,6 +403,7 @@
 			$('#hora-final').show("slow");
 			$('#costo').show("slow");
 			$('#cuota').show();
+            $('#dias-permitidos-reserva').show("slow");
 			$('#adjuntos').hide();
 
 		}else if(tipo_tarea == "reclamos"){
@@ -463,6 +424,7 @@
 			$('#hora-final').hide();
 			$('#costo').hide();
 			$('#cuota').hide();
+            $('#dias-permitidos-reserva').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "sugerencias"){
@@ -483,6 +445,7 @@
 			$('#hora-final').hide();
 			$('#costo').hide();
 			$('#cuota').hide();
+            $('#dias-permitidos-reserva').hide();
 			$('#adjuntos').show("slow");
 
 		}else if(tipo_tarea == "notificacion_mudanza"){
@@ -503,6 +466,7 @@
 			$('#hora-final').hide();
 			$('#costo').hide();
 			$('#cuota').hide();
+            $('#dias-permitidos-reserva').hide();
 			$('#adjuntos').hide();
 
 		}else if(tipo_tarea == "notificacion_trabajos"){
@@ -523,6 +487,7 @@
 			$('#hora-final').hide();
 			$('#costo').hide();
 			$('#cuota').hide();
+            $('#dias-permitidos-reserva').hide();
 			$('#adjuntos').show("slow");
 
 		}else{
@@ -544,6 +509,7 @@
 			$('#hora-final').hide();
 			$('#costo').hide();
 			$('#cuota').hide();
+            $('#dias-permitidos-reserva').hide();
 			$('#adjuntos').hide();
 		}
 	
@@ -568,6 +534,7 @@
 				$('#hora-final').hide();
 				$('#costo').hide();
 				$('#cuota').hide();
+                $('#dias-permitidos-reserva').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "solicitudes_recibidas"){
@@ -589,6 +556,7 @@
 				$('#hora-final').hide();
 				$('#costo').hide();
 				$('#cuota').hide();
+                $('#dias-permitidos-reserva').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "reserva_instalaciones"){
@@ -609,6 +577,7 @@
 				$('#hora-final').show("slow");
 				$('#costo').show("slow");
 				$('#cuota').show("slow");
+                $('#dias-permitidos-reserva').show("slow");
 				$('#adjuntos').hide();
 
 			}else if($(this).val() == "reclamos"){
@@ -630,6 +599,7 @@
 				$('#hora-final').hide();
 				$('#costo').hide();
 				$('#cuota').hide();
+                $('#dias-permitidos-reserva').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "sugerencias"){
@@ -651,6 +621,7 @@
 				$('#hora-final').hide();
 				$('#costo').hide();
 				$('#cuota').hide();
+                $('#dias-permitidos-reserva').hide();
 				$('#adjuntos').show("slow");
 
 			}else if($(this).val() == "notificacion_mudanza"){
@@ -672,6 +643,7 @@
 				$('#hora-final').hide();
 				$('#costo').hide();
 				$('#cuota').hide();
+                $('#dias-permitidos-reserva').hide();
 				$('#adjuntos').hide();
 
 			}else if($(this).val() == "notificacion_trabajos"){
@@ -693,6 +665,7 @@
 				$('#hora-final').hide();
 				$('#costo').hide();
 				$('#cuota').hide();
+                $('#dias-permitidos-reserva').hide();
 				$('#adjuntos').show("slow");
 
 			}else{
@@ -714,6 +687,7 @@
 				$('#hora-final').hide();
 				$('#costo').hide();
 				$('#cuota').hide();
+                $('#dias-permitidos-reserva').hide();
 				$('#adjuntos').hide();
 			}
 
@@ -789,12 +763,7 @@
 	$('#instalaciones').change(function () {
 
 		$('#costo-input').val($('#instalaciones option:selected').attr('costo'));
-		var hora_min = $('#instalaciones option:selected').attr('horamin');
-        var hora_max = $('#instalaciones option:selected').attr('horamax');
 		var dias_per = $('#instalaciones option:selected').attr('diasper');
-		//hora-minima
-		$('#hora-minima').text(hora_min.substring(0,5));
-        $('#hora-maxima').text(hora_max.substring(0,5));
 		$('#dias-permitidos').text(dias_per);
 	});
 	</script>

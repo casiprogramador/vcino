@@ -110,6 +110,17 @@
                                                     @endif
                                                 </div>
                                             </div>
+                                            <div class="form-group{{ $errors->has('forma_cobro') ? ' has-error' : '' }}">
+                                                <label class="col-sm-3 control-label">Forma de cobro:</label>
+                                                <div class="col-sm-3">
+                                                    {{ Form::select('forma_cobro',array('Tipo' => 'Tipo', 'FIT' => 'FIT'),$quota->forma_cobro,['class' => 'form-control input-sm','disabled'=>'disabled']) }}
+                                                    @if ($errors->has('forma_cobro'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('forma_cobro') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
 
                                             <div class="hr-line-dashed"></div>
 

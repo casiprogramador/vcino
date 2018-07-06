@@ -302,50 +302,8 @@
                             </div>
                         </div>
                     </div>
+
 					@if($task->tipo_tarea =='reserva_instalaciones')
-                    <div class="form-group{{ $errors->has('hora_inicio') ? ' has-error' : '' }}" id="hora-inicio">
-
-                        <label class="col-sm-2 control-label">Hora desde</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_inicio" value="{{ date_format(date_create($task->hora_inicio),'H:i') }}" >
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								
-                            </div>
-							@if ($errors->has('hora_inicio'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_inicio') }}</strong>
-								</span>
-							@endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('hora_final') ? ' has-error' : '' }}" id="hora-final">
-                        <label class="col-sm-2 control-label">Hora hasta</label>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control time-picker" name="hora_final" value="{{ date_format(date_create($task->hora_fin),'H:i') }}">
-
-                                <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                                </span>
-								
-                            </div>
-							@if ($errors->has('hora_final'))
-								<span class="help-block">
-									<strong>{{ $errors->first('hora_final') }}</strong>
-								</span>
-								@endif
-                        </div>
-                        <div class="col-sm-6" style="margin-top: -45px;">
-                            <p class="help-block m-b-none" style="color: #a5a5a5">Días permitidos: <b><span id="dias-permitidos"></span></b> </p>
-                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida día de semana (Lu, Ma, Mi, Ju, Do): <b><span id="hora-minima">{{substr($task->taskreservation->installation->hora_dia_semana_hasta,0,5)}}</span></b> </p>
-                            <p class="help-block m-b-none" style="color: #a5a5a5">Hora máxima permitida fin de semana (Vi, Sá): <b><span id="hora-maxima">{{substr($task->taskreservation->installation->hora_fin_de_semana_hasta,0,5)}}</span></b> </p>
-                        </div>
-                    </div>
 
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>

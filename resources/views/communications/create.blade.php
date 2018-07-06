@@ -65,7 +65,7 @@
 						<label class="col-sm-2 control-label">Cuerpo</label>
 						<div class="col-sm-9">
 							<div class="no-padding">
-								<textarea id="summernote" name="cuerpo"></textarea>
+								<textarea id="summernote" name="cuerpo">{{old('cuerpo')}}</textarea>
 							</div>
 							@if ($errors->has('cuerpo'))
 							<span class="help-block">

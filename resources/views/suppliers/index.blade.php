@@ -54,7 +54,11 @@
                             @foreach ($suppliers as $supplier)
                                 @if($supplier->activa == 1)
                                     <tr>
-                                        <td>{{ $supplier->razon_social }} {{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }}</td>
+                                        <td>{{ $supplier->razon_social }} 
+                                            @if ($supplier->contacto_nombre <> '')
+                                            ({{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }})
+                                            @endif
+                                        </td>
                                         <td>{{ $supplier->email }}</td>
                                         <td>{{ $supplier->telefono_emergencia }}</td>
                                         <td><span>Activo</span></td>
@@ -71,7 +75,11 @@
                                     </tr>
                                 @else
                                     <tr>
-                                        <td><span class="text-muted">{{ $supplier->razon_social }} {{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }}</span></td>
+                                        <td><span class="text-muted">{{ $supplier->razon_social }}
+                                        @if ($supplier->contacto_nombre <> '')
+                                            ({{ $supplier->contacto_nombre }} {{ $supplier->contacto_apellido }})</span>
+                                        @endif
+                                        </td>
                                         <td><span class="text-muted">{{ $supplier->email }}</span></td>
                                         <td><span class="text-muted">{{ $supplier->telefono_emergencia }}</span></td>
                                         <td><span class="text-muted">Inactivo</span></td>
