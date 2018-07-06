@@ -157,12 +157,7 @@ class CollectionController extends Controller
         $company = Auth::user()->company;
 
 		$properties = Property::where('company_id',$company->id )->lists('nro','id')->all();
-<<<<<<< HEAD
-		$accounts = Account::where('company_id',$company->id )->where('activa','1')->lists('nombre','id')->all();
-	
-=======
 		$accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();		
->>>>>>> c76ef086cf5df3d0f963dc5d4565f98e039118e6
 		$contacts = Contact::where('company_id',$company->id )->where('property_id', $collection->property_id)->where('activa','1')->get();
 		$contacts = $contacts->lists('FullName','id')->all();
 		$cuotas_cobradas = Accountsreceivable::whereIn('id',  explode(',', $collection->cuotas))->get();
