@@ -34,6 +34,7 @@ class AdminController extends Controller
 			$mes_actual = date('m');
 			$mes_actual = ($mes_actual == 1) ? 12 : $mes_actual-1;
 		}
+
 		//dd($mes_actual);
 		$mes_anterior = ($mes_actual == 1) ? 12 : $mes_actual-1;
 		
@@ -135,13 +136,10 @@ class AdminController extends Controller
 		$mes = date('m');
     	$anio = date('Y');
 		
-		//$mes = 5;
-    	//$anio = 2017;
-		
 		$array_colores = [	"#4E5B6C","#91A5BC","#D1DAE3",
 							"#E06F27","#EDB527","#F6D58F",
 							"#1A7CC0","#90BFE1","#CCE2F1",
-							"32BFCE","ABEEEA","DDF8F7",
+							"#32BFCE","#ABEEEA","#DDF8F7",
 							"#FBEEC0"];
 
 		$egresos = DB::table('expenses')
@@ -151,9 +149,11 @@ class AdminController extends Controller
 			->where('transactions.anulada',0)
 			->where('expenses.company_id',$company->id)
 			->where('transactions.excluir_reportes',0);
-
+			
 		$egresos->whereMonth('transactions.fecha_pago', '=', $mes);
 		$egresos->whereYear('transactions.fecha_pago', '=', $anio);
+        $egresos->groupBy('categories.nombre');
+		$egresos->sum('transactions.importe_debito');
 		$resultado = $egresos->get();
 		//dd($resultado);
 		$array_nombre_gastos = array();
