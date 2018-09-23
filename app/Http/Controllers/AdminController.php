@@ -28,18 +28,26 @@ class AdminController extends Controller
 		//dd(date('d'));
 		$cobranzas = $this->cobranzas_barras();
 		$gastos_torta = $this->gastos_torta();
+		//Definimos el mes y el anio actual y lo cambiamos si es prepago o pospago
+		$mes_actual = date('m');
+		$anio_actual = date('Y');
 		if($company->pago == 'prepago' ){
 			$mes_actual = date('m');
 		}else{
-			$mes_actual = date('m');
 			$mes_actual = ($mes_actual == 1) ? 12 : $mes_actual-1;
 		}
-
-		//dd($mes_actual);
+		
+		//obtenermos las cuotas por cobrar para el box
+		$cuotas_cobrar_box = $this->cuotas_cobrar($mes_actual,$anio_actual);
+		//Obtenermos los ingresos para el box
+		$ingresos_box = $this->ingresos($mes_actual,$anio_actual);	
+		//Obtenemos los gastos para el box
+		$gastos_box = $this->gastos($mes_actual,$anio_actual);		
+		
 		$mes_anterior = ($mes_actual == 1) ? 12 : $mes_actual-1;
 		
 		$mes_anterior_anterior = ($mes_anterior == 1) ? 12 : $mes_anterior -1;
-		$anio_actual = date('Y');
+
 		$anio_anterior = ($mes_actual == 1) ? date('Y')-1 : date('Y');
 		$anio_anterior_anterior = ($mes_anterior == 1 || $mes_anterior == 12) ? date('Y')-1 : date('Y');
 		
@@ -70,9 +78,15 @@ class AdminController extends Controller
 			->with('importe_pagado_total_anterior',$cuotas_pagadas_anterior['importe_total'])
 			->with('importe_pagado_promedio',$importe_promedio)
 			->with('importe_pagado_promedio_total',$importe_promedio_total)
+			// Datos torta
 			->with('gastos_torta_importe',json_encode($gastos_torta['importes']))
 			->with('gastos_torta_nombre',json_encode($gastos_torta['nombres']))
 			->with('gastos_torta_color',json_encode($gastos_torta['colores']))
+			// Datos Box
+			->with('cuotas_cobrar_box',$cuotas_cobrar_box)
+			->with('ingresos_box',$ingresos_box)
+			->with('gastos_box',$gastos_box)
+				
 			->with('mes_actual',$mes_actual)
 			->with('mes_anterior',$mes_anterior)
 			->with('cobranzas_mes_actual',json_encode($cobranzas['cobranza_mes_actual']))
@@ -219,5 +233,89 @@ class AdminController extends Controller
 		
 		return $resultado;
 	}
+	/*
+	 * Funciones para las cajas superiores de cuotas por cobrar, ingresos y gastos
+	 */
+	
+	function cuotas_cobrar($mes,$anio){
+		$company = Auth::user()->company;
+		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
+		
+		$totalCuotasCobrar = Accountsreceivable::where('company_id',$company->id )
+					->where('cancelada',0)
+					->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
+					->sum('importe_por_cobrar');
+		
+		$mesCuotasCobrar = Accountsreceivable::where('company_id',$company->id )
+					->where('cancelada',0)
+					->where('gestion','<=',$anio)
+					->where('periodo','<=',$mes)
+					->sum('importe_por_cobrar');
+		
+		$resultado = [
+			'mes_cobrar'=>$mesCuotasCobrar,
+			'total_cobrar'=>$totalCuotasCobrar
+		];
+		
+		return $resultado;
+	}
+	
+	function ingresos($mes,$anio){
+		$company = Auth::user()->company;
+		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
+		
+		$ingresoMesActual =  Accountsreceivable::where('company_id',$company->id )
+					->where('cancelada',1)
+					->where('gestion','<=',$anio)
+					->where('periodo','<=',$mes)
+					->sum('importe_por_cobrar');
+		
+		$mes_anterior = ($mes == 1) ? 12 : $mes-1;
+		$anio_anterior = ($mes == 1) ? $anio-1 : $anio;
+		
+		
+		$ingresoMesAnterior =  Accountsreceivable::where('company_id',$company->id )
+					->where('cancelada',1)
+					->where('gestion','<=',$anio_anterior)
+					->where('periodo','<=',$mes_anterior)
+					->sum('importe_por_cobrar');
+		
+		
+		$resultado = [
+			'mes_actual_ingreso'=>$ingresoMesActual,
+			'mes_anterior_ingreso'=>$ingresoMesAnterior
+		];
+		
+		return $resultado;
+	}
+	
+	function gastos($mes,$anio){
+		 $gastos_actual = DB::table('expenses')
+  					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+  					->whereMonth('fecha_pago', '=', $mes)
+					->whereYear('fecha_pago', '=', $anio)
+  					->where('anulada',0)
+  					->where('excluir_reportes',0)
+					->sum('importe_debito');
+		 
+		$mes_anterior = ($mes == 1) ? 12 : $mes-1;
+		$anio_anterior = ($mes == 1) ? $anio-1 : $anio;
+
+		$gastos_anterior = DB::table('expenses')
+  					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
+  					->whereMonth('fecha_pago', '=', $mes_anterior)
+					->whereYear('fecha_pago', '=', $anio_anterior)
+  					->where('anulada',0)
+  					->where('excluir_reportes',0)
+					->sum('importe_debito');
+		$resultado = [
+			'mes_actual_gastos'=>$gastos_actual,
+			'mes_anterior_gastos'=>$gastos_anterior
+		];
+		
+		return $resultado;
+	}
+	
+	
 	
 }

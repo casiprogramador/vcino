@@ -26,11 +26,11 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2 class="no-margins">3.451,90</h2>
-                            <div class="text-navy" style="color: #1A7CC0;"><small>Octubre</small></div>
+                            <h2 class="no-margins">{{ $cuotas_cobrar_box['mes_cobrar'] }}</h2>
+                            <div class="text-navy" style="color: #1A7CC0;"><small>{{ nombremes($mes_actual) }}</small></div>
                         </div>
                         <div class="col-md-6">
-                            <h2 class="no-margins">45.206,12</h2>
+                            <h2 class="no-margins">{{ $cuotas_cobrar_box['total_cobrar'] }}</h2>
                             <div class="text-navy" style="color: #1A7CC0;"><small>Total acumulado</small></div>
                         </div>
                     </div>
@@ -47,12 +47,12 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2 class="no-margins">23.546,90</h2>
-                            <div class="text-navy" style="color: #1A7CC0;"><small>Octubre (A la fecha)</small></div>
+                            <h2 class="no-margins">{{ $ingresos_box['mes_actual_ingreso'] }}</h2>
+                            <div class="text-navy" style="color: #1A7CC0;"><small>{{ nombremes($mes_actual) }}  (A la fecha)</small></div>
                         </div>
                         <div class="col-md-6">
-                            <h2 class="no-margins">34.546,21</h2>
-                            <div class="text-navy" style="color: #1A7CC0;"><small>Septiembre</small></div>
+                            <h2 class="no-margins">{{ $ingresos_box['mes_anterior_ingreso'] }}</h2>
+                            <div class="text-navy" style="color: #1A7CC0;"><small>{{ nombremes($mes_anterior) }} </small></div>
                         </div>
                     </div>
                 </div>
@@ -68,12 +68,12 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2 class="no-margins">23.546,90</h2>
-                            <div class="text-navy" style="color: #e88b51;"><small>Octubre (A la fecha)</small></div>
+                            <h2 class="no-margins">{{ $gastos_box['mes_actual_gastos'] }}</h2>
+                            <div class="text-navy" style="color: #e88b51;"><small>{{ nombremes($mes_actual) }} (A la fecha)</small></div>
                         </div>
                         <div class="col-md-6">
-                            <h2 class="no-margins">34.546,21</h2>
-                            <div class="text-navy" style="color: #e88b51;"><small>Septiembre</small></div>
+                            <h2 class="no-margins">{{ $gastos_box['mes_anterior_gastos'] }}</h2>
+                            <div class="text-navy" style="color: #e88b51;"><small>{{ nombremes($mes_anterior) }}</small></div>
                         </div>
                     </div>
                 </div>

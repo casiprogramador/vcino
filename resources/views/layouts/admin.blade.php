@@ -5,6 +5,7 @@
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav metismenu nav-custom" id="side-menu">
+				<a href="{{ route('admin.home') }}">
                 <li class="nav-header">
                     <div class="dropdown profile-element" style="height: 95px;">
                         <!-- <a href="{{ route('admin.home') }}">
@@ -12,10 +13,12 @@
                         </a> -->
                     </div>
                     <div class="logo-element" style="font-size: 14px;">
+						
                         <img src="{{ URL::asset('img/system/logo-h.png')}}" width="25" />
+						 
                     </div>
                 </li>
-
+				</a>
                 <li {!! (Request::is('transaction/*') ? ' class="active"' : '') !!}>
                     <a href="index.html"><i class="fa fa-usd"></i> <span class="nav-label">Transacciones</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
