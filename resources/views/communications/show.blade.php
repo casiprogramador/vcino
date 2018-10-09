@@ -76,7 +76,7 @@
 									?>
 									<div class="col-sm-4">
 										<div class="thumbnail">
-											@if($ext == 'jpg' || $ext == 'png')
+											@if($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
 											<a href="{{ URL::asset($adjunto)}}" target="_blank">
 												<img src="{{ URL::asset($adjunto)}}">
 												<div class="caption">

@@ -14,6 +14,7 @@ use App\Sendalertpayment;
 use App\Contact;
 use App\Subject;
 use App\Gestion;
+use App\Task;
 use Mail;
 
 class AccountsReceivableController extends Controller
@@ -171,7 +172,17 @@ class AccountsReceivableController extends Controller
 	public function destroy($id)
     {
         $accountsreceivable = Accountsreceivable::find($id);
+		$task_accountreceivables = $accountsreceivable->tasks()->get();
+
+		foreach ($task_accountreceivables as $task_accountreceivable) {
+			
+			$accountsreceivable->tasks()->detach($task_accountreceivable->id);
+			//$task = Task::find($task_accountreceivable->id);
+			//$task->delete();
+		}
+		
 		$accountsreceivable->delete();
+			
 		return redirect()->route('transaction.accountsreceivable.index');
     }
 	

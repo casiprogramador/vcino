@@ -64,41 +64,17 @@
                                     <tbody>
 
 										@foreach($sendalertpayments as $sendalertpayment)
-										@var $periodos = explode(',',$sendalertpayment->periodos)
-										@var $gestiones = explode(',',$sendalertpayment->gestiones)
+
+										
                                         <tr>
                                             <td style="vertical-align:middle; text-align: center;">
 												<input type="checkbox" class="i-checks check-submit" name="sendalertpayment[]" value="{{$sendalertpayment->id}}" checked>
                                             </td>
                                             <td data-order="{{ $sendalertpayment->property->orden }}" style="vertical-align:middle;">{{ $sendalertpayment->property->nro }}</td>
                                             <td style="vertical-align:middle;">
-												@for ($i = 0; $i < count($periodos); $i++)
-												 @if($periodos[$i] == 1)
-													{{ 'Enero'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 2)
-													{{ 'Febrero'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 3)
-													{{ 'Marzo'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 4)
-													{{ 'Abril'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 5)
-													{{ 'Mayo'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 6)
-													{{ 'Junio'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 7)
-													{{ 'Julio'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 8)
-													{{ 'Agosto'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 9)
-													{{ 'Septiembre'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 10)
-													{{ 'Octubre'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 11)
-													{{ 'Noviembre'.'/'.$gestiones[$i] }}
-												 @elseif($periodos[$i] == 12)
-													{{ 'Diciembre'.'/'.$gestiones[$i] }}
-												 @endif
-												@endfor
+												{{
+												ordenarPeriodoGestion($sendalertpayment->periodos,$sendalertpayment->gestiones)
+												}}
 											</td>
 											<td style="vertical-align:middle; text-align: right; padding-right: 30px;">{{ number_format($sendalertpayment->importe_total, 2, '.', '.') }}</td>
                                             <td style="vertical-align:middle; text-align: center;">

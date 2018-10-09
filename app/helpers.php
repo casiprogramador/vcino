@@ -180,3 +180,35 @@ function diffdays($fecha){
 	$interval = $now->diff($fecha_estimada);
 	return $interval->format('%R%a');
 }
+
+function date_sort($a, $b) {
+    return strtotime($a) - strtotime($b);
+}
+
+function ordenarPeriodoGestion($periodos,$gestiones){
+	$periodos = explode(',',$periodos);
+	$gestiones = explode(',',$gestiones);
+	$fecha_cobranzas = [];
+	for($i=0; $i<count($periodos);$i++){
+		$fecha_cobranza = $gestiones[$i].'-'.$periodos[$i].'-'.'01';
+		$fecha_cobranzas[]=$fecha_cobranza;
+												
+	}
+	
+	
+	usort($fecha_cobranzas, "date_sort");
+	$periodo_gestiones = [];
+	foreach($fecha_cobranzas as $fecha_cobranza){
+		$array_fecha_cobranza = explode('-', $fecha_cobranza);
+		$gestion = $array_fecha_cobranza[0];
+		$periodo = nombremes($array_fecha_cobranza[1]);
+		$periodo_gestion = $periodo.'/'.$gestion;
+		
+		$periodo_gestiones[]=$periodo_gestion;
+	}
+
+	return implode(' ', $periodo_gestiones);
+}
+
+
+
