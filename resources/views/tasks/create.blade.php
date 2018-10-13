@@ -200,7 +200,7 @@
 							 <select class="form-control input-sm" name="instalacion" id="instalaciones">
 								<option horamin="" horamax="" costo="0" value="0" diasper="">Seleccione una instalación</option>
 								@foreach($installations as $instalacion )
-								<option diasper="{{ ucfirst($instalacion->dias_permitidos) }}" costo="{{$instalacion->costo}}" value="{{$instalacion->id}}">{{$instalacion->instalacion}}</option>
+								<option diasper="{{ ucfirst($instalacion->dias_permitidos) }}" costo="{{$instalacion->costo}}" value="{{$instalacion->id}}" {{ selected( $instalacion->id,old('instalacion') ) }} >{{$instalacion->instalacion}}</option>
 								@endforeach
 							</select>
 						   @if ($errors->has('instalacion'))
@@ -216,7 +216,7 @@
                         <div class="col-sm-3">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control input-sm date-picker-2" name="fecha_requerida" value="{{ date('d/m/Y') }}">
+                                <input type="text" class="form-control input-sm date-picker-2" name="fecha_requerida" value="{{ old('fecha_requerida') }}">
 							@if ($errors->has('fecha_requerida'))
 								<span class="help-block">
 									<strong>{{ $errors->first('fecha_requerida') }}</strong>
@@ -234,7 +234,7 @@
 								<option importe="0" value="0">Sin cuota</option> 
 								@foreach($cuotas as $cuota)
 
-								<option importe="{{$cuota->importe}}" value="{{$cuota->id}}">{{$cuota->cuota}}</option>
+								<option importe="{{$cuota->importe}}" value="{{$cuota->id}}" {{ selected( $cuota->id,old('cuota') ) }}>{{$cuota->cuota}}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('cuota'))

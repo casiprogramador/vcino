@@ -61,33 +61,7 @@
 									<table cellpadding="0" cellspacing="0" style="width: 100%;">
 										<tr>
 											<td>Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span></td>
-											<td class="text-right">Al periodo:&nbsp;&nbsp;<span><strong>
-												 @if($sendalertpayment->limite_periodo == 1)
-													{{ 'Enero' }}
-												 @elseif($sendalertpayment->limite_periodo == 2)
-													{{ 'Febrero' }}
-												 @elseif($sendalertpayment->limite_periodo == 3)
-													{{ 'Marzo' }}
-												 @elseif($sendalertpayment->limite_periodo == 4)
-													{{ 'Abril' }}
-												 @elseif($sendalertpayment->limite_periodo == 5)
-													{{ 'Mayo' }}
-												 @elseif($sendalertpayment->limite_periodo == 6)
-													{{ 'Junio' }}
-												 @elseif($sendalertpayment->limite_periodo == 7)
-													{{ 'Julio' }}
-												 @elseif($sendalertpayment->limite_periodo == 8)
-													{{ 'Agosto' }}
-												 @elseif($sendalertpayment->limite_periodo == 9)
-													{{ 'Septiembre' }}
-												 @elseif($sendalertpayment->limite_periodo == 10)
-													{{ 'Octubre' }}
-												 @elseif($sendalertpayment->limite_periodo == 11)
-													{{ 'Noviembre' }}
-												 @elseif($sendalertpayment->limite_periodo == 12)
-													{{ 'Diciembre' }}
-												 @endif
-													{{ $sendalertpayment->limite_gestion }}</strong></span>
+											<td class="text-right">Al periodo:&nbsp;&nbsp;<span><strong>{{nombremes($sendalertpayment->limite_periodo)}} {{ $sendalertpayment->limite_gestion }}</strong></span>
 											</td>
 										</tr>
 									</table>

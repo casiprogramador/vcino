@@ -210,5 +210,6 @@ function ordenarPeriodoGestion($periodos,$gestiones){
 	return implode(' ', $periodo_gestiones);
 }
 
-
-
+function selected( $value, $old ){
+	return ($old == $value)? 'selected' : '';
+}

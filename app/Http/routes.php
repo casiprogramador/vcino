@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+	if (Auth::check()) {
+		$this->redirectTo = '/admin';
+	}
     return redirect('/login');
 });
 
