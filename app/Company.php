@@ -80,4 +80,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Document');
     }
+	
+	public function usermobile()
+    {
+        return $this->belongsTo('App\UserMobile');
+    }
 }

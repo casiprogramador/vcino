@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(BankTableSeeder::class);
+        /*$this->call(BankTableSeeder::class);
 		$this->call(ElectricServiceSeeder::class);
 		$this->call(InternetServiceSeeder::class);
 		$this->call(PhoneServiceSeeder::class);
@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
 		$this->call(WaterServiceSeeder::class);
 		$this->call(RelationContactSeeder::class);
 		$this->call(TypeContactSeeder::class);
-		$this->call(MediaSeeder::class);	
+		$this->call(MediaSeeder::class);*/
+		
+		factory(App\UserMobile::class)->create();
     }
 }

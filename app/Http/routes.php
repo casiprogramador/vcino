@@ -10,7 +10,22 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('testmobile', function () {
+        $user = \Auth::guard('api')->user();
+        return $user;
+    });
+});
 
+//Login Movile Routes
+Route::group(['middleware' => ['api'],'prefix' => 'api'], function () {
+    Route::post('register', 'APIController@register');
+    Route::post('login', 'APIController@login');
+    Route::group(['middleware' => 'jwt-auth'], function () {
+    	Route::post('get_user_details', 'APIController@get_user_details');
+    });
+});
+	
 Route::get('/', function () {
 	if (Auth::check()) {
 		$this->redirectTo = '/admin';
@@ -24,6 +39,7 @@ Route::post('administrator', 'SuperadminController@login');
 Route::post('administrator/home', 'SuperadminController@home');
 Route::get('/home', 'HomeController@index');
 Route::resource('company', 'CompanyController');
+Route::resource('movil', 'MovilController');
 Route::group(['prefix' => 'config'], function () {
     Route::resource('account', 'AccountController');
     Route::resource('category', 'CategoryController');

@@ -43,7 +43,7 @@ return [
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'users_mobile',
         ],
     ],
 
@@ -68,6 +68,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+		'users_mobile' => [
+            'driver' => 'eloquent',
+            'model' => App\UserMobile::class,
         ],
 
         // 'users' => [

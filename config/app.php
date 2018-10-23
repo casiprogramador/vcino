@@ -164,7 +164,7 @@ return [
 		\InfyOm\CoreTemplates\CoreTemplatesServiceProvider::class, 
 		Barryvdh\DomPDF\ServiceProvider::class,
 		'Maatwebsite\Excel\ExcelServiceProvider',
-
+		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 		
 
     ],
@@ -220,7 +220,7 @@ return [
 		'Flash'     => Laracasts\Flash\Flash::class,
 		'PDF' => Barryvdh\DomPDF\Facade::class,
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
-
+		'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth'
     ],
 
 ];

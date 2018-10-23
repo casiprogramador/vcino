@@ -75,4 +75,9 @@ class Property extends Model
     {
         return $this->hasMany('App\TaskReservation');
     }
+	
+	public function usermobile()
+    {
+        return $this->belongsTo('App\UserMobile');
+    }
 }
