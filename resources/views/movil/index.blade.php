@@ -45,67 +45,42 @@
                             </tr>
                         </thead>
                         <tbody>
+							@foreach ($users as $user)
                             <tr>
-                                <td>3 AB</td>
-                                <td>Juan Perez Rivera</td>
-                                <td><i class="fa fa-android"></i></td>
-                                <td>767-09878</td>
-                                <td><a href="mailto:juanperez@gmail.com">juanperez@gmail.com</a></td>
+                                <td>{{ $user->property->nro }}</td>
+                                <td>{{ $user->nombre }} {{ $user->apellido }}</td>
                                 <td>
-                                    <span class="label label-primary" style="font-size: 10px; background-color: #5CBD7E">&nbsp;&nbsp;&nbsp;&nbsp;ACTIVO&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									@if($user->sistema == 'android')
+									<i class="fa fa-android"></i>
+									@elseif($user->sistema == 'ios')
+									<i class="fa fa-apple"></i>
+									@endif
+								</td>
+                                <td>{{ $user->nro_movil }} </td>
+                                <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
+                                <td>
+									@if($user->estado == 1)
+									<span class="label label-primary" style="font-size: 10px; background-color: #5CBD7E">&nbsp;&nbsp;&nbsp;&nbsp;ACTIVO&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									@elseif($user->estado == 0 )
+									<span class="label label-warning" style="font-size: 10px; background-color: #F7B77B;">&nbsp;&nbsp;INACTIVO&nbsp;&nbsp;</span>
+									@elseif($user->estado == 2 )
+									<span class="label label-danger" style="font-size: 10px;">ELIMINADO</span>
+									@endif
+                                    
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver usuario móvil">
+                                        <a  class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver usuario móvil">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar usuario">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>3 AB</td>
-                                <td>Maria Fernandez de Perez</td>
-                                <td><i class="fa fa-apple"></i></td>
-                                <td>773-98987</td>
-                                <td><a href="mailto:mariaperez@gmail.com">mariaperez@gmail.com</a></td>
-                                <td>
-                                    <span class="label label-warning" style="font-size: 10px; background-color: #F7B77B;">&nbsp;&nbsp;INACTIVO&nbsp;&nbsp;</span>
-                                </td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </div>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>4 B</td>
-                                <td>Mario Jimenez Rueda</td>
-                                <td></td>
-                                <td>722-81223</td>
-                                <td><a href="mailto:mariojimenez@hotmail.com">mariojimenez@hotmail.com</a></td>
-                                <td>
-                                    <span class="label label-danger" style="font-size: 10px;">ELIMINADO</span>
-                                </td>
-                                <td style="vertical-align:middle; text-align:right;">
-                                    <div class="btn-group">
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                                        <a href="{{ route('movil.edit', $user->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar usuario">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>
                                </td>
                             </tr>
 
+							@endforeach
                         </tbody>
                     </table>
                 </div>

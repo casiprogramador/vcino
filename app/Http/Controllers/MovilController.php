@@ -19,7 +19,9 @@ class MovilController extends Controller
      */
     public function index()
     {
-         return view('movil.index');
+		$company = Auth::user()->company;
+        $users = UserMobile::where('company_id',$company->id );
+        return view('movil.index')->with('users',$users->get());
     }
 
     /**
@@ -97,7 +99,14 @@ class MovilController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
+		$typecontacts = Typecontact::all()->lists('nombre','id');
+		$user = UserMobile::find($id);
+        return view('movil.edit')
+		->with('properties',$properties)
+		->with('typecontacts',$typecontacts)
+		->with('user',$user);
     }
 
     /**
@@ -109,7 +118,7 @@ class MovilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**
