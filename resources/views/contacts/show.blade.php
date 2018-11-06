@@ -159,18 +159,43 @@
 
                                     <div class="hr-line-dashed"></div>
 
-                                    <div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
-                                        <label class="col-sm-3 control-label">Fotografía</label>
-                                        <div class="col-sm-8">
-                                            <label title="Upload image file" for="inputImage" >
-												@if(empty($contact->fotografia))
-													<img src="{{ URL::asset('img/system/user150.png')}}" class="img-thumbnail" width="100" />
-												@else
-													<img src="{{asset($contact->fotografia)}}" class="img-thumbnail" width="150" />	
-												@endif
-                                            </label>
+                                    <div class="form-group{{ $errors->has('media') ? ' has-error' : '' }}">
+                                        <label class="col-sm-3 control-label">Medio preferido contacto</label>
+                                        <div class="col-sm-3">
+                                            {{ Form::select('media',$medias, $contact->media_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
+                                            @if ($errors->has('media'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('media') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
+
+                                    <div class="form-group{{ $errors->has('correspondencia') ? ' has-error' : '' }}">
+                                        <label class="col-sm-3 control-label">Correspondencia</label>
+                                        <div class="col-sm-3">
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                            <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Comunicados</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Cobranzas</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Directorio</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Miembro Directorio</label>
+                                        <div class="col-sm-4">
+                                            <label><input type="checkbox" class="i-checks" name="miembro_directorio" value="1" {{ ($contact->miembro_directorio == 1) ? 'checked' : '' }} disabled="disabled"></label>
+                                        </div>
+                                    </div>
+
                                     <div class="hr-line-dashed"></div>
 
                                     <div class="form-group">
@@ -188,46 +213,21 @@
                                     </div>
 
                                     <div class="hr-line-dashed"></div>
-
-                                    <div class="form-group{{ $errors->has('correspondencia') ? ' has-error' : '' }}">
-                                        <label class="col-sm-3 control-label">Correspondencia</label>
-                                        <div class="col-sm-3">
-                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
-											<input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados" {{ (in_array('Comunicados',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Comunicados</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas" {{ (in_array('Cobranzas',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Cobranzas</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio" {{ (in_array('Directorio',explode(',',$contact->correspondencia))) ? 'checked' : '' }} disabled="disabled">&nbsp;&nbsp;Directorio</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group{{ $errors->has('media') ? ' has-error' : '' }}">
-                                        <label class="col-sm-3 control-label">Medio preferido</label>
-                                        <div class="col-sm-3">
-                                            {{ Form::select('media',$medias, $contact->media_id, ['class' => 'form-control input-sm','disabled'=>'disabled']) }}
-											@if ($errors->has('media'))
-												<span class="help-block">
-													<strong>{{ $errors->first('media') }}</strong>
-												</span>
-											@endif
-                                        </div>
-                                    </div>
-
-                                    <div class="hr-line-dashed"></div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Miembro Directorio</label>
-                                        <div class="col-sm-4">
-                                            <label><input type="checkbox" class="i-checks" name="miembro_directorio" value="1" {{ ($contact->miembro_directorio == 1) ? 'checked' : '' }} disabled="disabled"></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="hr-line-dashed"></div>
                                     
+                                    <div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
+                                        <label class="col-sm-3 control-label">Fotografía</label>
+                                        <div class="col-sm-8">
+                                            <label title="Upload image file" for="inputImage" >
+                                                @if(empty($contact->fotografia))
+                                                    <img src="{{ URL::asset('img/system/user150.png')}}" class="img-thumbnail" width="100" />
+                                                @else
+                                                    <img src="{{asset($contact->fotografia)}}" class="img-thumbnail" width="150" /> 
+                                                @endif
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
                                     <!--
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Mostrar mis datos</label>

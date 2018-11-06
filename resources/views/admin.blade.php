@@ -15,67 +15,55 @@
     </div>
     -->
 
-    <div class="row">
+    <div class="row" style="margin-bottom: 25px;">
 
         <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="pull-right"></span>
-                    <h5><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>Cuotas por cobrar</h5>
+            <div class="col-md-3" style="background-color: #1A7CC0; border: 1px solid #1A7CC0; min-height: 108px;">
+            	<img class="richi" src="img/system/ico_cxc.png" style="width: 40px;" />
+            </div>
+            <div class="col-md-9" style="background-color: #FFFFFF; border: 1px solid #e7eaec;">
+                <h4 style="color: #1A7CC0; padding: 14px 0 10px 0">Cuotas por cobrar</h4>
+                <div class="col-md-6" style="padding-left: 0; padding-bottom: 14px">
+                    <h2 class="no-margins" style="font-size: 19px;">{{ number_format($cuotas_cobrar_box['mes_cobrar'], 2, ',', '.') }}</h2>
+                    <div class="text-navy" style="color: #91A5BC;"><small>{{ nombremes($mes_actual) }}</small></div>
                 </div>
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2 class="no-margins">{{ $cuotas_cobrar_box['mes_cobrar'] }}</h2>
-                            <div class="text-navy" style="color: #1A7CC0;"><small>{{ nombremes($mes_actual) }}</small></div>
-                        </div>
-                        <div class="col-md-6">
-                            <h2 class="no-margins">{{ $cuotas_cobrar_box['total_cobrar'] }}</h2>
-                            <div class="text-navy" style="color: #1A7CC0;"><small>Total acumulado</small></div>
-                        </div>
-                    </div>
+                <div class="col-md-6" style="padding-left: 0;">
+                    <h2 class="no-margins" style="font-size: 19px;">{{ number_format($cuotas_cobrar_box['total_cobrar'], 2, ',', '.') }}</h2>
+                    <div class="text-navy" style="color: #91A5BC;"><small>Total</small></div>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="pull-right"></span>
-                    <h5><i class="fa fa-plus-circle" aria-hidden="true">&nbsp;&nbsp;</i>Ingresos</h5>
+            <div class="col-md-3" style="background-color: #32B0CE; border: 1px solid #32B0CE; min-height: 108px;">
+                <img class="richi" src="img/system/ico_income.png" style="width: 40px;" />
+            </div>
+            <div class="col-md-9" style="background-color: #FFFFFF; border: 1px solid #e7eaec;">
+                <h4 style="color: #32B0CE; padding: 14px 0 10px 0">Ingresos</h4>
+                <div class="col-md-6" style="padding-left: 0; padding-bottom: 14px">
+                    <h2 class="no-margins" style="font-size: 19px;">{{ number_format($ingresos_box['mes_actual_ingreso'], 2, ',', '.') }}</h2>
+                    <div class="text-navy" style="color: #91A5BC;"><small>{{ nombremes(date('m')) }}</small></div>
                 </div>
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2 class="no-margins">{{ $ingresos_box['mes_actual_ingreso'] }}</h2>
-                            <div class="text-navy" style="color: #1A7CC0;"><small>{{ nombremes($mes_actual) }}  (A la fecha)</small></div>
-                        </div>
-                        <div class="col-md-6">
-                            <h2 class="no-margins">{{ $ingresos_box['mes_anterior_ingreso'] }}</h2>
-                            <div class="text-navy" style="color: #1A7CC0;"><small>{{ nombremes($mes_anterior) }} </small></div>
-                        </div>
-                    </div>
+                <div class="col-md-6" style="padding-left: 0;">
+                    <h2 class="no-margins" style="font-size: 19px;">{{ number_format($ingresos_box['mes_anterior_ingreso'], 2, ',', '.') }}</h2>
+                    <div class="text-navy" style="color: #91A5BC;"><small>{{ nombremes($mes_anterior_real) }}</small></div>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="pull-right"></span>
-                    <h5><i class="fa fa-minus-circle" aria-hidden="true">&nbsp;&nbsp;</i>Gastos</h5>
+            <div class="col-md-3" style="background-color: #EDB527; border: 1px solid #EDB527; min-height: 108px;">
+                <img class="richi" src="img/system/ico_expense.png" style="width: 40px;" />
+            </div>
+            <div class="col-md-9" style="background-color: #FFFFFF; border: 1px solid #e7eaec;">
+                <h4 style="color: #EDB527; padding: 14px 0 10px 0">Gastos</h4>
+                <div class="col-md-6" style="padding-left: 0; padding-bottom: 14px">
+                    <h2 class="no-margins" style="font-size: 19px;">{{ number_format($gastos_box['mes_actual_gastos'], 2, ',', '.') }}</h2>
+                    <div class="text-navy" style="color: #91A5BC;"><small>{{ nombremes(date('m')) }}</small></div>
                 </div>
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2 class="no-margins">{{ $gastos_box['mes_actual_gastos'] }}</h2>
-                            <div class="text-navy" style="color: #e88b51;"><small>{{ nombremes($mes_actual) }} (A la fecha)</small></div>
-                        </div>
-                        <div class="col-md-6">
-                            <h2 class="no-margins">{{ $gastos_box['mes_anterior_gastos'] }}</h2>
-                            <div class="text-navy" style="color: #e88b51;"><small>{{ nombremes($mes_anterior) }}</small></div>
-                        </div>
-                    </div>
+                <div class="col-md-6" style="padding-left: 0;">
+                    <h2 class="no-margins" style="font-size: 19px;">{{ number_format($gastos_box['mes_anterior_gastos'], 2, ',', '.') }}</h2>
+                    <div class="text-navy" style="color: #91A5BC;"><small>{{ nombremes($mes_anterior_real) }}</small></div>
                 </div>
             </div>
         </div>
@@ -83,7 +71,8 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
+            
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Cobranza correspondiente a: {{ nombremes($mes_actual) }} <small>(Comparativo mes anterior)</small></h5>
@@ -93,83 +82,71 @@
                         <canvas id="barChart" height="60"></canvas>
 						<input  id ="cobranzas-mes-actual" type="hidden" value="{{$cobranzas_mes_actual}}"> 
 						<input  id ="cobranzas-mes-anterior" type="hidden" value="{{$cobranza_mes_anterior}}">
-						<input  id ="nombre-mes-actual" type="hidden" value="{{nombremes($mes_actual)}}"> 
-						<input  id ="nombre-mes-anterior" type="hidden" value="{{nombremes($mes_anterior)}}"> 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Gastos: {{nombremes(date('m'))}}</h5>
-                        </div>
-                        <div class="ibox-content">
-                            @if (($gastos_torta_nombre <> '[]') && ($gastos_torta_importe <> '[]'))
-                            <div>
-                                <canvas id="doughnutChart" height="120"></canvas>
-								<input  id ="nombres-gastos-torta" type="hidden" value="{{$gastos_torta_nombre}}">
-								<input  id ="importes-gastos-torta" type="hidden" value="{{$gastos_torta_importe}}">
-								<input  id ="colores-gastos-torta" type="hidden" value="{{$gastos_torta_color}}">
-                            </div>
-                            @else
-                                <p>No se encontraron gastos para el mes de <b>{{ strtolower(nombremes(date('m'))) }}</b>.</p>
-                            @endif
-                        </div>
+						<input  id ="nombre-mes-actual" type="hidden" value="Ingresos {{nombremes(date('m'))}}"> 
+						<input  id ="nombre-mes-anterior" type="hidden" value="Ingresos {{nombremes($mes_anterior_real)}}"> 
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Últimas transacciones</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="vertical-align:bottom">Fecha</th>
-                                            <th style="vertical-align:bottom">Nro. Documento</th>
-                                            <th style="vertical-align:bottom">Tipo</th>
-                                            <th style="vertical-align:bottom">Beneficiario</th>
-                                            <th style="vertical-align:bottom">Concepto</th>
-                                            <th style="vertical-align:bottom" class="text-right">Importe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-										@for ($i = 0; $i < count($transacciones); $i++)
-                                        <tr>
-                                            <td>{{$transacciones[$i][0]}}</td>
-                                            <td>{{$transacciones[$i][1]}}</td>
-                                            <td>{{$transacciones[$i][2]}}</td>
-                                            <td>{{$transacciones[$i][3]}}</td>
-                                            <td>{{$transacciones[$i][4]}}</td>
-                                            <td class="text-right">{{$transacciones[$i][5]}}</td>
-                                        </tr>
-										@endfor
-                                    </tbody>
-                                </table>
-                            </div>
-                            <a href="{{ route('transaction.transfer.index') }}" class="btn btn-default btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas las transacciones</a>
-                        </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Gastos correspondientes a: {{nombremes(date('m'))}}</h5>
+                </div>
+                <div class="ibox-content">
+                    @if (($gastos_torta_nombre <> '[]') && ($gastos_torta_importe <> '[]'))
+                    <div>
+                        <canvas id="doughnutChart" height="120"></canvas>
+                        <input  id ="nombres-gastos-torta" type="hidden" value="{{$gastos_torta_nombre}}">
+                        <input  id ="importes-gastos-torta" type="hidden" value="{{$gastos_torta_importe}}">
+                        <input  id ="colores-gastos-torta" type="hidden" value="{{$gastos_torta_color}}">
                     </div>
+                    @else
+                        <p>No se encontraron gastos para el mes de <b>{{ strtolower(nombremes(date('m'))) }}</b>.</p>
+                    @endif
                 </div>
             </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Últimas transacciones</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align:bottom">Fecha</th>
+                                    <th style="vertical-align:bottom">Nro. Documento</th>
+                                    <th style="vertical-align:bottom">Tipo</th>
+                                    <th style="vertical-align:bottom">Beneficiario</th>
+                                    <th style="vertical-align:bottom">Concepto</th>
+                                    <th style="vertical-align:bottom" class="text-right">Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for ($i = 0; $i < count($transacciones); $i++)
+                                <tr>
+                                    <td>{{$transacciones[$i][0]}}</td>
+                                    <td>{{$transacciones[$i][1]}}</td>
+                                    <td>{{$transacciones[$i][2]}}</td>
+                                    <td>{{$transacciones[$i][3]}}</td>
+                                    <td>{{$transacciones[$i][4]}}</td>
+                                    <td class="text-right">{{ number_format($transacciones[$i][5], 2, ',', '.') }}</td>
+                                </tr>
+                                @endfor
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="{{ route('transaction.transfer.index') }}" class="btn btn-default btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas las transacciones</a>
+                </div>
+            </div>
+
         </div>
 
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Solicitudes & tareas</h5>
+                    <h5>Tareas & Solicitudes</h5>
                     <div class="ibox-tools">
                         <!--
                         <span class="label label-success pull-right">2 Mensajes nuevos</span>
@@ -180,7 +157,7 @@
                     <div>
                         @if ( $tasks_count > 0 )
                         <div class="feed-activity-list">
-							@foreach($tasks as $task)
+                            @foreach($tasks as $task)
                             <div class="feed-element">
                                 <p class="pull-left">
                                     <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" >
@@ -213,64 +190,58 @@
                                     
                                     <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" style="font-size: 14px;" >{{ $task->titulo_tarea }}</a>
                                     <br>
-                                
-                                    <!--
-                                    @if($task->estado_solicitud == 'pendiente')
-                                       <i style="color: #F7B77B;" class="fa fa-circle" aria-hidden="true"></i>
-                                    @else
-                                        <i style="color: #5D96CC;" class="fa fa-circle" aria-hidden="true"></i>
+                                    
+                                    @if($task->prioridad == 'alta')
+                                       <i style="color: #ed5565;" class="fa fa-circle" aria-hidden="true"></i>
                                     @endif
-                                    -->
+
+                                    @if($task->estado_solicitud == 'pendiente')
+                                       <i style="color: #F7B77B;" class="fa fa-clock-o" aria-hidden="true"></i>
+                                    @endif
 
                                     <small class="text-muted">
                                     @if($task->tipo_tarea == 'mis_tareas')
                                         MIS TAREAS
 
-    								@elseif($task->tipo_tarea =='solicitudes_recibidas')
-    									SOLICITUDES RECIBIDAS
+                                    @elseif($task->tipo_tarea =='solicitudes_recibidas')
+                                        SOLICITUDES RECIBIDAS
 
-    								@elseif($task->tipo_tarea =='reserva_instalaciones')
-    									RESERVA DE INSTALACION
+                                    @elseif($task->tipo_tarea =='reserva_instalaciones')
+                                        RESERVA DE INSTALACION
 
-    								@elseif($task->tipo_tarea =='reclamos')
-    									RECLAMOS
+                                    @elseif($task->tipo_tarea =='reclamos')
+                                        RECLAMOS
 
-    								@elseif($task->tipo_tarea =='sugerencias')
-    									SUGERENCIAS
+                                    @elseif($task->tipo_tarea =='sugerencias')
+                                        SUGERENCIAS
 
-    								@elseif($task->tipo_tarea =='notificacion_mudanza')
-    									NOTIFICACION DE MUDANZA
+                                    @elseif($task->tipo_tarea =='notificacion_mudanza')
+                                        NOTIFICACION DE MUDANZA
 
-    								@elseif($task->tipo_tarea =='notificacion_trabajos')
-    									NOTIFICACION DE TRABAJO
+                                    @elseif($task->tipo_tarea =='notificacion_trabajos')
+                                        NOTIFICACION DE TRABAJO
 
-    								@endif
+                                    @endif
                                     </small>
 
-                                    <!--
-                                    <div class="actions">
-                                        <a href="{{ route('taskrequest.task.show', Crypt::encrypt($task->id)) }}" class="btn btn-xs btn-white">Ver solicitud</a>
-                                    </div>
-                                    -->
                                 </div>
                             </div>
                             @endforeach
                         </div>
-                        <a href="{{ route('taskrequest.task.index')}}" class="btn btn-success btn-block m-t">
+                        <a href="{{ route('taskrequest.task.index')}}" class="btn btn-default btn-block m-t">
                         <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todas</a>
                         @else
-                            <p>No se encontraron solicitudes o tareas pendientes.</p>
+                            <p>No se encontraron tareas o solicitudes pendientes.</p>
 
                             <a href="{{ route('taskrequest.task.create') }}" class="btn btn-default btn-block m-t">
-                            <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Nueva tarea</a>
+                            <i class="fa fa-file-o"></i>&nbsp;&nbsp;&nbsp;Nueva tarea</a>
                         @endif
                     </div>
 
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4">
+
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Planes de mantenimiento</h5>
@@ -292,15 +263,16 @@
                         </div>
                         @endforeach
                     </div>
-                    <a href="{{ route('equipment.maintenanceplan.index') }}" class="btn btn-success btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todos</a>
+                    <a href="{{ route('equipment.maintenanceplan.index') }}" class="btn btn-default btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Ver todos</a>
                     @else
                         <p>No se encontraron planes de mantenimiento.</p>
-                        <p>Los planes de mantenimiento permiten organizar adecuadamente la realización de mantenimiento preventivo a cada uno de los equipos con los que cuenta el condominio.</p>
+                        <p>Los planes de mantenimiento permiten organizar el mantenimiento preventivo de cada uno de los equipos instalados en el condominio.</p>
 
-                        <a href="{{ route('equipment.maintenanceplan.create') }}" class="btn btn-default btn-block m-t"><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Nuevo plan de mantenimiento</a>
+                        <a href="{{ route('equipment.maintenanceplan.create') }}" class="btn btn-default btn-block m-t"><i class="fa fa-file-o"></i>&nbsp;&nbsp;&nbsp;Nuevo plan de mantenimiento</a>
                     @endif
                 </div>
             </div>
+
         </div>
 
     </div>
@@ -311,6 +283,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}" />
 @endsection
 
 @section('javascript')
@@ -332,14 +305,14 @@ $(function () {
         datasets: [
             {
                 label: nombre_mes_anterior,
-                backgroundColor: 'rgba(144, 191 , 225, 0.6)',
+                backgroundColor: 'rgba(144, 191 , 225, 0.5)',
                 borderColor: 'rgba(144, 191 , 225, 0)',
                 data: mes_cobranza_anterior
             },
             {
                 label: nombre_mes_actual,
-                backgroundColor: 'rgba(224, 111, 39, 0.6)',
-                borderColor: "rgba(224, 111, 39, 0)",
+                backgroundColor: 'rgba(50, 176, 206, 0.9)',
+                borderColor: "rgba(50, 176, 206, 0)",
                 data: mes_cobranza_actual
             }
         ]

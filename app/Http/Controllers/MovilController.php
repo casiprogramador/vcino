@@ -88,7 +88,14 @@ class MovilController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = Auth::user()->company;
+		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id');
+		$typecontacts = Typecontact::all()->lists('nombre','id');
+		$user = UserMobile::find($id);
+        return view('movil.show')
+		->with('properties',$properties)
+		->with('typecontacts',$typecontacts)
+		->with('user',$user);
     }
 
     /**
@@ -118,7 +125,34 @@ class MovilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+		$this->validate($request, [
+            'nombre' => 'required',
+            'apellido' => 'required',
+			'nro_mobile'=> 'required|integer',
+			'email'=> 'required',
+			'sistema'=> 'required',
+			'estado'=> 'required',
+			//'password'=> 'required|min:6|confirmed',
+			'typecontact' => 'required|not_in:0',
+			'property' => 'required|not_in:0',
+        ]);
+		
+		$company = Auth::user()->company;
+
+        $userMobile = UserMobile::find($id);
+        $userMobile->nombre = $request->nombre;
+		$userMobile->apellido = $request->apellido;
+		$userMobile->nro_movil = $request->nro_mobile;
+		$userMobile->email = $request->email;
+		//$userMobile->password = bcrypt($request->password);
+		$userMobile->sistema= $request->sistema;
+		$userMobile->estado = $request->estado;
+
+		$userMobile->property_id = $request->property;
+		$userMobile->typecontact_id = $request->typecontact;
+		$userMobile->save();
+		Session::flash('message', 'Usuario actualizado correctamente.');
+		return redirect()->route('movil.index');
     }
 
     /**
@@ -129,6 +163,6 @@ class MovilController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

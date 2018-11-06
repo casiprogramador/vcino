@@ -35,7 +35,7 @@
                     <h5 style="padding-top: 7px;">Plan de mantenimiento</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px; padding-right: 5px;">
                         <div class="btn-group">
-							<a href="{{ route('equipment.maintenanceplan.create') }}" class="btn btn-sm btn-success" style="color: white;"">Nuevo</a>
+							<a href="{{ route('equipment.maintenanceplan.create') }}" class="btn btn-sm btn-default">Nuevo</a>
                         </div>
                     </div>
                 </div>

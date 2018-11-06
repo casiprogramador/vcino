@@ -125,7 +125,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Importe por cobrar</label>
                             <div class="col-sm-2{{ $errors->has('importe_por_cobrar') ? ' has-error' : '' }}">
-                                <input name="importe_por_cobrar" type="text" class="form-control input-sm" value="{{ $accountsreceivable->importe_por_cobrar }}" readonly>
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color: #CCC; border: 1px solid #CCC;">Bs.</span>
+                                    <input name="importe_por_cobrar" type="text" class="form-control input-sm" value="{{ $accountsreceivable->importe_por_cobrar }}" readonly>
+                                </div>
 								@if ($errors->has('importe_por_cobrar'))
 								<span class="help-block">
 									<strong>{{ $errors->first('importe_por_cobrar') }}</strong>

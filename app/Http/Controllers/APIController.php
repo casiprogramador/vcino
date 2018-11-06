@@ -30,6 +30,7 @@ class APIController extends Controller
     {
     	$input = $request->all();
     	$user = JWTAuth::toUser($input['token']);
+		//return response()->json(['result' => $user->property]);
         return response()->json(['result' => $user]);
     }
     

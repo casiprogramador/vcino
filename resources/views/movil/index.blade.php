@@ -70,7 +70,7 @@
                                 </td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
-                                        <a  class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver usuario móvil">
+                                        <a href="{{ route('movil.show', $user->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver usuario móvil">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a href="{{ route('movil.edit', $user->id) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Editar usuario">

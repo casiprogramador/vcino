@@ -115,7 +115,7 @@
 
 													<tr style="font-size: 14px;">
 														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
-														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($expense->transaction->importe_debito, 2, ',', '.') }}</td>
+														<td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-size: 14px; font-weight: 700; text-align: right; padding: 3px 0;">{{ number_format($expense->transaction->importe_debito, 2, ',', '.') }}</td>
 													</tr>
 												</table>
 											</td>
@@ -128,25 +128,23 @@
 									</table>
 								</div>
 
-								<div class="row">
-									<table width="100%">
+								<div class="row" style="padding-top: 10px;">
+									<table style="margin: 10px auto; text-align: left; width: 90%; font-size: 13px;">
 										<tr>
-											<td width="10%"></td>
-											<td width="20%">
+											<td width="25%">
 												<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
                                         		<span style="font-size: 10px;">Recibí conforme<br/>&nbsp;</span>
 											</td>
-											<td width="10%"></td>
-											<td width="20%">
+											<td width="12%"></td>
+											<td width="25%">
 												<div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
                                         		<span style="font-size: 10px;">Vo. Bo. Tesorero<br/>&nbsp;</span>
 											</td>
-											<td width="10%"></td>
-											<td width="20%">
+											<td width="13%"></td>
+											<td width="25%">
 												 <div class="hr-line-solid" style="margin-bottom: 1px; border-top: 1px solid #A4A4A4;"></div>
                                         <span style="font-size: 10px;">Entregue conforme<br>Administración</span>
 											</td>
-											<td width="10%"></td>
 										</tr>
 									</table>
 								</div>
@@ -158,7 +156,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<button class="btn btn-success" id="printButton" style="margin-right: 10px;">
-											<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir</button>
+											<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...</button>
 										<!--
 										<a href="{{ route('transaction.expense.pdf', $expense->id) }}" class="btn btn-default" style="margin-right: 10px">
 											<i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Exportar</a>
@@ -191,7 +189,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<input type="hidden" name="id_expense" value="{{$expense->id}}">
-											<button class="btn btn-danger" type="submit" onclick="return confirm('¿Está seguro de anular el registro?')">
+											<button class="btn btn-danger" type="submit" onclick="return confirm('¿Está seguro de anular el recibo?')">
 												<i class="fa fa-trash"></i>&nbsp;&nbsp;Anular...</button>
 										</div>
 									</div>
@@ -206,8 +204,12 @@
     </div>
 </div>
 
-
 @endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
+@endsection
+
 @section('javascript')
 <script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>

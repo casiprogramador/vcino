@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Directorio de documentos</h2>
+        <h2>Documentos de interés</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Comunicación & Información
             </li>
             <li class="active">
-                <strong>Directorio de documentos</strong>
+                <strong>Documentos de interés</strong>
             </li>
         </ol>
     </div>
@@ -32,10 +32,10 @@
                 @endif
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Documentos</h5>
+                    <h5 style="padding-top: 7px;">Documentos de interés</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px; padding-right: 5px;">
                         <div class="btn-group">
-                            <a href="{{ route('communication.document.create') }}" class="btn btn-sm btn-success" style="color: white;">Subir documento</a>
+                            <a href="{{ route('communication.document.create') }}" class="btn btn-sm btn-default">Nuevo documento</a>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
 								
                                 <td style="vertical-align: middle; text-align: center; padding: 0;">
                                     <div class="icon" style="padding: 15px 0px; width: 110px; background-color: white; border-left: 1px #E8E8E8 solid; border-right: 1px #E8E8E8 solid;">
-										@if($document->type == 'jpg' || $document->type == 'png')
+										@if($document->type == 'jpg' || $document->type == 'png' || $document->type == 'jpeg')
 
 										<img src="{{ URL::asset($document->archivo)}}" width="110" alt="image" class="img-responsive">
 										

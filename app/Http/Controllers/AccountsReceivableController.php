@@ -552,7 +552,7 @@ class AccountsReceivableController extends Controller
 		}
 		
 		
-		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->lists('cuota','id')->all();
+		$quotas = Quota::where('company_id',$company->id )->where('activa',1 )->orderBy('cuota', 'asc')->lists('cuota','id')->all();
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
 		$gestiones = Gestion::lists('nombre','nombre')->all();
 

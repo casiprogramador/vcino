@@ -234,7 +234,7 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear usuario</button>
-                            <a href="#" class="btn btn-white" type="submit">Cancelar</a>
+                            <a href="{{ route('movil.index') }}" class="btn btn-white" type="submit">Cancelar</a>
                         </div>
                     </div>
                     {!! Form::close() !!}

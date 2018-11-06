@@ -28,9 +28,11 @@ class ReportHistoricoTransaccionesController extends Controller
 
 		$company = Auth::user()->company;
 		$gestiones = Gestion::lists('nombre','nombre')->all();
-		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
-		$categories = Category::where('company_id',$company->id )->lists('nombre','id')->all();
-		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->lists('razon_social','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();
+		//$categories = Category::where('company_id',$company->id )->orderBy('tipo_categoria', 'asc')->orderBy('nombre', 'asc')->lists('nombre','id')->all();
+		$categories = Category::select('id', DB::raw("CONCAT(nombre, ' (', tipo_categoria, ')') as full"))->where('company_id',$company->id )->lists('full','id')->all();
+		//dd($categories);
+		$suppliers = Supplier::where('company_id',$company->id )->where('activa',1)->orderBy('razon_social', 'asc')->lists('razon_social','id')->all();
 		$properties = Property::where('company_id',$company->id )->orderBy('orden', 'asc')->lists('nro','id')->all();
 		return view('reports.historico.historico')
 				->with('gestiones',$gestiones)
@@ -560,7 +562,7 @@ class ReportHistoricoTransaccionesController extends Controller
 			foreach ($resultado as $egreso) {
 			   $fecha = date_format(date_create($egreso->fecha_pago),'d/m/Y');
 			   $nro_documento = str_pad($egreso->nro_documento, 6, "0", STR_PAD_LEFT);
-			   $array_egreso = array($fecha,$nro_documento,$egreso->razon_social,$egreso->concepto,$egreso->nombre,$egreso->forma_pago,$egreso->importe_debito);
+			   $array_egreso = array($fecha,$nro_documento,$egreso->razon_social,$egreso->concepto,$egreso->nombre,$egreso->forma_pago,$egreso->importe_debito,$egreso->numero_forma_pago);
 			   array_push($array_categorias, $array_egreso);
 			   $importe_total=$importe_total+$egreso->importe_debito;
 			}

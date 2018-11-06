@@ -103,7 +103,7 @@
 							</div>
 						</div>
 						<div id="panel-cuotas-cobrar-vacio">
-							<h4 style="font-weight: normal;">No existen gastos para esta categoría. Por favor presione <b>Siguiente</b> para continuar.</h4>
+							<h4 style="font-weight: normal;">Categoría sin gastos registrados hasta la fecha. Por favor presione el botón <b>Siguiente</b> para continuar.</h4>
 						</div>
 					</fieldset>
 					<h1>Importe y forma de pago</h1>
@@ -112,13 +112,14 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Fecha</label>
 								<div class="col-sm-4 input-group date">
-									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									<span class="input-group-addon" style="border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; border-left: 1px solid #CCC;"><i class="fa fa-calendar"></i></span>
 									<input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date('d/m/Y') }}" required>
 								</div>
 							</div>
 							<div class="form-group">
 								 <label class="col-sm-4 control-label">Importe</label>
 								<div class="col-sm-4 input-group">
+	                                <span class="input-group-addon" style="border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; border-left: 1px solid #CCC;">Bs.</span>
                                     <input type="text" class="form-control input-sm" name="importe" id="importe-input" >
 								</div>
 							</div>
@@ -131,7 +132,7 @@
 							<div class="form-group">
 								 <label class="col-sm-4 control-label">Forma de pago</label>
 								<div class="col-sm-8 input-group">
-										{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), old('forma_pago') , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
+										{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia' => 'Transferencia','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), old('forma_pago') , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
                                 </div>
 							</div>
 
@@ -332,7 +333,7 @@
 	} else if ($(this).val() == "deposito"){
 	$('#label-transaccion').text("Nro. Transacción");
 	$('#cont-forma-pago').show("slow");
-	} else if ($(this).val() == "transferencia bancaria"){
+	} else if ($(this).val() == "transferencia"){
 	$('#label-transaccion').text("Banco, Nro. Transacción");
 	$('#cont-forma-pago').show("slow");
 	} else if ($(this).val() == "tarjeta debito/credito"){

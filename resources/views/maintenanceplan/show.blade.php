@@ -15,7 +15,7 @@
                 <a href="{{ route('equipment.maintenanceplan.index') }}">Plan de mantenimiento</a>
             </li>
             <li class="active">
-                <strong>Ver</strong>
+                <strong>Ver plan de mantenimiento</strong>
             </li>
         </ol>
     </div>
@@ -72,7 +72,10 @@
                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Costo estimado</label>
                             <div class="col-sm-3">
-                                <input type="text" name="costo" class="form-control input-sm" value="{{$maintenanceplan->costo_estimado}}" disabled="disabled">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color: #CCC;">Bs.</span>
+                                    <input type="text" name="costo" class="form-control input-sm" value="{{$maintenanceplan->costo_estimado}}" disabled="disabled">
+                                </div>
 								@if ($errors->has('costo'))
 									<span class="help-block">
 										<strong>{{ $errors->first('costo') }}</strong>
@@ -83,6 +86,7 @@
 
                         <div class="hr-line-dashed"></div>
 						
+                        @if ($maintenanceplan->notas <> '')
 						<div class="form-group" id="nota">
 							<label class="col-sm-3 control-label">Notas</label>
 							<div class="col-sm-8" style="background-color: #EBEBEB; margin-left: 15px;">
@@ -92,6 +96,7 @@
 						</div>
 
                         <div class="hr-line-dashed"></div>
+                        @endif
                         
                         <div class="form-group">
                             <div class="col-sm-12">

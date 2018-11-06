@@ -35,7 +35,7 @@
                         <h5 style="padding-top: 7px;">Categorías</h5>
                         <div class="ibox-tools" style="padding-bottom: 7px;">
                             <div class="btn-group">
-                                <a href="{{ route('config.category.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva cuenta" style="margin-right: 10px;"> Nueva </a>
+                                <a href="{{ route('config.category.create') }}" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Nueva cuenta" data-original-title="Nueva categoría" style="margin-right: 10px;"> Nueva </a>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,6 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th style="vertical-align:bottom;"></th>
                                 <th style="vertical-align:bottom;">Categoría</th>
                                 <th style="vertical-align:bottom;">Tipo</th>
                                 <th style="vertical-align:bottom;">Clase</th>
@@ -55,7 +54,6 @@
                             @foreach ($categories as $category)
                                 @if($category->activa == 1)
                                     <tr>
-                                        <td style="vertical-align:middle"><img src="{{ $category->icono }}" width="30"></td>
                                         <td style="vertical-align:middle">{{ $category->nombre }}</td>
                                         <td style="vertical-align:middle">{{ $category->tipo_categoria }}</td>
                                         <td style="vertical-align:middle">{{ $category->clase }}</td>
@@ -73,7 +71,6 @@
                                     </tr>
                                 @else
                                     <tr>
-                                        <td style="vertical-align:middle"><img src="{{ $category->icono }}" width="28"></td>
                                         <td style="vertical-align:middle"><span class="text-muted">{{ $category->nombre }}</span></td>
                                         <td style="vertical-align:middle"><span class="text-muted">Egreso</span></td>
                                         <td style="vertical-align:middle"><span class="text-muted">Ordinaria</span></td>
@@ -140,7 +137,7 @@
                 },
                 "paging":   false,
                 "info":     false,
-                "columnDefs": [ { "width": "5%","orderable": false, "targets": 0 }, { "orderable": false, "targets": 4 }, { "orderable": false, "targets": 5 } ]
+                "columnDefs": [ { "orderable": false, "targets": 4 } ]
             });
         } );
     </script>

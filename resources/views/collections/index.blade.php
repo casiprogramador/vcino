@@ -10,7 +10,7 @@
                 <a href="{{ route('admin.home') }}">Inicio</a>
             </li>
             <li>
-                Transacciones
+                <a href="{{ route('transaction.transfer.index') }}">Transacciones</a>
             </li>
             <li class="active">
                 <strong>Cobranzas</strong>
@@ -29,7 +29,7 @@
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					Error en el envio de cobranza
+					Error en envío de cobranza.
 				</div>
 				@endif
 				@if(session('message') == "exito")
@@ -37,7 +37,7 @@
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					Cobranza enviada correctamente
+					Cobranza enviada correctamente.
 				</div>
 				@endif
 			@endif
@@ -63,6 +63,7 @@
                                 <th style="vertical-align:bottom">Cuenta</th>
                                 <th style="vertical-align:bottom; text-align: right;">Importe</th>
                                 <th style="vertical-align:bottom" width="70"></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,7 +80,8 @@
                                 <td style="text-align: right;">{{ number_format($collection->transaction->importe_credito, 2, ',', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <span class="label label-warning">ANULADA</span>
-                               </td>
+                                </td>
+                                <td>{{ $collection->transaction->notas }}</td>
                             </tr>
 							
 							@else
@@ -103,6 +105,7 @@
                                     </div>
                                    
                                </td>
+                                <td>{{ $collection->transaction->notas }}</td>
                             </tr>
 							
 							@endif
@@ -158,7 +161,7 @@
                 "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "Todos"] ],
                 "bLengthChange" : false,
                 "info":     false,
-                "columnDefs": [ { "orderable": false, "targets": 4 }, {"orderable": false, "targets": 7 } ]
+                "columnDefs": [ { "orderable": false, "targets": 4 }, {"orderable": false, "targets": 7 }, {"visible": false, "targets": 8 } ]
             });
         } );
     </script>

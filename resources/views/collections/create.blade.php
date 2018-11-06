@@ -36,7 +36,7 @@
                             <div class="col-lg-8">
                                 <div class="form-group">
                                     <label>Propiedad</label>
-									{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, old('propiedad'), ['class' => 'form-control input-sm','id'=>'propiedades']) }}
+									{{ Form::select('propiedad',['0'=>'Seleccione una propiedad']+$properties, old('propiedad'), ['class' => 'form-control input-sm','id'=>'propiedades']) }}
                                 </div>
                                 <div class="form-group">
                                     <label>Contacto (A nombre de)</label>
@@ -94,7 +94,7 @@
 								</div>
 							</div>
 							<div id="panel-cuotas-cobrar-vacio">
-								<h4 style="font-weight: normal;">No existe cuota(s) por cobrar.</h4>
+								<h4 style="font-weight: normal;">Propiedad sin cuota(s) por cobrar pendientes.</h4>
 							</div>
 							<div class="col-lg-2">
                             </div>
@@ -120,7 +120,7 @@
 								<div class="form-group">
                                     <label class="col-sm-4 control-label">Cuenta</label>
                                     <div class="col-sm-8 input-group">
-									{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, old('cuenta'), ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
+									{{ Form::select('cuenta',['0'=>'Seleccione una cuenta']+$accounts, old('cuenta'), ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -145,7 +145,7 @@
 											<option value="efectivo">Efectivo</option>
 											<option value="cheque">Cheque</option>
 											<option value="deposito">Depósito</option>
-											<option value="transferencia bancaria">Transferencia bancaria</option>
+											<option value="transferencia">Transferencia</option>
 											<option value="tarjeta debito/credito">Tarjeta Débito/Crédito</option>
 										</select>
                                     </div>
@@ -155,7 +155,7 @@
 									<!--
 										<label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>
 									-->
-									<label class="col-sm-4 control-label" id="label-transaccion">Nro. Transaccion</label>
+									<label class="col-sm-4 control-label" id="label-transaccion">Nro. Transacción</label>
                                     <div class="col-sm-6 input-group">
 										<input type="text" class="form-control input-sm" name="nro_forma_pago">
                                     </div>
@@ -163,7 +163,10 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Importe</label>
                                     <div class="col-sm-4 input-group">
-										<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total">
+			                            <div class="input-group">
+			                                <span class="input-group-addon" style="background-color: #CCC; border: 1px solid #CCC;">Bs.</span>
+                                    		<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total">
+                                    	</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -420,7 +423,7 @@
 			$('#label-transaccion').text("Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			
-		}else if($(this).val() == "transferencia bancaria"){
+		}else if($(this).val() == "transferencia"){
 			$('#label-transaccion').text("Banco, Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			

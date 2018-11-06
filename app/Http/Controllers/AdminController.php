@@ -45,6 +45,7 @@ class AdminController extends Controller
 		$gastos_box = $this->gastos($mes_actual,$anio_actual);		
 		
 		$mes_anterior = ($mes_actual == 1) ? 12 : $mes_actual-1;
+		$mes_anterior_real = (date('m') == 1) ? 12 : date('m')-1;
 		
 		$mes_anterior_anterior = ($mes_anterior == 1) ? 12 : $mes_anterior -1;
 
@@ -61,13 +62,13 @@ class AdminController extends Controller
 		$transacciones = $this->ultimas_transacciones();
 		//dd($importe_promedio/$importe_promedio_total*100);
 
-		$tasks = Task::where('company_id',$company->id )->where('estado_solicitud','<>','completada' )->orderBy('fecha', 'desc')->limit(3);
+		$tasks = Task::where('company_id',$company->id )->where('estado_solicitud','<>','completada' )->orderBy('fecha', 'asc')->limit(3);
 
-		$maintenances = MaintenancePlan::where('company_id',$company->id )
-			->where('id', '<>', 'maintenance_plans_records.maintenance_plan_id')
+		$maintenances = MaintenancePlan::doesnthave("maintenancerecords")->where('company_id',$company->id )
 			->orderBy('fecha_estimada', 'asc')
 			->limit(3);
 		$maintenances_count = $maintenances->get()->count();
+		//dd($maintenances->get());
 		$tasks_count = $tasks->get()->count();
 
         return view('admin')
@@ -89,6 +90,7 @@ class AdminController extends Controller
 				
 			->with('mes_actual',$mes_actual)
 			->with('mes_anterior',$mes_anterior)
+			->with('mes_anterior_real',$mes_anterior_real)
 			->with('cobranzas_mes_actual',json_encode($cobranzas['cobranza_mes_actual']))
 			->with('cobranza_mes_anterior',json_encode($cobranzas['cobranza_mes_anterior']))
 			->with('maintenances',$maintenances->get())
@@ -245,11 +247,13 @@ class AdminController extends Controller
 					->where('cancelada',0)
 					->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
 					->sum('importe_por_cobrar');
-		
+
+		// Revisar mas adelante la condición para que pueda ser todo lo que es por cobrar
+				
 		$mesCuotasCobrar = Accountsreceivable::where('company_id',$company->id )
 					->where('cancelada',0)
-					->where('gestion','<=',$anio)
-					->where('periodo','<=',$mes)
+					->where('gestion','=',$anio)
+					->where('periodo','=',$mes)
 					->sum('importe_por_cobrar');
 		
 		$resultado = [
@@ -262,24 +266,25 @@ class AdminController extends Controller
 	
 	function ingresos($mes,$anio){
 		$company = Auth::user()->company;
-		$date_gestion_periodo = new \DateTime($anio.'-'.$mes.'-'.'02');
 		
-		$ingresoMesActual =  Accountsreceivable::where('company_id',$company->id )
-					->where('cancelada',1)
-					->where('gestion','<=',$anio)
-					->where('periodo','<=',$mes)
-					->sum('importe_por_cobrar');
+		$ingresoMesActual =  Transaction::where('user_id',Auth::user()->id )
+					->whereMonth('fecha_pago', '=', date('m'))
+					->whereYear('fecha_pago', '=', date('Y'))
+					->where('tipo_transaccion', '=', 'Ingreso')
+					->where('anulada',0)
+					->where('excluir_reportes',0)
+					->sum('importe_credito');
 		
-		$mes_anterior = ($mes == 1) ? 12 : $mes-1;
-		$anio_anterior = ($mes == 1) ? $anio-1 : $anio;
+		$mes_anterior_i = (date('m') == 1) ? 12 : date('m')-1;
+		$anio_anterior_i = ($mes == 1) ? $anio-1 : $anio;
 		
-		
-		$ingresoMesAnterior =  Accountsreceivable::where('company_id',$company->id )
-					->where('cancelada',1)
-					->where('gestion','<=',$anio_anterior)
-					->where('periodo','<=',$mes_anterior)
-					->sum('importe_por_cobrar');
-		
+		$ingresoMesAnterior =  Transaction::where('user_id',Auth::user()->id )
+					->whereMonth('fecha_pago', '=', $mes_anterior_i)
+					->whereYear('fecha_pago', '=', $anio_anterior_i)
+					->where('tipo_transaccion', '=', 'Ingreso')
+					->where('anulada',0)
+					->where('excluir_reportes',0)
+					->sum('importe_credito');
 		
 		$resultado = [
 			'mes_actual_ingreso'=>$ingresoMesActual,
@@ -290,24 +295,25 @@ class AdminController extends Controller
 	}
 	
 	function gastos($mes,$anio){
-		 $gastos_actual = DB::table('expenses')
-  					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
-  					->whereMonth('fecha_pago', '=', $mes)
-					->whereYear('fecha_pago', '=', $anio)
-  					->where('anulada',0)
-  					->where('excluir_reportes',0)
+		 $gastos_actual = Transaction::where('user_id',Auth::user()->id )
+					->whereMonth('fecha_pago', '=', date('m'))
+					->whereYear('fecha_pago', '=', date('Y'))
+					->where('tipo_transaccion', '=', 'Egreso')
+					->where('anulada',0)
+					->where('excluir_reportes',0)
 					->sum('importe_debito');
-		 
-		$mes_anterior = ($mes == 1) ? 12 : $mes-1;
-		$anio_anterior = ($mes == 1) ? $anio-1 : $anio;
+		
+		$mes_anterior_e = (date('m') == 1) ? 12 : date('m')-1;
+		$anio_anterior_e = ($mes == 1) ? $anio-1 : $anio;
+		
+		$gastos_anterior =  Transaction::where('user_id',Auth::user()->id )
+					->whereMonth('fecha_pago', '=', $mes_anterior_e)
+					->whereYear('fecha_pago', '=', $anio_anterior_e)
+					->where('tipo_transaccion', '=', 'Egreso')
+					->where('anulada',0)
+					->where('excluir_reportes',0)
+					->sum('importe_debito');
 
-		$gastos_anterior = DB::table('expenses')
-  					->join('transactions', 'transactions.id', '=', 'expenses.transaction_id')
-  					->whereMonth('fecha_pago', '=', $mes_anterior)
-					->whereYear('fecha_pago', '=', $anio_anterior)
-  					->where('anulada',0)
-  					->where('excluir_reportes',0)
-					->sum('importe_debito');
 		$resultado = [
 			'mes_actual_gastos'=>$gastos_actual,
 			'mes_anterior_gastos'=>$gastos_anterior
@@ -315,7 +321,5 @@ class AdminController extends Controller
 		
 		return $resultado;
 	}
-	
-	
 	
 }

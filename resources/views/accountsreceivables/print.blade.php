@@ -36,7 +36,7 @@
                 <div id="printableArea" class="p-xl" style="padding-top: 0; padding-left: 10px; padding-right: 10px;">
                     <div class="row">
                         <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" style="margin-bottom: 5px;">
                             <tbody>
                                 <tr>
                                     <td style="border: 0; padding-right: 10px;">
@@ -59,10 +59,14 @@
                             <tr>
 								<td style="padding: 0 0 20px 0; line-height: 20px;">
 									<table cellpadding="0" cellspacing="0" style="width: 100%;">
+                                        <tr>
+                                            <td>Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span></td>
+                                            <td class="text-right">Al periodo:&nbsp;&nbsp;<span><strong>{{nombremes($sendalertpayment->limite_periodo)}} {{ $sendalertpayment->limite_gestion }}</strong></span>
+                                            </td>
+                                        </tr>
 										<tr>
-											<td>Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span></td>
-											<td class="text-right">Al periodo:&nbsp;&nbsp;<span><strong>{{nombremes($sendalertpayment->limite_periodo)}} {{ $sendalertpayment->limite_gestion }}</strong></span>
-											</td>
+											<td></td>
+											<td class="text-right">Fecha de emisión:&nbsp;&nbsp;{{ date_format(date_create($sendalertpayment->created_at),'d/m/Y') }}</td>
 										</tr>
 									</table>
 								</td>
@@ -116,7 +120,7 @@
 										@endfor
 
                                         <tr style="font-size: 16px;">
-                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total</td>
+                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
                                             <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 5px 0;">{{ number_format($sendalertpayment->importe_total, 2, ',', '.') }}</td>
                                         </tr>
                                     </table>
@@ -125,17 +129,10 @@
                         </table>
                     </div>
 
-                    <div class="row" style="padding: 10px 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6" style="width: 50%; margin: auto;">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
+                    <div class="row" style="padding: 5px 0;">
                     </div>
 
-                    <table style="margin: auto; text-align: left; width: 90%; font-size: 11px;">
+                    <table style="margin: auto; text-align: left; width: 90%; font-size: 12px;">
                         <tr>
                             <td>
                                 <address style="color: #9ba3a9;">
@@ -146,7 +143,7 @@
                     </table>
 
                     @if($sendalertpayment->nota<>'')
-                            <div class="row" style="padding: 0;">
+                            <div class="row" style="padding: 0;"> 
                                 <div class="col-sm-3">
                                 </div>
                                 <div class="col-sm-6" style="width: 50%; margin: auto;">
@@ -200,8 +197,12 @@
     </div>
 </div>
 
-
 @endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
+@endsection
+
 @section('javascript')
 <script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>

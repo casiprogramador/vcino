@@ -44,10 +44,13 @@
                     <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Histórico de transacciones - Traspasos</h3>
                      @if($mes != 0)
                     <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
-                    @else
+                    @elseif($anio != 0)
                     <small style="padding-left:36px;">Gestión: {{$anio}} - Moneda: Bolivianos</small>
+                    @else
+                    <small style="padding-left:36px;">Desde: {{ date("d/m/Y", strtotime($fecha_ini)) }} al {{ date("d/m/Y", strtotime($fecha_fin)) }} - Moneda: Bolivianos</small>
                     @endif
                 </div>
+
 
                 <div class="ibox-content">
                     <div id="printableArea">
@@ -66,8 +69,10 @@
                                                 <h2 style="line-height: 18px; font-size: 19px;">Histórico de transacciones - Traspasos</h2>
                                                 @if($mes != 0)
                                                 <p style="font-size: 10px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</p>
-                                                @else
+                                                @elseif($anio != 0)
                                                 <p style="font-size: 10px;">Gestión: {{$anio}} - Moneda: Bolivianos</p>
+                                                @else
+                                                <p style="font-size: 10px;">Desde: {{ date("d/m/Y", strtotime($fecha_ini)) }} al {{ date("d/m/Y", strtotime($fecha_fin)) }} - Moneda: Bolivianos</p>
                                                 @endif
                                             </div>
                                         </td>
@@ -102,13 +107,13 @@
                                             <td>{{$datos[$i][3]}}</td>
                                             <td>{{$datos[$i][4]}}</td>
                                             <td>{{ucfirst($datos[$i][5])}}</td>
-                                            <td style="text-align:right;">{{ number_format($datos[$i][6], 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($datos[$i][6], 2, ',', '.') }}</td>
                                         </tr>
     									@endfor
                                     </tbody>
                                     <tfoot>
                                         <th colspan="6">Total</th>
-                                        <th style="text-align:right;">{{ number_format($monto, 2, '.', '.') }}</th>
+                                        <th style="text-align:right;">{{ number_format($monto, 2, ',', '.') }}</th>
                                     </tfoot>
                                 </table>
                             </div>

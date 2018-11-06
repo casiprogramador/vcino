@@ -216,7 +216,7 @@
                         <div class="col-sm-3">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control input-sm date-picker-2" name="fecha_requerida" value="{{ old('fecha_requerida') }}">
+                                <input type="text" class="form-control input-sm date-picker-2" name="fecha_requerida" value="{{ date('d/m/Y') }}">
 							@if ($errors->has('fecha_requerida'))
 								<span class="help-block">
 									<strong>{{ $errors->first('fecha_requerida') }}</strong>
@@ -249,7 +249,10 @@
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" name="costo" id="costo-input" value="{{old('costo')}}">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="background-color: #EEE;">Bs.</span>
+                                <input type="number" class="form-control input-sm" name="costo" id="costo-input" step=".01" value="{{old('costo')}}">
+                            </div>
                         </div>
 						@if ($errors->has('costo'))
 						<span class="help-block">

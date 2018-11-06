@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('campo_1') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Campo 1</label>
+										<label class="col-sm-3 control-label">Referencia Recibos</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control input-sm" name="campo_1" value="{{ $property->campo_1 }}">
 											@if ($errors->has('campo_1'))
@@ -119,7 +119,7 @@
 													<strong>{{ $errors->first('campo_1') }}</strong>
 												</span>
 											@endif
-                                            <span class="help-block m-b-none" style="color: #d1d1d1">Campo personalizado para almacenar valores o referencias adicionales.</span>
+                                            <span class="help-block m-b-none" style="color: #d1d1d1">Referencia para la entrega, envío o impresión de Recibos de ingreso.</span>
                                         </div>
                                     </div>
                                     <div class="form-group{{ $errors->has('campo_2') ? ' has-error' : '' }}">

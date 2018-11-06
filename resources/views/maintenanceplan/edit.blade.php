@@ -49,11 +49,14 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('equipo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Equipo</label>
                             <div class="col-sm-6">
                                 {{ Form::select('equipo',['0' => 'Seleccione un equipo']+$equipmets,
 								$maintenanceplan->equipment_id, ['class' => 'form-control input-sm']) }}
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('equipo') }}</strong>
+                                </span>
                             </div>
                         </div>
 
@@ -72,7 +75,10 @@
                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Costo estimado</label>
                             <div class="col-sm-3">
-                                <input type="text" name="costo" class="form-control input-sm" value="{{$maintenanceplan->costo_estimado}}">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color: #EEE;">Bs.</span>
+                                    <input type="number" name="costo" class="form-control input-sm" step=".01" value="{{$maintenanceplan->costo_estimado}}">
+                                </div>
 								@if ($errors->has('costo'))
 									<span class="help-block">
 										<strong>{{ $errors->first('costo') }}</strong>

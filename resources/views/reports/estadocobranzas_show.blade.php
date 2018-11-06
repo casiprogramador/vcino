@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Estado de cobranzas</h2>
+        <h2>Cobranzas por periodo y gestión</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Reportes
             </li>
             <li class="active">
-                <strong>Estado de cobranzas</strong>
+                <strong>Cobranzas por periodo y gestión</strong>
             </li>
         </ol>
     </div>
@@ -24,7 +24,7 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Estado de cobranzas</h5>
+                    <h5 style="padding-top: 7px;">Cobranzas por periodo y gestión</h5>
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
-                    <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Estado de cobranzas</h3>
+                    <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Cobranzas por periodo y gestión</h3>
                     <small style="padding-left:35px;">Gestión: {{$gestion}} - Moneda: Bolivianos</small>
                     <div class="pull-right">
                         <small style="padding-left:41px;">Cobranza correspondiente a: <b>{{nombremes($mes)}} {{date('Y')}}</b></small>
@@ -60,7 +60,7 @@
                                         </td>
                                         <td style="border: 0; vertical-align:bottom; padding-right: 0;">
                                             <div class="p-h-xl text-right">
-                                                <h3>Estado de cobranzas</h3>
+                                                <h3>Cobranzas por periodo y gestión</h3>
                                                 <p style="font-size: 10px;">Gestión: {{$gestion}} - Moneda: Bolivianos</br>
                                                 Cobranza correspondiente a: <b>{{nombremes($mes)}} {{date('Y')}}</b></p>
                                             </div>
@@ -182,7 +182,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][1],'*') === false )
-													{{number_format($propiedades[$i][1], 2, ',', '.')}}
+													{{ $propiedades[$i][1] > 0 ? number_format($propiedades[$i][1], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][1]), 2, ',', '.')}}*
@@ -195,7 +195,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][2],'*') === false )
-													{{number_format($propiedades[$i][2], 2, ',', '.')}}
+													{{ $propiedades[$i][2] > 0 ? number_format($propiedades[$i][2], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][2]), 2, ',', '.')}}*
@@ -208,7 +208,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][3],'*') === false )
-													{{number_format($propiedades[$i][3], 2, ',', '.')}}
+													{{ $propiedades[$i][3] > 0 ? number_format($propiedades[$i][3], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][3]), 2, ',', '.')}}*
@@ -221,7 +221,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][4],'*') === false )
-													{{number_format($propiedades[$i][4], 2, ',', '.')}}
+													{{ $propiedades[$i][4] > 0 ? number_format($propiedades[$i][4], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][4]), 2, ',', '.')}}*
@@ -234,7 +234,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][5],'*') === false )
-													{{number_format($propiedades[$i][5], 2, ',', '.')}}
+													{{ $propiedades[$i][5] > 0 ? number_format($propiedades[$i][5], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][5]), 2, ',', '.')}}*
@@ -247,7 +247,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][6],'*') === false )
-													{{number_format($propiedades[$i][6], 2, ',', '.')}}
+													{{ $propiedades[$i][6] > 0 ? number_format($propiedades[$i][6], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][6]), 2, ',', '.')}}*
@@ -260,7 +260,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][7],'*') === false )
-													{{number_format($propiedades[$i][7], 2, ',', '.')}}
+													{{ $propiedades[$i][7] > 0 ? number_format($propiedades[$i][7], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][7]), 2, ',', '.')}}*
@@ -273,7 +273,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][8],'*') === false )
-													{{number_format($propiedades[$i][8], 2, ',', '.')}}
+													{{ $propiedades[$i][8] > 0 ? number_format($propiedades[$i][8], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][8]), 2, ',', '.')}}*
@@ -286,7 +286,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][9],'*') === false )
-													{{number_format($propiedades[$i][9], 2, ',', '.')}}
+													{{ $propiedades[$i][9] > 0 ? number_format($propiedades[$i][9], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][9]), 2, ',', '.')}}*
@@ -299,7 +299,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][10],'*') === false )
-													{{number_format($propiedades[$i][10], 2, ',', '.')}}
+													{{ $propiedades[$i][10] > 0 ? number_format($propiedades[$i][10], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][10]), 2, ',', '.')}}*
@@ -312,7 +312,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][11],'*') === false )
-													{{number_format($propiedades[$i][11], 2, ',', '.')}}
+													{{ $propiedades[$i][11] > 0 ? number_format($propiedades[$i][11], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][11]), 2, ',', '.')}}*
@@ -325,7 +325,7 @@
                                                 <td style="text-align:right;">
                                             @endif
 												@if(strpos($propiedades[$i][12],'*') === false )
-													{{number_format($propiedades[$i][12], 2, ',', '.')}}
+													{{ $propiedades[$i][12] > 0 ? number_format($propiedades[$i][12], 2, ',', '.') : " - " }}
 												@else
 													
 													{{number_format(str_replace('*','',$propiedades[$i][12]), 2, ',', '.')}}*
@@ -375,7 +375,7 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <h5 style="font-weight: normal; color: #B8B8B8;">* Monto parcial cancelado.</h5>
+                            <h5 style="font-weight: normal; color: #B8B8B8;">* Sin cancelar o parcialmente cancelado.</h5>
                         </div>
                     </div>
 

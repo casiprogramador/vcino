@@ -71,8 +71,16 @@
                         <div class="col-sm-1">
                         </div>
                         <div class="col-sm-10">
+                            <div class="row">
+                                <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                                    <tr>
+                                        <td align="right" style="padding-right: 15px;"><small>Fecha reporte: {{date('d/m/Y')}}</small></td>
+                                    </tr>
+                                </table>
+                            </div>
+
                             <div class="table-responsive" style="margin-top: 20px;">
-                                <table class="table table-hover table-striped texto-impresion tabla-compress">
+                                <table id="table-orden" class="table table-hover table-striped texto-impresion tabla-compress">
                                     <thead>
                                         <tr bgcolor="#D6D6D6">
                                             <th>Propiedad</th>
@@ -85,10 +93,10 @@
                                     <tbody>
     									@for ($i = 0; $i < count($cuotas); $i++)
                                         <tr>
-                                            <td>{{$cuotas[$i][0]}}</td>
+                                            <td data-order="{{ $cuotas[$i][4] }}">{{$cuotas[$i][0]}}</td>
                                             <td>{{$cuotas[$i][1]}}</td>
-                                            <td>{{$cuotas[$i][2]}}</td>
-                                            <td style="text-align:right;">{{ number_format($cuotas[$i][3], 2, ',', '.') }}</td>
+                                            <td data-order="{{ $cuotas[$i][2] }}" >{{$cuotas[$i][2]}}</td>
+                                            <td data-order="{{ $cuotas[$i][3] }}" style="text-align:right;">{{ $cuotas[$i][3] > 0 ? number_format($cuotas[$i][3], 2, ',', '.') : " - " }}</td>
                                         </tr>
     									@endfor
 
@@ -122,11 +130,15 @@
 </div>
 @endsection
 
+
+
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/datatables.min.css') }}" />
 @endsection
 
 @section('javascript')
+<script type="text/javascript" src="{{ URL::asset('js/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/jquery.PrintArea.js') }}"></script>
 <script>
     $(document).ready(function () {
@@ -137,6 +149,16 @@
             var options = {mode: mode, popClose: close};
             $("#printableArea").printArea(options);
         });
+
+        $('#table-orden').DataTable({
+            "paging": false,
+            "bFilter": false,
+            "searching": false,
+            "info": false,
+            "dom": 't',
+            "columnDefs": [ { "orderable": false, "targets": 1 } ]
+        });
+
     });
 </script>
 @endsection

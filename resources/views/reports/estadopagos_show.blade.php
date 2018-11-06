@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Estado de Pagos</h2>
+        <h2>Cobranzas por estado</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Reportes
             </li>
             <li class="active">
-                <strong>Estado de Pagos</strong>
+                <strong>Cobranzas por estado</strong>
             </li>
         </ol>
     </div>
@@ -24,22 +24,19 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5 style="padding-top: 7px;">Estado de Pagos</h5>
+                    <h5 style="padding-top: 7px;">Cobranzas por estado</h5>
 
                     <div class="ibox-tools" style="padding-bottom: 7px;">
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-default" id="printButton" data-toggle="tooltip" data-placement="bottom" title="Imprimir reporte" data-original-title="Imprimir reporte">
                                 <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir...
                             </button>
-                            <a href="" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Exportar reporte a Excel" data-original-title="Exportar reporte a Excel">
-                                <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar...
-                            </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="ibox-content ibox-heading" style="background-color: #ECF7FE">
-                    <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Estado de Pagos</h3>
+                    <h3><i class="fa fa-table">&nbsp;&nbsp;</i>Cobranzas por estado</h3>
                     @if($mes != 0)
                     <small style="padding-left:36px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</small>
                     @else
@@ -61,7 +58,7 @@
                                         </td>
                                         <td style="border: 0; vertical-align:bottom">
                                             <div class="p-h-xl text-right">
-                                                <h2 style="line-height: 18px; font-size: 19px;">Estado de Resultados</h2>
+                                                <h2 style="line-height: 18px; font-size: 19px;">Cobranzas por estado</h2>
                                                 @if($mes != 0)
                                                 <p style="font-size: 10px;">Periodo: {{nombremes($mes)}}/{{$anio}} - Moneda: Bolivianos</p>
                                                 @else
@@ -83,7 +80,7 @@
                                 <table class="table table-hover table-striped texto-impresion">
                                     <thead>
                                         <tr bgcolor="#D6D6D6">
-                                            <th></th>
+                                            <th>Estado</th>
                                             <th style="text-align:right;" width="15%">Porcentaje</th>
                                             <th style="text-align:right;" width="15%">Importe</th>
                                         </tr>
@@ -92,24 +89,24 @@
                                     <tbody>
                                         <tr>
                                             <td>Vigentes</td>
-											<td style="text-align:right;" width="15%"></td>
-											<td style="text-align:right;" width="15%">{{$estado_pagos[1][1]}}</td>
+											<td style="text-align:right;" width="15%">{{ number_format(100*($estado_pagos[1][1]/$estado_pagos[0][1]), 2, ',', '.') }}%</td>
+											<td style="text-align:right;" width="15%">{{ number_format($estado_pagos[1][1], 2, ',', '.') }}</td>
                                         </tr>
 									     <tr>
-                                            <td>Atrasadas</td>
-											<td style="text-align:right;" width="15%"></td>
-											<td style="text-align:right;" width="15%">{{$estado_pagos[2][1]}}</td>
+                                            <td>Vencidas/ Mora</td>
+											<td style="text-align:right;" width="15%">{{ number_format(100*($estado_pagos[2][1]/$estado_pagos[0][1]), 2, ',', '.') }}%</td>
+											<td style="text-align:right;" width="15%">{{ number_format($estado_pagos[2][1], 2, ',', '.') }}</td>
                                         </tr>
 									     <tr>
                                             <td>Adelantadas</td>
-											<td style="text-align:right;" width="15%"></td>
-											<td style="text-align:right;" width="15%">{{$estado_pagos[3][1]}}</td>
+											<td style="text-align:right;" width="15%">{{ number_format(100*($estado_pagos[3][1]/$estado_pagos[0][1]), 2, ',', '.') }}%</td>
+											<td style="text-align:right;" width="15%">{{ number_format($estado_pagos[3][1], 2, ',', '.') }}</td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <th>Total</th>
-										<th></th>
-                                        <th style="text-align:right;">{{$estado_pagos[0][1]}}</th>
+										<th style="text-align:right;">100,00%</th>
+                                        <th style="text-align:right;">{{ number_format($estado_pagos[0][1], 2, ',', '.') }}</th>
                                     </tfoot>
                                 </table>
                             </div>

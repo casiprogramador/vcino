@@ -136,7 +136,10 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Importe por cobrar</label>
 						<div class="col-sm-2{{ $errors->has('importe_por_cobrar') ? ' has-error' : '' }}">
-							<input id="importe-cobrar" name="importe_por_cobrar" type="text" class="form-control input-sm">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="background-color: #EEE;">Bs.</span>
+								<input id="importe-cobrar" name="importe_por_cobrar" type="text" class="form-control input-sm">
+							</div>
 							@if ($errors->has('importe_por_cobrar'))
 							<span class="help-block">
 								<strong>{{ $errors->first('importe_por_cobrar') }}</strong>

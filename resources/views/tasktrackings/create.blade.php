@@ -187,7 +187,7 @@
                                 </label>
                             </div>
 
-                            <div class="hr-line-dashed"></div>
+                            <div class="hr-line-dashed" style="display: none;"></div>
 
                             <div class="form-group">
                                 <button class="btn btn-success" type="submit" style="margin-right: 10px;">Crear seguimiento</button>

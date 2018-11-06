@@ -40,7 +40,7 @@
 							<div class="form-group">
 								<label>Modo de traspaso</label>
 								<div class="col-sm-6 input-group">
-									{{ Form::select('modo_traspaso', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'),$transfer->transactionOrigin->forma_pago, ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
+									{{ Form::select('modo_traspaso', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia' => 'Transferencia','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'),$transfer->transactionOrigin->forma_pago, ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
 								</div>
 							</div>
 							<div class="form-group" id="cont-forma-pago">
@@ -67,7 +67,7 @@
 							<div class="form-group">
 								<label>Fecha</label>
 								<div class="col-sm-6 input-group date">
-									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									<span class="input-group-addon" style="border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; border-left: 1px solid #CCC;"><i class="fa fa-calendar"></i></span>
 									<input type="text" name="fecha" id="fecha" class="form-control input-sm date-picker" value="{{ date_format(date_create($transfer->transactionOrigin->fecha_pago),'d/m/Y') }}" required>
 								</div>
 							</div>
@@ -98,6 +98,7 @@
 							<div class="form-group">
 								<label>Importe</label>
 								<div class="col-sm-6 input-group">
+	                                <span class="input-group-addon" style="border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; border-left: 1px solid #CCC;">Bs.</span>
 									<input type="text" id="importe-input" class="form-control input-sm" name="importe" value="{{$transfer->transactionOrigin->importe_debito}}">
 								</div>
 							</div>
@@ -260,7 +261,7 @@
 			} else if ($(this).val() == "deposito"){
 			$('#label-transaccion').text("Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
-			} else if ($(this).val() == "transferencia bancaria"){
+			} else if ($(this).val() == "transferencia"){
 			$('#label-transaccion').text("Banco, Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			} else if ($(this).val() == "tarjeta debito/credito"){
@@ -288,7 +289,7 @@
 			} else if ($('#forma-pago').val() == "deposito"){
 			$('#label-transaccion').text("Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
-			} else if ($('#forma-pago').val() == "transferencia bancaria"){
+			} else if ($('#forma-pago').val() == "transferencia"){
 			$('#label-transaccion').text("Banco, Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			} else if ($('#forma-pago').val() == "tarjeta debito/credito"){
@@ -299,8 +300,6 @@
 			$('#cont-forma-pago').hide();
 			}
 	});
-
-
 
 
 </script>

@@ -108,22 +108,27 @@
 								@foreach ($tasks as $task)
                                 <td data-order="{{ $task->prioridad }}">
 									@if($task->prioridad == 'alta')
-									<i class="fa fa-exclamation-circle fa-lg text-danger" aria-hidden="true"></i>
+									<i class="fa fa-exclamation-circle fa-lg text-danger" title="Prioridad: Alta" aria-hidden="true"></i>
 									@endif
 								</td>
                                 <td>
 									@if($task->estado_solicitud == 'pendiente')
-                                    <span class="label label-warning" style="font-size: 10px; background-color: #F7B77B;">&nbsp;{{strtoupper($task->estado_solicitud)}}&nbsp;</span>
+                                        <i class="fa fa-clock-o fa-lg" style="color: #F7B77B; padding-left: 12px;" aria-hidden="true" title="Pendiente"></i>
 									@elseif($task->estado_solicitud == 'en proceso')
-									<span class="label label-success" style="font-size: 9px; background-color: #5D96CC">&nbsp;EN PROCESO&nbsp;</span>
+                                        <i class="fa fa-adjust fa-lg" style="color: #5D96CC; padding-left: 12px;" aria-hidden="true" title="En proceso"></i>
 									@else
-									<span class="label label-primary" style="font-size: 9px; background-color: #5CBD7E">COMPLETADA</span>
+                                        <i class="fa fa-check-circle fa-lg" style="color: #5CBD7E; padding-left: 12px;" aria-hidden="true" title="Completada"></i>
 									@endif
+                                        <!--
+                                        <span class="label label-warning" style="font-size: 10px; background-color: #F7B77B;">&nbsp;{{strtoupper($task->estado_solicitud)}}&nbsp;</span>
+                                        <span class="label label-success" style="font-size: 9px; background-color: #5D96CC">&nbsp;EN PROCESO&nbsp;</span>
+                                        <span class="label label-primary" style="font-size: 9px; background-color: #5CBD7E">COMPLETADA</span>
+                                        -->
                                 </td>
                                 <td data-order="{{ $task->fecha }}">{{ date_format(date_create($task->fecha),'d/m/Y') }}</td>
                                 <td>{{$task->titulo_tarea}}
                                     @if(!empty($task->documento_1) || !empty($task->documento_2) || !empty($task->documento_3))
-                                        <span style="float: right;"><i class="fa fa-paperclip"></i></span>
+                                        <span style="float: right;"><i class="fa fa-paperclip fa-flip-vertical"></i></span>
                                     @endif
                                 </td>
 								@if($task->tipo_tarea == 'mis_tareas')

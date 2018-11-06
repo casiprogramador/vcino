@@ -49,17 +49,22 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('equipo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Equipo</label>
                             <div class="col-sm-6">
                                 {{ Form::select('equipo',['0' => 'Seleccione un equipo']+$equipmets,old('equipo'), ['class' => 'form-control input-sm']) }}
+                                @if ($errors->has('equipo'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('equipo') }}</strong>
+                                </span>
+                            @endif
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('referencia') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Referencia</label>
                             <div class="col-sm-6">
-                                <input type="text" name="referencia" class="form-control input-sm">
+                                <input type="text" name="referencia" class="form-control input-sm" value="{{ old('referencia') }}">
 								@if ($errors->has('referencia'))
 									<span class="help-block">
 										<strong>{{ $errors->first('referencia') }}</strong>
@@ -71,7 +76,10 @@
                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Costo estimado</label>
                             <div class="col-sm-3">
-                                <input type="text" name="costo" class="form-control input-sm">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color: #EEE;">Bs.</span>
+                                    <input type="number" name="costo" class="form-control input-sm" step=".01" value="{{ old('costo') }}">
+                                </div>
 								@if ($errors->has('costo'))
 									<span class="help-block">
 										<strong>{{ $errors->first('costo') }}</strong>
@@ -86,7 +94,7 @@
 							<label class="col-sm-3 control-label">Notas</label>
 							<div class="col-sm-8">
 								<div class="no-padding">
-									<textarea id="summernote" name="notas"></textarea>
+									<textarea id="summernote" name="notas"><?php echo old('notas') ?></textarea>
 								</div>
 							</div>
 						</div>

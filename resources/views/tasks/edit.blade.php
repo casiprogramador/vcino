@@ -308,7 +308,10 @@
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" name="costo" value="{{$task->costo}}">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="background-color: #EEE;">Bs.</span>
+                                <input type="number" class="form-control input-sm" name="costo" step=".01" value="{{$task->costo}}">
+                            </div>
                         </div>
 						@if ($errors->has('costo'))
 						<span class="help-block">

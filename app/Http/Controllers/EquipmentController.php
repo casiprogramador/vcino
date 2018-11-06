@@ -75,7 +75,7 @@ class EquipmentController extends Controller
         }elseif(!empty($request->adjunto_ori_documento)){
 			$pathDoc = $request->adjunto_ori_documento;
 		}else{
-			$pathDoc = '/img/system/equipo-generico.png';
+			$pathDoc = '';
 		}
         //Foto 1
         if(!empty($request->fotografia_1)){
@@ -203,7 +203,7 @@ class EquipmentController extends Controller
         }elseif(!empty($request->adjunto_ori_documento)){
 			$pathDoc = $request->adjunto_ori_documento;
 		}else{
-			$pathDoc = '/img/system/equipo-generico.png';
+			$pathDoc = '';
 		}
         //Foto 1
         if(!empty($request->fotografia_1)){

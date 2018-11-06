@@ -37,12 +37,12 @@
                             <div class="col-lg-8">
                                 <div class="form-group">
                                     <label>Propiedad</label>
-									{{ Form::select('propiedad',['0'=>'Selecciona una propiedad']+$properties, $collection->property_id, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
+									{{ Form::select('propiedad',['0'=>'Seleccione una propiedad']+$properties, $collection->property_id, ['class' => 'form-control input-sm','id'=>'propiedades','disabled'=>'disabled']) }}
 									<input type="hidden" class="form-control input-sm" id="propiedad" name="propiedad" value="{{$collection->property_id}}">
                                 </div>
                                 <div class="form-group">
                                     <label>Contacto (A nombre de)</label>
-									{{ Form::select('contacto',['0'=>'Selecciona contacto']+$contacts, $collection->contact_id, ['class' => 'form-control input-sm','id'=>'contactos']) }}
+									{{ Form::select('contacto',['0'=>'Seleccione un contacto']+$contacts, $collection->contact_id, ['class' => 'form-control input-sm','id'=>'contactos']) }}
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -130,7 +130,7 @@
 								<div class="form-group">
                                     <label class="col-sm-4 control-label">Cuenta</label>
                                     <div class="col-sm-8 input-group">
-									{{ Form::select('cuenta',['0'=>'Selecciona una cuenta']+$accounts, $collection->account_id , ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
+									{{ Form::select('cuenta',['0'=>'Seleccione una cuenta']+$accounts, $collection->account_id , ['class' => 'form-control input-sm','id'=>'select-cuenta']) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -151,7 +151,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Forma de pago</label>
                                     <div class="col-sm-6 input-group">
-										{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia bancaria' => 'Transferencia bancaria','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), $collection->transaction->forma_pago , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
+										{{ Form::select('forma_pago', array('efectivo' => 'Efectivo','cheque' => 'Cheque', 'deposito' => 'Depósito','transferencia' => 'Transferencia','tarjeta debito/credito' => 'Tarjeta Débito/Crédito'), $collection->transaction->forma_pago , ['class' => 'form-control input-sm','id'=>'forma-pago']) }}
                                     </div>
                                 </div>
 
@@ -159,7 +159,7 @@
 									<!--
 									<label>Banco, Nro. Cheque / Nro. Transacción / Banco, Nro. Transacción / Banco, Tipo, Nro. Tarjeta</label>
 									-->
-									<label class="col-sm-4 control-label" id="label-transaccion">Nro. Transaccion</label>
+									<label class="col-sm-4 control-label" id="label-transaccion">Nro. Transacción</label>
                                     <div class="col-sm-6 input-group">
 										<input type="text" class="form-control input-sm" name="nro_forma_pago" value="{{$collection->transaction->numero_forma_pago}}">
                                     </div>
@@ -167,7 +167,10 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Importe</label>
                                     <div class="col-sm-4 input-group">
-										<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total" value="{{$collection->transaction->importe_credito}}">
+			                            <div class="input-group">
+			                                <span class="input-group-addon" style="background-color: #CCC; border: 1px solid #ccc;">Bs.</span>
+											<input type="text" class="form-control input-sm" readonly id="importe" name="importe_total" value="{{$collection->transaction->importe_credito}}">
+										</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -220,7 +223,7 @@
 			$('#label-transaccion').text("Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			
-	}else if($foma_pago_val == "transferencia bancaria"){
+	}else if($foma_pago_val == "transferencia"){
 			$('#label-transaccion').text("Banco, Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			
@@ -437,7 +440,7 @@
 			$('#label-transaccion').text("Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			
-		}else if($(this).val() == "transferencia bancaria"){
+		}else if($(this).val() == "transferencia"){
 			$('#label-transaccion').text("Banco, Nro. Transacción");
 			$('#cont-forma-pago').show("slow");
 			
@@ -453,7 +456,6 @@
 	});
 
 	});
-
 
 </script>
 @endsection

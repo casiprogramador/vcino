@@ -4,7 +4,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Directorio de documentos</h2>
+        <h2>Documentos de interés</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -13,7 +13,7 @@
                 Comunicación & Información
             </li>
             <li>
-                <a href="{{ route('communication.document.index') }}">Directorio de documentos</a>
+                <a href="{{ route('communication.document.index') }}">Documentos de interés</a>
             </li>
             <li class="active">
                 <strong>Editar documento</strong>
@@ -95,7 +95,7 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <button class="btn btn-success" type="submit" style="margin-right: 10px;">Subir documento</button>
+                            <button class="btn btn-success" type="submit" style="margin-right: 10px;">Guardar</button>
                             <a href="{{ route('communication.document.index') }}" class="btn btn-white" type="submit">Cancelar</a>
                         </div>
                     </div>

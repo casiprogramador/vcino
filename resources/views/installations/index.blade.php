@@ -46,7 +46,7 @@
                                 <tr>
                                     <th style="vertical-align:bottom">Foto<br>principal</th>
                                     <th style="vertical-align:bottom">Instalación</th>
-                                    <th style="vertical-align:bottom">Costo</th>
+                                    <th style="vertical-align:bottom" class="text-right">Costo</th>
                                     <th style="vertical-align:bottom">Requiere <br>reserva</th>
                                     <th style="vertical-align:bottom">Estado</th>
                                     <th style="vertical-align:bottom"></th>
@@ -58,7 +58,7 @@
                                         <tr>
                                             <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="80"></td>
                                             <td>{{ $installation->instalacion }}</td>
-                                            <td>{{ $installation->costo }}</td>
+                                            <td class="text-right">{{ number_format($installation->costo, 2, ',', '.') }}</td>
                                             <td>{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</td>
                                             <td><span>Activa</span></td>
                                             <td style="vertical-align:middle; text-align:right;">
@@ -76,7 +76,7 @@
                                         <tr>
                                             <td><img src="{{ $installation->fotografia_principal }}" class="img-responsive" width="80"></td>
                                             <td style="vertical-align:middle"><span class="text-muted">{{ $installation->instalacion }}</span></td>
-                                            <td style="vertical-align:middle"><span class="text-muted">{{ $installation->costo }}</span></td>
+                                            <td style="vertical-align:middle" class="text-right"><span class="text-muted">{{ number_format($installation->costo, 2, ',', '.') }}</span></td>
                                             <td style="vertical-align:middle"><span class="text-muted">{{ ($installation->requiere_reserva == 1) ? 'SI' : 'NO' }}</span></td>
                                             <td style="vertical-align:middle"><span class="text-muted">Inactiva</span></td>
                                             <td style="vertical-align:middle; text-align:right;">

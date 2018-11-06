@@ -65,6 +65,7 @@ class ReportCuentasCobrarController extends Controller
 					->with('anio',$anio)
 					->with('cuotas',$cuotas)
 					->with('monto_total',$monto_total);
+
 		}elseif($request->tipo == "porpropiedad"){
 			
 			$porpropiedad = array();
@@ -177,6 +178,7 @@ class ReportCuentasCobrarController extends Controller
 					->where('cancelada',0)
 					->where('property_id',$property->id)
 					->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
+					->orderBy('gestion','asc')->orderBy('periodo','asc')
 					->get();
 			foreach ($accountsreceivables as $cuotapagar) {
 				$cuota = array($property->nro,$cuotapagar->quota->cuota,$cuotapagar->gestion,$cuotapagar->periodo,$cuotapagar->importe_por_cobrar);
@@ -225,7 +227,7 @@ class ReportCuentasCobrarController extends Controller
 			$tipo = $tipo_p->tipo_propiedad;
 
 			//Armamos el array
-			$propiedad = array($property->nro,$nombre_propietario,$tipo,$importe_total);
+			$propiedad = array($property->nro,$nombre_propietario,$tipo,$importe_total,$property->orden);
 			$total = $total + $importe_total;
 			array_push($resultado, $propiedad);
 
@@ -244,6 +246,7 @@ class ReportCuentasCobrarController extends Controller
 					->where('cancelada',0)
 					->where('property_id',$propiedad)
 					->where('fecha_gestion_periodo','<=',$date_gestion_periodo)
+					->orderBy('gestion', 'asc')->orderBy('periodo', 'asc')
 					->get();
 		$importe_total = 0;
 		foreach ($accountsreceivables as $cuotapagar) {

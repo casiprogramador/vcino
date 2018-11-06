@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Property;
 use App\Contact;
+use App\Bank;
 use App\Account;
 use App\Transaction;
 use App\Collection;

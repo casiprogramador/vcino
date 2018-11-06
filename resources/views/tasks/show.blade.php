@@ -300,7 +300,10 @@
                     <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}" id="costo">
 						<label class="col-sm-2 control-label">Costo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" name="costo" value="{{$task->costo}}" disabled="disabled">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="background-color: #CCC;">Bs.</span>
+                        		<input type="text" class="form-control input-sm" name="costo" value="{{$task->costo}}" disabled="disabled">
+                        	</div>
                         </div>
 						@if ($errors->has('costo'))
 						<span class="help-block">
@@ -317,11 +320,11 @@
 							<?php
 							$filename = explode("-name-", $task->documento_1);
 							$ext_array = explode(".", $task->documento_1);
-							$ext = end($ext_array);
+							$ext = strtolower(end($ext_array));
 							?>
 							<div class="col-sm-3">
 								<div class="thumbnail">
-									@if($ext == 'jpg' || $ext == 'png')
+									@if($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
 									<a href="{{ URL::asset($task->documento_1)}}" target="_blank">
 										<img src="{{ URL::asset($task->documento_1)}}">
 										<div class="caption">
@@ -372,11 +375,11 @@
 							<?php
 							$filename = explode("-name-", $task->documento_2);
 							$ext_array = explode(".", $task->documento_2);
-							$ext = end($ext_array);
+							$ext = strtolower(end($ext_array));
 							?>
 							<div class="col-sm-3">
 								<div class="thumbnail">
-									@if($ext == 'jpg' || $ext == 'png')
+									@if($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
 									<a href="{{ URL::asset($task->documento_2)}}" target="_blank">
 										<img src="{{ URL::asset($task->documento_2)}}">
 										<div class="caption">
@@ -427,11 +430,11 @@
 							<?php
 							$filename = explode("-name-", $task->documento_3);
 							$ext_array = explode(".", $task->documento_3);
-							$ext = end($ext_array);
+							$ext = strtolower(end($ext_array));
 							?>
 							<div class="col-sm-3">
 								<div class="thumbnail">
-									@if($ext == 'jpg' || $ext == 'png')
+									@if($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
 									<a href="{{ URL::asset($task->documento_3)}}" target="_blank">
 										<img src="{{ URL::asset($task->documento_3)}}" width="300">
 										<div class="caption">

@@ -90,7 +90,10 @@
                                             <div class="form-group{{ $errors->has('importe') ? ' has-error' : '' }}">
                                                 <label class="col-sm-3 control-label">Importe</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control input-sm" name="importe" value="{{old('importe')}}">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #EEE;">Bs.</span>
+                                                        <input type="number" class="form-control input-sm" name="importe" step=".01" value="{{old('importe')}}">
+                                                    </div>
                                                     @if ($errors->has('importe'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('importe') }}</strong>

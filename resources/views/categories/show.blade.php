@@ -68,15 +68,6 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Icono</label>
-                                            <div class="col-sm-8">
-                                                <img src="{{$category->icono}}" alt="icono" width="50">
-                                            </div>
-                                        </div>
-
-                                        <div class="hr-line-dashed"></div>
-
-                                        <div class="form-group">
                                             <label class="col-sm-3 control-label">Activa</label>
                                             <div class="col-sm-4">
 

@@ -58,8 +58,10 @@
                                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                                             <label class="col-sm-3 control-label">Costo</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control input-sm" name="costo" value="{{$installation->costo}}" readonly>
-
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" style="background-color: #CCC;">Bs.</span>
+                                                    <input type="text" class="form-control input-sm" name="costo" value="{{$installation->costo}}" readonly>
+                                                </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <p style="font-size: 11px; color: #B0B0B0;">Si la instalación comun tiene un costo por utilización. Al momento de realizar la reserva, este monto será acreditado a la propiedad.</p>

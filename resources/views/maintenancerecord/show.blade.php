@@ -69,8 +69,10 @@
                         <div class="form-group{{ $errors->has('costo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Costo</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control input-sm" name="costo" value="{{$maintenancerecord->costo}}" disabled="disabled">
-
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color: #CCC;">Bs.</span>
+	                                <input type="text" class="form-control input-sm" name="costo" value="{{$maintenancerecord->costo}}" disabled="disabled">
+								</div>
                             </div>
                         </div>
 
@@ -99,10 +101,16 @@
 							</div>
 						</div>
 
+						@if(!empty($maintenancerecord->adjunto_1) || !empty($maintenancerecord->adjunto_2) || !empty($maintenancerecord->adjunto_3))
                         <div class="hr-line-dashed"></div>
+                        @endif
 
                         <div class="form-group">
+                            
+                        	@if(!empty($maintenancerecord->adjunto_1) || !empty($maintenancerecord->adjunto_2) || !empty($maintenancerecord->adjunto_3))
                             <label class="col-sm-3 control-label">Adjuntos</label>
+                            @endif
+
                             <div class="col-sm-8">
 
 								
@@ -114,7 +122,7 @@
 							?>
 							<div class="col-sm-4">
 								<div class="thumbnail">
-									@if($ext == 'jpg' || $ext == 'png')
+									@if($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
 									<a href="{{ URL::asset($maintenancerecord->adjunto_1)}}" target="_blank">
 										<img src="{{ URL::asset($maintenancerecord->adjunto_1)}}" width="300">
 										<div class="caption">
@@ -169,7 +177,7 @@
 							?>
 							<div class="col-sm-4">
 								<div class="thumbnail">
-									@if($ext == 'jpg' || $ext == 'png')
+									@if($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
 									<a href="{{ URL::asset($maintenancerecord->adjunto_2)}}" target="_blank">
 										<img src="{{ URL::asset($maintenancerecord->adjunto_2)}}" width="300">
 										<div class="caption">
@@ -224,7 +232,7 @@
 							?>
 							<div class="col-sm-4">
 								<div class="thumbnail">
-									@if($ext == 'jpg' || $ext == 'png')
+									@if($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
 									<a href="{{ URL::asset($maintenancerecord->adjunto_3)}}" target="_blank">
 										<img src="{{ URL::asset($maintenancerecord->adjunto_3)}}" width="300">
 										<div class="caption">

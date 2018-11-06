@@ -160,26 +160,43 @@
 
                                     <div class="hr-line-dashed"></div>
 									
-									<div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
-										<label class="col-sm-3 control-label">Fotografía</label>
-										<div class="col-sm-8">
-											<label title="Upload image file" for="inputImage">
+                                    <div class="form-group{{ $errors->has('media') ? ' has-error' : '' }}">
+                                        <label class="col-sm-3 control-label">Medio preferido contacto</label>
+                                        <div class="col-sm-3">
+                                            {{ Form::select('media',$medias, old('media'), ['class' => 'form-control input-sm']) }}
+                                            @if ($errors->has('media'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('media') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
 
-												<div class="fileinput input-group fileinput-new" data-provides="fileinput">
-													<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-													<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
-														<input type="file" name="fotografia"></span>
-													<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
-												</div>
-											</label>
-											@if ($errors->has('fotografia'))
-												<span class="help-block">
-														<strong>{{ $errors->first('fotografia') }}</strong>
-													</span>
-											@endif
-										</div>
-									</div>
+                                    <div class="form-group{{ $errors->has('correspondencia') ? ' has-error' : '' }}">
+                                        <label class="col-sm-3 control-label">Correspondencia</label>
+                                        <div class="col-sm-3">
+                                           <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados">&nbsp;&nbsp;Comunicados</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas">&nbsp;&nbsp;Cobranzas</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
+                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio">&nbsp;&nbsp;Directorio</label>
+                                        </div>
+                                    </div>
 									
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Miembro Directorio</label>
+                                        <div class="col-sm-4">
+                                            <label><input type="checkbox" class="i-checks" name="miembro_directorio" value="1"></label>
+                                        </div>
+                                    </div>
+
                                     <div class="hr-line-dashed"></div>
 
                                     <div class="form-group">
@@ -198,40 +215,23 @@
 
                                     <div class="hr-line-dashed"></div>
 
-                                    <div class="form-group{{ $errors->has('correspondencia') ? ' has-error' : '' }}">
-                                        <label class="col-sm-3 control-label">Correspondencia</label>
-                                        <div class="col-sm-3">
-                                           <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Comunicados">&nbsp;&nbsp;Comunicados</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Cobranzas">&nbsp;&nbsp;Cobranzas</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="checkbox-inline" style="padding-top: 0; padding-left: 0;">
-                                                <input type="checkbox" class="i-checks" name='correspondencia[]' value="Directorio">&nbsp;&nbsp;Directorio</label>
-                                        </div>
-                                    </div>
+                                    <div class="form-group{{ $errors->has('fotografia') ? ' has-error' : '' }}">
+                                        <label class="col-sm-3 control-label">Fotografía</label>
+                                        <div class="col-sm-8">
+                                            <label title="Upload image file" for="inputImage">
 
-                                    <div class="form-group{{ $errors->has('media') ? ' has-error' : '' }}">
-                                        <label class="col-sm-3 control-label">Medio preferido</label>
-                                        <div class="col-sm-3">
-                                            {{ Form::select('media',$medias, old('media'), ['class' => 'form-control input-sm']) }}
-											@if ($errors->has('media'))
-											<span class="help-block">
-												<strong>{{ $errors->first('media') }}</strong>
-											</span>
-											@endif
-                                        </div>
-                                    </div>
-
-                                    <div class="hr-line-dashed"></div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Miembro Directorio</label>
-                                        <div class="col-sm-4">
-                                            <label><input type="checkbox" class="i-checks" name="miembro_directorio" value="1"></label>
+                                                <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar archivo...</span><span class="fileinput-exists">Cambiar</span>
+                                                        <input type="file" name="fotografia"></span>
+                                                    <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
+                                                </div>
+                                            </label>
+                                            @if ($errors->has('fotografia'))
+                                                <span class="help-block">
+                                                        <strong>{{ $errors->first('fotografia') }}</strong>
+                                                    </span>
+                                            @endif
                                         </div>
                                     </div>
 

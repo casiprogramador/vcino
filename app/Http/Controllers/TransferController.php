@@ -307,7 +307,7 @@ class TransferController extends Controller
 		
 		
 		$categories = Category::where('company_id',$company->id )->where('tipo_categoria','Egreso')->where('activa',1)->lists('nombre','id')->all();
-		$accounts = Account::where('company_id',$company->id )->where('activa',1)->lists('nombre','id')->all();
+		$accounts = Account::where('company_id',$company->id )->where('activa',1)->orderBy('nombre', 'asc')->lists('nombre','id')->all();
         return view('transfers.index')
 				->with('transactions',$transactions->get())
 				->with('categories',$categories)

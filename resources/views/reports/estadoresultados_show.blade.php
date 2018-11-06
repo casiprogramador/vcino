@@ -94,22 +94,22 @@
                                         <tr>
                                             <td>{{$categorias_ingreso[$i]['nombre']}}</td>
                                             @if($importe_total_ingreso != 0)
-                                            <td style="text-align:right;">{{ number_format($categorias_ingreso[$i]['monto']/$importe_total_ingreso*100,2)."%" }}</td>
+                                            <td style="text-align:right;">{{ number_format($categorias_ingreso[$i]['monto']/$importe_total_ingreso*100, 2, ',', '.')."%" }}</td>
                                             @else
-                                            <td style="text-align:right;">{{"0.00%"}}</td>
+                                            <td style="text-align:right;">{{"0,00%"}}</td>
                                             @endif
-                                            <td style="text-align:right;">{{ number_format($categorias_ingreso[$i]['monto'], 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($categorias_ingreso[$i]['monto'], 2, ',', '.') }}</td>
                                         </tr>
     									@endfor
                                     </tbody>
                                     <tfoot>
                                         <th>Total</th>
     									@if($importe_total_ingreso != 0)
-                                        <th style="text-align:right;">100.00%</th>
+                                        <th style="text-align:right;">100,00%</th>
     									@else
-    									<th style="text-align:right;">0.00%</th>
+    									<th style="text-align:right;">0,00%</th>
     									@endif
-                                        <th style="text-align:right;">{{ number_format($importe_total_ingreso, 2, '.', '.') }}</th>
+                                        <th style="text-align:right;">{{ number_format($importe_total_ingreso, 2, ',', '.') }}</th>
                                     </tfoot>
                                 </table>
                             </div>
@@ -134,11 +134,11 @@
                                         <tr>
                                             <td>{{$categorias_egreso_ordinario[$i]['nombre']}}</td>
                                             @if($importe_total_egreso != 0)
-                                                <td style="text-align:right;">{{number_format($categorias_egreso_ordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
+                                                <td style="text-align:right;">{{number_format($categorias_egreso_ordinario[$i]['monto']/$importe_total_egreso*100, 2, ',', '.')."%"}}</td>
                                             @else
-                                                <td style="text-align:right;">{{"0.00%"}}</td>
+                                                <td style="text-align:right;">{{"0,00%"}}</td>
                                             @endif
-                                            <td style="text-align:right;">{{ number_format($categorias_egreso_ordinario[$i]['monto'], 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($categorias_egreso_ordinario[$i]['monto'], 2, ',', '.') }}</td>
                                         </tr>
     									@endfor
                                         <tr>
@@ -148,23 +148,23 @@
                                         <tr>
                                             <td>{{$categorias_egreso_extraordinario[$i]['nombre']}}</td>
                                             @if($importe_total_egreso != 0)
-                                            <td style="text-align:right;">{{number_format($categorias_egreso_extraordinario[$i]['monto']/$importe_total_egreso*100,2)."%"}}</td>
+                                            <td style="text-align:right;">{{number_format($categorias_egreso_extraordinario[$i]['monto']/$importe_total_egreso*100, 2, ',', '.')."%"}}</td>
                                             @else
-                                            <td style="text-align:right;">{{"0.00%"}}</td>
+                                            <td style="text-align:right;">{{"0,00%"}}</td>
                                             @endif
 
-                                            <td style="text-align:right;">{{ number_format($categorias_egreso_extraordinario[$i]['monto'], 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($categorias_egreso_extraordinario[$i]['monto'], 2, ',', '.') }}</td>
                                         </tr>
     									 @endfor
                                     </tbody>
                                     <tfoot>
                                         <th>Total</th>
                                         @if($importe_total_egreso != 0)
-                                        <th style="text-align:right;">100.00%</th>
+                                        <th style="text-align:right;">100,00%</th>
     									@else
-    									<th style="text-align:right;">0.00%</th>
+    									<th style="text-align:right;">0,00%</th>
     									@endif
-                                        <th style="text-align:right;">{{ number_format($importe_total_egreso, 2, '.', '.') }}</th>
+                                        <th style="text-align:right;">{{ number_format($importe_total_egreso, 2, ',', '.') }}</th>
                                     </tfoot>
                                 </table>
                             </div>
@@ -184,17 +184,17 @@
                                         <tr>
                                             <td>Ingresos</td>
                                             <td style="text-align:right;"></td>
-                                            <td style="text-align:right;">{{ number_format($importe_total_ingreso, 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($importe_total_ingreso, 2, ',', '.') }}</td>
                                         </tr>
                                         <tr>
                                             <td>Gastos ordinarios</td>
                                             <td style="text-align:right;"></td>
-                                            <td style="text-align:right;">{{ number_format($importe_total_egreso_ordinario, 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($importe_total_egreso_ordinario, 2, ',', '.') }}</td>
                                         </tr>
                                         <tr>
                                             <td>Gastos extraordinarios</td>
                                             <td style="text-align:right;"></td>
-                                            <td style="text-align:right;">{{ number_format($importe_total_egreso_extraordinario, 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($importe_total_egreso_extraordinario, 2, ',', '.') }}</td>
                                         </tr>
                                         <tr>
                                             <td>Diferencia del periodo</td>
@@ -202,9 +202,9 @@
 
                                             <!-- Valor mayor o igual a cero (0) -->
     										@if(($importe_total_ingreso-$importe_total_egreso)>= 0)
-                                            <td style="text-align:right; color: #0E9AEF">{{ number_format($importe_total_ingreso-$importe_total_egreso, 2, '.', '.') }}</td>
+                                            <td style="text-align:right; color: #0E9AEF">{{ number_format($importe_total_ingreso-$importe_total_egreso, 2, ',', '.') }}</td>
     										@else
-    										<td style="text-align:right; color: red">{{ number_format($importe_total_ingreso-$importe_total_egreso, 2, '.', '.') }}</td>
+    										<td style="text-align:right; color: red">{{ number_format($importe_total_ingreso-$importe_total_egreso, 2, ',', '.') }}</td>
     										@endif
 
                                         </tr>

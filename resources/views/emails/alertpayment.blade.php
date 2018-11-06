@@ -32,10 +32,10 @@
                                     <div class="row" style="padding: 10px 0 20px 0;">
                                         <div class="col-sm-6">
                                             Propiedad:&nbsp;&nbsp;<span><strong>{{ $sendalertpayment->property->nro }}</strong></span>
+                                            <br>&nbsp;
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-6" style="text-align: right;">
                                             Al periodo:&nbsp;&nbsp;<span><strong>
-
 												 @if($sendalertpayment->limite_periodo == 1)
 													{{ 'Enero' }}
 												 @elseif($sendalertpayment->limite_periodo == 2)
@@ -61,7 +61,8 @@
 												 @elseif($sendalertpayment->limite_periodo == 12)
 													{{ 'Diciembre' }}
 												 @endif
-													{{ $sendalertpayment->limite_gestion }}</strong></span>
+													/{{ $sendalertpayment->limite_gestion }}</strong></span><br>
+                                            Fecha de emisión:&nbsp;&nbsp;{{ date_format(date_create($sendalertpayment->created_at),'d/m/Y') }}
                                         </div>
                                     </div>                                    
                                 </td>
@@ -109,13 +110,17 @@
                                                     {{ ' Diciembre' }}/{{ $gestiones[$i] }}
                                                 @endif
                                             </td>
-                                            <td style="border-top: #eee 1px solid; text-align: right; padding: 5px 0;">{{ number_format($importes[$i], 2, '.', '.') }}</td>
+                                            <td style="border-top: #eee 1px solid; text-align: right; padding: 5px 0;">{{ number_format($importes[$i], 2, ',', '.') }}</td>
                                         </tr>
 										@endfor
 
+                                        <tr>
+                                            <td style="border-top: #eee 1px solid; padding: 5px 0;">&nbsp;</td>
+                                            <td style="border-top: #eee 1px solid; text-align: right; padding: 5px 0;">&nbsp;</td>
+                                        </tr>
                                         <tr style="font-size: 16px;">
-                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total</td>
-                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 5px 0;">{{ number_format($sendalertpayment->importe_total, 2, '.', '.') }}</td>
+                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700;" class="alignright" width="80%; padding: 5px 0;">Total Bs.</td>
+                                            <td style="border-top: 2px solid #333; border-bottom: 2px solid #333; font-weight: 700; text-align: right; padding: 5px 0;">{{ number_format($sendalertpayment->importe_total, 2, ',', '.') }}</td>
                                         </tr>
                                     </table>
                                 </td>
@@ -123,7 +128,7 @@
                         </table>
                     </div>
 
-                    <table style="margin: auto; text-align: left; width: 90%; font-size: 11px;">
+                    <table style="margin: auto; text-align: left; width: 90%; font-size: 12px;">
                         <tr>
                             <td>
                                 <address style="color: #9ba3a9;">
@@ -147,5 +152,8 @@
     </div>
 </div>
 
+@endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ URL::asset('css/varios.css') }}" media="print"/>
 @endsection

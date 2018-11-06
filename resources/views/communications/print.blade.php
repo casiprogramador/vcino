@@ -55,12 +55,7 @@
                     </div>
 
                     <div class="row" style="padding: 0 0 10px 0;">
-                        <div class="col-sm-3">
-                        </div>
-                        <div class="col-sm-6" style="width: 50%; margin: auto;">
-                            <div class="hr-line-solid"></div>
-                        </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-12">
                         </div>
                     </div>
 

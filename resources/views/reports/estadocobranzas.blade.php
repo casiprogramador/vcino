@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Estado de cobranzas</h2>
+        <h2>Cobranzas por periodo y gestión</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Reportes
             </li>
             <li class="active">
-                <strong>Estado de cobranzas</strong>
+                <strong>Cobranzas por periodo y gestión</strong>
             </li>
         </ol>
     </div>
@@ -24,7 +24,7 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>Estado de cobranzas</h5>
+                    <h5>Cobranzas por periodo y gestión</h5>
                 </div>
 				{!! Form::open(array('route' => 'report.estadocobranzas.show')) !!}
                 <div class="ibox-content">
@@ -47,7 +47,7 @@
                             </div>
 
                         </div>
-                        <div class="col-sm-4"><h4 class="text-muted">Estado de cobranzas</h4>
+                        <div class="col-sm-4"><h4 class="text-muted">Cobranzas por periodo y gestión</h4>
                             <p class="text-muted">Este reporte refleja las cobranzas realizadas para cada pediodo (mes), durante una gestión, por propiedad.</p>
                         </div>
                     </div>

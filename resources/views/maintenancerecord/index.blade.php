@@ -35,7 +35,7 @@
                     <h5 style="padding-top: 7px;">Registro de mantenimiento</h5>
                     <div class="ibox-tools" style="padding-bottom: 7px; padding-right: 5px;">
                         <div class="btn-group">
-							<a href="{{ route('equipment.maintenancerecord.create') }}" class="btn btn-sm btn-success" style="color: white;"">Nuevo</a>
+							<a href="{{ route('equipment.maintenancerecord.create') }}" class="btn btn-sm btn-default" title="Nuevo registro de mantenimiento">Nuevo</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                 <th style="vertical-align:bottom">Fecha</th>
                                 <th style="vertical-align:bottom">Equipo/ Maquinaria</th>
                                 <th style="vertical-align:bottom">Tipo</th>
-                                <th style="vertical-align:bottom">Costo</th>
+                                <th class="text-right" style="vertical-align:bottom">Costo</th>
                                 <th style="vertical-align:bottom" width="200"></th>
                             </tr>
                         </thead>
@@ -58,7 +58,7 @@
                                 <td data-order="{{ $maintenancerecord->fecha_realizacion }}" style="vertical-align: middle;">{{ date_format(date_create($maintenancerecord->fecha_realizacion),'d/m/Y') }}</td>
                                 <td style="vertical-align: middle;">{{$maintenancerecord->equipment->equipo}}</td>
                                 <td style="vertical-align: middle;">{{$maintenancerecord->tipo}}</td>
-                                <td style="vertical-align: middle;">{{$maintenancerecord->costo}}</td>
+                                <td style="vertical-align: middle; text-align: right;">{{ number_format($maintenancerecord->costo, 2, ',', '.') }}</td>
                                 <td style="vertical-align:middle; text-align:right;">
                                     <div class="btn-group">
                                         <a href="{{ route('equipment.maintenancerecord.show', Crypt::encrypt($maintenancerecord->id) ) }}" class="btn btn-success btn-xs btn-outline btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="Ver registro de mantenimiento">

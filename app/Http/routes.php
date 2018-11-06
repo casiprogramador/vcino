@@ -12,7 +12,7 @@
 */
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('testmobile', function () {
-        $user = \Auth::guard('api')->user();
+        $user = \Auth::guard('api')->user()->property();
         return $user;
     });
 });

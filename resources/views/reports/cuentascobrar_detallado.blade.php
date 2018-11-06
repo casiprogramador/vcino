@@ -89,7 +89,7 @@
     									@if($cuotas[$i][0] === 'Total')
                                         <tr>
                                             <td colspan="5"><strong>Total propiedad</strong></td>
-                                            <td style="text-align:right;"><strong>{{ number_format($cuotas[$i][4], 2, '.', '.') }}</strong></td>
+                                            <td style="text-align:right;"><strong>{{ number_format($cuotas[$i][4], 2, ',', '.') }}</strong></td>
                                         </tr>
     									@else
                                         <tr>
@@ -97,7 +97,7 @@
                                             <td>{{$cuotas[$i][1]}}</td>
                                             <td>{{$cuotas[$i][2]}}</td>
                                             <td>{{ nombremes( $cuotas[$i][3] )}}</td>
-                                            <td style="text-align:right;">{{ number_format($cuotas[$i][4], 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($cuotas[$i][4], 2, ',', '.') }}</td>
                                             <td></td>
                                         </tr>
     									@endif
@@ -106,7 +106,7 @@
                                     </tbody>
                                     <tfoot>
                                         <th colspan="5">Total</th>
-                                        <th style="text-align:right;">{{ number_format($monto_total, 2, '.', '.') }}</th>
+                                        <th style="text-align:right;">{{ number_format($monto_total, 2, ',', '.') }}</th>
                                     </tfoot>
                                 </table>
                             </div>

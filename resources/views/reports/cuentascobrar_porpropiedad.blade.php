@@ -93,7 +93,6 @@
                                             <th style="text-align:right;">Importe</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
     									@for ($i = 0; $i < count($cuotas); $i++)
     									@if($cuotas[$i][0] !== 'Total')
@@ -101,16 +100,26 @@
                                             <td>{{$cuotas[$i][0]}}</td>
                                             <td>{{$cuotas[$i][1]}}</td>
                                             <td>{{nombremes( $cuotas[$i][2] )}}</td>
-                                            <td style="text-align:right;">{{ number_format($cuotas[$i][3], 2, '.', '.') }}</td>
+                                            <td style="text-align:right;">{{ number_format($cuotas[$i][3], 2, ',', '.') }}</td>
                                         </tr>
     									@endif
     									@endfor
                                     </tbody>
                                     <tfoot>
                                         <th colspan="3">Total</th>
-                                        <th style="text-align:right;">{{ number_format($monto_total, 2, '.', '.') }}</th>
+                                        <th style="text-align:right;">{{ number_format($monto_total, 2, ',', '.') }}</th>
                                     </tfoot>
                                 </table>
+    
+                                @if($monto_total == 0)
+                                    <div class="jumbotron">
+                                        <h2>Certificado</h2>
+                                        <p style="font-size: 18px;">La oficina de Administración certifica que la propiedad {{ strtoupper($propiedad) }} no tiene deudas ni obligaciones pendientes.</p>
+                                        <p>&nbsp;</p>
+                                        <small><strong>{{ Auth::user()->nombre }}</strong><br><cite title="" data-original-title="">Administrador</cite></small>
+                                    </div>
+                                @endif
+
                             </div>
                         </div>
                         <div class="col-sm-1">

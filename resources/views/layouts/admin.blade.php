@@ -57,7 +57,7 @@
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('communication/communication') }}"><a href="{{ route('communication.communication.index') }}">Comunicados</a></li>
 						<li class="{{ MenuRoute::active('communication/phonesite') }}"><a href="{{ route('communication.phonesite.index') }}">Teléfonos y sitios útiles</a></li>
-                        <li class="{{ MenuRoute::active('communication/document') }}"><a href="{{ route('communication.document.index') }}">Directorio de documentos</a></li>
+                        <li class="{{ MenuRoute::active('communication/document') }}"><a href="{{ route('communication.document.index') }}">Documentos de interés</a></li>
                     </ul>
                 </li>
                 <li {!! (Request::is('properties/*') ? ' class="active"' : '') !!}>
@@ -84,11 +84,11 @@
                     <ul class="nav nav-second-level">
                         <li class="{{ MenuRoute::active('report/disponibilidad') }}"><a href="{{ route('report.disponibilidad') }}">Disponibilidad</a></li>
                         <li class="{{ MenuRoute::active('report/estadoresultados') }}"><a href="{{ route('report.estadoresultados') }}">Estado de Resultados</a></li>
-                        <li class="{{ MenuRoute::active('report/categoriaperiodogestion') }}"><a href="{{ route('report.reportcategoriaperiodogestion') }}">Categorías por periodo y gestión</a></li>
                         <li class="{{ MenuRoute::active('report/cuentascobrar') }}"><a href="{{ route('report.cuentascobrar') }}">Cuotas por cobrar</a></li>
-                        <li class="{{ MenuRoute::active('report/estadocobranzas') }}"><a href="{{ route('report.estadocobranzas') }}">Estado de cobranzas</a></li>
+                        <li class="{{ MenuRoute::active('report/categoriaperiodogestion') }}"><a href="{{ route('report.reportcategoriaperiodogestion') }}">Categorías por periodo y gestión</a></li>
+                        <li class="{{ MenuRoute::active('report/estadocobranzas') }}"><a href="{{ route('report.estadocobranzas') }}">Cobranzas por periodo y gestión</a></li>
+                        <li class="{{ MenuRoute::active('report/estadopagos') }}"><a href="{{ route('report.estadopagos') }}">Cobranzas por estado</a></li>
                         <li class="{{ MenuRoute::active('report/historicotransacciones') }}"><a href="{{ route('report.historicotransacciones') }}">Histórico de transacciones</a></li>
-						<li class="{{ MenuRoute::active('report/estadopagos') }}"><a href="{{ route('report.estadopagos') }}">Estado Pagos</a></li>
                     </ul>
                 </li>
 
@@ -115,14 +115,21 @@
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
                     </a>
                     <div style="width:500px; margin-left:65px;">
-                        <h2 style="margin-top:18px;">{{ Session::get('company_name') }}</h2>
+                        <h2 style="margin-top:18px;">{{ Session::get('company_name') }} &nbsp;&raquo;&nbsp;
+                            <span style="font-weight:normal; font-size: 13px; color: #CCC"> {{ Auth::user()->nombre }}</span></h2>
                     </div>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
+                        <!--
+                        <a href="#">
+                            <i class="fa fa-question-circle"></i>Soporte 
+                        </a>
+                        -->
+                    </li>
+                    <li>
                         <a href="{{ url('/logout') }}">
-                            <i class="fa fa-sign-out"></i>Salir &nbsp;&raquo;&nbsp;
-                            <span style="font-weight:normal; font-size: 13px; color: #CCC"> {{ Auth::user()->nombre }}</span>
+                            <i class="fa fa-sign-out"></i>Salir
                         </a>
                     </li>
                 </ul>
@@ -131,10 +138,10 @@
         @yield('admin-content')
         <div class="footer">
             <div class="pull-right">
-                <span style="color: #ccc">v1.5</span>
+                <span style="color: #ccc">v1.5.308</span>
             </div>
             <div>
-                <strong></strong><span style="color: #ccc">&copy; 2017 Versión Digital</span>
+                <strong></strong><span style="color: #ccc">&copy; 2018 Versión Digital</span>
             </div>
         </div>
     </div>

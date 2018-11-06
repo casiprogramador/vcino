@@ -80,7 +80,7 @@ class CommunicationController extends Controller
 			$communication->adjuntos = implode(",", $array_path);
 		}
         $communication->save();
-        Session::flash('message', 'Nuevo comunicado ingresado correctamente');
+        Session::flash('message', 'Nuevo comunicado registrado correctamente.');
         return redirect()->route('communication.communication.index');
 
     }
@@ -142,7 +142,7 @@ class CommunicationController extends Controller
 			$communication->adjuntos = '';
 		}
         $communication->save();
-        Session::flash('message', 'Comunicado actualizado correctamente');
+        Session::flash('message', 'Comunicado actualizado correctamente.');
         return redirect()->route('communication.communication.index');
 	}
 	
@@ -209,7 +209,7 @@ class CommunicationController extends Controller
 			$communication->adjuntos = '';
 		}
         $communication->save();
-        Session::flash('message', 'Nuevo comunicado ingresado correctamente');
+        Session::flash('message', 'Nuevo comunicado registrado correctamente.');
         return redirect()->route('communication.communication.index');
 
     }
@@ -322,7 +322,7 @@ class CommunicationController extends Controller
 
 				});
 				if (Mail::failures()) {
-					Session::flash('message', 'Error envio comunicacion');
+					Session::flash('message', 'Error en el envío del comunicado.');
 					return redirect()->route('communication.communication.index');
 				}else{
 					$correos[] = $data['email_contancto'];
@@ -347,12 +347,12 @@ class CommunicationController extends Controller
 			$sendcommunication->company_id = $company->id;
 			$sendcommunication->save();
 			
-			Session::flash('message', 'Comunicado enviado correctamente');
+			Session::flash('message', 'Comunicado enviado correctamente.');
 			return redirect()->route('communication.communication.index');
 		
 					
 		}else{
-			Session::flash('message', 'No existe contactos para enviar comunicado');
+			Session::flash('message', 'No existen contactos para enviar el comunicado.');
 			return redirect()->route('communication.communication.send', ['id' => $request->comunicado]);
 		}
 		

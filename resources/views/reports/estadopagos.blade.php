@@ -3,7 +3,7 @@
 @section('admin-content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Estado de pagos</h2>
+        <h2>Cobranzas por estado</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.home') }}">Inicio</a>
@@ -12,7 +12,7 @@
                 Reportes
             </li>
             <li class="active">
-                <strong>Estado Pagos</strong>
+                <strong>Cobranzas por estado</strong>
             </li>
         </ol>
     </div>
@@ -24,7 +24,7 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>Estado de pagos</h5>
+                    <h5>Cobranzas por estado</h5>
                 </div>
 				{!! Form::open(array('route' => 'report.estadopagos.show')) !!}
                 <div class="ibox-content">

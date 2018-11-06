@@ -76,7 +76,7 @@
 												ordenarPeriodoGestion($sendalertpayment->periodos,$sendalertpayment->gestiones)
 												}}
 											</td>
-											<td style="vertical-align:middle; text-align: right; padding-right: 30px;">{{ number_format($sendalertpayment->importe_total, 2, '.', '.') }}</td>
+											<td style="vertical-align:middle; text-align: right; padding-right: 30px;">{{ number_format($sendalertpayment->importe_total, 2, ',', '.') }}</td>
                                             <td style="vertical-align:middle; text-align: center;">
                                                 <div class="btn-group">
                                                     <a href="{{ route('transaction.accountsreceivable.print', $sendalertpayment->id) }}" class="btn btn-success btn-xs btn-outline" data-toggle="tooltip" data-placement="bottom" title="Ver aviso de cobranza" style="margin-bottom: 0px;">

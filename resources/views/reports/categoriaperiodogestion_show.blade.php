@@ -95,36 +95,36 @@
 										@if($categorias[$i][0] != 'Total')
                                         <tr>
                                             <td>{{$categorias[$i][0]}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][1], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][2], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][3], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][4], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][5], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][6], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][7], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][8], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][9], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][10], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][11], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][12], 2, '.', '.')}}</td>
-                                            <td style="text-align:right;">{{number_format($categorias[$i][13], 2, '.', '.')}}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][1] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][2] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][3] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][4] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][5] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][6] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][7] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][8] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][9] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][10] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][11] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][12] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
+                                            <td style="text-align:right;">{{ $categorias[$i][13] > 0 ? number_format($categorias[$i][1], 2, ',', '.') : " - " }}</td>
                                         </tr>
 										@else
                                         <tr>
                                             <td><strong>{{$categorias[$i][0]}}</strong></td>
-                                            <td style="text-align:right;" id="ene_total" suma="{{$categorias[$i][1]}}"><strong>{{number_format($categorias[$i][1], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="feb_total" suma="{{$categorias[$i][2]}}"><strong>{{number_format($categorias[$i][2], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="mar_total" suma="{{$categorias[$i][3]}}"><strong>{{number_format($categorias[$i][3], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="abr_total" suma="{{$categorias[$i][4]}}"><strong>{{number_format($categorias[$i][4], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="may_total" suma="{{$categorias[$i][5]}}"><strong>{{number_format($categorias[$i][5], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="jun_total" suma="{{$categorias[$i][6]}}"><strong>{{number_format($categorias[$i][6], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="jul_total" suma="{{$categorias[$i][7]}}"><strong>{{number_format($categorias[$i][7], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="ago_total" suma="{{$categorias[$i][8]}}"><strong>{{number_format($categorias[$i][8], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="sep_total" suma="{{$categorias[$i][9]}}"><strong>{{number_format($categorias[$i][9], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="oct_total" suma="{{$categorias[$i][10]}}"><strong>{{number_format($categorias[$i][10], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="nov_total" suma="{{$categorias[$i][11]}}"><strong>{{number_format($categorias[$i][11], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="dic_total" suma="{{$categorias[$i][12]}}"><strong>{{number_format($categorias[$i][12], 2, '.', '.')}}</strong></td>
-                                            <td style="text-align:right;" id="sum_total" suma="{{$categorias[$i][13]}}"><strong>{{number_format($categorias[$i][13], 2, '.', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="ene_total" suma="{{$categorias[$i][1]}}"><strong>{{number_format($categorias[$i][1], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="feb_total" suma="{{$categorias[$i][2]}}"><strong>{{number_format($categorias[$i][2], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="mar_total" suma="{{$categorias[$i][3]}}"><strong>{{number_format($categorias[$i][3], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="abr_total" suma="{{$categorias[$i][4]}}"><strong>{{number_format($categorias[$i][4], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="may_total" suma="{{$categorias[$i][5]}}"><strong>{{number_format($categorias[$i][5], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="jun_total" suma="{{$categorias[$i][6]}}"><strong>{{number_format($categorias[$i][6], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="jul_total" suma="{{$categorias[$i][7]}}"><strong>{{number_format($categorias[$i][7], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="ago_total" suma="{{$categorias[$i][8]}}"><strong>{{number_format($categorias[$i][8], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="sep_total" suma="{{$categorias[$i][9]}}"><strong>{{number_format($categorias[$i][9], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="oct_total" suma="{{$categorias[$i][10]}}"><strong>{{number_format($categorias[$i][10], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="nov_total" suma="{{$categorias[$i][11]}}"><strong>{{number_format($categorias[$i][11], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="dic_total" suma="{{$categorias[$i][12]}}"><strong>{{number_format($categorias[$i][12], 2, ',', '.')}}</strong></td>
+                                            <td style="text-align:right;" id="sum_total" suma="{{$categorias[$i][13]}}"><strong>{{number_format($categorias[$i][13], 2, ',', '.')}}</strong></td>
                                         </tr>
 										@endif
                                         @endfor
@@ -161,9 +161,7 @@
                     </div>
 
                     <div class="row" style="padding-top: 20px;">
-                        <div class="col-sm-1">
-                        </div>
-                        <div class="col-sm-10">
+                        <div class="col-sm-8">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
                                     <h5>Categorías por periodo - Gestión: {{$gestion}}</h5>
@@ -175,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-4">
                         </div>
                     </div>
 
